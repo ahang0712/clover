@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://arxiv.org/pdf/2504.00521"><img src="https://img.shields.io/badge/arXiv-2504.08001-b31b1b.svg?style=for-the-badge"></a>
-    <a href="https://huggingface.co/datasets/ahang518/Racebench"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Dataset-Racebench-%23ff8811.svg"></a>
+    <a href="https://huggingface.co/datasets/ahang518/Racebench"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Racebench-%23ff8811.svg"></a>
 </p>
 
 ![Framework](assets/overview.png)
