@@ -106,4 +106,4 @@ This structure is inspired by best practices in Prompt Engineering and modular a
 
 For questions or contributions, feel free to open an issue or pull request.
 
-Let me know if you want a more technical or minimal version, or if you want example screenshots, usage cases, etc!
+Let me know if you want a more technical or minimal version, or if you want example screenshots, usage cases, etc!# clover
