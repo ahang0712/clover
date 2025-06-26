@@ -1,11 +1,14 @@
-<img src="assets/icon.png" alt="Project logo" width="40"> Automated detection of atomicity violations in large-scale systems
+# <img src="assets/icon.png" alt="Project logo" width="40"> Automated detection of atomicity violations in large-scale systems
+
 <p align="left">
-<a href="https://arxiv.org/pdf/2504.00521"><img src="https://img.shields.io/badge/arXiv-2504.08001-b31b1b.svg?style=for-the-badge">
+    <a href="https://arxiv.org/pdf/2504.00521"><img src="https://img.shields.io/badge/arXiv-2504.08001-b31b1b.svg?style=for-the-badge">
 </p>
 
 ![Framework](assets/overview.png)
 
-Multi-Agent Atomicity Violation Detection
+## About
+
+
 This project provides a modular, extensible Python framework for detecting atomicity violations (such as RWW, WWR, RWR, WRW patterns) in C code for embedded/interrupt-driven systems, using a multi-agent architecture and prompt engineering best practices.
 
 Features
