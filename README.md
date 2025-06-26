@@ -4,6 +4,9 @@
     <a href="https://arxiv.org/pdf/2504.00521"><img src="https://img.shields.io/badge/arXiv-2504.08001-b31b1b.svg?style=for-the-badge">
 </p>
 
+<p align="left">
+    <a href="https://huggingface.co/datasets/ahang518/Racebench"><img src="https://img.shields.io/badge/Dataset-Racebench-00A1FF.svg?style=for-the-badge"></a>
+</p>
 ![Framework](assets/overview.png)
 
 ## About
