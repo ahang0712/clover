@@ -1,0 +1,41 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/code/blink/blink3-output.json:
+Defect_Pattern: RWR
+Variable: timerCount
+Location: Timer_A_isr
+Description: RWR defect found: consecutive reads in Timer_A_isr with write in Timer_B_isr
+---
+Defect_Pattern: RWR
+Variable: timerCount
+Location: Timer_B_isr
+Description: RWR defect found: consecutive reads in Timer_B_isr with write in Timer_C_isr
+---
+Defect_Pattern: RWW
+Variable: timerCount
+Location: Timer_A_isr
+Description: RWW defect found: read-write in Timer_A_isr with write in Timer_B_isr
+---
+Defect_Pattern: RWW
+Variable: timerCount
+Location: Timer_B_isr
+Description: RWW defect found: read-write in Timer_B_isr with write in Timer_C_isr
+---
+Defect_Pattern: WRW
+Variable: timerCount
+Location: Timer_A_isr
+Description: WRW defect found: consecutive writes in Timer_A_isr with read in Timer_B_isr
+---
+Defect_Pattern: WRW
+Variable: timerCount
+Location: Timer_B_isr
+Description: WRW defect found: consecutive writes in Timer_B_isr with read in Timer_C_isr
+---
+Defect_Pattern: WWR
+Variable: timerCount
+Location: Timer_A_isr
+Description: WWR defect found: write-read in Timer_A_isr with write in Timer_B_isr
+---
+Defect_Pattern: WWR
+Variable: timerCount
+Location: Timer_B_isr
+Description: WWR defect found: write-read in Timer_B_isr with write in Timer_C_isr
+---

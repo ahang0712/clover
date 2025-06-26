@@ -1,0 +1,11 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/2.1/svp_simple_001/svp_simple_001_001-output.json:
+Defect_Pattern: WRW
+Variable: svp_simple_001_001_global_array
+Location: MAIN
+Description: WRW defect found: consecutive writes in main function with read in ISR
+---
+Defect_Pattern: WRW
+Variable: svp_simple_001_001_global_var
+Location: svp_simple_001_001_isr_1
+Description: WRW defect found: consecutive writes in svp_simple_001_001_isr_1 with read in svp_simple_001_001_isr_2
+---

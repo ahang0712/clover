@@ -1,0 +1,16 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/code/brake/brake1-output.json:
+Defect_Pattern: RWR
+Variable: test
+Location: task_isr_1
+Description: RWR defect found: consecutive reads in task_isr_1 with write in task_isr_2
+---
+Defect_Pattern: RWW
+Variable: test
+Location: task_isr_1
+Description: RWW defect found: read-write in task_isr_1 with write in task_isr_2
+---
+Defect_Pattern: WWR
+Variable: test
+Location: task_isr_1
+Description: WWR defect found: write-read in task_isr_1 with write in task_isr_2
+---

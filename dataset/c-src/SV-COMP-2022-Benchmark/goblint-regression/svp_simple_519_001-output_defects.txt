@@ -1,0 +1,6 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_519_001-output.json:
+Defect_Pattern: RWR
+Variable: myglobal
+Location: MAIN
+Description: RWR defect found: consecutive reads in main function with write in ISR
+---

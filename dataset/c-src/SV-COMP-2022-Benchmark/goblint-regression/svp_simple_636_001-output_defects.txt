@@ -1,0 +1,11 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_636_001-output.json:
+Defect_Pattern: WRW
+Variable: g
+Location: MAIN
+Description: WRW defect found: consecutive writes in main function with read in ISR
+---
+Defect_Pattern: WWR
+Variable: g
+Location: MAIN
+Description: WWR defect found: write-read in main function with write in ISR
+---

@@ -1,0 +1,23 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "myglobal",
+    "./svp_simple_524_001.c:.str"
+  ],
+  "MAIN_INFO": [
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "myglobal",
+      "line": "5",
+      "function": "svp_simple_524_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "myglobal",
+      "line": "6",
+      "function": "svp_simple_524_001_isr_1"
+    }
+  ]
+}

@@ -11,7 +11,9 @@ def read_json(filepath): # Read the contents of a JSON file
     with open(filepath, 'r') as f:
         return json.load(f)
 
-def write_file(filepath, content, mode='w'): # Write content to a file
+def write_file(filepath, content, mode='w'):
+    # Ensure parent directory exists
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
     with open(filepath, mode) as f:
         f.write(content)
 

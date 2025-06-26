@@ -1,0 +1,71 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "svp_simple_028_001_gloable_var",
+    "svp_simple_028_001_isr_1_flag"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "14",
+      "function": "svp_simple_028_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "15",
+      "function": "svp_simple_028_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "28",
+      "function": "svp_simple_028_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "28",
+      "function": "svp_simple_028_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_028_001_isr_1_flag",
+      "line": "29",
+      "function": "svp_simple_028_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_028_001_isr_1_flag",
+      "line": "33",
+      "function": "svp_simple_028_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "34",
+      "function": "svp_simple_028_001_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "34",
+      "function": "svp_simple_028_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "38",
+      "function": "svp_simple_028_001_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_028_001_gloable_var",
+      "line": "38",
+      "function": "svp_simple_028_001_isr_3"
+    }
+  ]
+}

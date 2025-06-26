@@ -1,0 +1,16 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "myglobal"
+  ],
+  "MAIN_INFO": [
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "myglobal",
+      "line": "4",
+      "function": "svp_simple_597_001_isr_1"
+    }
+  ]
+}

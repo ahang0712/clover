@@ -1,0 +1,16 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/2.1/svp_simple_027/svp_simple_027_001-output.json:
+Defect_Pattern: RWW
+Variable: svp_simple_027_001_gloable_var
+Location: MAIN
+Description: RWW defect found: read-write in main function with write in ISR
+---
+Defect_Pattern: RWW
+Variable: svp_simple_027_001_gloable_var
+Location: svp_simple_027_001_isr_1
+Description: RWW defect found: read-write in svp_simple_027_001_isr_1 with write in svp_simple_027_001_isr_2
+---
+Defect_Pattern: RWW
+Variable: svp_simple_027_001_gloable_var
+Location: svp_simple_027_001_isr_2
+Description: RWW defect found: read-write in svp_simple_027_001_isr_2 with write in svp_simple_027_001_isr_3
+---

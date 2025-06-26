@@ -1,0 +1,40 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "data"
+  ],
+  "MAIN_INFO": [
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "data",
+      "line": "8",
+      "function": "svp_simple_304_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "data",
+      "line": "9",
+      "function": "svp_simple_304_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "data",
+      "line": "16",
+      "function": "svp_simple_304_001_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "data",
+      "line": "17",
+      "function": "svp_simple_304_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "data",
+      "line": "23",
+      "function": "svp_simple_304_001_isr_3"
+    }
+  ]
+}

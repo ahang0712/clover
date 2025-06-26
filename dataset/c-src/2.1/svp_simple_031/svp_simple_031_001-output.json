@@ -1,0 +1,76 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "svp_simple_031_001_tc_chan1_buff",
+    "svp_simple_031_001_tc_buff_p",
+    "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+    "svp_simple_031_001_tc_block_rcvd_bytes",
+    "svp_simple_031_001_gloable_var1",
+    "svp_simple_031_001_tc_block_rcvd_bytes_ch2",
+    "svp_simple_031_001_tc_chan2_buff"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "line": "31",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_031_001_tc_block_rcvd_bytes",
+      "line": "30",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_buff_p",
+      "line": "34",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_buff_p",
+      "line": "35",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_buff_p",
+      "line": "36",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "line": "68",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_gloable_var1",
+      "line": "69",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "line": "70",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "line": "50",
+      "function": "svp_simple_031_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "line": "75",
+      "function": "svp_simple_031_001_isr_1"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "ISR_COUNT": 2,
+  "GLOBAL_VAR": [
+    "g"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "19",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "26",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "28",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "29",
+      "function": "svp_simple_643_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "58",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "60",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "61",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "63",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "63",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "58",
+      "function": "svp_simple_643_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "60",
+      "function": "svp_simple_643_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "61",
+      "function": "svp_simple_643_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "63",
+      "function": "svp_simple_643_001_isr1"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "63",
+      "function": "svp_simple_643_001_isr1"
+    }
+  ]
+}

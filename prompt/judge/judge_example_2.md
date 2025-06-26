@@ -6,7 +6,7 @@ Consider the following C code:
 volatile int globalvar; 
 volatile int condition = 1;
 void isr1(){
-	disable_isr(2); // disable isr2
+	disable_isr(2); // Disable isr2
 	condition = 0;
 	enable_isr(2); // enable isr2
 }

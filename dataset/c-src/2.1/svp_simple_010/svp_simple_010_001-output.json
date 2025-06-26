@@ -1,0 +1,47 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "svp_simple_010_001_global_union",
+    "svp_simple_010_001_global_struct"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_union",
+      "line": "25",
+      "function": "svp_simple_010_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_union",
+      "line": "26",
+      "function": "svp_simple_010_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_struct",
+      "line": "28",
+      "function": "svp_simple_010_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_struct",
+      "line": "29",
+      "function": "svp_simple_010_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_010_001_global_union",
+      "line": "36",
+      "function": "svp_simple_010_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_010_001_global_struct",
+      "line": "38",
+      "function": "svp_simple_010_001_isr_1"
+    }
+  ]
+}

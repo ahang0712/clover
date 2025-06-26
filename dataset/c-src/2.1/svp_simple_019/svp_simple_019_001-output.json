@@ -1,0 +1,155 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "svp_simple_019_001_global_condition1",
+    "svp_simple_019_001_global_condiiton2",
+    "svp_simple_019_001_global_condition3",
+    "svp_simple_019_001_global_para1",
+    "svp_simple_019_001_global_para2",
+    "svp_simple_019_001_global_para3",
+    "svp_simple_019_001_global_var2",
+    "svp_simple_019_001_global_var1"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_019_001_global_para1",
+      "line": "18",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_019_001_global_para2",
+      "line": "19",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_019_001_global_para3",
+      "line": "20",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_para1",
+      "line": "23",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_para3",
+      "line": "23",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_para2",
+      "line": "23",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_var2",
+      "line": "24",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_var2",
+      "line": "26",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_condition1",
+      "line": "28",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_condiiton2",
+      "line": "28",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_var1",
+      "line": "29",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_condition1",
+      "line": "32",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_condition3",
+      "line": "32",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_var1",
+      "line": "33",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_condiiton2",
+      "line": "37",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_condition3",
+      "line": "37",
+      "function": "svp_simple_019_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_var1",
+      "line": "38",
+      "function": "svp_simple_019_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_para1",
+      "line": "44",
+      "function": "svp_simple_019_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_para3",
+      "line": "44",
+      "function": "svp_simple_019_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_019_001_global_para2",
+      "line": "44",
+      "function": "svp_simple_019_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_019_001_global_var2",
+      "line": "45",
+      "function": "svp_simple_019_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_019_001_global_condition3",
+      "line": "47",
+      "function": "svp_simple_019_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_019_001_global_var1",
+      "line": "49",
+      "function": "svp_simple_019_001_isr_1"
+    }
+  ]
+}

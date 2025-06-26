@@ -1,0 +1,41 @@
+{
+  "ISR_COUNT": 2,
+  "GLOBAL_VAR": [
+    "g",
+    "./svp_simple_641_001.c:.str"
+  ],
+  "MAIN_INFO": [
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "10",
+      "function": "svp_simple_641_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "12",
+      "function": "svp_simple_641_001_isr1"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "13",
+      "function": "svp_simple_641_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "19",
+      "function": "svp_simple_641_001_isr2"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "20",
+      "function": "svp_simple_641_001_isr2"
+    }
+  ]
+}

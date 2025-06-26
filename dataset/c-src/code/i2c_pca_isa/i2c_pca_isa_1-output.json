@@ -1,0 +1,219 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "stdout",
+    "stdin",
+    "irq",
+    "global_id",
+    "global_dev",
+    "cnt1",
+    "cnt2",
+    "cnt3",
+    "cnt4",
+    "global_clock",
+    "cnt5",
+    "cnt6"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "irq",
+      "line": "258",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "global_id",
+      "line": "259",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "global_dev",
+      "line": "259",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "global_dev",
+      "line": "260",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "irq",
+      "line": "260",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "global_id",
+      "line": "260",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "global_id",
+      "line": "261",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "global_dev",
+      "line": "261",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt1",
+      "line": "262",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt1",
+      "line": "262",
+      "function": "svp_simple_007_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "irq",
+      "line": "268",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "global_id",
+      "line": "269",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "global_dev",
+      "line": "269",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "global_dev",
+      "line": "270",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "irq",
+      "line": "270",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "global_id",
+      "line": "270",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "global_id",
+      "line": "271",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "global_dev",
+      "line": "271",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt2",
+      "line": "272",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt2",
+      "line": "272",
+      "function": "req_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "irq",
+      "line": "278",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "global_id",
+      "line": "279",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "global_dev",
+      "line": "279",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "global_dev",
+      "line": "280",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "irq",
+      "line": "280",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "global_id",
+      "line": "280",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "global_id",
+      "line": "281",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "global_dev",
+      "line": "281",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt3",
+      "line": "282",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt3",
+      "line": "282",
+      "function": "req_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "irq",
+      "line": "288",
+      "function": "req_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt4",
+      "line": "289",
+      "function": "req_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt4",
+      "line": "289",
+      "function": "req_isr_3"
+    }
+  ]
+}

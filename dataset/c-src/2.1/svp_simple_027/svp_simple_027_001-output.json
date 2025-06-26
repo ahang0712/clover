@@ -1,0 +1,58 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "svp_simple_027_001_gloable_var"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "11",
+      "function": "svp_simple_027_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "12",
+      "function": "svp_simple_027_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "25",
+      "function": "svp_simple_027_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "25",
+      "function": "svp_simple_027_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "29",
+      "function": "svp_simple_027_001_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "29",
+      "function": "svp_simple_027_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "32",
+      "function": "svp_simple_027_001_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_027_001_gloable_var",
+      "line": "32",
+      "function": "svp_simple_027_001_isr_3"
+    }
+  ]
+}

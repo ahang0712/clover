@@ -1,0 +1,11 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/2.1/svp_simple_023/svp_simple_023_001-output.json:
+Defect_Pattern: RWR
+Variable: svp_simple_023_001_global_var
+Location: MAIN
+Description: RWR defect found: consecutive reads in main function with write in ISR
+---
+Defect_Pattern: RWW
+Variable: svp_simple_023_001_global_var
+Location: MAIN
+Description: RWW defect found: read-write in main function with write in ISR
+---

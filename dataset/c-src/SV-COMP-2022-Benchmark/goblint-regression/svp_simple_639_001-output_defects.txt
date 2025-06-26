@@ -1,0 +1,16 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001-output.json:
+Defect_Pattern: RWR
+Variable: g
+Location: svp_simple_639_001_isr1
+Description: RWR defect found: consecutive reads in svp_simple_639_001_isr1 with write in svp_simple_639_001_isr2
+---
+Defect_Pattern: RWW
+Variable: g
+Location: svp_simple_639_001_isr1
+Description: RWW defect found: read-write in svp_simple_639_001_isr1 with write in svp_simple_639_001_isr2
+---
+Defect_Pattern: WWR
+Variable: g
+Location: svp_simple_639_001_isr1
+Description: WWR defect found: write-read in svp_simple_639_001_isr1 with write in svp_simple_639_001_isr2
+---

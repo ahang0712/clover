@@ -1,20 +1,19 @@
-# Example 2
+# Example 3
 
-**Dynamic Control Condition Affected by Interrupts**
-
-Consider the following code:
+Consider the following C code:
 
 ```c
-volatile int globalvar;
-volatile int condition = 1;
-void isr1(){
-	disable_isr(2);
-	condition = 0;
-	enable_isr(2);
+void main() {
+	disable_isr(-1);
+    int reader = globalvar;
+	enable_isr(1);  
 }
-void isr2(){
-	if (condition == 1)
-		globalvar = 1;
+void isr_1() {
+	globalvar += 2;
 }
+void isr_2() {
+	globalvar++;
+}
+```
 
-In Example 2, note that interrupt isr1 will change the value of condition, thereby altering the truth value of the control condition in isr2. Therefore, it is necessary to consider whether the control condition in isr2 could be true after isr1 is executed.
+In Example 3, `disable_isr(-1)` disables all interrupts until `enable_isr(1)` is executed. After executing `enable_isr(1)`, the interrupt for ISR1 is enabled, allowing ISR1 to preempt and execute. However, since ISR2 is not explicitly enabled, it remains disabled and cannot preempt and execute.

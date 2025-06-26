@@ -1,0 +1,248 @@
+
+### Task Objective:
+- Analyze the provided C code to detect single-variable atomicity violations involving global shared variables in interrupt-driven programs. Focus exclusively on detecting the `<Write, Write, Read>` pattern of atomicity violations. 
+
+### Key Considerations:
+1. **Program Architecture**:
+- The program consists of a main function and Interrupt Service Routines (ISRs).
+- The main function executes sequentially, is not periodic, and runs only once.
+
+2. **Interrupt Characteristics**:
+- **Interrupt Priority**: Higher numerical values denote higher priority (e.g. priority 0 < priority 1 < priority 2).
+- **Interrupt Nesting**: High-priority ISRs can preempt lower-priority ISRs and the main function.
+- **Interrupt Timing**: Interrupt timing can occur multiple times at any point during the program's execution.
+
+3. **Atomicity Violation Pattern `<Write, Write, Read>`**:
+    - The pattern consists of:
+        - **a1**: A write operation on a global shared variable by a relatively lower-priority task (can be main function or a lower priority ISR).
+        - **a2**: A write operation on the same global shared variable by a high-priority ISR.
+        - **a3**: A read operation on the same global shared variable by the same relatively lower-priority task as a1.
+    **a1** and **a3** should be consecutive. The write and read operations are considered "consecutive" if:
+    They operate on the same memory location (including the same array element).
+    No other read to that specific memory location occurs between them.
+    They are executed by the same relatively lower-priority tasktask (main function or ISR).
+    **Goal**: Detect instances where a local read `a3` follows a write operation `a1` and is interrupted by another write operation `a2`. The expectation of the local read `a3` to read the assigned value is violated by the interleaved write operation. 
+
+### Key Rules for Detection:
+1. Inline Function Calls:
+- Identify the function definition and locate the function call within the code.
+- Substitute the function call with the corresponding function body.
+- Ensure that any parameters passed to the function are correctly replaced with the actual arguments used in the function call.
+
+2. **Global Shared Variables**:
+- Detect violations on each global shared variable, like primitive data types, arrays, pointers or struct members accessed by both the main function and ISRs.
+- The three operations in the defect must operate on the same address space, For the Atomicity Violation Pattern <a1, a2, a3>:
+    For struct variables, the read/write operations in a1, a2, and a3 must point to the same struct member.
+    For arrays, the read/write operations in a1, a2, and a3 must point to the same array element.
+    For pointers, we need to focus on the variable pointed to by the pointer.
+- Monitor every read and write operation on global shared variables and list each of their read and write operations.
+
+3. **Compound Operations**:
+-  Decompose compound operations (+=, -=, ++, *=, /=, %=, &=, |=, ^=, <<=) into their atomic read and write parts. 
+    * For example, `x += 1` decomposed as:
+    Read operation: `temp = x;`
+    Write operation: `x = temp + 1;`
+
+    * For example, `x++` decomposed as:
+    Read operation: `temp = x;`
+    Write operation: `x = temp + 1;`
+
+- Identify potential points for atomicity violations in these decomposed operations.
+- Check each compound operation for read and write vulnerabilities.
+- Test all possible priority level combinations systematically, e.g., for priorities 0, 1, 2:
+  * Check (0,1,0), (0,2,0), (1,2,1).
+
+4. **Loop Analysis**:
+    - When loop operations involve global shared variables, each independent read/write operation within the loop must be explicitly identified. 
+    - Consider the sequence of loop variable initialization, condition check, loop body execution, and variable incrementation strictly in order. It is necessary to account for potential interruptions between each phase of the loop, as well as the possibility of interruptions spanning multiple iterations.
+    - Account for interrupt interleavings during loop execution. 
+    - Analyze initialization, condition checks, body execution, and updates.
+    - Each loop iteration may contain atomicity violations if interrupts preempt the critical sections.
+    - When analyzing conditional statements (if-else), consider all possible branches and their impact on the execution path.
+    - Pay attention to how variable modifications before a conditional statement affect which branch will be executed.
+
+### Output Format:
+After thoroughly checking all Read/Write oprations on global shared variables, output a JSON report if a violation is detected:
+
+```json
+{
+"violations": [
+    {
+    "sharedVariable": "variable_name",
+    "accessPattern": ["Write", "Write", "Read"],
+    "details": [
+        {
+        "codeSnippet": "code_snippet",
+        "function": "Main or ISRx",
+        "lineNumber": "Number",
+        "accessType": "Write/Read",
+        "priority": "priority_level"
+        },
+        {
+        "codeSnippet": "code_snippet",
+        "function": "ISRy",
+        "lineNumber": "Number",
+        "accessType": "Write/Read",
+        "priority": "priority_level"
+        },
+        {
+        "codeSnippet": "code_snippet",
+        "function": "Main or ISRx",
+        "lineNumber": "Number",
+        "accessType": "Write/Read",
+        "priority": "priority_level"
+        }
+    ],
+    "triggerCount": "calculated_value"
+    }
+]
+}
+
+Explanation:
+`sharedVariable`: The name of the shared variable involved in the violation.
+`codeSnippet` provide precise locations or context of these operations for analysis.
+`triggerCount` refers to the calculated number of possible triggers, considering all execution paths and scenarios such as loops or conditional branches, as well as the number of function calls.
+# Example:
+## Code Example:
+    ```c
+    1:  volatile unsigned long shared_case;
+    2:  void case_main(){ //Main
+    3:      unsigned char tmp;
+    4:      shared_case = 0; // `a1`: Write operation on `shared_case`.
+    5:      tmp = shared_case; // `a3`: Read operation on `shared_case`.
+    6:  }
+    7:  void case_isr1(){ //ISR1, priority: 1
+    8:      shared_case = 1; // `a2`: Write operation on `shared_case`.
+    9:  }
+    ```
+    The global variables to focus on in the code:
+    [shared_case]
+
+    The global variable read/write operations, line numbers, and function information are as follows:
+    shared_case: line 4, Write Operation, case_main
+    shared_case: line 5, Read Operation, case_main
+    shared_case: line 8, Write Operation, case_isr1
+    
+    - Defect Analysis: The main function writes 0 to `shared_case` and expects to read it back. However, before the read occurs, ISR1 preempts and writes 1 to `shared_case`. This causes the read operation to return 1 instead of the expected 0.
+    - JSON Output:
+
+    ```json
+{
+    "violations": [
+        {
+            "sharedVariable": "shared_case",
+            "accessPattern": ["Write", "Write", "Read"],
+            "details": [
+                {
+                    "codeSnippet": "shared_case = 0;",
+                    "function": "main",
+                    "lineNumber": "4",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "shared_case = 1;",
+                    "function": "isr_1",
+                    "lineNumber": "8",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "tmp = shared_case;",
+                    "function": "main",
+                    "lineNumber": "5",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+            ```
+            
+
+Note:
+- Ensure that the `accessType` strictly corresponds to the operation types in `accessPattern`. For example, the second item in `accessPattern` must be "Read", so the corresponding `accessType` in `details` must also be "Read".
+- If the operation types in `details` do not match those in `accessPattern`, the pattern should be ignored or marked as invalid.
+
+If no violations are detected, output:
+
+```plaintext
+No defects.
+```
+
+Provide all possible branch scenarios in the analysis. For each potential violation, include separate entries in the JSON output for different execution paths that could lead to the violation.
+We need to analyze the provided code for atomicity violation pattern <Write, Write, Read>, in relation to the following global variables:
+The code required to detect atomicity violation patterns is as follows:
+
+    ```c
+1: 
+2: #include "../common.h"
+3: 
+4: volatile int svp_simple_019_001_global_condition1 = 1;
+5: volatile int svp_simple_019_001_global_condiiton2 = 1;
+6: volatile int svp_simple_019_001_global_condition3 = 1;
+7: 
+8: volatile int svp_simple_019_001_global_para1;
+9: volatile int svp_simple_019_001_global_para2;
+10: volatile int svp_simple_019_001_global_para3;
+11: 
+12: volatile int svp_simple_019_001_global_var1;
+13: volatile int svp_simple_019_001_global_var2;
+14: 
+15: void svp_simple_019_001_main() {
+16: int reader1, reader2, reader3, reader4, reader5;
+17: init();
+18: svp_simple_019_001_global_para1 = rand() % 10;
+19: svp_simple_019_001_global_para2 = rand() % 10;
+20: svp_simple_019_001_global_para3 = rand() % 10;
+21: 
+22: svp_simple_019_001_global_var1 = rand(); // Write Operation on svp_simple_019_001_global_var1.
+23: 
+24: if ((svp_simple_019_001_global_para1 + svp_simple_019_001_global_para3) > svp_simple_019_001_global_para2)
+25: reader1 = svp_simple_019_001_global_var2; // Read Operation on svp_simple_019_001_global_var2.
+26: 
+27: reader2 = svp_simple_019_001_global_var2; // Read Operation on svp_simple_019_001_global_var2.
+28: 
+29: if ((svp_simple_019_001_global_condition1 == 1) && (svp_simple_019_001_global_condiiton2 == 1))
+30: reader3 = svp_simple_019_001_global_var1; // Read Operation on svp_simple_019_001_global_var1.
+31: idlerun();
+32: // disable_isr(1);
+33: if ((svp_simple_019_001_global_condition1 == 1) && (svp_simple_019_001_global_condition3 == 1)) // Read Operation on svp_simple_019_001_global_condition3.
+34: reader4 = svp_simple_019_001_global_var1; // Read Operation on svp_simple_019_001_global_var1.
+35: // enable_isr(1);
+36: idlerun();
+37: // disable_isr(1);
+38: if ((svp_simple_019_001_global_condiiton2 == 1) && (svp_simple_019_001_global_condition3 == 0)) // Read Operation on svp_simple_019_001_global_condition3.
+39: reader5 = svp_simple_019_001_global_var1; // Read Operation on svp_simple_019_001_global_var1.
+40: // enable_isr(1);
+41: }
+42: 
+43: void svp_simple_019_001_isr_1() {
+44: idlerun();
+45: if ((svp_simple_019_001_global_para1 + svp_simple_019_001_global_para3) < svp_simple_019_001_global_para2)
+46: svp_simple_019_001_global_var2 = 0x55; // Write Operation on svp_simple_019_001_global_var2.
+47: 
+48: svp_simple_019_001_global_condition3 = 0; // Write Operation on svp_simple_019_001_global_condition3.
+49: 
+50: svp_simple_019_001_global_var1 = 0x01; // Write Operation on svp_simple_019_001_global_var1.
+51: }
+    ```
+Global Variables to Focus on:
+[svp_simple_019_001_global_condition3, svp_simple_019_001_global_var1, svp_simple_019_001_global_var2]
+
+The global variable read/write operations, line numbers, and function information are as follows:
+svp_simple_019_001_global_condition3: line 33, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_condition3: line 38, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_condition3: line 48, Write Operation, svp_simple_019_001_isr_1
+svp_simple_019_001_global_var1: line 22, Write Operation, svp_simple_019_001_main
+svp_simple_019_001_global_var1: line 30, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_var1: line 34, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_var1: line 39, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_var1: line 50, Write Operation, svp_simple_019_001_isr_1
+svp_simple_019_001_global_var2: line 25, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_var2: line 27, Read Operation, svp_simple_019_001_main
+svp_simple_019_001_global_var2: line 46, Write Operation, svp_simple_019_001_isr_1
+The above provides the read and write operations of global variables in each line (including inline function calls), but you need to consider the impact of branch statements on the execution order.
+    

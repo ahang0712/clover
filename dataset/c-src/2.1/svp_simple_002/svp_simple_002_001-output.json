@@ -1,0 +1,41 @@
+{
+  "ISR_COUNT": 2,
+  "GLOBAL_VAR": [
+    "svp_simple_002_001_global_array",
+    "casee2_global_var"
+  ],
+  "MAIN_INFO": [
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_002_001_global_array",
+      "line": "18",
+      "function": "svp_simple_002_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_002_001_global_array",
+      "line": "20",
+      "function": "svp_simple_002_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_002_001_global_array",
+      "line": "22",
+      "function": "svp_simple_002_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_002_001_global_array",
+      "line": "24",
+      "function": "svp_simple_002_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_002_001_global_array",
+      "line": "29",
+      "function": "svp_simple_002_001_isr_2"
+    }
+  ]
+}

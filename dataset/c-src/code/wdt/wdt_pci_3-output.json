@@ -1,0 +1,241 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "heartbeat",
+    "nowayout",
+    "wdtpci_write_buf",
+    "expect_close",
+    "count",
+    "cnt1",
+    "cnt2",
+    "cnt5",
+    "cnt8",
+    "cnt3",
+    "cnt4",
+    "cnt6",
+    "cnt7",
+    "wdt_dc_port",
+    "jiffies",
+    "dev_count",
+    "open_sem",
+    "wdtpci_lock",
+    "io",
+    "irq",
+    "wd_heartbeat",
+    "buf"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "wdtpci_write_buf",
+      "line": "1064",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1065",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "count",
+      "line": "1066",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "count",
+      "line": "1068",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "nowayout",
+      "line": "1069",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "wdtpci_write_buf",
+      "line": "1074",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1075",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "expect_close",
+      "line": "1081",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1086",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt8",
+      "line": "1088",
+      "function": "svp_simple_023_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt8",
+      "line": "1088",
+      "function": "svp_simple_023_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "count",
+      "line": "1117",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1118",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "count",
+      "line": "1120",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "nowayout",
+      "line": "1121",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "wdtpci_write_buf",
+      "line": "1126",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1127",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt4",
+      "line": "1131",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt4",
+      "line": "1131",
+      "function": "writer_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "count",
+      "line": "1138",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1139",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "count",
+      "line": "1141",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "nowayout",
+      "line": "1142",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "wdtpci_write_buf",
+      "line": "1147",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1148",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt6",
+      "line": "1152",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt6",
+      "line": "1152",
+      "function": "writer_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "count",
+      "line": "1159",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1160",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "load",
+      "variable": "count",
+      "line": "1162",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "load",
+      "variable": "nowayout",
+      "line": "1163",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "load",
+      "variable": "wdtpci_write_buf",
+      "line": "1168",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "store",
+      "variable": "expect_close",
+      "line": "1169",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt7",
+      "line": "1173",
+      "function": "writer_isr_4"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt7",
+      "line": "1173",
+      "function": "writer_isr_4"
+    }
+  ]
+}

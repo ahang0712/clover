@@ -1,0 +1,75 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "svp_simple_029_001_ptr_SetSelfCtrlFlag",
+    "svp_simple_029_001_average_adjust_flag",
+    "svp_simple_029_001_ptr_SetTmData",
+    "svp_simple_029_001_ptr_GetTmData",
+    "svp_simple_029_001_tm_blocks",
+    "svp_simple_029_001_average_adjust_count"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_029_001_average_adjust_flag",
+      "line": "32",
+      "function": "svp_simple_029_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_ptr_SetSelfCtrlFlag",
+      "line": "25",
+      "function": "svp_simple_029_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_average_adjust_flag",
+      "line": "72",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_average_adjust_count",
+      "line": "73",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_029_001_average_adjust_count",
+      "line": "73",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_ptr_SetTmData",
+      "line": "74",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_average_adjust_count",
+      "line": "75",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_029_001_average_adjust_count",
+      "line": "77",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_ptr_SetTmData",
+      "line": "78",
+      "function": "svp_simple_029_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_029_001_average_adjust_count",
+      "line": "78",
+      "function": "svp_simple_029_001_isr_1"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+GLOBAL_VAR
+glob
+
+MAIN_INFO
+load,glob,13,svp_simple_500_001_main
+store,glob,14,svp_simple_500_001_main
+ISR_INFO
+load,glob,6,svp_simple_500_001_isr_1
+store,glob,7,svp_simple_500_001_isr_1

@@ -1,0 +1,16 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/SV-COMP-2022-Benchmark/Idv-races/svp_simple_303_001-output.json:
+Defect_Pattern: RWR
+Variable: pdev
+Location: MAIN
+Description: RWR defect found: consecutive reads in main function with write in ISR
+---
+Defect_Pattern: RWW
+Variable: pdev
+Location: MAIN
+Description: RWW defect found: read-write in main function with write in ISR
+---
+Defect_Pattern: WWR
+Variable: pdev
+Location: MAIN
+Description: WWR defect found: write-read in main function with write in ISR
+---

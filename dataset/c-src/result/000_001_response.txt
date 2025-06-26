@@ -1,0 +1,69 @@
+Let's analyze the code step by step to detect any atomicity violations following the <Write, Read, Write> pattern:
+
+1. For svp_simple_001_001_global_array:
+
+   a. In the main function (priority 0):
+      - There are two write operations in lines 19 and 24.
+      - These writes are not consecutive due to the loop structure and conditional statement.
+   
+   b. In isr_2 (priority 2):
+      - There are read operations in lines 46, 50, and 53.
+
+   Potential violation:
+   - The write in line 19 and the write in line 24 (for i == TRIGGER) could be interrupted by a read in isr_2.
+   - However, these writes are not consecutive due to the loop and conditional structure, so this doesn't constitute a violation.
+
+2. For svp_simple_001_001_global_var:
+
+   a. In isr_1 (priority 1):
+      - There are two consecutive write operations in lines 33 and 34.
+   
+   b. In isr_2 (priority 2):
+      - There is a read operation in line 56.
+
+   This forms a potential <Write, Read, Write> violation pattern.
+
+Based on this analysis, we can identify one atomicity violation:
+
+```json
+{
+"violations": [
+    {
+    "sharedVariable": "svp_simple_001_001_global_var",
+    "accessPattern": ["Write", "Read", "Write"],
+    "details": [
+        {
+        "codeSnippet": "svp_simple_001_001_global_var = 0;",
+        "function": "svp_simple_001_001_isr_1",
+        "lineNumber": "33",
+        "accessType": "Write",
+        "priority": "1"
+        },
+        {
+        "codeSnippet": "reader2 = svp_simple_001_001_global_var;",
+        "function": "svp_simple_001_001_isr_2",
+        "lineNumber": "56",
+        "accessType": "Read",
+        "priority": "2"
+        },
+        {
+        "codeSnippet": "svp_simple_001_001_global_var = 1;",
+        "function": "svp_simple_001_001_isr_1",
+        "lineNumber": "34",
+        "accessType": "Write",
+        "priority": "1"
+        }
+    ],
+    "triggerCount": 1
+    }
+]
+}
+```
+
+Explanation of the violation:
+- The variable svp_simple_001_001_global_var is written to in isr_1 (priority 1) in line 33.
+- This write could be interrupted by isr_2 (priority 2), which reads the variable in line 56.
+- After the interruption, isr_1 continues and writes to the variable again in line 34.
+- This creates a scenario where isr_2 might read an intermediate value that was not intended to be visible.
+
+The triggerCount is 1 because this violation can occur once each time isr_1 is called and interrupted by isr_2 between the two write operations.

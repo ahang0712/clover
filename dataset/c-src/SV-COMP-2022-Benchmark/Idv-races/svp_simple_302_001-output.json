@@ -1,0 +1,88 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "pdev"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "15",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "pdev",
+      "line": "16",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "18",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "pdev",
+      "line": "19",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "23",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "pdev",
+      "line": "24",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "30",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "pdev",
+      "line": "31",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "30",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "pdev",
+      "line": "31",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "30",
+      "function": "svp_simple_302_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "pdev",
+      "line": "31",
+      "function": "svp_simple_302_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "pdev",
+      "line": "11",
+      "function": "svp_simple_302_001_isr_1"
+    }
+  ]
+}
