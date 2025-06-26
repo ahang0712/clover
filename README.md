@@ -73,5 +73,7 @@ Framework Architecture
 Clover employs a three-layer architecture for detecting atomicity violation detection:
 
 Code Extractor: Performs static analysis to identify shared resources and extract critical code snippets.
+
 Expert Agent: Uses LLMs with domain knowledge to detect potential atomicity violations.
+
 Judge Agent: Validates detected violations by analyzing execution traces and interrupt contexts.
