@@ -1,0 +1,9 @@
+numpy
+pandas
+requests
+tqdm
+rich
+markdown
+matplotlib
+seaborn
+python_version >= 3.8

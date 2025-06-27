@@ -52,7 +52,7 @@ def handle_pattern(defect_mode, pattern_info, context):
 def main():
     # ==== File selection logic: adjust as needed ====
     i, j = 22, 1
-    file_template = f'{BASE_SRC_PATH}/2.1/svp_simple_{{:03d}}/svp_simple_{{:03d}}_{{:03d}}'
+    file_template = f'{BASE_SRC_PATH}/Racebench_2.1/svp_simple_{{:03d}}/svp_simple_{{:03d}}_{{:03d}}'
     defect_file_path = file_template.format(i, i, j) + '-output_defects.txt'
     json_file_path = file_template.format(i, i, j) + '-output.json'
     code_file_path = file_template.format(i, i, j) + '.c'
