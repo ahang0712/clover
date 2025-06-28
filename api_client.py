@@ -13,7 +13,7 @@ class APIClient: # Define the API client class
             'Content-Type': 'application/json'
         }
 
-    def send_messages(self, model, messages, temperature=0.0): # Define the send_messages method
+    def send_messages(self, model, messages, temperature=0.01): # Define the send_messages method
         payload = json.dumps({
             "model": model,
             "temperature": temperature,

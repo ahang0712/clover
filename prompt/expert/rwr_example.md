@@ -1,4 +1,4 @@
-3. **Atomicity Violation Pattern `<Read, Write, Write>`**:
+**Atomicity Violation Pattern `<Read, Write, Write>`**:
 - The pattern consists of:
     - **a1**: Read operation on a global shared variable by a relatively lower-priority task (can be main function or a lower priority ISR).
     - **a2**: Write operation on the same global shared variable by a higher-priority ISR.
@@ -8,8 +8,10 @@
     No other read/write to that specific memory location occurs between a1 adn a3.
     They are executed sequentially by the same relatively lower-priority task
 - Description: A local write follows a read operation and is interrupted by another write operation. The local write operation depends on the value read by the local read operation (e.g., conditional branch based on the read value), and the interleaved write modifies this value.
-''',
-                'pattern_example':'''     ```c
+
+**Example Code:**
+
+```c
 1:  volatile int globalvar1;
 2:  volatile int globalvar2;
 3:  void main() {
@@ -24,7 +26,8 @@
 12: void isr_2() { //priority: 2
 13:     globalvar2--; // Read operation on globalvar2. Write operation on globalvar2.
 14: }
-    ```
+```
+
 The global variables to focus on in the code:
 [globalvar1, globalvar2]
 
@@ -42,7 +45,7 @@ Defect 1: The `if(globalvar1 > 1)` statement performs a read (line 4) followed b
 Defect 2: ISR1 has the statement globalvar2++ (line 9), which is a compound operation that reads the current value of globalvar2, increments it by one, and writes the new value back to globalvar2. Similarly, ISR2 has the statement globalvar2-- (line 13), which reads the current value of globalvar2, decrements it by one, and writes the new value back to globalvar2. If ISR1’s globalvar2++ is executed and is preempted by ISR2’s globalvar2-- after the read but before the write, there could be a race condition leading to incorrect behavior. 
 - JSON Output:
 
-        ```json
+```json
 {
     "violations": [
         {
@@ -103,5 +106,4 @@ Defect 2: ISR1 has the statement globalvar2++ (line 9), which is a compound oper
         }
     ]
 }
-
-    ```
+```
