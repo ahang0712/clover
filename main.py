@@ -20,20 +20,45 @@ def handle_pattern_task(defect_mode, context, api_client, model):
     if not pattern_info:
         print(f"[Warning] Pattern info not found: {defect_mode}")
         return
-    example_md_file = pattern_info['prompt_file']
 
     # Load prompts
     system_prompt = load_prompt("prompt/common/system_message.md")
     task_objective = load_prompt("prompt/expert/task_objective.md", pattern_name=pattern_info['pattern_name'])
     detection_rules = load_prompt("prompt/expert/detection_rules.md")
+    domain_knowledge_md_file = pattern_info['domain_knowledge']
+    domain_knowledge = load_prompt(f"prompt/domain_knowledge/{domain_knowledge_md_file}")
+    example_md_file = pattern_info['pattern_example']
     pattern_example = load_prompt(f"prompt/expert/{example_md_file}")
     judge_prompt = load_prompt("prompt/judge/judge_steps.md")
+    output_format = load_prompt("prompt/expert/output_format.md", 
+                                pattern_name=pattern_info['pattern_name'],
+                                pattern_example=pattern_example,
+                                access_pattern=pattern_info['access_pattern']
+                                )
 
-    user_prompt = f"{task_objective}\n{detection_rules}\n\n{pattern_example}\n\n" \
-                  f"---\n\n" \
-                  f"Global Variables to Focus on:\n[{context['variables_text']}]\n\n" \
-                  f"The global variable read/write operations, line numbers, and function information are as follows:\n{context['operations_text']}\n" \
-                  f"\nThe code to analyze is:\n```c\n{context['code_str']}\n```\n"
+    expert_prompt = (
+        f"{task_objective}\n\n"
+        f"{domain_knowledge}\n\n"
+        f"{detection_rules}\n\n"
+        f"{output_format}\n\n"
+        f"---\n\n"
+        f"Global Variables to Focus on:\n[{context['variables_text']}]\n\n"
+        f"The global variable read/write operations, line numbers, and function information are as follows:\n{context['operations_text']}\n"
+        f"\nThe code to analyze is:\n```c\n{context['code_str']}\n```\n"
+    )
+    
+    judge_example_1 = load_prompt("prompt/judge/judge_example_1.md")
+    judge_example_2 = load_prompt("prompt/judge/judge_example_2.md")
+    judge_example_3 = load_prompt("prompt/judge/judge_example_3.md")
+    judge_example_4 = load_prompt("prompt/judge/judge_example_4.md")
+
+    judge_prompt = load_prompt(
+        "prompt/judge/judge_steps.md",
+        judge_example_1=judge_example_1,
+        judge_example_2=judge_example_2,
+        judge_example_3=judge_example_3,
+        judge_example_4=judge_example_4,
+    )
 
     expert_agent = ExpertAgent(api_client, model)
     judge_agent = JudgeAgent(api_client, model)
@@ -41,7 +66,7 @@ def handle_pattern_task(defect_mode, context, api_client, model):
     response_file_path = context['response_file_path']
     start = time.time()
     # Expert agent
-    response1 = expert_agent.analyze(system_prompt, user_prompt + "\nLet's think step by step.")
+    response1 = expert_agent.analyze(system_prompt, expert_prompt + "\nLet's think step by step.")
     save_response(response_file_path, f"Expert Agent Response: {response1}", time.time() - start)
     # Judge agent
     response2 = judge_agent.judge(judge_prompt)

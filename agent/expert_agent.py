@@ -3,8 +3,6 @@
 
 from agent.agent_base import AgentBase
 
-from agent.agent_base import AgentBase
-
 class ExpertAgent(AgentBase):
     def __init__(self, api_client, model, name="ExpertAgent"):
         super().__init__(name)
