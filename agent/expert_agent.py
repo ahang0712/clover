@@ -1,29 +1,23 @@
-# expert_agent.py
+# agent/expert_agent.py
 # This file defines the ExpertAgent class, which is a subclass of AgentBase
 
-from clover.agent.agent_base import AgentBase
-from clover.utils import write_file
+from agent.agent_base import AgentBase
+
+from agent.agent_base import AgentBase
 
 class ExpertAgent(AgentBase):
-    """
-    ExpertAgent is responsible for in-depth defect analysis on a given pattern or variable.
-    Demonstrates how to use utils.write_file for result output.
-    """
-    def __init__(self, task_info, name="ExpertAgent"):
+    def __init__(self, api_client, model, name="ExpertAgent"):
         super().__init__(name)
-        self.task_info = task_info
+        self.api_client = api_client
+        self.model = model
 
-    def run(self):
-        """
-        Main logic for expert agent.
-        Here, just creates a mock result and writes it to a file using write_file.
-        """
-        self.add_message("system", f"Running expert analysis on {self.task_info}")
-        # Replace with real logic (LLM call, static analysis, etc.)
-        result = f"ExpertAgent({self.task_info}) result"
-        # Save to file (example path, should be adapted)
-        result_path = f"results/expert_{str(self.task_info).replace(' ', '_')}.txt"
-        write_file(result_path, result)
-        self.add_message("result", f"Result saved to {result_path}")
+    def analyze(self, system_prompt, user_prompt):
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
+        print(user_prompt)
+        result = self.api_client.send_messages(self.model, messages)
+        self.add_message("expert", "Expert analysis done.")
         return result
 

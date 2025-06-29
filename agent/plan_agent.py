@@ -1,8 +1,8 @@
 # clover/agent/plan_agent.py
 
 import json
-from clover.agent.agent_base import AgentBase
-from clover.utils import read_json
+from agent.agent_base import AgentBase
+from utils import read_json
 
 class PlanAgent(AgentBase):
     """
