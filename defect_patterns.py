@@ -36,7 +36,7 @@ def get_pattern_info(pattern_code):
     Retrieve the meta information for a specific atomicity violation pattern.
 
     Args:
-        pattern_code (str): The code of the pattern (e.g., "RWW", "WWR", etc.)
+        pattern_code (str): The code of the pattern (e.g., "RWW", "WWR", "RWR", "WRW".)
 
     Returns:
         dict or None: The pattern info dictionary if found, else None.
