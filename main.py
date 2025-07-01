@@ -37,6 +37,7 @@ def handle_pattern_task(defect_mode, context, api_client, model):
                                 )
 
     expert_prompt = (
+        f"<think>\n"
         f"{task_objective}\n\n"
         f"{domain_knowledge}\n\n"
         f"{detection_rules}\n\n"
@@ -45,6 +46,7 @@ def handle_pattern_task(defect_mode, context, api_client, model):
         f"Global Variables to Focus on:\n[{context['variables_text']}]\n\n"
         f"The global variable read/write operations, line numbers, and function information are as follows:\n{context['operations_text']}\n"
         f"\nThe code to analyze is:\n```c\n{context['code_str']}\n```\n"
+        f"</think>"
     )
     
     judge_example_1 = load_prompt("prompt/judge/judge_example_1.md")

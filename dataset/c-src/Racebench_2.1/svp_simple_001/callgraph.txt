@@ -1,0 +1,8 @@
+svp_simple_001_001_isr_1() <void svp_simple_001_001_isr_1 () at svp_simple_001_001.c:28>:
+    idlerun()
+    enable_isr()
+svp_simple_001_001_isr_2() <void svp_simple_001_001_isr_2 () at svp_simple_001_001.c:41>:
+svp_simple_001_001_main() <void svp_simple_001_001_main () at svp_simple_001_001.c:10>:
+    init()
+    disable_isr()
+    idlerun()

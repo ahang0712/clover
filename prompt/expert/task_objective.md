@@ -1,5 +1,5 @@
 ### Task Objective:
-- Analyze the provided C code to detect single-variable atomicity violations involving global shared variables in interrupt-driven programs. Focus exclusively on detecting the `{pattern_name}` pattern of atomicity violations. 
+- Analyze the provided C code to detect single-variable atomicity violations involving global shared variables in interrupt-driven programs. Focus exclusively on detecting the {pattern_name} pattern of atomicity violations. 
 
 ### Key Considerations:
 1. **Program Architecture**:
