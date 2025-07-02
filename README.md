@@ -5,7 +5,7 @@
     <a href="https://huggingface.co/datasets/ahang518/Racebench"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Racebench-%23ff8811.svg"></a>
 </p>
 
-![Framework](assets/overview.png)
+![Framework](assets/overview.svg)
 
 ## About
 
