@@ -1,134 +1,128 @@
-# clover/agent/plan_agent.py
-
-import os
 import json
 from agent.agent_base import AgentBase
-from utils import read_json
-
-try:
-    from tool.runner import run_tool_mcp
-except ImportError:
-    # Fallback MCP runner实现
-    import subprocess
-    def run_tool_mcp(tool_name, args, env=None, timeout=300):
-        try:
-            proc = subprocess.run(
-                [tool_name] + args,
-                capture_output=True,
-                text=True,
-                env=os.environ if env is None else {**os.environ, **env},
-                timeout=timeout
-            )
-            return {
-                "protocol": "mcp",
-                "result": "success" if proc.returncode == 0 else "error",
-                "exit_code": proc.returncode,
-                "stdout": proc.stdout,
-                "stderr": proc.stderr
-            }
-        except Exception as e:
-            return {
-                "protocol": "mcp",
-                "result": "exception",
-                "error": str(e)
-            }
+from utils import read_json, load_prompt
+from tool.runner import run_tool_mcp
 
 class PlanAgent(AgentBase):
     """
-    PlanAgent: Tool orchestration and scheduling with MCP protocol.
+    PlanAgent:
+      - 根据目标和代码结构自主决策工具链调用顺序与参数
+      - 支持 MCP 协议工具统一调度
+      - 可结合规则、LLM、或自定义 prompt 实现自主化决策
     """
 
-    def __init__(self, name="PlanAgent"):
+    def __init__(self, llm_decision=False, name="PlanAgent"):
         super().__init__(name)
-        self.static_report_path = None
+        self.llm_decision = llm_decision  # 是否用LLM决策，否则规则决策
 
-    def call_tool_mcp(self, tool_path, input_file, timeout=300):
+    def decide_tools(self, code_path, task_goal, max_code_length=500):
         """
-        Use MCP protocol to call an external static analysis tool.
-        Returns MCP response dict.
+        根据规则或LLM判断调用哪些工具及顺序
         """
-        # 使用MCP协议调用外部静态分析工具
-        mcp_result = run_tool_mcp(
-            tool_name=tool_path,
-            args=[input_file],
-            timeout=timeout
-        )
-        # 添加消息，记录调用的工具和输入文件以及MCP结果
-        self.add_message("tool_call", f"Called tool {tool_path} on {input_file}: {mcp_result['result']}")
-        # 返回MCP结果
-        return mcp_result
+        # 1. 读取代码基本信息
+        code_excerpt = self._get_code_excerpt(code_path, max_code_length=60)
+        code_length = self._get_code_length(code_path)
+        tool_calls = []
 
-    def find_output_json(self, input_file):
-        """
-        Heuristically find the tool's output json file from input_file path.
-        """
-        base = os.path.splitext(input_file)[0]
-        candidates = [base + "-output.json", base + "_output.json", base + ".json"]
-        for path in candidates:
-            if os.path.exists(path):
-                self.static_report_path = path
-                return path
-        raise FileNotFoundError(f"No output json found for {input_file}")
+        # ----------- 规则决策示例 -----------
+        # 1. Extractor: 代码过长就调用
+        input_code = code_path
+        if code_length > max_code_length:
+            short_code = code_path.replace(".c", "_short.c")
+            tool_calls.append({
+                "tool": "extractor",
+                "input": input_code,
+                "output": short_code,
+                "reason": "Source code exceeds length threshold, need to compress."
+            })
+            input_code = short_code
+        # 2. Analyzer: 必调
+        analyzer_json = input_code.replace(".c", "-accesses.json")
+        tool_calls.append({
+            "tool": "analyzer",
+            "input": input_code,
+            "output": analyzer_json,
+            "reason": "Extract all read/write operations on variables."
+        })
+        # 3. Callgraph: 如有多个函数或出现调用，则调用
+        if self._need_callgraph(code_path):
+            callgraph_file = input_code.replace(".c", "-calls.dot")
+            tool_calls.append({
+                "tool": "callgraph",
+                "input": input_code,
+                "output": callgraph_file,
+                "reason": "Multiple functions or complex call relationships detected."
+            })
+        # 可选：如用LLM决策，则调用LLM
+        if self.llm_decision:
+            plan_prompt = load_prompt(
+                "prompt/plan_agent_decision.md",
+                code_excerpt=code_excerpt,
+                task_goal=task_goal
+            )
+            # send to LLM, parse output为tool_calls
+            # 伪代码: tool_calls = your_llm_api.ask(plan_prompt)
+            # 如需实现LLM决策，请替换以上规则部分
+        return tool_calls
 
-    def plan_and_dispatch(self, tool_path, input_file, type_threshold=3, variable_threshold=5):
+    def run_tools(self, tool_calls):
         """
-        1. Call static analysis tool (MCP protocol)
-        2. Parse report
-        3. Decide expert/judge agent scheduling plan
-        Returns (plan, output_json_path, mcp_result)
+        依次调用所有列出的工具，每步MCP协议封装
         """
-        mcp_result = self.call_tool_mcp(tool_path, input_file)
-        if mcp_result["result"] != "success":
-            raise RuntimeError(f"Tool call failed: {mcp_result}")
+        results = []
+        for tool_call in tool_calls:
+            tool = tool_call["tool"]
+            input_file = tool_call["input"]
+            output_file = tool_call["output"]
+            reason = tool_call.get("reason", "")
+            tool_path = self._resolve_tool_path(tool)
+            self.add_message("plan", f"Calling tool: {tool} for {reason}")
+            result = run_tool_mcp(tool_path, [input_file, output_file])
+            self.add_message("tool_result", {
+                "tool": tool, "exit_code": result.get("exit_code"),
+                "stdout": result.get("stdout"), "stderr": result.get("stderr")
+            })
+            results.append({
+                "tool": tool,
+                "input": input_file,
+                "output": output_file,
+                "exit_code": result.get("exit_code"),
+                "stdout": result.get("stdout"),
+                "stderr": result.get("stderr")
+            })
+        return results
 
-        output_json = self.find_output_json(input_file)
-        plan = self.decide_plan(
-            static_report_path=output_json,
-            type_threshold=type_threshold,
-            variable_threshold=variable_threshold
-        )
-        return plan, output_json, mcp_result
+    # ----------- 辅助函数 -----------
+    def _get_code_excerpt(self, code_path, max_code_length=60):
+        """截取部分代码用于LLM决策或展示"""
+        with open(code_path, 'r') as f:
+            lines = f.readlines()
+        excerpt = ''.join(lines[:max_code_length])
+        if len(lines) > max_code_length:
+            excerpt += "\n// ... (truncated)"
+        return excerpt
 
-    def parse_report(self, static_report_path=None):
-        """
-        Parse static analysis report JSON, extract patterns and variables.
-        """
-        path = static_report_path or self.static_report_path
-        if not path:
-            raise ValueError("No static report path specified.")
-        data = read_json(path)
-        entries = data.get("defects") or data.get("violations") or []
-        patterns = set()
-        variables = set()
-        pattern_to_variables = dict()
-        variable_to_patterns = dict()
-        for entry in entries:
-            pattern = entry.get("pattern") or entry.get("accessPattern")
-            variable = entry.get("variable") or entry.get("sharedVariable")
-            if isinstance(pattern, list):
-                pattern = ','.join(pattern)
-            if pattern is None or variable is None:
-                continue
-            patterns.add(pattern)
-            variables.add(variable)
-            pattern_to_variables.setdefault(pattern, set()).add(variable)
-            variable_to_patterns.setdefault(variable, set()).add(pattern)
-        return patterns, variables, pattern_to_variables, variable_to_patterns
+    def _get_code_length(self, code_path):
+        """代码总行数"""
+        with open(code_path, 'r') as f:
+            return len(f.readlines())
 
-    def decide_plan(self, static_report_path=None, type_threshold=3, variable_threshold=5):
+    def _need_callgraph(self, code_path):
         """
-        Decide scheduling plan based on report content.
+        粗略判断：如有2个及以上函数则认为需要callgraph
+        可结合Analyzer产物或直接用AST更严谨
         """
-        patterns, variables, pattern_to_variables, variable_to_patterns = self.parse_report(static_report_path)
-        num_patterns = len(patterns)
-        num_variables = len(variables)
-        if num_patterns == 0 or num_variables == 0:
-            return {"mode": "none", "tasks": []}
-        if num_patterns <= type_threshold and num_variables <= variable_threshold:
-            tasks = [{"pattern": pattern, "variables": list(pattern_to_variables[pattern])} for pattern in patterns]
-            self.add_message("plan", f"Plan: {len(tasks)} tasks by pattern.")
-            return {"mode": "by_pattern", "tasks": tasks}
-        else:
-            tasks = [{"variable": var, "patterns": list(variable_to_patterns[var])} for var in variables]
-            self.add_message("plan", f"Plan: {len(tasks)} tasks by variable.")
-            return {"mode": "by_variable", "tasks": tasks}
+        with open(code_path, 'r') as f:
+            text = f.read()
+        return text.count("void ") + text.count("int ") + text.count("float ") > 2  # 粗糙示例
+
+    def _resolve_tool_path(self, tool):
+        """
+        根据工具名找到实际可执行文件路径，可根据项目实际调整
+        """
+        tool_map = {
+            "extractor": "./tool/Extractor",
+            "analyzer": "./tool/Analyzer",
+            "callgraph": "./tool/Callgraph",
+        }
+        return tool_map[tool]
