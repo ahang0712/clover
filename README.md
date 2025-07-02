@@ -65,9 +65,21 @@ clover/
 │   │   └── wrw_example.md
 │   └── judge/
 │       ├── judge_steps.md
-│       ├── judge_example_1.md
-│       └── judge_example_2.md
+├── tool/
+│   ├── Analyzer/
+│   │   ├── cJSON.c
+│   │   ├── Makefile
+│   │   ├── tool.cpp
+│   │   └── main.cpp
+│   ├── Callgraph/
+│   └── Extractor/
+├── dataset/
+│   └── c-src/
+│       └── SV-COMP-2022-Benchmark/
+│           └── goblint-regression/
+├── requriements.txt
 └── README.md
+
 ```
 
 Framework Architecture
