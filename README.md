@@ -19,11 +19,16 @@ Clover is a cutting-edge framework that integrates static analysis with large la
 ## Environment Setup
 
 **Step 1**
-Install the following dependencies:
 
-```sh
+```bash
+cd clover
+# Init Conda Env
+conda create -n clover python=3.10 -y
+conda activate clover
+# Install Python dependencies
 pip3 install -r requirements.txt
 ```
+
 **Step 2**
 ```sh
 python3 main.py
