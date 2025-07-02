@@ -1,4 +1,4 @@
-# <img src="assets/icon.svg" alt="Project logo" width="120"> Automated detection of atomicity violations in large-scale systems
+# <img src="assets/icon.svg" alt="Project logo" width="100"> Automated detection of atomicity violations in large-scale systems
 
 <p align="center">
     <a href="https://arxiv.org/pdf/2504.00521"><img src="https://img.shields.io/badge/arXiv-2504.08001-a55fed.svg"></a>
