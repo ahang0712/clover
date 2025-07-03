@@ -16,6 +16,9 @@ Clover is a cutting-edge framework that integrates static analysis with large la
 
 **Contact:** [Hang He](hang.he@stu.ecnu.edu.cn), [Chengcheng Wan](https://chengcheng-wan.github.io/).
 
+## News
+- [25.04.01] Paper released on [ArXiv](https://arxiv.org/pdf/2504.00521.pdf).
+
 ## Environment Setup
 
 **Step 1**
@@ -95,3 +98,6 @@ Code Extractor: Performs static analysis to identify shared resources and extrac
 Expert Agent: Uses LLMs with domain knowledge to detect potential atomicity violations.
 
 Judge Agent: Validates detected violations by analyzing execution traces and interrupt contexts.
+
+## Acknowledgement
+We sincerely thank these repositories for providing helpful open-source resources: [Racebench](https://github.com/chenruibuaa/racebench),[CPA4AV](https://github.com/BinYu-Xidian-University/CPA4AV),[intAtom](https://github.com/wangilson/Atom)
