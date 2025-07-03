@@ -100,4 +100,4 @@ Expert Agent: Uses LLMs with domain knowledge to detect potential atomicity viol
 Judge Agent: Validates detected violations by analyzing execution traces and interrupt contexts.
 
 ## Acknowledgement
-We sincerely thank these repositories for providing helpful open-source resources: [Racebench](https://github.com/chenruibuaa/racebench),[CPA4AV](https://github.com/BinYu-Xidian-University/CPA4AV),[intAtom](https://github.com/wangilson/Atom)
+We sincerely thank these repositories for providing helpful open-source resources: [Racebench](https://github.com/chenruibuaa/racebench), [CPA4AV](https://github.com/BinYu-Xidian-University/CPA4AV), [intAtom](https://github.com/wangilson/Atom)
