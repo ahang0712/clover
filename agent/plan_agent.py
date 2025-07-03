@@ -1,128 +1,103 @@
 import json
 from agent.agent_base import AgentBase
-from utils import read_json, load_prompt
 from tool.runner import run_tool_mcp
 
 class PlanAgent(AgentBase):
     """
     PlanAgent:
-      - 根据目标和代码结构自主决策工具链调用顺序与参数
-      - 支持 MCP 协议工具统一调度
-      - 可结合规则、LLM、或自定义 prompt 实现自主化决策
+      - 依次调用 Extractor, Analyzer, Candidate, Callgraph 工具
+      - 用 LLM 融合所有工具产物，返回统一 plan_result
+      - api_client 和 model 必须提供
     """
-
-    def __init__(self, llm_decision=False, name="PlanAgent"):
+    def __init__(self, api_client, model, name="PlanAgent"):
         super().__init__(name)
-        self.llm_decision = llm_decision  # 是否用LLM决策，否则规则决策
+        if api_client is None or model is None:
+            raise ValueError("PlanAgent 需要 api_client 和 model 参数用于 LLM 融合。")
+        self.api_client = api_client
+        self.model = model
 
-    def decide_tools(self, code_path, task_goal, max_code_length=500):
+    def decide_tools(self, source_file: str) -> dict:
         """
-        根据规则或LLM判断调用哪些工具及顺序
-        """
-        # 1. 读取代码基本信息
-        code_excerpt = self._get_code_excerpt(code_path, max_code_length=60)
-        code_length = self._get_code_length(code_path)
-        tool_calls = []
+        工具链分析流程（全部为本地工具调用）：
+        1. Extractor      - 提取关键代码片段
+        2. Analyzer       - 生成 analysis_summary
+        3. Candidate      - 生成候选缺陷报告
+        4. Callgraph      - 生成函数调用信息
 
-        # ----------- 规则决策示例 -----------
-        # 1. Extractor: 代码过长就调用
-        input_code = code_path
-        if code_length > max_code_length:
-            short_code = code_path.replace(".c", "_short.c")
-            tool_calls.append({
-                "tool": "extractor",
-                "input": input_code,
-                "output": short_code,
-                "reason": "Source code exceeds length threshold, need to compress."
-            })
-            input_code = short_code
-        # 2. Analyzer: 必调
-        analyzer_json = input_code.replace(".c", "-accesses.json")
-        tool_calls.append({
-            "tool": "analyzer",
-            "input": input_code,
-            "output": analyzer_json,
-            "reason": "Extract all read/write operations on variables."
-        })
-        # 3. Callgraph: 如有多个函数或出现调用，则调用
-        if self._need_callgraph(code_path):
-            callgraph_file = input_code.replace(".c", "-calls.dot")
-            tool_calls.append({
-                "tool": "callgraph",
-                "input": input_code,
-                "output": callgraph_file,
-                "reason": "Multiple functions or complex call relationships detected."
-            })
-        # 可选：如用LLM决策，则调用LLM
-        if self.llm_decision:
-            plan_prompt = load_prompt(
-                "prompt/plan_agent_decision.md",
-                code_excerpt=code_excerpt,
-                task_goal=task_goal
-            )
-            # send to LLM, parse output为tool_calls
-            # 伪代码: tool_calls = your_llm_api.ask(plan_prompt)
-            # 如需实现LLM决策，请替换以上规则部分
-        return tool_calls
+        5. LLM 融合四路工具产物，统一生成 plan_result 并返回
+        """
+        # 1. Extractor
+        extract_out = source_file.replace('.c', '-snippets.json')
+        self.add_message("plan", f"Running Extractor on {source_file}")
+        run_tool_mcp(self._resolve_tool_path('extractor'), [source_file, extract_out])
+        with open(extract_out, 'r') as f:
+            extracted_code = json.load(f)
 
-    def run_tools(self, tool_calls):
-        """
-        依次调用所有列出的工具，每步MCP协议封装
-        """
-        results = []
-        for tool_call in tool_calls:
-            tool = tool_call["tool"]
-            input_file = tool_call["input"]
-            output_file = tool_call["output"]
-            reason = tool_call.get("reason", "")
-            tool_path = self._resolve_tool_path(tool)
-            self.add_message("plan", f"Calling tool: {tool} for {reason}")
-            result = run_tool_mcp(tool_path, [input_file, output_file])
-            self.add_message("tool_result", {
-                "tool": tool, "exit_code": result.get("exit_code"),
-                "stdout": result.get("stdout"), "stderr": result.get("stderr")
-            })
-            results.append({
-                "tool": tool,
-                "input": input_file,
-                "output": output_file,
-                "exit_code": result.get("exit_code"),
-                "stdout": result.get("stdout"),
-                "stderr": result.get("stderr")
-            })
-        return results
+        # 2. Analyzer
+        analysis_out = source_file.replace('.c', '-analysis.json')
+        self.add_message("plan", f"Running Analyzer on {source_file}")
+        run_tool_mcp(self._resolve_tool_path('analyzer'), [source_file, analysis_out])
+        with open(analysis_out, 'r') as f:
+            analysis_summary = json.load(f)
 
-    # ----------- 辅助函数 -----------
-    def _get_code_excerpt(self, code_path, max_code_length=60):
-        """截取部分代码用于LLM决策或展示"""
-        with open(code_path, 'r') as f:
-            lines = f.readlines()
-        excerpt = ''.join(lines[:max_code_length])
-        if len(lines) > max_code_length:
-            excerpt += "\n// ... (truncated)"
-        return excerpt
+        # 3. Candidate
+        cand_out = source_file.replace('.c', '-candidates.json')
+        self.add_message("plan", f"Running Candidate on {source_file}")
+        run_tool_mcp(self._resolve_tool_path('candidate'), [source_file, cand_out])
+        with open(cand_out, 'r') as f:
+            candidates = json.load(f)
 
-    def _get_code_length(self, code_path):
-        """代码总行数"""
-        with open(code_path, 'r') as f:
-            return len(f.readlines())
+        # 4. Callgraph
+        callgraph_out = source_file.replace('.c', '-calls.json')
+        self.add_message("plan", f"Running Callgraph on {source_file}")
+        run_tool_mcp(self._resolve_tool_path('callgraph'), [source_file, callgraph_out])
+        with open(callgraph_out, 'r') as f:
+            callgraph = json.load(f)
 
-    def _need_callgraph(self, code_path):
-        """
-        粗略判断：如有2个及以上函数则认为需要callgraph
-        可结合Analyzer产物或直接用AST更严谨
-        """
-        with open(code_path, 'r') as f:
-            text = f.read()
-        return text.count("void ") + text.count("int ") + text.count("float ") > 2  # 粗糙示例
+        # 5. LLM 融合（必须，若失败则报错）
+        if not self.api_client or not self.model:
+            raise RuntimeError("PlanAgent requires api_client and model for LLM fusion.")
+        prompt = self._build_llm_prompt(analysis_summary, candidates, callgraph, extracted_code)
+        self.add_message("plan_prompt", prompt)
+        llm_resp = self.api_client.send_messages(
+            self.model,
+            [
+                {"role": "system", "content": "You are the plan agent."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        try:
+            llm_data = json.loads(llm_resp)
+            analysis_summary.update(llm_data.get('analysis_summary', {}))
+            candidates = llm_data.get('candidates', candidates)
+            callgraph = llm_data.get('callgraph', callgraph)
+            extracted_code = llm_data.get('extracted_code', extracted_code)
+        except json.JSONDecodeError:
+            self.add_message("plan_warning", "LLM 返回非 JSON，跳过融合。")
 
-    def _resolve_tool_path(self, tool):
-        """
-        根据工具名找到实际可执行文件路径，可根据项目实际调整
-        """
-        tool_map = {
-            "extractor": "./tool/Extractor",
-            "analyzer": "./tool/Analyzer",
-            "callgraph": "./tool/Callgraph",
+        plan_result = {
+            "analysis_summary": analysis_summary,
+            "candidates": candidates,
+            "callgraph": callgraph,
+            "extracted_code": extracted_code,
         }
-        return tool_map[tool]
+        return plan_result
+
+    def _resolve_tool_path(self, tool_name: str) -> str:
+        tool_map = {
+            "analyzer": "./tool/Analyzer",
+            "candidate": "./tool/Candidate",
+            "callgraph": "./tool/Callgraph",
+            "extractor": "./tool/Extractor",
+        }
+        return tool_map[tool_name]
+
+    def _build_llm_prompt(self, analysis, candidates, callgraph, snippets) -> str:
+        # 构造给 LLM 的融合 prompt
+        return (
+            "请基于以下工具产物融合最终的 analysis_summary、candidates、callgraph 和 extracted_code，并输出 JSON 格式：\n"
+            f"analysis_summary: {json.dumps(analysis, ensure_ascii=False, indent=2)}\n"
+            f"candidates: {json.dumps(candidates, ensure_ascii=False, indent=2)}\n"
+            f"callgraph: {json.dumps(callgraph, ensure_ascii=False, indent=2)}\n"
+            f"extracted_code: {json.dumps(snippets, ensure_ascii=False, indent=2)}"
+        )
