@@ -30,31 +30,95 @@ You should:
 
 ```json
 {
-  "inline_functions_needed": ["func1", ...],
-  "shared_variables": ["g_x", "g_y", ...],
-  "variable_types": {"g_x": "int", ...},
-  "variable_accesses": [
-    {"variable": "g_x", "op": "Read", "function": "main", "line": 12},
-    {"variable": "g_x", "op": "Write", "function": "isr1", "line": 37}
-  ],
-  "compound_operations": [
-    {"expr": "g_x += 1", "lines": [21], "decomposed": ["Read", "Write"]}
-  ],
-  "loops_with_shared_vars": [
-    {"variable": "g_y", "lines": [42, 44], "loop_type": "for"}
-  ],
-  "callgraph": [
-    {"caller": "main", "callee": "foo"}
-  ],
-  "priorities": [0, 1, 2],
-  "variable_initial_values": {"g_x": 0, "g_y": 1.0},
-  "interrupt_switches": [
-    {"function": "main", "line": 13, "type": "disable_isr", "param": -1}
-  ],
-  "branch_conditions": [
-    {"function": "main", "line": 20, "condition": "flag==1"}
-  ]
+    "global_variables_to_detect": [
+        "g_x"
+    ],
+    "variable_types": {
+        "g_x": "int"
+    },
+    "variable_accesses": [
+        {
+            "variable": "g_x",
+            "op": "Read",
+            "function": "main",
+            "line": 12
+        },
+        {
+            "variable": "g_x",
+            "op": "Read",
+            "function": "main",
+            "line": 15
+        },
+        {
+            "variable": "g_x",
+            "op": "Read",
+            "function": "main",
+            "line": 21
+        },
+        {
+            "variable": "g_x",
+            "op": "Write",
+            "function": "main",
+            "line": 21
+        }，
+        {
+            "variable": "g_x",
+            "op": "Write",
+            "function": "isr2",
+            "line": 37
+        }
+    ],
+    "compound_operations": [
+        {
+            "expr": "g_x += 1",
+            "lines": [
+                21
+            ],
+            "decomposed": [
+                "Read",
+                "Write"
+            ]
+        }
+    ],
+    "loops_with_shared_vars": [
+        {
+            "variable": "g_y",
+            "lines": [
+                42,
+                44
+            ],
+            "loop_type": "for"
+        }
+    ],
+    "callgraph": [
+        {
+            "caller": "main",
+            "callee": "foo"
+        }
+    ],
+    "priorities": {
+        "main": 0,
+        "isr1": 1,
+        "isr2": 2
+    },
+    "interrupt_switches": [
+        {
+            "function": "main",
+            "line": 13,
+            "type": "disable_isr",
+            "param": -1
+        }
+    ],
+    "branch_conditions": [
+        {
+            "function": "main",
+            "line": 20,
+            "condition": "flag==1"
+        }
+    ]
 }
+```
+
 If the code is too long, use Extractor to reduce its length before further analysis.
 
 At the end, output ONLY your planned tool calls, their reasoning, and the final JSON facts—nothing else.
