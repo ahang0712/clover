@@ -1,60 +1,60 @@
-// /*
-//  *	Industrial Computer Source PCI-WDT500/501 driver
-//  *
-//  *	(c) Copyright 1996-1997 Alan Cox <alan@redhat.com>, All Rights Reserved.
-//  *				http://www.redhat.com
-//  *
-//  *	This program is free software; you can redistribute it and/or
-//  *	modify it under the terms of the GNU General Public License
-//  *	as published by the Free Software Foundation; either version
-//  *	2 of the License, or (at your option) any later version.
-//  *
-//  *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
-//  *	warranty for any of this software. This material is provided
-//  *	"AS-IS" and at no charge.
-//  *
-//  *	(c) Copyright 1995    Alan Cox <alan@lxorguk.ukuu.org.uk>
-//  *
-//  *	Release 0.10.
-//  *
-//  *	Fixes
-//  *		Dave Gregorich	:	Modularisation and minor bugs
-//  *		Alan Cox	:	Added the watchdog ioctl() stuff
-//  *		Alan Cox	:	Fixed the reboot problem (as noted by
-//  *					Matt Crocker).
-//  *		Alan Cox	:	Added wdt= boot option
-//  *		Alan Cox	:	Cleaned up copy/user stuff
-//  *		Tim Hockin	:	Added insmod parameters, comment cleanup
-//  *					Parameterized timeout
-//  *		JP Nollmann	:	Added support for PCI wdt501p
-//  *		Alan Cox	:	Split ISA and PCI cards into two drivers
-//  *		Jeff Garzik	:	PCI cleanups
-//  *		Tigran Aivazian	:	Restructured wdtpci_init_one() to handle failures
-//  *		Joel Becker 	:	Added WDIOC_GET/SETTIMEOUT
-//  *		Zwane Mwaikambo	:	Magic char closing, locking changes, cleanups
-//  *		Matt Domsch	:	nowayout module option
-//  */
-// #if 0
-// #include <linux/interrupt.h>
-// #include <linux/module.h>
-// #include <linux/moduleparam.h>
-// #include <linux/types.h>
-// #include <linux/miscdevice.h>
-// #include <linux/watchdog.h>
-// #include <linux/ioport.h>
-// #include <linux/notifier.h>
-// #include <linux/reboot.h>
-// #include <linux/init.h>
-// #include <linux/fs.h>
-// #include <linux/pci.h>
+/*
+ *	Industrial Computer Source PCI-WDT500/501 driver
+ *
+ *	(c) Copyright 1996-1997 Alan Cox <alan@redhat.com>, All Rights Reserved.
+ *				http://www.redhat.com
+ *
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License
+ *	as published by the Free Software Foundation; either version
+ *	2 of the License, or (at your option) any later version.
+ *
+ *	Neither Alan Cox nor CymruNet Ltd. admit liability nor provide
+ *	warranty for any of this software. This material is provided
+ *	"AS-IS" and at no charge.
+ *
+ *	(c) Copyright 1995    Alan Cox <alan@lxorguk.ukuu.org.uk>
+ *
+ *	Release 0.10.
+ *
+ *	Fixes
+ *		Dave Gregorich	:	Modularisation and minor bugs
+ *		Alan Cox	:	Added the watchdog ioctl() stuff
+ *		Alan Cox	:	Fixed the reboot problem (as noted by
+ *					Matt Crocker).
+ *		Alan Cox	:	Added wdt= boot option
+ *		Alan Cox	:	Cleaned up copy/user stuff
+ *		Tim Hockin	:	Added insmod parameters, comment cleanup
+ *					Parameterized timeout
+ *		JP Nollmann	:	Added support for PCI wdt501p
+ *		Alan Cox	:	Split ISA and PCI cards into two drivers
+ *		Jeff Garzik	:	PCI cleanups
+ *		Tigran Aivazian	:	Restructured wdtpci_init_one() to handle failures
+ *		Joel Becker 	:	Added WDIOC_GET/SETTIMEOUT
+ *		Zwane Mwaikambo	:	Magic char closing, locking changes, cleanups
+ *		Matt Domsch	:	nowayout module option
+ */
+#if 0
+#include <linux/interrupt.h>
+#include <linux/module.h>
+#include <linux/moduleparam.h>
+#include <linux/types.h>
+#include <linux/miscdevice.h>
+#include <linux/watchdog.h>
+#include <linux/ioport.h>
+#include <linux/notifier.h>
+#include <linux/reboot.h>
+#include <linux/init.h>
+#include <linux/fs.h>
+#include <linux/pci.h>
 
 #include <asm/io.h>
 #include <asm/uaccess.h>
 #include <asm/system.h>
 
-// #define WDT_IS_PCI
-// #include "wd501p.h"
-// #endif
+#define WDT_IS_PCI
+#include "wd501p.h"
+#endif
 
 // begin wd501p.h
 // /*
