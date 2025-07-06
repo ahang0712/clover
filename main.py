@@ -2,12 +2,13 @@ import time
 import os
 import re
 import concurrent.futures
+import json
 
 from config import *
 from utils import read_file, read_json, add_line_numbers, load_prompt
 from defect_patterns import PATTERN_REGEX, PATTERNS
-from code_parser import extract_variable_operations, annotate_code
 from api_client import APIClient
+from agent.plan_agent import PlanAgent
 from agent.expert_agent import ExpertAgent
 from agent.judge_agent import JudgeAgent
 from output import save_response
@@ -43,9 +44,8 @@ def handle_pattern_task(defect_mode, context, api_client, model):
         f"{detection_rules}\n\n"
         f"{output_format}\n\n"
         f"---\n\n"
-        f"Global Variables to Focus on:\n[{context['variables_text']}]\n\n"
-        f"The global variable read/write operations, line numbers, and function information are as follows:\n{context['operations_text']}\n"
-        f"\nThe code to analyze is:\n```c\n{context['code_str']}\n```\n"
+        f"The following structured analysis facts are provided:\n"
+        f"{json.dumps(context['facts'], indent=2)}\n"
         f"</think>"
     )
     
@@ -85,48 +85,40 @@ def main():
     response_file_name = os.path.basename(code_file_path).replace('.c', '-response.txt')
     response_file_base = os.path.join(RESPONSE_PATH, response_file_name)
 
-    # === Load all data ===
+    # === Load code and defect pattern detection results ===
+    code_text = read_file(code_file_path)
     content = read_file(defect_file_path)
-    json_data = read_json(json_file_path)
-    code_lines = read_file(code_file_path).splitlines()
-    code_with_lines = add_line_numbers(code_lines)
-
-    # === Extract variable operations & patterns ===
     reports = content.split('---')
-    all_variables = set()
-    all_operations = {}
-    found_defect_modes = set()
 
+    # === Detect all found defect modes ===
+    found_defect_modes = set()
     for report in reports:
         matches = re.findall(PATTERN_REGEX, report)
         for match in matches:
             defect_mode, variable, location = match
-            all_variables.add(variable)
             found_defect_modes.add(defect_mode)
-            operations = extract_variable_operations(variable, json_data)
-            all_operations.setdefault(variable, []).extend(operations)
 
     if not found_defect_modes:
         print("[Info] No defects!")
         return
 
-    variables_text = ", ".join(sorted(all_variables))
-    unique_operations = []
-    for var in sorted(all_variables):
-        unique_operations.extend(list(dict.fromkeys(all_operations.get(var, []))))
-    operations_text = "\n".join(unique_operations)
-    annotated_code = annotate_code(code_with_lines, unique_operations)
-    code_str = "\n".join(annotated_code)
-
-    context_base = {
-        'variables_text': variables_text,
-        'operations_text': operations_text,
-        'code_str': code_str
-    }
-
-    # === Shared api_client/model for all tasks ===
+    # === Prepare PlanAgent ===
     api_client = APIClient()
     model = API_MODEL
+    plan_agent = PlanAgent(api_client, model)
+
+    # === Let PlanAgent produce all required structured facts ===
+    plan_result = plan_agent.decide_tools(
+        code_text,
+        known_patterns=list(found_defect_modes)
+    )
+    # The facts object (as required by ExpertAgent/JudgeAgent)
+    facts = plan_result["facts"]
+
+    # === Shared context for all pattern tasks ===
+    context_base = {
+        'facts': facts
+    }
 
     results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
