@@ -14,6 +14,14 @@ class PlanAgent(AgentBase):
       - Requires api_client and model.
     """
 
+    # === 固定原子性违规模式 ===
+    known_patterns = [
+        "<Read, Write, Write>",
+        "<Read, Write, Read>",
+        "<Write, Write, Read>",
+        "<Write, Read, Write>"
+    ]
+
     TOOL_CONFIG = [
         ("Code_Extractor", "-snippets.json", "Code_Extractor"),
         ("Read_Write_Analyzer", "-analysis.json", "Read_Write_Analyzer"),
@@ -28,7 +36,7 @@ class PlanAgent(AgentBase):
         self.api_client = api_client
         self.model = model
 
-    def decide_tools(self, code: str, known_patterns: Optional[list] = None) -> Dict[str, Any]:
+    def decide_tools(self, code: str) -> Dict[str, Any]:
         """
         1. Ask LLM (via plan.md prompt) if it can confidently output facts directly.
         2. If yes, use LLM output.
@@ -37,7 +45,7 @@ class PlanAgent(AgentBase):
         """
         # === 1. Compose the plan prompt ===
         plan_prompt_template = load_prompt("prompt/plan/plan.md")
-        patterns_str = ", ".join(known_patterns) if known_patterns else ""
+        patterns_str = ", ".join(self.known_patterns)
         plan_prompt = plan_prompt_template.format(
             code=code if len(code) < 2000 else code[:2000] + "\n... [truncated]",  # 防止太长
             known_patterns=patterns_str

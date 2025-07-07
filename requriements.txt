@@ -5,5 +5,6 @@ tqdm
 rich
 markdown
 matplotlib
+openai
 seaborn
 python_version >= 3.8
