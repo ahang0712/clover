@@ -14,7 +14,7 @@ class ExpertAgent(AgentBase):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ]
-        print(user_prompt)
+        # print(user_prompt)
         result = self.api_client.send_messages(self.model, messages)
         self.add_message("expert", "Expert analysis done.")
         return result

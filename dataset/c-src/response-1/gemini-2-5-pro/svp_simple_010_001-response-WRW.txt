@@ -1,0 +1,234 @@
+[Expert Agent Response - Round 1]
+An atomicity violation has been detected in the provided code.
+
+### Analysis of `svp_simple_010_001_global_struct`
+- **Operations**:
+    - `a1`: Write to `svp_simple_010_001_global_struct.header` in `svp_simple_010_001_main` (Line 28).
+    - `a3`: Write to `svp_simple_010_001_global_struct.data` in `svp_simple_010_001_main` (Line 29).
+- **Rule Check**: According to the rules, for a struct, the operations must be on the same member. Since `a1` and `a3` access different members (`.header` and `.data`), they do not constitute a consecutive write pair on the same memory location.
+- **Conclusion**: No atomicity violation is found for `svp_simple_010_001_global_struct`.
+
+### Analysis of `svp_simple_010_001_global_union`
+- **Operations**:
+    - `a1`: Write to `svp_simple_010_001_global_union.header` in `svp_simple_010_001_main` (Line 25).
+    - `a3`: Write to `svp_simple_010_001_global_union.data` in `svp_simple_010_001_main` (Line 26).
+    - `a2`: Read from `svp_simple_010_001_global_union.header` in `svp_simple_010_001_isr_1` (Line 36).
+- **Rule Check**: For a union, all members share the same memory space. Therefore, the write to `.header` (a1) and the write to `.data` (a3) are considered consecutive writes to the same shared memory location.
+- **Violation Scenario**:
+    1. The `svp_simple_010_001_main` function (Priority 0) executes the first write operation (`a1`) on `svp_simple_010_001_global_union.header` at line 25.
+    2. Before the next line is executed, an interrupt occurs, and `svp_simple_010_001_isr_1` (Priority 1) preempts the main function.
+    3. The ISR executes the read operation (`a2`) on `svp_simple_010_001_global_union.header` at line 36, accessing the intermediate state of the union.
+    4. The ISR completes, and control returns to `svp_simple_010_001_main`.
+    5. The main function executes the second write operation (`a3`) on `svp_simple_010_001_global_union.data` at line 26, overwriting the previous value.
+- **Conclusion**: This sequence matches the `<Write, Read, Write>` atomicity violation pattern.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_010_001_global_union",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_010_001_global_union.header = svp_simple_010_001_local_var1;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "25",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "reader1 = svp_simple_010_001_global_union.header;",
+                    "function": "svp_simple_010_001_isr_1",
+                    "lineNumber": "36",
+                    "accessType": "Read",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_010_001_global_union.data = svp_simple_010_001_local_var2;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "26",
+                    "accessType": "Write",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+```
+
+[Judge Agent Response - Round 1]
+An atomicity violation has been detected in the provided code.
+
+### Analysis of `svp_simple_010_001_global_struct`
+- **Operations**:
+    - `a1`: Write to `svp_simple_010_001_global_struct.header` in `svp_simple_010_001_main` (Line 28).
+    - `a3`: Write to `svp_simple_010_001_global_struct.data` in `svp_simple_010_001_main` (Line 29).
+- **Rule Check**: According to the rules, for a struct, the operations must be on the same member. Since `a1` and `a3` access different members (`.header` and `.data`), they do not constitute a consecutive write pair on the same memory location.
+- **Conclusion**: No atomicity violation is found for `svp_simple_010_001_global_struct`.
+
+### Analysis of `svp_simple_010_001_global_union`
+- **Operations**:
+    - `a1`: Write to `svp_simple_010_001_global_union.header` in `svp_simple_010_001_main` (Line 25).
+    - `a3`: Write to `svp_simple_010_001_global_union.data` in `svp_simple_010_001_main` (Line 26).
+    - `a2`: Read from `svp_simple_010_001_global_union.header` in `svp_simple_010_001_isr_1` (Line 36).
+- **Rule Check**: For a union, all members share the same memory space. Therefore, the write to `.header` (a1) and the write to `.data` (a3) are considered consecutive writes to the same shared memory location.
+- **Violation Scenario**:
+    1. The `svp_simple_010_001_main` function (Priority 0) executes the first write operation (`a1`) on `svp_simple_010_001_global_union.header` at line 25.
+    2. Before the next line is executed, an interrupt occurs, and `svp_simple_010_001_isr_1` (Priority 1) preempts the main function.
+    3. The ISR executes the read operation (`a2`) on `svp_simple_010_001_global_union.header` at line 36, accessing the intermediate state of the union.
+    4. The ISR completes, and control returns to `svp_simple_010_001_main`.
+    5. The main function executes the second write operation (`a3`) on `svp_simple_010_001_global_union.data` at line 26, overwriting the previous value.
+- **Conclusion**: This sequence matches the `<Write, Read, Write>` atomicity violation pattern.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_010_001_global_union",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_010_001_global_union.header = svp_simple_010_001_local_var1;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "25",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "reader1 = svp_simple_010_001_global_union.header;",
+                    "function": "svp_simple_010_001_isr_1",
+                    "lineNumber": "36",
+                    "accessType": "Read",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_010_001_global_union.data = svp_simple_010_001_local_var2;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "26",
+                    "accessType": "Write",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+```
+
+[Expert Agent Response - Round 2]
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_010_001_global_var1",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_010_001_global_var1 = 1;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "22",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "reader1 = svp_simple_010_001_global_var1;",
+                    "function": "svp_simple_010_001_isr_1",
+                    "lineNumber": "35",
+                    "accessType": "Read",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_010_0_global_var1 = 2;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "23",
+                    "accessType": "Write",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+```
+
+[Judge Agent Response - Round 2]
+An atomicity violation has been detected in the provided code.
+
+### Analysis of `svp_simple_010_001_global_struct`
+- **Operations**:
+    - `a1`: Write to `svp_simple_010_001_global_struct.header` in `svp_simple_010_001_main` (Line 28).
+    - `a3`: Write to `svp_simple_010_001_global_struct.data` in `svp_simple_010_001_main` (Line 29).
+- **Rule Check**: According to the rules, for a struct, the operations must be on the same member. Since `a1` and `a3` access different members (`.header` and `.data`), they do not constitute a consecutive write pair on the same memory location.
+- **Conclusion**: No atomicity violation is found for `svp_simple_010_001_global_struct`.
+
+### Analysis of `svp_simple_010_001_global_union`
+- **Operations**:
+    - `a1`: Write to `svp_simple_010_001_global_union.header` in `svp_simple_010_001_main` (Line 25).
+    - `a3`: Write to `svp_simple_010_001_global_union.data` in `svp_simple_010_001_main` (Line 26).
+    - `a2`: Read from `svp_simple_010_001_global_union.header` in `svp_simple_010_001_isr_1` (Line 36).
+- **Rule Check**: For a union, all members share the same memory space. Therefore, the write to `.header` (a1) and the write to `.data` (a3) are considered consecutive writes to the same shared memory location.
+- **Violation Scenario**:
+    1. The `svp_simple_010_001_main` function (Priority 0) executes the first write operation (`a1`) on `svp_simple_010_001_global_union.header` at line 25.
+    2. Before the next line is executed, an interrupt occurs, and `svp_simple_010_001_isr_1` (Priority 1) preempts the main function.
+    3. The ISR executes the read operation (`a2`) on `svp_simple_010_001_global_union.header` at line 36, accessing the intermediate state of the union.
+    4. The ISR completes, and control returns to `svp_simple_010_001_main`.
+    5. The main function executes the second write operation (`a3`) on `svp_simple_010_001_global_union.data` at line 26, overwriting the previous value.
+- **Conclusion**: This sequence matches the `<Write, Read, Write>` atomicity violation pattern.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_010_001_global_union",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_010_001_global_union.header = svp_simple_010_001_local_var1;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "25",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "reader1 = svp_simple_010_001_global_union.header;",
+                    "function": "svp_simple_010_001_isr_1",
+                    "lineNumber": "36",
+                    "accessType": "Read",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_010_001_global_union.data = svp_simple_010_001_local_var2;",
+                    "function": "svp_simple_010_001_main",
+                    "lineNumber": "26",
+                    "accessType": "Write",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+```
+
+[Expert Agent Response - Round 3]
+Abstain
+
+
+Elapsed Time: 127.90151190757751 seconds

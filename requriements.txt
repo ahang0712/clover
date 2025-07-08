@@ -8,3 +8,5 @@ matplotlib
 openai
 seaborn
 python_version >= 3.8
+torch == 2.6.0
+vllm == 0.8.5

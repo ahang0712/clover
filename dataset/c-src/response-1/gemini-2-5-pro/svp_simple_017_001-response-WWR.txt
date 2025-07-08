@@ -1,0 +1,317 @@
+[Expert Agent Response - Round 1]
+An atomicity violation of the `<Write, Write, Read>` pattern occurs when a lower-priority task writes a value to a shared variable, expecting to read the same value back, but is preempted by a higher-priority task that writes a different value to the same variable before the lower-priority task can perform its read.
+
+### Analysis of `svp_simple_017_001_global_var`
+
+1.  **Decomposition of Operations**:
+    *   **`svp_simple_017_001_main` (Priority 0)**:
+        *   `for (svp_simple_017_001_global_var = 0; ...)`: A **Write** operation (initialization).
+        *   `...; svp_simple_017_001_global_var < MAX_LENGTH; ...)`: A **Read** operation (condition check).
+        *   `svp_simple_017_001_global_var++`: This compound operation is decomposed into a **Read** followed by a **Write**.
+    *   **`svp_simple_017_001_isr_1` (Priority 1)**:
+        *   `svp_simple_017_001_global_var = TRIGGER;`: A **Write** operation.
+
+2.  **Violation Detection**:
+    We search for sequences where a `Write` in `main` is followed by a `Read` in `main`, with a potential for an interrupting `Write` from `isr_1` in between.
+
+    *   **Scenario 1: Interruption after Loop Initialization**
+        *   **a1 (Write, Prio 0)**: The `for` loop's initialization `svp_simple_017_001_global_var = 0;` at line 14.
+        *   **a2 (Write, Prio 1)**: The ISR can be triggered, executing `svp_simple_017_001_global_var = TRIGGER;` at line 24.
+        *   **a3 (Read, Prio 0)**: The `for` loop's first condition check `svp_simple_017_001_global_var < MAX_LENGTH;` at line 14.
+        *   **Analysis**: The main function writes `0` and expects to read `0` in the condition check. However, the ISR can interrupt and write `50` (`TRIGGER`), causing the read to return an unexpected value. This constitutes a `<Write, Write, Read>` violation. This specific scenario occurs only once at the beginning of the loop.
+        *   **Trigger Count**: 1
+
+    *   **Scenario 2: Interruption after Loop Increment**
+        *   **a1 (Write, Prio 0)**: The write part of the increment operation `svp_simple_017_001_global_var++` at line 15, which occurs at the end of each loop iteration.
+        *   **a2 (Write, Prio 1)**: The ISR can be triggered, executing `svp_simple_017_001_global_var = TRIGGER;` at line 24.
+        *   **a3 (Read, Prio 0)**: The condition check for the *next* iteration, `svp_simple_017_001_global_var < MAX_LENGTH;`, at line 14.
+        *   **Analysis**: At the end of an iteration, `main` increments the variable (e.g., from `k` to `k+1`) and expects to read `k+1` in the next condition check. The interrupting ISR can write `50`, violating this expectation. This can happen after each of the loop's 100 iterations (from `global_var` = 0 to 99).
+        *   **Trigger Count
+
+[Judge Agent Response - Round 1]
+An atomicity violation of the `<Write, Write, Read>` pattern occurs when a lower-priority task writes a value to a shared variable, expecting to read the same value back, but is preempted by a higher-priority task that writes a different value to the same variable before the lower-priority task can perform its read.
+
+### Analysis of `svp_simple_017_001_global_var`
+
+1.  **Decomposition of Operations**:
+    *   **`svp_simple_017_001_main` (Priority 0)**:
+        *   `for (svp_simple_017_001_global_var = 0; ...)`: A **Write** operation (initialization).
+        *   `...; svp_simple_017_001_global_var < MAX_LENGTH; ...)`: A **Read** operation (condition check).
+        *   `svp_simple_017_001_global_var++`: This compound operation is decomposed into a **Read** followed by a **Write**.
+    *   **`svp_simple_017_001_isr_1` (Priority 1)**:
+        *   `svp_simple_017_001_global_var = TRIGGER;`: A **Write** operation.
+
+2.  **Violation Detection**:
+    We search for sequences where a `Write` in `main` is followed by a `Read` in `main`, with a potential for an interrupting `Write` from `isr_1` in between.
+
+    *   **Scenario 1: Interruption after Loop Initialization**
+        *   **a1 (Write, Prio 0)**: The `for` loop's initialization `svp_simple_017_001_global_var = 0;` at line 14.
+        *   **a2 (Write, Prio 1)**: The ISR can be triggered, executing `svp_simple_017_001_global_var = TRIGGER;` at line 24.
+        *   **a3 (Read, Prio 0)**: The `for` loop's first condition check `svp_simple_017_001_global_var < MAX_LENGTH;` at line 14.
+        *   **Analysis**: The main function writes `0` and expects to read `0` in the condition check. However, the ISR can interrupt and write `50` (`TRIGGER`), causing the read to return an unexpected value. This constitutes a `<Write, Write, Read>` violation. This specific scenario occurs only once at the beginning of the loop.
+        *   **Trigger Count**: 1
+
+    *   **Scenario 2: Interruption after Loop Increment**
+        *   **a1 (Write, Prio 0)**: The write part of the increment operation `svp_simple_017_001_global_var++` at line 15, which occurs at the end of each loop iteration.
+        *   **a2 (Write, Prio 1)**: The ISR can be triggered, executing `svp_simple_017_001_global_var = TRIGGER;` at line 24.
+        *   **a3 (Read, Prio 0)**: The condition check for the *next* iteration, `svp_simple_017_001_global_var < MAX_LENGTH;`, at line 14.
+        *   **Analysis**: At the end of an iteration, `main` increments the variable (e.g., from `k` to `k+1`) and expects to read `k+1` in the next condition check. The interrupting ISR can write `50`, violating this expectation. This can happen after each of the loop's 100 iterations (from `global_var` = 0 to 99).
+        *   **Trigger Count**: 100
+
+### Final JSON Report
+
+Based on the analysis, two distinct violation scenarios are confirmed.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_017_001_global_var",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var = TRIGGER; // Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_isr_1",
+                    "lineNumber": "24",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        },
+        {
+            "sharedVariable": "svp_simple_017_001_global_var",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var++) // Read Operation on svp_simple_017_001_global_var. Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "15",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var = TRIGGER; // Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_isr_1",
+                    "lineNumber": "24",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 100
+        }
+    ]
+}
+```
+
+[Expert Agent Response - Round 2]
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_017_001_global_var",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var = TRIGGER; // Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_isr_1",
+                    "lineNumber": "24",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var++) // Read Operation on svp_simple_017_001_global_var. Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "15",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        },
+        {
+            "sharedVariable": "svp_simple_017_001_global_var",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var++) // Read Operation on svp_simple_017_001_global_var. Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "15",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var = TRIGGER; // Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_isr_1",
+                    "lineNumber": "24",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var++) // Read Operation on svp_simple_017_001_global_var. Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "15",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 99
+        }
+    ]
+}
+```
+
+[Judge Agent Response - Round 2]
+An atomicity violation of the `<Write, Write, Read>` pattern occurs when a lower-priority task writes a value to a shared variable, expecting to read the same value back, but is preempted by a higher-priority task that writes a different value to the same variable before the lower-priority task can perform its read.
+
+### Analysis of `svp_simple_017_001_global_var`
+
+1.  **Decomposition of Operations**:
+    *   **`svp_simple_017_001_main` (Priority 0)**:
+        *   `for (svp_simple_017_001_global_var = 0; ...)`: A **Write** operation (initialization).
+        *   `...; svp_simple_017_001_global_var < MAX_LENGTH; ...)`: A **Read** operation (condition check).
+        *   `svp_simple_017_001_global_var++`: This compound operation is decomposed into a **Read** followed by a **Write**.
+    *   **`svp_simple_017_001_isr_1` (Priority 1)**:
+        *   `svp_simple_017_001_global_var = TRIGGER;`: A **Write** operation.
+
+2.  **Violation Detection**:
+    We search for sequences where a `Write` in `main` is followed by a `Read` in `main`, with a potential for an interrupting `Write` from `isr_1` in between.
+
+    *   **Scenario 1: Interruption after Loop Initialization**
+        *   **a1 (Write, Prio 0)**: The `for` loop's initialization `svp_simple_017_001_global_var = 0;` at line 14.
+        *   **a2 (Write, Prio 1)**: The ISR can be triggered, executing `svp_simple_017_001_global_var = TRIGGER;` at line 24.
+        *   **a3 (Read, Prio 0)**: The `for` loop's first condition check `svp_simple_017_001_global_var < MAX_LENGTH;` at line 14.
+        *   **Analysis**: The main function writes `0` and expects to read `0` in the condition check. However, the ISR can interrupt and write `50` (`TRIGGER`), causing the read to return an unexpected value. This constitutes a `<Write, Write, Read>` violation. This specific scenario occurs only once at the beginning of the loop.
+        *   **Trigger Count**: 1
+
+    *   **Scenario 2: Interruption after Loop Increment**
+        *   **a1 (Write, Prio 0)**: The write part of the increment operation `svp_simple_017_001_global_var++` at line 15, which occurs at the end of each loop iteration.
+        *   **a2 (Write, Prio 1)**: The ISR can be triggered, executing `svp_simple_017_001_global_var = TRIGGER;` at line 24.
+        *   **a3 (Read, Prio 0)**: The condition check for the *next* iteration, `svp_simple_017_001_global_var < MAX_LENGTH;`, at line 14.
+        *   **Analysis**: At the end of an iteration, `main` increments the variable (e.g., from `k` to `k+1`) and expects to read `k+1` in the next condition check. The interrupting ISR can write `50`, violating this expectation. This can happen after each of the loop's 100 iterations (from `global_var` = 0 to 99).
+        *   **Trigger Count**: 100
+
+### Final JSON Report
+
+Based on the analysis, two distinct violation scenarios are confirmed.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_017_001_global_var",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var = TRIGGER; // Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_isr_1",
+                    "lineNumber": "24",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        },
+        {
+            "sharedVariable": "svp_simple_017_001_global_var",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var++) // Read Operation on svp_simple_017_001_global_var. Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "15",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_017_001_global_var = TRIGGER; // Write Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_isr_1",
+                    "lineNumber": "24",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "for (svp_simple_017_001_global_var = 0; svp_simple_017_001_global_var < MAX_LENGTH; // Write Operation on svp_simple_017_001_global_var. Read Operation on svp_simple_017_001_global_var.",
+                    "function": "svp_simple_017_001_main",
+                    "lineNumber": "14",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 100
+        }
+    ]
+}
+```
+
+[Expert Agent Response - Round 3]
+Abstain
+
+
+Elapsed Time: 201.0784933567047 seconds

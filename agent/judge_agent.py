@@ -14,7 +14,7 @@ class JudgeAgent(AgentBase):
             {"role": "system", "content": "You are the judge agent."},
             {"role": "user", "content": judge_prompt}
         ]
-        print(judge_prompt)
+        # print(judge_prompt)
         result = self.api_client.send_messages(self.model, messages)
         self.add_message("judge", "Judgement completed.")
         return result

@@ -1,9 +1,5 @@
 # api_client.py
 
-import http.client
-import json
-from config import API_HOST, API_AUTH
-
 # class APIClient: # Define the API client class
 #     def __init__(self, headers=None): # Define the constructor method
 #         self.conn = http.client.HTTPSConnection(API_HOST)
@@ -30,45 +26,63 @@ from config import API_HOST, API_AUTH
 #         response = data['choices'][0]['message']['content']
 #         # Return the response
 #         return response
-    
-    
+
+# api_client.py
+import json
+from config import API_HOST, API_AUTH, API_MODEL, MODEL_TYPE, MODEL_PATH
 from openai import OpenAI
+# from model_loader import LocalModel  # 导入本地模型
 
 class APIClient:
-    # 初始化APIClient类
-    def __init__(self, 
-                 api_key="21942129896071983176", 
-                 base_url="https://aigc.sankuai.com/v1/openai/native",
-                 model="anthropic.claude-opus-4",
-                 max_tokens=8192,
-                 temperature=0.01):
-        # 初始化OpenAI客户端
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url=base_url
-        )
-        # 设置模型
-        self.model = model
+    def __init__(self, api_key=None, base_url=None, model=None, max_tokens=8192, temperature=0.0):
+        # 使用配置文件中的模型类型
+        self.model_type = MODEL_TYPE  # 获取配置的模型类型（'local' 或 'online'）
+        
+        if self.model_type == "online":
+            # 初始化 OpenAI 客户端（在线模型）
+            self.client = OpenAI(
+                api_key= API_AUTH,
+                base_url= API_HOST
+            )
+            self.model = API_MODEL
+        else:
+            # 本地模型
+            self.local_model = LocalModel(MODEL_PATH)  # 使用本地模型加载类
+            self.model = "local-model"
+
+        # 配置默认参数
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.messages = []
 
     def add_message(self, role, content):
-
+        """向消息列表添加消息"""
         self.messages.append({"role": role, "content": content})
 
     def send_messages(self, model=None, messages=None):
+        """根据模型类型发送消息"""
         model = model or self.model
         messages = messages or self.messages
-        response = self.client.chat.completions.create(
-            model=model,
-            max_tokens=self.max_tokens,
-            temperature=self.temperature,
-            messages=messages
-        )
-        return response.choices[0].message.content
+        
+        if self.model_type == "online":
+            # 在线模型推理
+            response = self.client.chat.completions.create(
+                model=model,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                messages=messages
+            )
+            return response.choices[0].message.content
+        else:
+            # 本地模型推理
+            responses = self.local_model.generate_responses(
+                [msg['content'] for msg in messages],
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                num_responses=1
+            )
+            return responses[0]
 
     def clear_messages(self):
-
+        """清空消息列表"""
         self.messages = []
-

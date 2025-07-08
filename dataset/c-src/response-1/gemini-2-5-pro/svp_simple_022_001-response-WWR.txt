@@ -1,0 +1,197 @@
+[Expert Agent Response - Round 1]
+An atomicity violation of the `<Write, Write, Read>` pattern has been detected.
+
+### Analysis of `svp_simple_022_001_global_var1`
+
+1.  **Execution Path Analysis**:
+    *   The `main` function (`svp_simple_022_001_main`, priority 0) starts execution.
+    *   At line 17, a `Write` operation (`a1`) occurs: `svp_simple_022_001_global_var1 = 0;`.
+    *   The program then calls `svp_simple_022_001_func_1()`, which in turn calls `svp_simple_022_001_func_3()`.
+    *   Inside `svp_simple_022_001_func_3()`, at line 42, a `Read` operation (`a3`) occurs on the same variable: `if (svp_simple_022_001_global_var1 >= 12)`.
+    *   Between the `Write` at line 17 and the `Read` at line 42, the `svp_simple_022_001_isr_1` (priority 1) can be triggered.
+    *   The ISR performs a `Write` operation (`a2`) at line 53: `svp_simple_022_001_global_var1 = 0;`.
+    *   This sequence creates a `<Write, Write, Read>` pattern: The `Write` at line 17 is followed by an interrupting `Write` from the ISR at line 53, and then the `Read` at line 42. The read at line 42 is intended to get the value from line 17, but it instead reads the value written by the ISR, violating atomicity.
+
+2.  **Second Execution Path Analysis**:
+    *   Following the read at line 42, the `if` condition (`0 >= 12`) is false, so the `else` block is executed.
+    *   At line 45, a `Write` operation (`a1`) occurs: `svp_simple_022_001_global_var1 = 0;`.
+    *   The program continues and calls `svp_simple_022_001_func_2()`, which in turn calls `svp_simple_022_001_func_4()`.
+    *   Inside `svp_simple_022_001_func_4()`, at line 50, a `Read` operation (`a3`) occurs on the same variable: `svp_simple_022_001_global_var3 = svp_simple_022_001_global_var1;`.
+    *   Between the `Write` at line 45 and the `Read` at line 50, the `svp_simple_022_001_isr_1` (priority 1) can be triggered.
+    *   The ISR performs a `Write` operation (`a2`) at line 53: `svp_simple_022_001_global_var1 = 0;`.
+    *   This sequence creates a second `<Write, Write, Read>` pattern. The `Write` at line 45 is followed by an interrupting `Write` from the ISR at line 53, and then the `Read` at line 50. The atomicity is violated as the read gets its value from the ISR's write, not the intended write from the main thread.
+
+Based on this analysis, two violations are reported.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_022_001_global_var1",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_main",
+                    "lineNumber": "17",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_isr_1",
+                    "lineNumber": "53",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "if (svp_simple_022_001_global_var1 >= 12) {",
+                    "function": "svp_simple_022_001_func_3",
+                    "lineNumber": "42",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        },
+        {
+            "sharedVariable": "svp_simple_022_001_global_var1",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_func_3",
+                    "lineNumber": "45",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_isr_1",
+                    "lineNumber": "53",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var3 = svp_simple_022_001_global_var1;",
+                    "function": "svp_simple_022_001_func_4",
+                    "lineNumber": "50",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+```
+
+[Judge Agent Response - Round 1]
+An atomicity violation of the `<Write, Write, Read>` pattern has been detected.
+
+### Analysis of `svp_simple_022_001_global_var1`
+
+1.  **Execution Path Analysis**:
+    *   The `main` function (`svp_simple_022_001_main`, priority 0) starts execution.
+    *   At line 17, a `Write` operation (`a1`) occurs: `svp_simple_022_001_global_var1 = 0;`.
+    *   The program then calls `svp_simple_022_001_func_1()`, which in turn calls `svp_simple_022_001_func_3()`.
+    *   Inside `svp_simple_022_001_func_3()`, at line 42, a `Read` operation (`a3`) occurs on the same variable: `if (svp_simple_022_001_global_var1 >= 12)`.
+    *   Between the `Write` at line 17 and the `Read` at line 42, the `svp_simple_022_001_isr_1` (priority 1) can be triggered.
+    *   The ISR performs a `Write` operation (`a2`) at line 53: `svp_simple_022_001_global_var1 = 0;`.
+    *   This sequence creates a `<Write, Write, Read>` pattern: The `Write` at line 17 is followed by an interrupting `Write` from the ISR at line 53, and then the `Read` at line 42. The read at line 42 is intended to get the value from line 17, but it instead reads the value written by the ISR, violating atomicity.
+
+2.  **Second Execution Path Analysis**:
+    *   Following the read at line 42, the `if` condition (`0 >= 12`) is false, so the `else` block is executed.
+    *   At line 45, a `Write` operation (`a1`) occurs: `svp_simple_022_001_global_var1 = 0;`.
+    *   The program continues and calls `svp_simple_022_001_func_2()`, which in turn calls `svp_simple_022_001_func_4()`.
+    *   Inside `svp_simple_022_001_func_4()`, at line 50, a `Read` operation (`a3`) occurs on the same variable: `svp_simple_022_001_global_var3 = svp_simple_022_001_global_var1;`.
+    *   Between the `Write` at line 45 and the `Read` at line 50, the `svp_simple_022_001_isr_1` (priority 1) can be triggered.
+    *   The ISR performs a `Write` operation (`a2`) at line 53: `svp_simple_022_001_global_var1 = 0;`.
+    *   This sequence creates a second `<Write, Write, Read>` pattern. The `Write` at line 45 is followed by an interrupting `Write` from the ISR at line 53, and then the `Read` at line 50. The atomicity is violated as the read gets its value from the ISR's write, not the intended write from the main thread.
+
+Based on this analysis, two violations are reported.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "svp_simple_022_001_global_var1",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_main",
+                    "lineNumber": "17",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_isr_1",
+                    "lineNumber": "53",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "if (svp_simple_022_001_global_var1 >= 12) {",
+                    "function": "svp_simple_022_001_func_3",
+                    "lineNumber": "42",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        },
+        {
+            "sharedVariable": "svp_simple_022_001_global_var1",
+            "accessPattern": [
+                "Write",
+                "Write",
+                "Read"
+            ],
+            "details": [
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_func_3",
+                    "lineNumber": "45",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var1 = 0;",
+                    "function": "svp_simple_022_001_isr_1",
+                    "lineNumber": "53",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "svp_simple_022_001_global_var3 = svp_simple_022_001_global_var1;",
+                    "function": "svp_simple_022_001_func_4",
+                    "lineNumber": "50",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
+        }
+    ]
+}
+```
+
+[Expert Agent Response - Round 2]
+Abstain
+
+
+Elapsed Time: 118.8210859298706 seconds

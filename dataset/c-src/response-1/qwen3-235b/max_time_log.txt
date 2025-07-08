@@ -1,0 +1,16 @@
+Iteration 1: Time taken: 526.84 seconds. Max time so far: 526.84 seconds.
+Iteration 2: Time taken: 188.75 seconds. Max time so far: 526.84 seconds.
+Iteration 3: Time taken: 299.02 seconds. Max time so far: 526.84 seconds.
+Iteration 4: Time taken: 50.65 seconds. Max time so far: 526.84 seconds.
+Iteration 5: Time taken: 257.30 seconds. Max time so far: 526.84 seconds.
+Iteration 6: Time taken: 127.16 seconds. Max time so far: 526.84 seconds.
+Iteration 7: Time taken: 368.22 seconds. Max time so far: 368.22 seconds.
+Iteration 8: Time taken: 164.27 seconds. Max time so far: 368.22 seconds.
+Iteration 9: Time taken: 248.37 seconds. Max time so far: 368.22 seconds.
+Iteration 10: Time taken: 181.72 seconds. Max time so far: 368.22 seconds.
+Iteration 11: Time taken: 116.34 seconds. Max time so far: 368.22 seconds.
+Iteration 12: Time taken: 120.36 seconds. Max time so far: 368.22 seconds.
+Iteration 13: Time taken: 292.13 seconds. Max time so far: 368.22 seconds.
+Iteration 14: Time taken: 72.86 seconds. Max time so far: 368.22 seconds.
+Iteration 15: Time taken: 124.53 seconds. Max time so far: 368.22 seconds.
+Iteration 16: Time taken: 279.03 seconds. Max time so far: 368.22 seconds.

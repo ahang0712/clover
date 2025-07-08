@@ -1,0 +1,121 @@
+[Expert Agent Response - Round 1]
+Let's analyze the code for atomicity violation pattern `<Write, Write, Read>` on the global variable:
+
+**Global Variables to Focus on:**
+- `svp_simple_029_001_tm_blocks` (array of 4096 `volatile unsigned8`)
+
+---
+
+## Step 1: Identify All Read/Write Operations on `svp_simple_029_001_tm_blocks`
+
+### In Main Context
+
+#### `svp_simple_029_001_main()`
+- Calls `svp_simple_029_001_init()` (does **not** write to `svp_simple_029_001_tm_blocks` as the line is commented out)
+- Calls `svp_simple_029_001_TmOrgFuncMap()` (sets function pointers)
+- If `svp_simple_029_001_local_status == 1`, calls:
+  - `svp_simple_029_001_ptr_SetSelfCtrlFlag(36, 0xFF, 0);`
+    - This points to `svp_simple_029_001_SetSelfCtrlFlag(36, 0xFF, 0);`
+
+#### `svp_simple_029_001_SetSelfCtrlFlag(unsigned32 tm_para, unsigned8 ctrl_flag, unsigned8 flag_pos)`
+- `ctrl_sts = svp_simple_029_001_ptr_GetTmData(tm_para);`
+  - Calls `svp_simple_029_001_GetTmData(tm_para)` → `svp_simple_029_001_tm_blocks[tm_para]` (**Read**)
+- `ctrl_sts += svp_simple_029_001_ptr_GetTmData(tm_para + 1);`
+  - Calls `svp_simple_029_001_GetTmData(tm_para + 1)` → `svp_simple_029_001_tm_blocks[tm_para + 1]` (**Read**)
+- `svp_simple_029_001_ptr_SetTmData(tm_para, ctrl_sts);`
+  - Calls `svp_simple_029_001_SetTmData(tm_para, ctrl_sts)` → `svp_simple_029_001_tm_blocks[tm_para] = ctrl_sts;` (**Write**)
+
+So, in main, for `tm_para = 36`:
+- **Read**: `svp_simple_029_001_tm_blocks[36]` (line 65, via line 58)
+- **Read**: `svp_simple_029_001_tm_blocks[37]` (line 65, via line 59)
+- **Write**: `svp_simple_029_001_tm_blocks[36]` (line 68, via line 62)
+
+### In ISR
+
+#### `svp_simple_029_001_isr_1()`
+- If `svp_simple_029_001_average_adjust_flag == 0xFF`:
+  - `svp_simple_029_001_average_adjust_count++`
+  - `svp_simple_029_001_ptr_SetTmData(36, svp_simple_029_001_average_adjust_count);`
+    - Calls `svp_simple_029_001_SetTmData(36, ...)` → `svp_simple_029_001_tm_blocks[36] = ...;` (**Write**)
+- Else:
+  - `svp_simple_029_001_average_adjust_count = 0;`
+  - `svp_simple_029_001_ptr_SetTmData(36, svp_simple_029_001_average_adjust_count);`
+    - Calls `svp_simple_029_001_SetTmData(36, ...)` → `svp_simple_029_001_tm_blocks[36] = ...;` (**Write**)
+
+So, in ISR, for index 36:
+- **Write**: `svp_simple_029_001_tm_blocks[36]` (line 68, via line 75 or 78)
+
+---
+
+## Step 2: Inline Function Calls
+
+- All function pointers are set to the actual functions before use.
+- All calls are direct after mapping.
+
+---
+
+## Step 3: Map Out the Sequence in Main
+
+In `svp_simple_029_001_main()`:
+- Calls `svp_simple_029_001_SetSelfCtrlFlag(36, 0xFF, 0);`
+  - This does:
+    1. `ctrl_sts = svp_simple_029_001_tm_blocks[36];` (**Read**)
+    2. `ctrl_sts += svp_simple_029_001_tm_blocks[37];` (**Read**)
+    3. `svp_simple_029_001_tm_blocks[36] = ctrl_sts | tmp1;` (**Write**)
+
+So, the **write** to `svp_simple_029_001_tm_blocks[36]` in main is the last operation in `svp_simple_029_001_SetSelfCtrlFlag`.
+
+---
+
+## Step 4: Look for `<Write, Write, Read>` Pattern
+
+The pattern requires:
+- a1: **Write** by main (or lower-priority ISR) to `svp_simple_029_001_tm_blocks[36]`
+- a2: **Write** by higher-priority ISR to `svp_simple_029_001_tm_blocks[36]`
+- a3: **Read** by main (or lower-priority ISR) to `svp_simple_029_001_tm_blocks[36]`, consecutive to a1
+
+**But in main, the only read to `svp_simple_029_001_tm_blocks[36]` occurs *before* the write, not after.**
+
+Sequence in main:
+1. Read `svp_simple_029_001_tm_blocks[36]` (line 58)
+2. Read `svp_simple_029_001_tm_blocks[37]` (line 59)
+3. Write `svp_simple_029_001_tm_blocks[36]` (line 62)
+
+There is **no read after the write** to `svp_simple_029_001_tm_blocks[36]` in main.
+
+---
+
+## Step 5: Check for Pattern in Loops or Other Functions
+
+- The only place `svp_simple_029_001_tm_blocks` is written in main is in `svp_simple_029_001_SetSelfCtrlFlag`, and the only read is before the write.
+- In ISR, only writes occur, no reads.
+
+---
+
+## Step 6: Check for Compound Operations
+
+- No compound operations (`+=`, `++`, etc.) on `svp_simple_029_001_tm_blocks`.
+
+---
+
+## Step 7: Check for All Branches
+
+- No other branches or loops in main that would cause a read after a write to the same index.
+
+---
+
+## Step 8: Conclusion
+
+**There is no `<Write, Write, Read>` pattern on `svp_simple_029_001_tm_blocks` in this code.**
+
+---
+
+## Final Output
+
+```plaintext
+No defects.
+```
+
+[Expert Agent] No defects found. Ending the conversation.
+
+Elapsed Time: 11.586523056030273 seconds

@@ -1,0 +1,23 @@
+Iteration 10: Time taken: 44.19 seconds. Max time so far: 44.19 seconds.
+Iteration 11: Time taken: 34.74 seconds. Max time so far: 44.19 seconds.
+Iteration 12: Time taken: 34.82 seconds. Max time so far: 44.19 seconds.
+Iteration 13: Time taken: 50.00 seconds. Max time so far: 50.00 seconds.
+Iteration 14: Time taken: 52.50 seconds. Max time so far: 52.50 seconds.
+Iteration 15: Time taken: 37.07 seconds. Max time so far: 52.50 seconds.
+Iteration 16: Time taken: 42.88 seconds. Max time so far: 52.50 seconds.
+Iteration 17: Time taken: 42.70 seconds. Max time so far: 52.50 seconds.
+Iteration 18: Time taken: 57.52 seconds. Max time so far: 57.52 seconds.
+Iteration 19: Time taken: 66.92 seconds. Max time so far: 66.92 seconds.
+Iteration 20: Time taken: 58.88 seconds. Max time so far: 66.92 seconds.
+Iteration 21: Time taken: 61.65 seconds. Max time so far: 66.92 seconds.
+Iteration 22: Time taken: 66.72 seconds. Max time so far: 66.92 seconds.
+Iteration 23: Time taken: 60.34 seconds. Max time so far: 66.92 seconds.
+Iteration 24: Time taken: 61.25 seconds. Max time so far: 66.92 seconds.
+Iteration 25: Time taken: 62.36 seconds. Max time so far: 66.92 seconds.
+Iteration 26: Time taken: 65.75 seconds. Max time so far: 66.92 seconds.
+Iteration 27: Time taken: 59.85 seconds. Max time so far: 66.92 seconds.
+Iteration 28: Time taken: 58.81 seconds. Max time so far: 66.92 seconds.
+Iteration 29: Time taken: 9.72 seconds. Max time so far: 66.92 seconds.
+Iteration 30: Time taken: 75.36 seconds. Max time so far: 75.36 seconds.
+Iteration 31: Time taken: 79.85 seconds. Max time so far: 79.85 seconds.
+Maximum time for all iterations: 79.85 seconds.
