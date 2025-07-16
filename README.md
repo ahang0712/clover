@@ -37,6 +37,42 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
+```sh
+# Download LLVM-10.0.0
+wget https://mirrors.tuna.tsinghua.edu.cn/llvm/releases/10.0.0/llvm-10.0.0.src.tar.xz
+# Download Clang-10.0.0
+wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang-10.0.0.src.tar.xz
+# Download CMake-3.13.0
+wget https://github.com/Kitware/CMake/releases/download/v3.13.0/cmake-3.13.0-Linux-x86_64.tar.gz
+
+tar -xf llvm-10.0.0.src.tar.xz
+tar -xf clang-10.0.0.src.tar.xz
+tar -xf cmake-3.13.0-Linux-x86_64.tar.gz
+
+mv clang-10.0.0.src llvm-10.0.0.src/tools/clang
+export PATH=/path/to/cmake-3.13.0-Linux-x86_64/bin:$PATH
+
+mkdir /path/to/llvm-build-10
+cd /path/to/llvm-build-10
+
+cmake -G "Unix Makefiles" \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/path/to/llvm-10.0.0 \
+  ../llvm-10.0.0.src
+
+make -j$(nproc)    # 多核编译，时间较长
+make install
+
+clang++ main.cpp tool.cpp cJSON.c -o analyzer \
+  `llvm-config --cxxflags --ldflags --libs all` \
+  -I. -std=c++17 \
+  -I/opt/rh/devtoolset-9/root/usr/include/c++/9 \
+  -I/opt/rh/devtoolset-9/root/usr/include/c++/9/x86_64-redhat-linux \
+  -L/opt/rh/devtoolset-9/root/usr/lib/gcc/x86_64-redhat-linux/9 \
+  -L/opt/rh/devtoolset-9/root/usr/lib64 \
+  -lstdc++ -lz -lrt -ldl -lpthread -lm
+```
+
 ## Features
 Multi-Agent: Expert and Judge agents interact and reason step by step.
 
