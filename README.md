@@ -38,31 +38,51 @@ python3 main.py
 ```
 
 ```sh
-# Download LLVM-10.0.0
+# Download LLVM-10.0.0 source code
 wget https://mirrors.tuna.tsinghua.edu.cn/llvm/releases/10.0.0/llvm-10.0.0.src.tar.xz
-# Download Clang-10.0.0
+# Download Clang-10.0.0 source code (Clang is a subproject of LLVM)
 wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang-10.0.0.src.tar.xz
-# Download CMake-3.13.0
+# Download CMake-3.13.0 (required for building LLVM from source)
 wget https://github.com/Kitware/CMake/releases/download/v3.13.0/cmake-3.13.0-Linux-x86_64.tar.gz
 
+# Extract all downloaded source archives
 tar -xf llvm-10.0.0.src.tar.xz
 tar -xf clang-10.0.0.src.tar.xz
 tar -xf cmake-3.13.0-Linux-x86_64.tar.gz
 
+# Move Clang source code into LLVM's tools directory as required by LLVM's build system
 mv clang-10.0.0.src llvm-10.0.0.src/tools/clang
+# Add CMake to PATH so the system can find the newly downloaded CMake version
 export PATH=/path/to/cmake-3.13.0-Linux-x86_64/bin:$PATH
 
+# Create a build directory for LLVM and navigate into it
 mkdir /path/to/llvm-build-10
 cd /path/to/llvm-build-10
 
+# Configure LLVM build using CMake with specified options:
+# -G "Unix Makefiles": Use Unix Makefiles as the build system generator
+# -DCMAKE_BUILD_TYPE=Release: Build in release mode (optimized)
+# -DCMAKE_INSTALL_PREFIX: Specify installation directory
 cmake -G "Unix Makefiles" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/path/to/llvm-10.0.0 \
   ../llvm-10.0.0.src
 
-make -j$(nproc)    # 多核编译，时间较长
+# Compile LLVM and Clang using multiple CPU cores (nproc returns number of processors)
+# This step takes a long time
+make -j$(nproc)
+# Install the compiled LLVM and Clang to the specified prefix directory
 make install
 
+# Navigate to the directory containing the Read_Write_Analyzer tool source code
+cd clover/tool/Read_Write_Analyzer
+
+# Compile the Read_Write_Analyzer tool using Clang++ with the following options:
+# `llvm-config --cxxflags --ldflags --libs all`: Get LLVM's compilation and linking flags
+# -I.: Include current directory for header files
+# -std=c++17: Use C++17 standard
+# Additional include paths for GCC 9 headers
+# Additional library paths and libraries required for linking
 clang++ main.cpp tool.cpp cJSON.c -o analyzer \
   `llvm-config --cxxflags --ldflags --libs all` \
   -I. -std=c++17 \
