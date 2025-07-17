@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/vip/hanghe/race-master/llvm-api-demo
+CMAKE_SOURCE_DIR = /Users/hehang03/code/clover/tool/Read_Write_Analyzer/llvm_api_demo
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/vip/hanghe/race-master/llvm-api-demo
+CMAKE_BINARY_DIR = /Users/hehang03/code/clover/tool/Read_Write_Analyzer/llvm_api_demo
 
 #=============================================================================
 # Targets provided globally by CMake.

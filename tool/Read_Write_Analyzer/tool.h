@@ -19,11 +19,42 @@
 #include <vector>
 #include <string>
 #include <regex>
-#include<cstring>
+#include <cstring>
 #include <map>
+#include <set>
+#include <limits>
 #include "cJSON.h"
 
 using namespace llvm;
+
+// ValueRange structure for tracking variable ranges
+struct ValueRange {
+    int64_t min;
+    int64_t max;
+    bool isConstant;
+    int64_t constantValue;
+    
+    ValueRange() : min(std::numeric_limits<int64_t>::min()), 
+                  max(std::numeric_limits<int64_t>::max()),
+                  isConstant(false), constantValue(0) {}
+    
+    ValueRange(int64_t val) : min(val), max(val), isConstant(true), constantValue(val) {}
+    
+    ValueRange(int64_t minVal, int64_t maxVal) : min(minVal), max(maxVal), 
+                                               isConstant(minVal == maxVal), 
+                                               constantValue(minVal) {}
+                                               
+    std::string toString() const {
+        if (isConstant) {
+            return std::to_string(constantValue);
+        } else if (min == std::numeric_limits<int64_t>::min() && 
+                  max == std::numeric_limits<int64_t>::max()) {
+            return "unknown";
+        } else {
+            return "[" + std::to_string(min) + "," + std::to_string(max) + "]";
+        }
+    }
+};
 
 extern std::vector<std::vector<std::string>> mainInfo;
 extern std::vector<std::vector<std::vector<std::string>>> isrInfo;
@@ -36,10 +67,20 @@ extern std::vector<std::string> global_union;
 extern std::map<std::string,int> mapCalledFun;
 extern std::map<std::string,std::vector<std::vector<std::string>>> allFunInfo;
 
-
+// Map to track variable ranges
+extern std::map<std::string, ValueRange> g_variableRanges;
 
 extern int g_enable_para;
 
+// Helper function declarations for global variable handling
+void addToGlobalVars(const std::string& varName);
+void ensureGlobalVarsPopulated(Module *M);
+
+// 添加 getTypeString 函数的声明
+std::string getTypeString(Type *Ty);
+std::string getStructMemberInfo(const GetElementPtrInst *GEP);
+std::string handleGEPAccess(const Value *ptr, Instruction *insertPoint);
+std::string traceUnionFieldAccess(const Value* ptr);
 
 bool findSubString(std::string str_long,std::string str_short);
 
