@@ -93,6 +93,11 @@ clang++ main.cpp tool.cpp cJSON.c -o analyzer \
   -lstdc++ -lz -lrt -ldl -lpthread -lm
 ```
 
+```sh
+clang -O0 -g -emit-llvm -S svp_simple_001_001.c -o svp_simple_001_001.ll
+opt -O2 svp_simple_010_001.ll -S -o svp_simple_010_001-opt.ll
+```
+
 ## Features
 Multi-Agent: Expert and Judge agents interact and reason step by step.
 
