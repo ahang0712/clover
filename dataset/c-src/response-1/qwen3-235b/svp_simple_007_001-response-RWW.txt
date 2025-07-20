@@ -32,3 +32,12 @@ No defects.
 [Expert Agent] No defects found. Ending the conversation.
 
 Elapsed Time: 159.97198700904846 seconds
+
+[System R1] Task failed: Connection error.
+Elapsed Time: 10.388724327087402 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 4.332468032836914 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 2.412130117416382 seconds

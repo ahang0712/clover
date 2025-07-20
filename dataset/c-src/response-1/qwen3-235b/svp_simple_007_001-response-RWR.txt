@@ -127,3 +127,15 @@ Without this information, I must respond with:
 
 
 Elapsed Time: 243.36094331741333 seconds
+
+[System R1] Task failed: Connection error.
+Elapsed Time: 6.578141212463379 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 2.2839009761810303 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 6.710901975631714 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 6.895992040634155 seconds

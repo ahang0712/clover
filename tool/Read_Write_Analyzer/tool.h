@@ -70,17 +70,43 @@ extern std::map<std::string,std::vector<std::vector<std::string>>> allFunInfo;
 // Map to track variable ranges
 extern std::map<std::string, ValueRange> g_variableRanges;
 
+// Map to track pointer-to-variable relationships
+extern std::map<std::string, std::string> g_pointerTargets;
+
+// Map to track which local variables are accessed by pointers
+extern std::map<std::string, std::vector<std::string>> g_localVarAccesses;
+
+// Map to track memory locations
+extern std::map<std::string, std::string> g_memoryLocations;
+
+// Map to track shared memory locations (pointers pointing to the same memory)
+extern std::map<std::string, std::set<std::string>> g_sharedMemory;
+
+// Map to normalize variable names (map all related pointers to a canonical name)
+extern std::map<std::string, std::string> g_normalizedNames;
+
 extern int g_enable_para;
 
 // Helper function declarations for global variable handling
 void addToGlobalVars(const std::string& varName);
 void ensureGlobalVarsPopulated(Module *M);
+void cleanGlobalVarList(Module *M);
+void registerSharedMemory(const std::string &ptr1, const std::string &ptr2);
 
 // 添加 getTypeString 函数的声明
 std::string getTypeString(Type *Ty);
 std::string getStructMemberInfo(const GetElementPtrInst *GEP);
 std::string handleGEPAccess(const Value *ptr, Instruction *insertPoint);
 std::string traceUnionFieldAccess(const Value* ptr);
+
+// 添加 analyzeForLoops 函数的声明
+void analyzeForLoops(Function *F);
+
+// 添加 extractVariableFromArrayAccess 函数的声明
+std::string extractVariableFromArrayAccess(const std::string &arrayAccess);
+
+// 添加 isVariableName 函数的声明
+bool isVariableName(const std::string &str);
 
 bool findSubString(std::string str_long,std::string str_short);
 

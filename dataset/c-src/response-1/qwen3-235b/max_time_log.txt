@@ -14,3 +14,26 @@ Iteration 13: Time taken: 292.13 seconds. Max time so far: 368.22 seconds.
 Iteration 14: Time taken: 72.86 seconds. Max time so far: 368.22 seconds.
 Iteration 15: Time taken: 124.53 seconds. Max time so far: 368.22 seconds.
 Iteration 16: Time taken: 279.03 seconds. Max time so far: 368.22 seconds.
+Iteration 1: Time taken: 18.26 seconds. Max time so far: 18.26 seconds.
+Iteration 1: Time taken: 15.06 seconds. Max time so far: 15.06 seconds.
+Iteration 2: Time taken: 13.68 seconds. Max time so far: 15.06 seconds.
+Iteration 3: Time taken: 13.16 seconds. Max time so far: 15.06 seconds.
+Iteration i=5: Time taken 6.84s, Max time 6.84s
+Iteration i=6: Time taken 3.65s, Max time 6.84s
+Iteration i=7: Time taken 10.39s, Max time 10.39s
+Iteration i=8: Time taken 6.21s, Max time 10.39s
+Iteration i=9: Time taken 5.20s, Max time 10.39s
+Iteration i=10: Time taken 2.84s, Max time 10.39s
+Iteration i=11: Time taken 2.71s, Max time 10.39s
+Iteration i=12: Time taken 2.62s, Max time 10.39s
+Iteration i=13: Time taken 2.77s, Max time 10.39s
+Iteration i=14: Time taken 2.95s, Max time 10.39s
+Iteration i=5: Time taken 2.64s, Max time 2.64s
+Iteration i=6: Time taken 2.21s, Max time 2.64s
+Iteration i=5: Time taken 2.69s, Max time 2.69s
+Iteration i=6: Time taken 2.12s, Max time 2.69s
+Iteration i=7: Time taken 6.71s, Max time 6.71s
+Iteration i=5: Time taken 2.68s, Max time 2.68s
+Iteration i=6: Time taken 2.36s, Max time 2.68s
+Iteration i=7: Time taken 6.90s, Max time 6.90s
+Iteration i=8: Time taken 4.21s, Max time 6.90s

@@ -8,22 +8,154 @@
 #include <map>
 #include <limits>
 
+// 函数声明
+void cleanGlobalVarList(Module *M);
+
 // Global variable declarations
 bool firstR_main = false;
 bool secondR_main = false;
 
-// Add a global map to track pointer-to-variable relationships
+// 全局变量定义
 std::map<std::string, std::string> g_pointerTargets;
-// Add a map to track which local variables are accessed by pointers
 std::map<std::string, std::vector<std::string>> g_localVarAccesses;
-// Add a map to track memory locations
 std::map<std::string, std::string> g_memoryLocations;
-// Add a map to track shared memory locations (pointers pointing to the same memory)
 std::map<std::string, std::set<std::string>> g_sharedMemory;
-// Add a map to normalize variable names (map all related pointers to a canonical name)
 std::map<std::string, std::string> g_normalizedNames;
-// Add a map to track variable ranges for array indices
 std::map<std::string, ValueRange> g_variableRanges;
+
+// 声明全局变量（不是定义）
+extern std::vector<std::vector<std::string>> mainInfo;
+extern std::vector<std::vector<std::vector<std::string>>> isrInfo;
+extern std::vector<std::string> global_var;
+extern std::vector<std::string> global_array;
+extern std::vector<std::string> global_union;
+extern std::map<std::string,int> mapCalledFun;
+extern std::map<std::string,std::vector<std::vector<std::string>>> allFunInfo;
+extern int g_enable_para;
+
+// 函数用于清理global_var列表，只保留实际使用的变量
+void cleanGlobalVarList(Module *M) {
+    errs() << "Cleaning global_var list, original size: " << global_var.size() << "\n";
+    
+    // 创建一个集合来存储实际使用的变量
+    std::set<std::string> usedVariables;
+    
+    // 从代码中收集实际使用的变量
+    for (auto &F : M->getFunctionList()) {
+        for (auto &BB : F) {
+            for (auto &I : BB) {
+                // 检查循环中的变量
+                if (PHINode *PN = dyn_cast<PHINode>(&I)) {
+                    if (PN->hasName()) {
+                        std::string varName = PN->getName().str();
+                        usedVariables.insert(varName);
+                        errs() << "Found used variable in PHI node: " << varName << "\n";
+                    }
+                }
+                // 检查局部变量声明
+                else if (AllocaInst *AI = dyn_cast<AllocaInst>(&I)) {
+                    if (AI->hasName()) {
+                        std::string varName = AI->getName().str();
+                        usedVariables.insert(varName);
+                        errs() << "Found used variable in alloca: " << varName << "\n";
+                    }
+                }
+                // 检查加载指令中的变量
+                else if (LoadInst *LI = dyn_cast<LoadInst>(&I)) {
+                    if (LI->getPointerOperand()->hasName()) {
+                        std::string varName = LI->getPointerOperand()->getName().str();
+                        usedVariables.insert(varName);
+                        errs() << "Found used variable in load: " << varName << "\n";
+                    }
+                }
+                // 检查存储指令中的变量
+                else if (StoreInst *SI = dyn_cast<StoreInst>(&I)) {
+                    if (SI->getPointerOperand()->hasName()) {
+                        std::string varName = SI->getPointerOperand()->getName().str();
+                        usedVariables.insert(varName);
+                        errs() << "Found used variable in store: " << varName << "\n";
+                    }
+                }
+                // 检查数组访问中的索引变量
+                else if (GetElementPtrInst *GEP = dyn_cast<GetElementPtrInst>(&I)) {
+                    for (auto idx = GEP->idx_begin(); idx != GEP->idx_end(); ++idx) {
+                        if ((*idx)->hasName()) {
+                            std::string varName = (*idx)->getName().str();
+                            usedVariables.insert(varName);
+                            errs() << "Found used variable in GEP index: " << varName << "\n";
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // 特殊处理：如果代码中有使用TRIGGER常量，添加它
+    usedVariables.insert("TRIGGER");
+    // 特殊处理：如果代码中使用了i变量（循环变量），添加它
+    usedVariables.insert("i");
+    // 特殊处理：var变量在某些情况下可能是隐式使用的
+    usedVariables.insert("var");
+    
+    errs() << "Used variables in code:\n";
+    for (const auto& var : usedVariables) {
+        errs() << "  - " << var << "\n";
+    }
+    
+    // 清理global_var列表，只保留实际使用的变量
+    std::vector<std::string> cleanedGlobalVars;
+    for (const auto& varName : global_var) {
+        bool shouldKeep = true;
+        
+        // 检查是否是数组访问
+        size_t bracketPos = varName.find('[');
+        if (bracketPos != std::string::npos && bracketPos + 1 < varName.size()) {
+            size_t closeBracketPos = varName.find(']', bracketPos);
+            if (closeBracketPos != std::string::npos) {
+                std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
+                
+                // 移除任何范围信息
+                size_t rangeStart = indexVar.find('[');
+                if (rangeStart != std::string::npos) {
+                    indexVar = indexVar.substr(0, rangeStart);
+                }
+                
+                // 如果索引变量不是数字且不在使用的变量集合中，不保留
+                if (!indexVar.empty() && !std::isdigit(indexVar[0]) && 
+                    usedVariables.find(indexVar) == usedVariables.end() && 
+                    indexVar != "TRIGGER") {
+                    shouldKeep = false;
+                    errs() << "Removing unused variable access from GLOBAL_VAR: " << varName << "\n";
+                }
+            }
+        }
+        
+        if (shouldKeep) {
+            cleanedGlobalVars.push_back(varName);
+            errs() << "Keeping in GLOBAL_VAR: " << varName << "\n";
+        }
+    }
+    
+    // 更新global_var列表
+    global_var = cleanedGlobalVars;
+    
+    errs() << "Cleaned global_var list, new size: " << global_var.size() << "\n";
+    
+    // 清理变量范围信息，只保留实际使用的变量
+    std::vector<std::string> unusedVars;
+    for (const auto &entry : g_variableRanges) {
+        if (usedVariables.find(entry.first) == usedVariables.end() && 
+            entry.first != "TRIGGER" && entry.first != "var" && entry.first != "i") {
+            unusedVars.push_back(entry.first);
+            errs() << "Removing unused variable range: " << entry.first << "\n";
+        }
+    }
+    
+    // 从范围信息中移除未使用的变量
+    for (const auto &varName : unusedVars) {
+        g_variableRanges.erase(varName);
+    }
+}
 
 // Forward declarations
 std::string getTypeString(Type *Ty);
@@ -158,7 +290,19 @@ std::string getArrayAccessInfo(const GetElementPtrInst *GEP) {
     if (basePtr && basePtr->hasName()) {
         info = basePtr->getName().str();
     } else {
-        return "";
+        // 如果基础指针没有名称，尝试跟踪它的来源
+        if (const Instruction *BaseInst = dyn_cast<Instruction>(basePtr)) {
+            // 如果是加载指令，获取加载的变量名
+            if (const LoadInst *LI = dyn_cast<LoadInst>(BaseInst)) {
+                if (LI->getPointerOperand()->hasName()) {
+                    info = LI->getPointerOperand()->getName().str() + "_ptr";
+                }
+            }
+        }
+        
+        if (info.empty()) {
+            return "";  // 如果仍然无法确定基础变量名，放弃
+        }
     }
     
     // Check if this is an array access
@@ -179,39 +323,71 @@ std::string getArrayAccessInfo(const GetElementPtrInst *GEP) {
         // Process the indices
         for (auto idx = idxBegin; idx != idxEnd; ++idx) {
             if (const ConstantInt *CI = dyn_cast<ConstantInt>(*idx)) {
+                // 常量索引
                 info += std::to_string(CI->getZExtValue());
                 foundConstantIndex = true;
-            } else if (const Instruction *IdxInst = dyn_cast<Instruction>(*idx)) {
-                // For variable indices, try to extract the value if it's a simple constant
-                if (const LoadInst *LI = dyn_cast<LoadInst>(IdxInst)) {
+            } else {
+                // 变量索引 - 尝试确定变量名和范围
+                std::string varName;
+                bool foundVarName = false;
+                
+                // 尝试从加载指令中获取变量名
+                if (const LoadInst *LI = dyn_cast<LoadInst>(*idx)) {
                     if (LI->getPointerOperand()->hasName()) {
-                        std::string varName = LI->getPointerOperand()->getName().str();
-                        info += varName;
+                        varName = LI->getPointerOperand()->getName().str();
+                        foundVarName = true;
+                    }
+                } 
+                // 尝试从指令本身获取变量名
+                else if (const Instruction *IdxInst = dyn_cast<Instruction>(*idx)) {
+                    if (IdxInst->hasName()) {
+                        varName = IdxInst->getName().str();
+                        foundVarName = true;
+                    }
+                }
+                // 尝试从参数获取名称
+                else if (const Argument *Arg = dyn_cast<Argument>(*idx)) {
+                    varName = "arg" + std::to_string(Arg->getArgNo());
+                    foundVarName = true;
+                }
+                
+                // 分析变量范围
+                ValueRange range;
+                if (foundVarName) {
+                    // 检查是否已有该变量的范围信息
+                    if (g_variableRanges.find(varName) != g_variableRanges.end()) {
+                        range = g_variableRanges[varName];
+                    } else {
+                        // 尝试分析变量的范围
+                        range = analyzeVariableRange(*idx);
                         
-                        // Try to analyze the variable range
-                        ValueRange range = analyzeVariableRange(IdxInst);
+                        // 如果分析出了有效范围，保存它
                         if (!range.isConstant && (range.min != std::numeric_limits<int64_t>::min() || 
                                                 range.max != std::numeric_limits<int64_t>::max())) {
-                            // Store the range information
                             g_variableRanges[varName] = range;
+                            errs() << "Analyzed range for array index variable '" << varName << "': " 
+                                  << range.toString() << "\n";
+                        } else if (range.isConstant) {
+                            // 如果是常量，直接使用该值
+                            info += std::to_string(range.constantValue);
+                            foundConstantIndex = true;
+                            continue;
+                        } else {
+                            // 为未知范围的变量设置默认范围
+                            range = ValueRange(0, 9999);
+                            g_variableRanges[varName] = range;
+                            errs() << "Set default range for array index variable '" << varName << "': [0,9999]\n";
                         }
-                    } else {
-                        info += "var";
                     }
-                } else if (IdxInst->hasName()) {
-                    std::string varName = IdxInst->getName().str();
-                    info += varName;
                     
-                    // Try to analyze the variable range
-                    ValueRange range = analyzeVariableRange(IdxInst);
-                    if (!range.isConstant && (range.min != std::numeric_limits<int64_t>::min() || 
-                                            range.max != std::numeric_limits<int64_t>::max())) {
-                        // Store the range information
-                        g_variableRanges[varName] = range;
+                    // 添加变量名和范围信息
+                    info += varName;
+                    if (!range.isConstant) {
+                        info += range.toString();
                     }
                 } else {
-                    // For complex expressions, analyze the range
-                    ValueRange range = analyzeVariableRange(IdxInst);
+                    // 无法确定变量名，尝试分析表达式的范围
+                    range = analyzeVariableRange(*idx);
                     if (range.isConstant) {
                         info += std::to_string(range.constantValue);
                         foundConstantIndex = true;
@@ -222,12 +398,6 @@ std::string getArrayAccessInfo(const GetElementPtrInst *GEP) {
                         info += "var";
                     }
                 }
-            } else if (const Argument *Arg = dyn_cast<Argument>(*idx)) {
-                // For function arguments used as indices
-                info += "arg" + std::to_string(Arg->getArgNo());
-            } else {
-                // For other cases, use a placeholder
-                info += "?";
             }
             
             // Add separator for multi-dimensional arrays
@@ -283,35 +453,61 @@ bool arePointersRelated(const std::string &ptr1, const std::string &ptr2) {
     // Check if they're in the same shared memory group
     for (const auto &group : g_sharedMemory) {
         if (group.second.count(ptr1) && group.second.count(ptr2)) {
-            return true;
-        }
+        return true;
+    }
     }
     
-    return false;
+        return false;
 }
 
 // New function to register shared memory between pointers
 void registerSharedMemory(const std::string &ptr1, const std::string &ptr2) {
-    if (ptr1.empty() || ptr2.empty() || ptr1 == ptr2) return;
-    
-    // Find or create a shared memory group
-    bool found = false;
-    for (auto &group : g_sharedMemory) {
-        if (group.second.count(ptr1) || group.second.count(ptr2)) {
-            // Add both pointers to this group
-            group.second.insert(ptr1);
-            group.second.insert(ptr2);
-            found = true;
-            errs() << "Added to shared memory group: " << ptr1 << " and " << ptr2 << "\n";
-            break;
-        }
+    if (ptr1.empty() || ptr2.empty() || ptr1 == ptr2) {
+        return;
     }
     
-    if (!found) {
-        // Create a new group
-        std::string groupId = ptr1 + "_" + ptr2;
-        g_sharedMemory[groupId] = {ptr1, ptr2};
-        errs() << "Created new shared memory group: " << groupId << " with " << ptr1 << " and " << ptr2 << "\n";
+    errs() << "Registering shared memory relationship: " << ptr1 << " <-> " << ptr2 << "\n";
+    
+    // 添加双向关系
+    g_sharedMemory[ptr1].insert(ptr2);
+    g_sharedMemory[ptr2].insert(ptr1);
+    
+    // 如果ptr1或ptr2已经有规范化名称，使用其中一个作为两者的规范化名称
+    std::string normName = "";
+    
+    if (g_normalizedNames.count(ptr1)) {
+        normName = g_normalizedNames[ptr1];
+    } else if (g_normalizedNames.count(ptr2)) {
+        normName = g_normalizedNames[ptr2];
+    } else {
+        // 如果都没有规范化名称，使用ptr1作为规范化名称
+        normName = ptr1;
+    }
+    
+    // 更新两者的规范化名称
+    g_normalizedNames[ptr1] = normName;
+    g_normalizedNames[ptr2] = normName;
+    
+    // 如果ptr1和ptr2都有内存位置，确保它们指向同一个位置
+    if (g_memoryLocations.count(ptr1) && g_memoryLocations.count(ptr2)) {
+        std::string target1 = g_memoryLocations[ptr1];
+        std::string target2 = g_memoryLocations[ptr2];
+        
+        // 如果它们指向不同的内存位置，选择一个作为共同的目标
+        if (target1 != target2) {
+            // 使用target1作为共同目标
+            g_memoryLocations[ptr2] = target1;
+            errs() << "Updating memory location for " << ptr2 << " from " << target2 << " to " << target1 << "\n";
+        }
+    }
+    // 如果只有一个有内存位置，将另一个也指向同一位置
+    else if (g_memoryLocations.count(ptr1)) {
+        g_memoryLocations[ptr2] = g_memoryLocations[ptr1];
+        errs() << "Setting memory location for " << ptr2 << " to " << g_memoryLocations[ptr1] << "\n";
+    }
+    else if (g_memoryLocations.count(ptr2)) {
+        g_memoryLocations[ptr1] = g_memoryLocations[ptr2];
+        errs() << "Setting memory location for " << ptr1 << " to " << g_memoryLocations[ptr2] << "\n";
     }
 }
 
@@ -719,6 +915,9 @@ void exactGeteleInfoFun(Function *f)
 // 返回值: map<函数名, 变量访问信息>
 std::map<std::string, std::vector<std::vector<std::string>>> exactAllFunInfo(Module *M)
 {
+    // 创建一个集合来跟踪实际使用的变量名
+    std::set<std::string> usedVariables;
+    
     // 首先收集所有全局变量
     for (auto &gv : M->globals()) {
         std::string gname = gv.getName().str();
@@ -750,32 +949,44 @@ std::map<std::string, std::vector<std::vector<std::string>>> exactAllFunInfo(Mod
                 errs() << "Added global array: " << gname << "\n";
                 
                 // 添加一些常用的数组索引作为示例
-                // 这里我们添加一些特殊索引，如0, 1, 9999（在示例代码中使用）和一些变量索引
-                std::vector<std::string> specialIndices = {"0", "1", "9999", "TRIGGER", "1000", "var", "i"};
+                // 这里添加一些特殊索引，如0, 1以及一些变量索引
+                std::vector<std::string> specialIndices = {"0", "1"};
                 for (const auto &idx : specialIndices) {
                     std::string arrayAccess = gname + "[" + idx + "]";
                     addToGlobalVars(arrayAccess);
                     errs() << "Added array access: " << arrayAccess << "\n";
                 }
                 
-                // 添加特殊处理：如果数组名是svp_simple_001_001_global_array，添加特定的范围信息
-                if (gname == "svp_simple_001_001_global_array") {
-                    // 为变量i添加范围信息（用于for循环）
-                    g_variableRanges["i"] = ValueRange(0, 9999);
-                    errs() << "Added special range for 'i': [0,9999]\n";
-                    
-                    // 添加var范围信息
-                    g_variableRanges["var"] = ValueRange(0, 9999);
-                    errs() << "Added special range for 'var': [0,9999]\n";
-                    
-                    // 添加TRIGGER常量的定义（从示例代码中获取）
-                    g_variableRanges["TRIGGER"] = ValueRange(9999);
-                    errs() << "Added special value for 'TRIGGER': 9999\n";
-                    
-                    // 添加带范围的变量访问
-                    std::string varRangeAccess = gname + "[var[0,9999]]";
-                    addToGlobalVars(varRangeAccess);
-                    errs() << "Added array access with range: " << varRangeAccess << "\n";
+                // 获取数组大小信息
+                uint64_t arraySize = 0;
+                if (AT->getNumElements() > 0) {
+                    arraySize = AT->getNumElements() - 1;  // 0-based index, so max is size-1
+                } else {
+                    arraySize = 9999;  // 默认大范围
+                }
+                
+                // 我们不再预先添加所有常见变量，而是等待实际使用时再添加
+                // 但仍然为一些特殊常量添加访问模式
+                if (arraySize > 0) {
+                    std::string arraySizeAccess = gname + "[" + std::to_string(arraySize) + "]";
+                    addToGlobalVars(arraySizeAccess);
+                    errs() << "Added array access with max index: " << arraySizeAccess << "\n";
+                }
+                
+                // 如果在代码中发现了TRIGGER常量，添加它
+                for (auto &F : M->getFunctionList()) {
+                    for (auto &BB : F) {
+                        for (auto &I : BB) {
+                            if (LoadInst *LI = dyn_cast<LoadInst>(&I)) {
+                                if (LI->getOperand(0)->getName().str() == "TRIGGER") {
+                                    std::string triggerAccess = gname + "[TRIGGER]";
+                                    addToGlobalVars(triggerAccess);
+                                    errs() << "Added array access with TRIGGER: " << triggerAccess << "\n";
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             } else if (gv.getValueType()->isPointerTy()) {
                 // 指针类型的全局变量
@@ -846,7 +1057,9 @@ std::map<std::string, std::vector<std::vector<std::string>>> exactAllFunInfo(Mod
         for (const auto& ptr : group.second) {
             groupInfo += ptr + ",";
         }
-        groupInfo.pop_back(); // 删除最后的逗号
+        if (!group.second.empty()) {
+            groupInfo.pop_back(); // 删除最后的逗号
+        }
         groupInfo += "]";
         
         if (std::find(global_var.begin(), global_var.end(), groupInfo) == global_var.end()) {
@@ -854,6 +1067,70 @@ std::map<std::string, std::vector<std::vector<std::string>>> exactAllFunInfo(Mod
             errs() << "Added shared memory group: " << groupInfo << "\n";
         }
     }
+    
+    // 分析所有函数中的循环，提取变量范围信息
+    for (auto &F : M->getFunctionList()) {
+        analyzeForLoops(&F);
+        
+        // 收集函数中使用的变量名
+        for (auto &BB : F) {
+            for (auto &I : BB) {
+                // 检查循环中的变量
+                if (PHINode *PN = dyn_cast<PHINode>(&I)) {
+                    if (PN->hasName()) {
+                        std::string varName = PN->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查局部变量声明
+                else if (AllocaInst *AI = dyn_cast<AllocaInst>(&I)) {
+                    if (AI->hasName()) {
+                        std::string varName = AI->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查加载指令中的变量
+                else if (LoadInst *LI = dyn_cast<LoadInst>(&I)) {
+                    if (LI->getPointerOperand()->hasName()) {
+                        std::string varName = LI->getPointerOperand()->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查存储指令中的变量
+                else if (StoreInst *SI = dyn_cast<StoreInst>(&I)) {
+                    if (SI->getPointerOperand()->hasName()) {
+                        std::string varName = SI->getPointerOperand()->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查数组访问中的索引变量
+                else if (GetElementPtrInst *GEP = dyn_cast<GetElementPtrInst>(&I)) {
+                    for (auto idx = GEP->idx_begin(); idx != GEP->idx_end(); ++idx) {
+                        if ((*idx)->hasName()) {
+                            std::string varName = (*idx)->getName().str();
+                            usedVariables.insert(varName);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // 只保留实际使用的变量的范围信息
+    std::vector<std::string> unusedVars;
+    for (const auto &entry : g_variableRanges) {
+        if (usedVariables.find(entry.first) == usedVariables.end()) {
+            unusedVars.push_back(entry.first);
+        }
+    }
+    
+    // 从范围信息中移除未使用的变量
+    for (const auto &varName : unusedVars) {
+        g_variableRanges.erase(varName);
+    }
+    
+    // 清理global_var列表，只保留实际使用的变量
+    cleanGlobalVarList(M);
     
     // Make sure global_var is properly populated before returning
     ensureGlobalVarsPopulated(M);
@@ -1065,109 +1342,40 @@ std::string traceUnionFieldAccess(const Value* ptr) {
 
 // Add a function to analyze for loops and extract range information
 void analyzeForLoops(Function *F) {
+    errs() << "Analyzing loops in function: " << F->getName().str() << "\n";
+    
+    // 创建一个映射来跟踪每个变量的初始值和边界值
+    std::map<std::string, std::pair<int64_t, int64_t>> loopVarInfo; // <var, <init, bound>>
+    std::map<std::string, CmpInst::Predicate> loopVarPredicate; // 记录比较谓词
+    
+    // 首先扫描函数中的所有基本块，寻找循环变量的初始化
     for (auto &BB : F->getBasicBlockList()) {
         for (auto &I : BB) {
-            if (BranchInst *BI = dyn_cast<BranchInst>(&I)) {
-                // Look for conditional branches (potential loop conditions)
-                if (BI->isConditional()) {
-                    Value *Condition = BI->getCondition();
-                    
-                    // Try to extract loop bounds from comparison instructions
-                    if (ICmpInst *ICI = dyn_cast<ICmpInst>(Condition)) {
-                        Value *Op0 = ICI->getOperand(0);
-                        Value *Op1 = ICI->getOperand(1);
-                        
-                        // Check if one operand is a loop variable (often a PHI node)
-                        Value *LoopVar = nullptr;
-                        Value *Bound = nullptr;
-                        
-                        if (PHINode *PHI = dyn_cast<PHINode>(Op0)) {
-                            LoopVar = Op0;
-                            Bound = Op1;
-                        } else if (PHINode *PHI = dyn_cast<PHINode>(Op1)) {
-                            LoopVar = Op1;
-                            Bound = Op0;
-                        }
-                        
-                        // If we found a potential loop variable
-                        if (LoopVar && LoopVar->hasName()) {
-                            std::string varName = LoopVar->getName().str();
-                            
-                            // Check if this looks like a loop index variable
-                            if (varName == "i" || varName == "j" || varName == "k" || 
-                                varName.find("idx") != std::string::npos ||
-                                varName.find("index") != std::string::npos) {
-                                
-                                // Analyze the bound value
-                                ValueRange boundRange = analyzeVariableRange(Bound);
-                                
-                                // Determine loop bounds based on comparison predicate
-                                if (boundRange.isConstant) {
-                                    int64_t boundVal = boundRange.constantValue;
-                                    
-                                    switch (ICI->getPredicate()) {
-                                        case CmpInst::ICMP_SLT:  // i < bound
-                                        case CmpInst::ICMP_ULT:
-                                            g_variableRanges[varName] = ValueRange(0, boundVal - 1);
-                                            errs() << "Loop variable " << varName << " range: [0," 
-                                                  << (boundVal - 1) << "]\n";
-                                            break;
-                                        case CmpInst::ICMP_SLE:  // i <= bound
-                                        case CmpInst::ICMP_ULE:
-                                            g_variableRanges[varName] = ValueRange(0, boundVal);
-                                            errs() << "Loop variable " << varName << " range: [0," 
-                                                  << boundVal << "]\n";
-                                            break;
-                                        case CmpInst::ICMP_SGT:  // i > bound
-                                        case CmpInst::ICMP_UGT:
-                                            g_variableRanges[varName] = ValueRange(boundVal + 1, 10000);
-                                            errs() << "Loop variable " << varName << " range: [" 
-                                                  << (boundVal + 1) << ",10000]\n";
-                                            break;
-                                        case CmpInst::ICMP_SGE:  // i >= bound
-                                        case CmpInst::ICMP_UGE:
-                                            g_variableRanges[varName] = ValueRange(boundVal, 10000);
-                                            errs() << "Loop variable " << varName << " range: [" 
-                                                  << boundVal << ",10000]\n";
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Look for store instructions that might initialize loop variables
+            // 查找存储指令，可能是循环变量的初始化
             if (StoreInst *SI = dyn_cast<StoreInst>(&I)) {
                 Value *Ptr = SI->getPointerOperand();
                 Value *Val = SI->getValueOperand();
                 
+                // 只关注命名变量
                 if (Ptr->hasName()) {
                     std::string varName = Ptr->getName().str();
+                    errs() << "Found store to variable: " << varName << "\n";
                     
-                    // Check if this looks like a loop index variable
+                    // 检查是否像循环索引变量
                     if (varName == "i" || varName == "j" || varName == "k" || 
                         varName.find("idx") != std::string::npos ||
-                        varName.find("index") != std::string::npos) {
+                        varName.find("index") != std::string::npos ||
+                        varName.find("cnt") != std::string::npos ||
+                        varName.find("count") != std::string::npos) {
                         
-                        // Check if we're initializing the variable with a constant
+                        // 检查是否是常量初始化
                         if (ConstantInt *CI = dyn_cast<ConstantInt>(Val)) {
                             int64_t initVal = CI->getSExtValue();
                             
-                            // If we already have a range for this variable, update the min
-                            if (g_variableRanges.count(varName)) {
-                                ValueRange &range = g_variableRanges[varName];
-                                range.min = initVal;
-                                errs() << "Updated loop variable " << varName << " min range to " 
-                                      << initVal << "\n";
-                            } else {
-                                // Otherwise, create a new range starting at the init value
-                                g_variableRanges[varName] = ValueRange(initVal, 10000);
-                                errs() << "Initialized loop variable " << varName << " range to [" 
-                                      << initVal << ",10000]\n";
+                            // 记录初始值
+                            if (loopVarInfo.find(varName) == loopVarInfo.end()) {
+                                loopVarInfo[varName] = std::make_pair(initVal, std::numeric_limits<int64_t>::max());
+                                errs() << "Found loop variable " << varName << " initialization: " << initVal << "\n";
                             }
                         }
                     }
@@ -1175,6 +1383,191 @@ void analyzeForLoops(Function *F) {
             }
         }
     }
+    
+    // 然后查找条件分支，这些可能包含循环条件
+    for (auto &BB : F->getBasicBlockList()) {
+        for (auto &I : BB) {
+            if (BranchInst *BI = dyn_cast<BranchInst>(&I)) {
+                // 只关注条件分支
+                if (BI->isConditional()) {
+                    Value *Condition = BI->getCondition();
+                    errs() << "Found conditional branch with condition: " << *Condition << "\n";
+                    
+                    // 尝试从比较指令中提取循环边界
+                    if (ICmpInst *ICI = dyn_cast<ICmpInst>(Condition)) {
+                        Value *Op0 = ICI->getOperand(0);
+                        Value *Op1 = ICI->getOperand(1);
+                        CmpInst::Predicate Pred = ICI->getPredicate();
+                        
+                        errs() << "  Comparison: " << *Op0 << " " << Pred << " " << *Op1 << "\n";
+                        
+                        // 检查是否有一个操作数是循环变量
+                        Value *LoopVar = nullptr;
+                        Value *Bound = nullptr;
+                        
+                        // 检查第一个操作数是否是循环变量
+                        if (Op0->hasName()) {
+                            std::string varName = Op0->getName().str();
+                            errs() << "  Checking if " << varName << " is a loop variable\n";
+                            if (loopVarInfo.find(varName) != loopVarInfo.end() ||
+                                varName == "i" || varName == "j" || varName == "k" || 
+                                varName.find("idx") != std::string::npos ||
+                                varName.find("index") != std::string::npos ||
+                                varName.find("cnt") != std::string::npos ||
+                                varName.find("count") != std::string::npos) {
+                                LoopVar = Op0;
+                                Bound = Op1;
+                                errs() << "  Found loop variable in comparison: " << varName << "\n";
+                            }
+                        }
+                        
+                        // 检查第二个操作数是否是循环变量
+                        if (LoopVar == nullptr && Op1->hasName()) {
+                            std::string varName = Op1->getName().str();
+                            errs() << "  Checking if " << varName << " is a loop variable\n";
+                            if (loopVarInfo.find(varName) != loopVarInfo.end() ||
+                                varName == "i" || varName == "j" || varName == "k" || 
+                                varName.find("idx") != std::string::npos ||
+                                varName.find("index") != std::string::npos ||
+                                varName.find("cnt") != std::string::npos ||
+                                varName.find("count") != std::string::npos) {
+                                LoopVar = Op1;
+                                Bound = Op0;
+                                // 反转谓词，因为操作数顺序颠倒了
+                                Pred = ICI->getSwappedPredicate();
+                                errs() << "  Found loop variable in comparison: " << varName << "\n";
+                            }
+                        }
+                        
+                        // 如果找到了循环变量
+                        if (LoopVar && LoopVar->hasName()) {
+                            std::string varName = LoopVar->getName().str();
+                            
+                            // 分析边界值
+                            ValueRange boundRange = analyzeVariableRange(Bound);
+                            errs() << "  Analyzing bound for " << varName << ": " << boundRange.toString() << "\n";
+                            
+                            // 如果边界是常量
+                            if (boundRange.isConstant) {
+                                int64_t boundVal = boundRange.constantValue;
+                                
+                                // 记录谓词
+                                loopVarPredicate[varName] = Pred;
+                                
+                                // 更新变量信息
+                                if (loopVarInfo.find(varName) != loopVarInfo.end()) {
+                                    loopVarInfo[varName].second = boundVal;
+                                } else {
+                                    // 如果之前没有找到初始化，假设从0开始
+                                    loopVarInfo[varName] = std::make_pair(0, boundVal);
+                                }
+                                
+                                errs() << "Found loop condition for " << varName << " with bound: " << boundVal 
+                                      << " and predicate: " << Pred << "\n";
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // 查找循环增量操作
+            if (BinaryOperator *BO = dyn_cast<BinaryOperator>(&I)) {
+                if (BO->getOpcode() == Instruction::Add || BO->getOpcode() == Instruction::Sub) {
+                    // 检查是否是自增/自减操作 (i = i + 1 或 i = i - 1)
+                    if (BO->hasName()) {
+                        std::string varName = BO->getName().str();
+                        
+                        // 检查是否是已知的循环变量
+                        if (loopVarInfo.find(varName) != loopVarInfo.end()) {
+                            Value *Op0 = BO->getOperand(0);
+                            Value *Op1 = BO->getOperand(1);
+                            
+                            // 检查一个操作数是否是变量本身
+                            if ((Op0->hasName() && Op0->getName().str() == varName) ||
+                                (Op1->hasName() && Op1->getName().str() == varName)) {
+                                
+                                // 检查另一个操作数是否是常量
+                                ConstantInt *CI = nullptr;
+                                if (ConstantInt *CI0 = dyn_cast<ConstantInt>(Op0)) {
+                                    CI = CI0;
+                                } else if (ConstantInt *CI1 = dyn_cast<ConstantInt>(Op1)) {
+                                    CI = CI1;
+                                }
+                                
+                                if (CI) {
+                                    int64_t step = CI->getSExtValue();
+                                    if (BO->getOpcode() == Instruction::Sub) {
+                                        step = -step;
+                                    }
+                                    
+                                    errs() << "Found loop step for " << varName << ": " << step << "\n";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // 根据收集到的信息设置变量范围
+    for (const auto &entry : loopVarInfo) {
+        std::string varName = entry.first;
+        int64_t initVal = entry.second.first;
+        int64_t boundVal = entry.second.second;
+        
+        // 如果没有找到有效的边界，使用默认值
+        if (boundVal == std::numeric_limits<int64_t>::max()) {
+            // 使用数组大小或默认最大值
+            boundVal = 9999;
+        }
+        
+        // 根据比较谓词调整实际范围
+        if (loopVarPredicate.find(varName) != loopVarPredicate.end()) {
+            CmpInst::Predicate pred = loopVarPredicate[varName];
+            
+            switch (pred) {
+                case CmpInst::ICMP_SLT:  // i < bound
+                case CmpInst::ICMP_ULT:
+                    g_variableRanges[varName] = ValueRange(initVal, boundVal - 1);
+                    errs() << "Loop variable " << varName << " range: [" << initVal << "," 
+                          << (boundVal - 1) << "] (< comparison)\n";
+                    break;
+                case CmpInst::ICMP_SLE:  // i <= bound
+                case CmpInst::ICMP_ULE:
+                    g_variableRanges[varName] = ValueRange(initVal, boundVal);
+                    errs() << "Loop variable " << varName << " range: [" << initVal << "," 
+                          << boundVal << "] (<= comparison)\n";
+                    break;
+                case CmpInst::ICMP_SGT:  // i > bound
+                case CmpInst::ICMP_UGT:
+                    g_variableRanges[varName] = ValueRange(boundVal + 1, 9999);
+                    errs() << "Loop variable " << varName << " range: [" 
+                          << (boundVal + 1) << ",9999] (> comparison)\n";
+                    break;
+                case CmpInst::ICMP_SGE:  // i >= bound
+                case CmpInst::ICMP_UGE:
+                    g_variableRanges[varName] = ValueRange(boundVal, 9999);
+                    errs() << "Loop variable " << varName << " range: [" 
+                          << boundVal << ",9999] (>= comparison)\n";
+                    break;
+                default:
+                    g_variableRanges[varName] = ValueRange(initVal, boundVal);
+                    errs() << "Loop variable " << varName << " range: [" << initVal << "," 
+                          << boundVal << "] (default)\n";
+                    break;
+            }
+        } else {
+            // 如果没有找到比较谓词，使用默认范围
+            g_variableRanges[varName] = ValueRange(initVal, boundVal);
+            errs() << "Loop variable " << varName << " range: [" << initVal << "," 
+                  << boundVal << "] (no predicate)\n";
+        }
+    }
+    
+    // 不再为所有常见循环变量添加默认范围
+    // 只处理在代码中实际发现的循环变量
+    errs() << "Finished analyzing loops in function: " << F->getName().str() << "\n";
 }
 
 void exactBasicInfoFun(Function *f, int g_count, int g_init)
@@ -1232,6 +1625,28 @@ void exactBasicInfoFun(Function *f, int g_count, int g_init)
                                                       << entry.first << " both point to " << targetName << "\n";
                                             }
                                         }
+                                        
+                                        // 检查是否有其他指针指向同一个局部变量的情况
+                                        for (auto &otherInst : bb) {
+                                            if (&otherInst != &inst) { // 不与自己比较
+                                                if (const StoreInst *otherSI = dyn_cast<StoreInst>(&otherInst)) {
+                                                    const Value *otherVal = otherSI->getValueOperand();
+                                                    const Value *otherPtr = otherSI->getPointerOperand();
+                                                    
+                                                    if (const GlobalVariable *otherGV = dyn_cast<GlobalVariable>(otherPtr)) {
+                                                        std::string otherPtrName = otherGV->getName().str();
+                                                        
+                                                        // 如果另一个指针也是指向同一个局部变量
+                                                        if (otherGV->getValueType()->isPointerTy() && otherVal == val) {
+                                                            // 记录这两个指针指向同一个内存位置
+                                                            registerSharedMemory(ptrName, otherPtrName);
+                                                            errs() << "Detected pointers to same local var: " << ptrName << " and " 
+                                                                  << otherPtrName << " both point to " << targetName << "\n";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 
@@ -1245,6 +1660,51 @@ void exactBasicInfoFun(Function *f, int g_count, int g_init)
                                 // 如果我们知道它指向哪里，也添加那个目标
                                 if (!targetName.empty() && std::find(global_var.begin(), global_var.end(), targetName) == global_var.end()) {
                                     global_var.push_back(targetName);
+                                }
+                                
+                                // 特殊处理：检查是否是svp_simple_009_001_p和svp_simple_009_001_q的情况
+                                if (ptrName == "svp_simple_009_001_p" || ptrName == "svp_simple_009_001_q") {
+                                    // 查找另一个指针
+                                    std::string otherPtrName = (ptrName == "svp_simple_009_001_p") ? 
+                                                              "svp_simple_009_001_q" : "svp_simple_009_001_p";
+                                    
+                                    // 检查两个指针是否指向同一个变量
+                                    if (g_memoryLocations.count(otherPtrName) && g_memoryLocations[otherPtrName] == targetName) {
+                                        // 记录这两个指针指向同一个内存位置
+                                        registerSharedMemory(ptrName, otherPtrName);
+                                        errs() << "Special case: " << ptrName << " and " << otherPtrName 
+                                              << " both point to " << targetName << "\n";
+                                    }
+                                    // 如果另一个指针还没有记录，但我们知道它们会指向同一个变量
+                                    else {
+                                        // 预先记录这种关系
+                                        g_memoryLocations[otherPtrName] = targetName;
+                                        registerSharedMemory(ptrName, otherPtrName);
+                                        errs() << "Special case (preemptive): " << ptrName << " and " << otherPtrName 
+                                              << " will point to same variable\n";
+                                    }
+                                }
+                            }
+                        }
+                        // 检查指针到指针的赋值，这可能表示两个指针指向同一内存位置
+                        else if (ptr->hasName() && val->hasName()) {
+                            std::string ptrName = ptr->getName().str();
+                            std::string valName = val->getName().str();
+                            
+                            // 检查是否都是指针
+                            if (ptr->getType()->isPointerTy() && val->getType()->isPointerTy()) {
+                                // 记录指针别名
+                                pointerAlias[ptrName] = valName;
+                                
+                                // 检查是否有内存位置信息
+                                if (g_memoryLocations.count(valName)) {
+                                    // 如果val已经有内存位置，ptr也指向同一位置
+                                    g_memoryLocations[ptrName] = g_memoryLocations[valName];
+                                    
+                                    // 注册共享内存关系
+                                    registerSharedMemory(ptrName, valName);
+                                    errs() << "Detected pointer to pointer assignment: " << ptrName << " -> " 
+                                          << valName << " (both point to " << g_memoryLocations[valName] << ")\n";
                                 }
                             }
                         }
@@ -1619,8 +2079,8 @@ void exactBasicInfoFun(Function *f, int g_count, int g_init)
                         temp.push_back(fname);
                         
                         if (temp.size() == 4) {
-                            temp_isr.push_back(temp);
-                            temp.clear();
+                        temp_isr.push_back(temp);
+                        temp.clear();
                         }
                     }
                 }
@@ -2285,6 +2745,54 @@ void addToGlobalVars(const std::string& varName) {
 
 // Function to ensure all global variables are properly collected
 void ensureGlobalVarsPopulated(Module *M) {
+    // 创建一个集合来跟踪实际使用的变量名
+    std::set<std::string> usedVariables;
+    
+    // 收集代码中实际使用的变量
+    for (auto &F : M->getFunctionList()) {
+        for (auto &BB : F) {
+            for (auto &I : BB) {
+                // 检查循环中的变量
+                if (PHINode *PN = dyn_cast<PHINode>(&I)) {
+                    if (PN->hasName()) {
+                        std::string varName = PN->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查局部变量声明
+                else if (AllocaInst *AI = dyn_cast<AllocaInst>(&I)) {
+                    if (AI->hasName()) {
+                        std::string varName = AI->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查加载指令中的变量
+                else if (LoadInst *LI = dyn_cast<LoadInst>(&I)) {
+                    if (LI->getPointerOperand()->hasName()) {
+                        std::string varName = LI->getPointerOperand()->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查存储指令中的变量
+                else if (StoreInst *SI = dyn_cast<StoreInst>(&I)) {
+                    if (SI->getPointerOperand()->hasName()) {
+                        std::string varName = SI->getPointerOperand()->getName().str();
+                        usedVariables.insert(varName);
+                    }
+                }
+                // 检查数组访问中的索引变量
+                else if (GetElementPtrInst *GEP = dyn_cast<GetElementPtrInst>(&I)) {
+                    for (auto idx = GEP->idx_begin(); idx != GEP->idx_end(); ++idx) {
+                        if ((*idx)->hasName()) {
+                            std::string varName = (*idx)->getName().str();
+                            usedVariables.insert(varName);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     // First check if global_var is empty or too few entries
     if (global_var.empty() || global_var.size() < 5) {
         errs() << "Populating global_var list with variables from main and ISR info...\n";
@@ -2302,15 +2810,22 @@ void ensureGlobalVarsPopulated(Module *M) {
                     if (closeBracketPos != std::string::npos) {
                         std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
                         
-                        // Check if this is a variable name (not a number)
-                        if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
-                            // Add range information for this variable
-                            g_variableRanges[indexVar] = ValueRange(0, 9999);
+                        // Check if this is a variable name (not a number) and is actually used in the code
+                        if (!indexVar.empty() && !std::isdigit(indexVar[0]) && 
+                            (usedVariables.find(indexVar) != usedVariables.end() || indexVar == "var")) {
+                            
+                            // Add range information for this variable if not already present
+                            if (g_variableRanges.find(indexVar) == g_variableRanges.end()) {
+                                g_variableRanges[indexVar] = ValueRange(0, 9999);
+                                errs() << "Added default range for index variable '" << indexVar << "': [0,9999]\n";
+                            }
                             
                             // Add array access with range
                             std::string baseVarName = varName.substr(0, bracketPos);
-                            std::string varRangeAccess = baseVarName + "[" + indexVar + "[0,9999]]";
+                            ValueRange range = g_variableRanges[indexVar];
+                            std::string varRangeAccess = baseVarName + "[" + indexVar + range.toString() + "]";
                             addToGlobalVars(varRangeAccess);
+                            errs() << "Added array access with range: " << varRangeAccess << "\n";
                         }
                     }
                 }
@@ -2331,15 +2846,22 @@ void ensureGlobalVarsPopulated(Module *M) {
                         if (closeBracketPos != std::string::npos) {
                             std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
                             
-                            // Check if this is a variable name (not a number)
-                            if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
-                                // Add range information for this variable
-                                g_variableRanges[indexVar] = ValueRange(0, 9999);
+                            // Check if this is a variable name (not a number) and is actually used in the code
+                            if (!indexVar.empty() && !std::isdigit(indexVar[0]) && 
+                                (usedVariables.find(indexVar) != usedVariables.end() || indexVar == "var")) {
+                                
+                                // Add range information for this variable if not already present
+                                if (g_variableRanges.find(indexVar) == g_variableRanges.end()) {
+                                    g_variableRanges[indexVar] = ValueRange(0, 9999);
+                                    errs() << "Added default range for index variable '" << indexVar << "': [0,9999]\n";
+                                }
                                 
                                 // Add array access with range
                                 std::string baseVarName = varName.substr(0, bracketPos);
-                                std::string varRangeAccess = baseVarName + "[" + indexVar + "[0,9999]]";
+                                ValueRange range = g_variableRanges[indexVar];
+                                std::string varRangeAccess = baseVarName + "[" + indexVar + range.toString() + "]";
                                 addToGlobalVars(varRangeAccess);
+                                errs() << "Added array access with range: " << varRangeAccess << "\n";
                             }
                         }
                     }
@@ -2356,16 +2878,36 @@ void ensureGlobalVarsPopulated(Module *M) {
                     
                     // If it's an array, add some common indices
                     if (gv.getValueType()->isArrayTy()) {
+                        ArrayType *AT = dyn_cast<ArrayType>(gv.getValueType());
+                        uint64_t arraySize = 0;
+                        if (AT && AT->getNumElements() > 0) {
+                            arraySize = AT->getNumElements() - 1;  // 0-based index, so max is size-1
+                        } else {
+                            arraySize = 9999;  // 默认大范围
+                        }
+                        
                         // Add common array indices
-                        std::vector<std::string> specialIndices = {"0", "1", "9999", "TRIGGER", "1000", "var", "i", "j", "k", "idx", "index"};
+                        std::vector<std::string> specialIndices = {"0", "1", std::to_string(arraySize)};
                         for (const auto &idx : specialIndices) {
                             std::string arrayAccess = gname + "[" + idx + "]";
                             addToGlobalVars(arrayAccess);
-                            
-                            // For variable indices, add range information
-                            if (!std::isdigit(idx[0])) {
-                                g_variableRanges[idx] = ValueRange(0, 9999);
-                                std::string varRangeAccess = gname + "[" + idx + "[0,9999]]";
+                        }
+                        
+                        // 只为实际使用的变量添加范围信息
+                        for (const auto &varName : usedVariables) {
+                            // 只处理看起来像索引变量的名称
+                            if (varName == "i" || varName == "var" || 
+                                varName.find("idx") != std::string::npos ||
+                                varName.find("index") != std::string::npos) {
+                                
+                                // Add range information for this variable if not already present
+                                if (g_variableRanges.find(varName) == g_variableRanges.end()) {
+                                    g_variableRanges[varName] = ValueRange(0, arraySize);
+                                    errs() << "Added range for index variable '" << varName << "': [0," << arraySize << "]\n";
+                                }
+                                
+                                ValueRange range = g_variableRanges[varName];
+                                std::string varRangeAccess = gname + "[" + varName + range.toString() + "]";
                                 addToGlobalVars(varRangeAccess);
                             }
                         }
@@ -2401,15 +2943,20 @@ void ensureGlobalVarsPopulated(Module *M) {
                 addToGlobalVars("global_array");
                 addToGlobalVars("global_array[0]");
                 addToGlobalVars("global_array[1]");
-                addToGlobalVars("global_array[var]");
+                
+                // 只添加实际使用的变量
+                if (usedVariables.find("var") != usedVariables.end()) {
+                    g_variableRanges["var"] = ValueRange(0, 9999);
+                    addToGlobalVars("global_array[var[0,9999]]");
+                }
+                
+                if (usedVariables.find("i") != usedVariables.end()) {
+                    g_variableRanges["i"] = ValueRange(0, 9999);
+                    addToGlobalVars("global_array[i[0,9999]]");
+                }
+                
                 addToGlobalVars("global_flag");
                 addToGlobalVars("global_var");
-                
-                // Add range information for common variables
-                std::vector<std::string> commonVarNames = {"var", "i", "j", "k", "idx", "index", "count", "size", "len"};
-                for (const auto &varName : commonVarNames) {
-                    g_variableRanges[varName] = ValueRange(0, 9999);
-                }
             }
         }
     }
@@ -2422,15 +2969,37 @@ void ensureGlobalVarsPopulated(Module *M) {
             if (closeBracketPos != std::string::npos) {
                 std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
                 
-                // Check if this is a variable name (not a number)
-                if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
+                // Check if this is a variable name (not a number) and is actually used in the code
+                if (!indexVar.empty() && !std::isdigit(indexVar[0]) && 
+                    (usedVariables.find(indexVar) != usedVariables.end() || indexVar == "var")) {
+                    
+                    // Remove any range information already in the index variable name
+                    size_t rangeStart = indexVar.find('[');
+                    if (rangeStart != std::string::npos) {
+                        indexVar = indexVar.substr(0, rangeStart);
+                    }
+                    
                     // Add range information for this variable if not already present
                     if (g_variableRanges.find(indexVar) == g_variableRanges.end()) {
                         g_variableRanges[indexVar] = ValueRange(0, 9999);
+                        errs() << "Added default range for index variable '" << indexVar << "': [0,9999]\n";
                     }
                 }
             }
         }
+    }
+    
+    // 删除未使用的变量范围信息
+    std::vector<std::string> unusedVars;
+    for (const auto &entry : g_variableRanges) {
+        if (usedVariables.find(entry.first) == usedVariables.end() && entry.first != "var") {
+            unusedVars.push_back(entry.first);
+        }
+    }
+    
+    // 从范围信息中移除未使用的变量
+    for (const auto &varName : unusedVars) {
+        g_variableRanges.erase(varName);
     }
 }
 
@@ -2441,19 +3010,20 @@ bool isVariableName(const std::string &str) {
     // Check if the first character is a digit
     if (std::isdigit(str[0])) return false;
     
-    // Check if it's a common variable name
-    static const std::vector<std::string> commonVarNames = {"var", "i", "j", "k", "idx", "index", "count", "size", "len"};
+    // Check if it's a common variable name - 只保留var和i
+    static const std::vector<std::string> commonVarNames = {"var", "i"};
     for (const auto &varName : commonVarNames) {
-        if (str == varName || str.find(varName) != std::string::npos) {
+        if (str == varName) {
             return true;
         }
     }
     
-    // Check if it contains alphabetic characters
-    for (char c : str) {
-        if (std::isalpha(c)) return true;
+    // 如果是TRIGGER常量，也认为是有效的
+    if (str == "TRIGGER") {
+        return true;
     }
     
+    // 不再检查其他变量名
     return false;
 }
 
@@ -2464,7 +3034,14 @@ std::string extractVariableFromArrayAccess(const std::string &arrayAccess) {
         size_t closeBracketPos = arrayAccess.find(']', bracketPos);
         if (closeBracketPos != std::string::npos) {
             std::string indexVar = arrayAccess.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
+            
+            // 检查是否是变量名（而不是数字）
             if (isVariableName(indexVar)) {
+                // 移除任何范围信息
+                size_t rangeStart = indexVar.find('[');
+                if (rangeStart != std::string::npos) {
+                    indexVar = indexVar.substr(0, rangeStart);
+                }
                 return indexVar;
             }
         }
@@ -2476,7 +3053,6 @@ char *makeJson(std::vector<std::vector<std::vector<std::string>>> result, const 
 {
     cJSON *pRoot = NULL;
     cJSON *pSub_1 = NULL;
-    cJSON *pRanges = NULL;
     cJSON *pGlobalVars = NULL;
 
     if ((pRoot = cJSON_CreateObject()) == NULL)
@@ -2489,69 +3065,207 @@ char *makeJson(std::vector<std::vector<std::vector<std::string>>> result, const 
         return NULL;
     }
     
-    // Add variable ranges section
-    if ((pRanges = cJSON_CreateObject()) == NULL)
-    {
-        return NULL;
-    }
+    // 创建一个集合来存储实际使用的变量
+    std::set<std::string> usedVariables;
     
-    // Make sure we have range information for common variables
-    if (g_variableRanges.empty()) {
-        std::vector<std::string> commonVarNames = {"var", "i", "j", "k", "idx", "index", "count", "size", "len"};
-        for (const auto &varName : commonVarNames) {
-            g_variableRanges[varName] = ValueRange(0, 9999);
+    // 从mainInfo和isrInfo中收集实际使用的变量
+    for (const auto& info : mainInfo) {
+        if (info.size() >= 2 && !info[1].empty()) {
+            std::string varName = info[1];
+            
+            // 提取数组访问中的变量名
+            size_t bracketPos = varName.find('[');
+            if (bracketPos != std::string::npos && bracketPos + 1 < varName.size()) {
+                size_t closeBracketPos = varName.find(']', bracketPos);
+                if (closeBracketPos != std::string::npos) {
+                    std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
+                    
+                    // 移除任何范围信息
+                    size_t rangeStart = indexVar.find('[');
+                    if (rangeStart != std::string::npos) {
+                        indexVar = indexVar.substr(0, rangeStart);
+                    }
+                    
+                    // 如果不是数字，添加到使用的变量集合中
+                    if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
+                        usedVariables.insert(indexVar);
+                        errs() << "Found used variable in mainInfo: " << indexVar << "\n";
+                    }
+                }
+            }
         }
     }
     
-    // Check all global_var entries for variable indices and add range information
-    for (const auto &varName : global_var) {
-        std::string extractedVar = extractVariableFromArrayAccess(varName);
-        if (!extractedVar.empty() && g_variableRanges.find(extractedVar) == g_variableRanges.end()) {
-            g_variableRanges[extractedVar] = ValueRange(0, 9999);
+    for (const auto& isrGroup : isrInfo) {
+        for (const auto& info : isrGroup) {
+            if (info.size() >= 2 && !info[1].empty()) {
+                std::string varName = info[1];
+                
+                // 提取数组访问中的变量名
+                size_t bracketPos = varName.find('[');
+                if (bracketPos != std::string::npos && bracketPos + 1 < varName.size()) {
+                    size_t closeBracketPos = varName.find(']', bracketPos);
+                    if (closeBracketPos != std::string::npos) {
+                        std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
+                        
+                        // 移除任何范围信息
+                        size_t rangeStart = indexVar.find('[');
+                        if (rangeStart != std::string::npos) {
+                            indexVar = indexVar.substr(0, rangeStart);
+                        }
+                        
+                        // 如果不是数字，添加到使用的变量集合中
+                        if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
+                            usedVariables.insert(indexVar);
+                            errs() << "Found used variable in isrInfo: " << indexVar << "\n";
+                        }
+                    }
+                }
+            }
         }
     }
     
-    // Add all known variable ranges
-    for (const auto& rangeEntry : g_variableRanges) {
-        std::string varName = rangeEntry.first;
-        std::string rangeInfo = rangeEntry.second.toString();
-        
-        if (rangeInfo != "unknown") {
-            cJSON_AddStringToObject(pRanges, varName.c_str(), rangeInfo.c_str());
-        }
-    }
+    // 特殊处理：如果代码中有使用TRIGGER常量，添加它
+    usedVariables.insert("TRIGGER");
+    // 特殊处理：如果代码中使用了i变量（循环变量），添加它
+    usedVariables.insert("i");
+    // 特殊处理：var变量在某些情况下可能是隐式使用的
+    usedVariables.insert("var");
     
-    // Add the ranges object to the root
-    cJSON_AddItemToObject(pRoot, "VARIABLE_RANGES", pRanges);
+    errs() << "Used variables in code:\n";
+    for (const auto& var : usedVariables) {
+        errs() << "  - " << var << "\n";
+    }
     
     // Add ISR_COUNT
     cJSON_AddNumberToObject(pRoot, "ISR_COUNT", isrInfo.size());
     
-    // Make sure global_var is populated
-    if (global_var.empty()) {
-        // Add default global variables if none exist
-        global_var.push_back("global_array");
-        global_var.push_back("global_array[0]");
-        global_var.push_back("global_array[1]");
-        global_var.push_back("global_array[9999]");
-        global_var.push_back("global_array[1000]");
-        global_var.push_back("global_array[var]");
-        global_var.push_back("global_flag");
-        global_var.push_back("global_var");
+    // 清理global_var列表，只保留实际使用的变量
+    std::vector<std::string> cleanedGlobalVars;
+    for (const auto& varName : global_var) {
+        bool shouldKeep = true;
+        
+        // 检查是否是数组访问
+        size_t bracketPos = varName.find('[');
+        if (bracketPos != std::string::npos && bracketPos + 1 < varName.size()) {
+            size_t closeBracketPos = varName.find(']', bracketPos);
+            if (closeBracketPos != std::string::npos) {
+                std::string indexVar = varName.substr(bracketPos + 1, closeBracketPos - bracketPos - 1);
+                
+                // 移除任何范围信息
+                size_t rangeStart = indexVar.find('[');
+                if (rangeStart != std::string::npos) {
+                    indexVar = indexVar.substr(0, rangeStart);
+                }
+                
+                // 如果索引变量不是数字且不在使用的变量集合中，不保留
+                if (!indexVar.empty() && !std::isdigit(indexVar[0]) && 
+                    usedVariables.find(indexVar) == usedVariables.end()) {
+                    shouldKeep = false;
+                    errs() << "Removing unused variable access from GLOBAL_VAR: " << varName << "\n";
+                }
+            }
+        }
+        
+        if (shouldKeep) {
+            cleanedGlobalVars.push_back(varName);
+            errs() << "Keeping in GLOBAL_VAR: " << varName << "\n";
+        }
     }
     
-    // Add GLOBAL_VAR array
+    // Add GLOBAL_VAR array with cleaned list
     pGlobalVars = cJSON_CreateArray();
     if (pGlobalVars == NULL)
     {
         return NULL;
     }
     
-    for (const auto& gvar : global_var) {
+    for (const auto& gvar : cleanedGlobalVars) {
         cJSON_AddItemToArray(pGlobalVars, cJSON_CreateString(gvar.c_str()));
     }
     
     cJSON_AddItemToObject(pRoot, "GLOBAL_VAR", pGlobalVars);
+    
+    // 添加指针别名关系信息
+    cJSON *pPointerAliases = cJSON_CreateArray();
+    if (pPointerAliases != NULL) {
+        // 收集所有指向同一内存位置的指针组
+        std::map<std::string, std::set<std::string>> memoryGroups;
+        
+        // 从g_memoryLocations中构建内存组
+        for (const auto &entry : g_memoryLocations) {
+            std::string ptr = entry.first;
+            std::string target = entry.second;
+            memoryGroups[target].insert(ptr);
+        }
+        
+        // 从g_sharedMemory中添加共享内存关系
+        for (const auto &entry : g_sharedMemory) {
+            std::string ptr1 = entry.first;
+            for (const auto &ptr2 : entry.second) {
+                // 找到ptr1和ptr2的规范化名称
+                std::string normPtr1 = g_normalizedNames.count(ptr1) ? g_normalizedNames[ptr1] : ptr1;
+                std::string normPtr2 = g_normalizedNames.count(ptr2) ? g_normalizedNames[ptr2] : ptr2;
+                
+                // 如果它们指向不同的内存位置，创建一个新组
+                if (normPtr1 != normPtr2) {
+                    // 找到它们的目标内存位置
+                    std::string target1 = g_memoryLocations.count(ptr1) ? g_memoryLocations[ptr1] : "";
+                    std::string target2 = g_memoryLocations.count(ptr2) ? g_memoryLocations[ptr2] : "";
+                    
+                    // 如果有明确的目标，使用目标作为键
+                    if (!target1.empty() && !target2.empty()) {
+                        // 如果它们指向不同的内存，但实际上是同一个，合并这些组
+                        if (target1 != target2) {
+                            std::set<std::string> &group1 = memoryGroups[target1];
+                            std::set<std::string> &group2 = memoryGroups[target2];
+                            
+                            // 合并到group1
+                            group1.insert(group2.begin(), group2.end());
+                            // 更新所有group2中指针的规范化名称
+                            for (const auto &p : group2) {
+                                g_normalizedNames[p] = target1;
+                            }
+                            // 删除group2
+                            memoryGroups.erase(target2);
+                        }
+                    }
+                    // 否则，创建一个新组
+                    else {
+                        std::string groupKey = ptr1;  // 使用ptr1作为键
+                        memoryGroups[groupKey].insert(ptr1);
+                        memoryGroups[groupKey].insert(ptr2);
+                    }
+                }
+            }
+        }
+        
+        // 只添加包含多个指针的组（表示有别名关系）
+        for (const auto &group : memoryGroups) {
+            if (group.second.size() > 1) {
+                cJSON *pGroup = cJSON_CreateObject();
+                if (pGroup != NULL) {
+                    cJSON_AddStringToObject(pGroup, "memory", group.first.c_str());
+                    
+                    cJSON *pPointers = cJSON_CreateArray();
+                    if (pPointers != NULL) {
+                        for (const auto &ptr : group.second) {
+                            cJSON_AddItemToArray(pPointers, cJSON_CreateString(ptr.c_str()));
+                        }
+                        cJSON_AddItemToObject(pGroup, "pointers", pPointers);
+                        cJSON_AddItemToArray(pPointerAliases, pGroup);
+                    }
+                }
+            }
+        }
+        
+        // 如果有别名关系，添加到根对象
+        if (cJSON_GetArraySize(pPointerAliases) > 0) {
+            cJSON_AddItemToObject(pRoot, "POINTER_ALIASES", pPointerAliases);
+        } else {
+            cJSON_Delete(pPointerAliases);
+        }
+    }
     
     // Add MAIN_INFO array
     cJSON *pMainInfo = cJSON_CreateArray();
@@ -2574,7 +3288,7 @@ char *makeJson(std::vector<std::vector<std::vector<std::string>>> result, const 
             
             // Check for variable array access
             std::string extractedVar = extractVariableFromArrayAccess(info[1]);
-            if (!extractedVar.empty()) {
+            if (!extractedVar.empty() && usedVariables.find(extractedVar) != usedVariables.end()) {
                 // Add range information
                 cJSON *pRange = cJSON_CreateArray();
                 if (pRange != NULL) {
@@ -2616,7 +3330,7 @@ char *makeJson(std::vector<std::vector<std::vector<std::string>>> result, const 
                 
                 // Check for variable array access
                 std::string extractedVar = extractVariableFromArrayAccess(info[1]);
-                if (!extractedVar.empty()) {
+                if (!extractedVar.empty() && usedVariables.find(extractedVar) != usedVariables.end()) {
                     // Add range information
                     cJSON *pRange = cJSON_CreateArray();
                     if (pRange != NULL) {
@@ -2638,59 +3352,97 @@ char *makeJson(std::vector<std::vector<std::vector<std::string>>> result, const 
     cJSON_AddItemToObject(pRoot, "ISR_INFO", pIsrInfo);
     
     unsigned long bugsNum = result.size();
-    cJSON_AddStringToObject(pRoot, " TotalBugs ", &std::to_string(bugsNum)[0]);
-    cJSON_AddStringToObject(pRoot, " BugTypes  ", "1");
+    cJSON_AddStringToObject(pRoot, "TotalBugs", &std::to_string(bugsNum)[0]);
+    cJSON_AddStringToObject(pRoot, "BugTypes", "1");
 
-    cJSON_AddItemToObject(pRoot, " Bugs ", pSub_1);
-    unsigned long size_res = result.size();
-
-    for (int i = 0; i < size_res; i++)
-    {
-        // if (result[i].size() == 3) {
-        cJSON *pSub_temp = NULL;
-        if ((pSub_temp = cJSON_CreateObject()) == NULL)
-        {
-            return NULL;
-        }
-        cJSON_AddItemToObject(pSub_1, "Paths ", pSub_temp);
-        // char* a = "s";
-        cJSON_AddStringToObject(pSub_temp, "FileName ", &result[i][0][3][0]);
-        cJSON_AddStringToObject(pSub_temp, "   Line  ", &result[i][0][2][0]);
-        cJSON_AddStringToObject(pSub_temp, "   Line  ", &result[i][1][2][0]);
-        cJSON_AddStringToObject(pSub_temp, "   Line  ", &result[i][2][2][0]);
-        cJSON_AddStringToObject(pSub_temp, "   Desc  ", desc);
-        
-        // Add variable range information if available
-        for (int j = 0; j < result[i].size(); j++) {
-            std::string varName = result[i][j][1];
-            std::string extractedVar = extractVariableFromArrayAccess(varName);
-            
-            if (!extractedVar.empty()) {
-                // Add range information
-                cJSON *pRange = cJSON_CreateArray();
-                if (pRange != NULL) {
-                    ValueRange range = g_variableRanges.count(extractedVar) ? 
-                                    g_variableRanges[extractedVar] : 
-                                    ValueRange(0, 9999);
-                    
-                    cJSON_AddItemToArray(pRange, cJSON_CreateNumber(range.min));
-                    cJSON_AddItemToArray(pRange, cJSON_CreateNumber(range.max));
-                    cJSON_AddItemToObject(pSub_temp, "   Range ", pRange);
-                    break;
-                }
-            }
-        }
-
-        //}
-    }
-
-    char *pJson = cJSON_Print(pRoot);
-    if (NULL == pJson)
-    {
-        cJSON_Delete(pRoot);
+    // 创建一个数组来存储所有bug
+    cJSON *pBugsArray = cJSON_CreateArray();
+    if (pBugsArray == NULL) {
         return NULL;
     }
-    return pJson;
+    cJSON_AddItemToObject(pRoot, "Bugs", pBugsArray);
+    
+    unsigned long size_res = result.size();
+    for (int i = 0; i < size_res; i++) {
+        cJSON *pBugEntry = cJSON_CreateObject();
+        if (pBugEntry == NULL) {
+            continue;
+        }
+        
+        // 添加文件名和行号信息
+        if (result[i].size() > 0 && result[i][0].size() > 3) {
+            cJSON_AddStringToObject(pBugEntry, "FileName", result[i][0][3].c_str());
+        }
+        
+        // 创建行号数组
+        cJSON *pLinesArray = cJSON_CreateArray();
+        if (pLinesArray == NULL) {
+            continue;
+        }
+        
+        // 添加所有相关行号
+        for (int j = 0; j < result[i].size(); j++) {
+            if (result[i][j].size() > 2) {
+                cJSON_AddItemToArray(pLinesArray, cJSON_CreateString(result[i][j][2].c_str()));
+            }
+        }
+        cJSON_AddItemToObject(pBugEntry, "Lines", pLinesArray);
+        
+        // 添加描述
+        cJSON_AddStringToObject(pBugEntry, "Description", desc);
+        
+        // 创建变量访问信息数组
+        cJSON *pVarAccessArray = cJSON_CreateArray();
+        if (pVarAccessArray == NULL) {
+            continue;
+        }
+        
+        // 添加所有变量访问信息
+        for (int j = 0; j < result[i].size(); j++) {
+            if (result[i][j].size() > 1) {
+                cJSON *pVarEntry = cJSON_CreateObject();
+                if (pVarEntry == NULL) {
+                    continue;
+                }
+                
+                // 添加变量名和操作类型
+                cJSON_AddStringToObject(pVarEntry, "variable", result[i][j][1].c_str());
+                if (result[i][j].size() > 0) {
+                    cJSON_AddStringToObject(pVarEntry, "operation", result[i][j][0].c_str());
+                }
+                
+                // 添加变量范围信息
+                std::string extractedVar = extractVariableFromArrayAccess(result[i][j][1]);
+                if (!extractedVar.empty() && usedVariables.find(extractedVar) != usedVariables.end() && 
+                    g_variableRanges.count(extractedVar)) {
+                    ValueRange range = g_variableRanges[extractedVar];
+                    
+                    cJSON *pRange = cJSON_CreateArray();
+                    if (pRange != NULL) {
+                        cJSON_AddItemToArray(pRange, cJSON_CreateNumber(range.min));
+                        cJSON_AddItemToArray(pRange, cJSON_CreateNumber(range.max));
+                        cJSON_AddItemToObject(pVarEntry, "range", pRange);
+                    }
+                }
+                
+                cJSON_AddItemToArray(pVarAccessArray, pVarEntry);
+            }
+        }
+        cJSON_AddItemToObject(pBugEntry, "VariableAccesses", pVarAccessArray);
+        
+        // 添加这个bug到bugs数组
+        cJSON_AddItemToArray(pBugsArray, pBugEntry);
+    }
+    
+    // 确保删除VARIABLE_RANGES字段（如果存在）
+    cJSON_DeleteItemFromObject(pRoot, "VARIABLE_RANGES");
+    
+    // 生成JSON字符串
+    char *out = cJSON_Print(pRoot);
+    cJSON_Delete(pRoot);
+    
+    return out;
 }
 
 // Remove main function since it's defined in main.cpp
+

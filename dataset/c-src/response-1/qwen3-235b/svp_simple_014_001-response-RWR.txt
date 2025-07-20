@@ -27,3 +27,6 @@ No defects.
 [Expert Agent] No defects found. Ending the conversation.
 
 Elapsed Time: 72.74789619445801 seconds
+
+[System R1] Task failed: Connection error.
+Elapsed Time: 2.9457879066467285 seconds

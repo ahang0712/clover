@@ -29,20 +29,27 @@
 
 # api_client.py
 import json
-from config import API_HOST, API_AUTH, API_MODEL, MODEL_TYPE, MODEL_PATH
+import time
+import asyncio
+import random
+from config import API_HOST, API_MODEL, MODEL_TYPE, MODEL_PATH, API_KEYS
 from openai import OpenAI
-# from model_loader import LocalModel  # 导入本地模型
+from model_loader import LocalModel  # 导入本地模型
 
 class APIClient:
-    def __init__(self, api_key=None, base_url=None, model=None, max_tokens=8192, temperature=0.0):
+    def __init__(self, api_key=None, base_url=None, model=None, max_tokens=512, temperature=0.0):
         # 使用配置文件中的模型类型
         self.model_type = MODEL_TYPE  # 获取配置的模型类型（'local' 或 'online'）
+        
+        # API密钥轮换设置
+        self.api_keys = API_KEYS
+        self.current_key_index = 0
         
         if self.model_type == "online":
             # 初始化 OpenAI 客户端（在线模型）
             self.client = OpenAI(
-                api_key= API_AUTH,
-                base_url= API_HOST
+                api_key=self.get_next_api_key(),
+                base_url=API_HOST
             )
             self.model = API_MODEL
         else:
@@ -55,34 +62,129 @@ class APIClient:
         self.temperature = temperature
         self.messages = []
 
+    def get_next_api_key(self):
+        """获取下一个API密钥（简单轮换）"""
+        if not self.api_keys:
+            return None
+            
+        # 获取当前密钥
+        key = self.api_keys[self.current_key_index]
+        
+        # 更新索引，实现轮换
+        self.current_key_index = (self.current_key_index + 1) % len(self.api_keys)
+        
+        print(f"[APIClient] 使用API密钥: {key[:5]}... (索引: {self.current_key_index})")
+        return key
+
     def add_message(self, role, content):
         """向消息列表添加消息"""
         self.messages.append({"role": role, "content": content})
 
-    def send_messages(self, model=None, messages=None):
+    async def send_messages(self, model=None, messages=None):
         """根据模型类型发送消息"""
         model = model or self.model
         messages = messages or self.messages
         
         if self.model_type == "online":
             # 在线模型推理
-            response = self.client.chat.completions.create(
-                model=model,
-                max_tokens=self.max_tokens,
-                temperature=self.temperature,
-                messages=messages
-            )
-            return response.choices[0].message.content
+            return await self._send_online_messages(model, messages)
         else:
-            # 本地模型推理
-            responses = self.local_model.generate_responses(
-                [msg['content'] for msg in messages],
+            # 本地模型推理 - 提取system和user内容
+            return await self._send_local_messages(messages)
+    
+    async def _send_online_messages(self, model, messages):
+        """发送在线API请求，支持密钥轮换和重试"""
+        # 尝试所有API密钥
+        errors = []
+        
+        # 从当前索引开始，尝试所有密钥
+        for _ in range(len(self.api_keys)):
+            api_key = self.get_next_api_key()
+            self.client.api_key = api_key
+            
+            try:
+                response = self.client.chat.completions.create(
+                    model=model,
+                    max_tokens=self.max_tokens,
+                    temperature=self.temperature,
+                    messages=messages
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                error_msg = f"API密钥 {api_key[:5]}... 请求失败: {str(e)}"
+                print(f"[APIClient Error] {error_msg}")
+                errors.append(error_msg)
+                
+                # 短暂等待后尝试下一个密钥
+                await asyncio.sleep(0.5)
+        
+        # 如果所有密钥都失败，返回错误信息
+        error_summary = "\n".join(errors)
+        print(f"[APIClient Critical Error] 所有API密钥都失败:\n{error_summary}")
+        return f"API请求失败，所有密钥都无法使用。错误信息:\n{error_summary}"
+            
+    async def _send_local_messages(self, messages):
+        """发送本地模型请求"""
+        system_content = None
+        user_content = None
+        
+        for msg in messages:
+            if msg["role"] == "system":
+                system_content = msg["content"]
+            elif msg["role"] == "user":
+                user_content = msg["content"]
+        
+        # 如果没有找到user内容，使用最后一条消息作为user内容
+        if not user_content and messages:
+            user_content = messages[-1]["content"]
+        
+        try:
+            # 使用修改后的generate_responses方法
+            response = await self.local_model.generate_responses(
+                prompt=user_content,
+                system_prompt=system_content,
                 max_tokens=self.max_tokens,
-                temperature=self.temperature,
-                num_responses=1
+                temperature=self.temperature
             )
-            return responses[0]
+            return response
+        except Exception as e:
+            print(f"[APIClient Error] 本地模型推理失败: {str(e)}")
+            
+            # 如果本地模型失败且有在线API密钥，尝试使用在线API
+            if self.api_keys and len(self.api_keys) > 0:
+                print("[APIClient Info] 本地模型失败，尝试使用在线API作为备用")
+                try:
+                    # 临时切换到在线模式
+                    original_model_type = self.model_type
+                    self.model_type = "online"
+                    
+                    # 使用在线API
+                    result = await self._send_online_messages(API_MODEL, messages)
+                    
+                    # 恢复原始模式
+                    self.model_type = original_model_type
+                    
+                    return result
+                except Exception as online_error:
+                    print(f"[APIClient Error] 备用在线API也失败: {str(online_error)}")
+                    # 恢复原始模式
+                    self.model_type = original_model_type
+            
+            # 如果所有尝试都失败，抛出原始异常
+            raise
 
     def clear_messages(self):
         """清空消息列表"""
         self.messages = []
+        
+    def print_api_keys_status(self):
+        """打印API密钥状态"""
+        print("\n=== API密钥状态 ===")
+        print(f"总密钥数量: {len(self.api_keys)}")
+        print(f"当前使用索引: {self.current_key_index}")
+        
+        for i, key in enumerate(self.api_keys):
+            status = "当前使用中" if i == self.current_key_index else "待用"
+            print(f"密钥 {i}: {key[:5]}... - {status}")
+            
+        print("==================\n")

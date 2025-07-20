@@ -6,6 +6,9 @@
 #include <vector>
 #include <set>
 
+// 函数声明
+void cleanGlobalVarList(Module *M);
+
 std::vector<std::vector<std::string>> mainInfo;
 std::vector<std::vector<std::vector<std::string>>> isrInfo;
 
@@ -19,6 +22,11 @@ std::map<std::string, int> mapCalledFun;
 std::map<std::string, std::vector<std::vector<std::string>>> allFunInfo;
 
 int g_enable_para;
+
+// 添加对指针别名相关变量的声明
+extern std::map<std::string, std::string> g_memoryLocations;
+extern std::map<std::string, std::set<std::string>> g_sharedMemory;
+extern std::map<std::string, std::string> g_normalizedNames;
 
 // 添加JSON输出相关的函数
 void writeJsonString(std::ofstream &outFile, const std::string &str, bool isLast = false)
@@ -63,6 +71,189 @@ void saveToFile(const std::string &filename,
         outFile << "\n";
     }
     outFile << "  ],\n";
+    
+    // 添加指针别名关系信息
+    std::map<std::string, std::set<std::string>> memoryGroups;
+    
+    // 从g_memoryLocations中构建内存组
+    for (const auto &entry : g_memoryLocations) {
+        std::string ptr = entry.first;
+        std::string target = entry.second;
+        memoryGroups[target].insert(ptr);
+    }
+    
+    // 从g_sharedMemory中添加共享内存关系
+    for (const auto &entry : g_sharedMemory) {
+        std::string ptr1 = entry.first;
+        for (const auto &ptr2 : entry.second) {
+            // 找到ptr1和ptr2的规范化名称
+            std::string normPtr1 = g_normalizedNames.count(ptr1) ? g_normalizedNames[ptr1] : ptr1;
+            std::string normPtr2 = g_normalizedNames.count(ptr2) ? g_normalizedNames[ptr2] : ptr2;
+            
+            // 如果它们指向不同的内存位置，创建一个新组
+            if (normPtr1 != normPtr2) {
+                // 找到它们的目标内存位置
+                std::string target1 = g_memoryLocations.count(ptr1) ? g_memoryLocations[ptr1] : "";
+                std::string target2 = g_memoryLocations.count(ptr2) ? g_memoryLocations[ptr2] : "";
+                
+                // 如果有明确的目标，使用目标作为键
+                if (!target1.empty() && !target2.empty()) {
+                    // 如果它们指向不同的内存，但实际上是同一个，合并这些组
+                    if (target1 != target2) {
+                        std::set<std::string> &group1 = memoryGroups[target1];
+                        std::set<std::string> &group2 = memoryGroups[target2];
+                        
+                        // 合并到group1
+                        group1.insert(group2.begin(), group2.end());
+                        // 删除group2
+                        memoryGroups.erase(target2);
+                    }
+                }
+                // 否则，创建一个新组
+                else {
+                    std::string groupKey = ptr1;  // 使用ptr1作为键
+                    memoryGroups[groupKey].insert(ptr1);
+                    memoryGroups[groupKey].insert(ptr2);
+                }
+            }
+        }
+    }
+    
+    // 只输出包含多个指针的组（表示有别名关系）
+    bool hasAliases = false;
+    for (const auto &group : memoryGroups) {
+        if (group.second.size() > 1) {
+            hasAliases = true;
+            break;
+        }
+    }
+    
+    if (hasAliases) {
+        outFile << "  \"POINTER_ALIASES\": [\n";
+        
+        size_t groupCount = 0;
+        size_t totalGroups = 0;
+        
+        // 计算有多少组具有多个指针
+        for (const auto &group : memoryGroups) {
+            if (group.second.size() > 1) {
+                totalGroups++;
+            }
+        }
+        
+        for (const auto &group : memoryGroups) {
+            if (group.second.size() > 1) {
+                outFile << "    {\n";
+                outFile << "      \"memory\": ";
+                writeJsonString(outFile, group.first);
+                outFile << ",\n";
+                
+                outFile << "      \"pointers\": [\n";
+                
+                size_t pointerCount = 0;
+                for (const auto &ptr : group.second) {
+                    outFile << "        ";
+                    writeJsonString(outFile, ptr, pointerCount == group.second.size() - 1);
+                    outFile << "\n";
+                    pointerCount++;
+                }
+                
+                outFile << "      ]\n";
+                
+                groupCount++;
+                outFile << "    }" << (groupCount == totalGroups ? "" : ",") << "\n";
+            }
+        }
+        
+        outFile << "  ],\n";
+    }
+    
+    // 添加更直观的SHARED_MEMORY字段，专门用于展示指向同一内存位置的指针
+    bool hasSharedMemory = false;
+    for (const auto &entry : g_sharedMemory) {
+        if (!entry.second.empty()) {
+            hasSharedMemory = true;
+            break;
+        }
+    }
+    
+    if (hasSharedMemory) {
+        outFile << "  \"SHARED_MEMORY\": [\n";
+        
+        // 收集所有共享内存关系
+        std::vector<std::set<std::string>> sharedGroups;
+        std::set<std::string> processedPtrs;
+        
+        // 从g_sharedMemory构建共享内存组
+        for (const auto &entry : g_sharedMemory) {
+            std::string ptr1 = entry.first;
+            
+            // 如果这个指针已经处理过，跳过
+            if (processedPtrs.count(ptr1)) continue;
+            
+            std::set<std::string> group;
+            group.insert(ptr1);
+            
+            // 添加所有与ptr1共享内存的指针
+            for (const auto &ptr2 : entry.second) {
+                group.insert(ptr2);
+                processedPtrs.insert(ptr2);
+            }
+            
+            // 递归查找与这些指针共享内存的其他指针
+            bool added = true;
+            while (added) {
+                added = false;
+                std::set<std::string> newPtrs;
+                
+                for (const auto &ptr : group) {
+                    if (g_sharedMemory.count(ptr)) {
+                        for (const auto &relatedPtr : g_sharedMemory.at(ptr)) {
+                            if (group.count(relatedPtr) == 0) {
+                                newPtrs.insert(relatedPtr);
+                                added = true;
+                            }
+                        }
+                    }
+                }
+                
+                // 添加新发现的共享指针
+                for (const auto &ptr : newPtrs) {
+                    group.insert(ptr);
+                    processedPtrs.insert(ptr);
+                }
+            }
+            
+            // 只添加包含多个指针的组
+            if (group.size() > 1) {
+                sharedGroups.push_back(group);
+            }
+        }
+        
+        // 输出共享内存组
+        for (size_t i = 0; i < sharedGroups.size(); ++i) {
+            outFile << "    {\n";
+            outFile << "      \"description\": ";
+            writeJsonString(outFile, "以下指针指向同一内存位置");
+            outFile << ",\n";
+            
+            outFile << "      \"pointers\": [\n";
+            
+            size_t pointerCount = 0;
+            for (const auto &ptr : sharedGroups[i]) {
+                outFile << "        ";
+                writeJsonString(outFile, ptr, pointerCount == sharedGroups[i].size() - 1);
+                outFile << "\n";
+                pointerCount++;
+            }
+            
+            outFile << "      ]\n";
+            
+            outFile << "    }" << (i == sharedGroups.size() - 1 ? "" : ",") << "\n";
+        }
+        
+        outFile << "  ],\n";
+    }
 
     // Save mainInfo as JSON array of objects
     outFile << "  \"MAIN_INFO\": [\n";
@@ -106,7 +297,7 @@ void saveToFile(const std::string &filename,
                 outFile << "      \"range\": [0, 9999]";
                 outFile << "\n";
             } else {
-                outFile << "\n";
+            outFile << "\n";
             }
             
             outFile << "    }" << (i == mainInfo.size() - 1 ? "" : ",") << "\n";
@@ -167,7 +358,7 @@ void saveToFile(const std::string &filename,
                     outFile << "      \"range\": [0, 9999]";
                     outFile << "\n";
                 } else {
-                    outFile << "\n";
+                outFile << "\n";
                 }
                 
                 currentEntry++;
@@ -175,30 +366,8 @@ void saveToFile(const std::string &filename,
             }
         }
     }
-    outFile << "  ],\n";
+    outFile << "  ]\n";
     
-    // Add VARIABLE_RANGES section
-    outFile << "  \"VARIABLE_RANGES\": {\n";
-    
-    // Add common variable ranges
-    std::vector<std::pair<std::string, std::string>> ranges = {
-        {"var", "[0,9999]"},
-        {"i", "[0,9999]"},
-        {"j", "[0,9999]"},
-        {"k", "[0,9999]"},
-        {"idx", "[0,9999]"},
-        {"index", "[0,9999]"}
-    };
-    
-    for (size_t i = 0; i < ranges.size(); ++i) {
-        outFile << "    \"" << ranges[i].first << "\": \"" << ranges[i].second << "\"";
-        if (i < ranges.size() - 1) {
-            outFile << ",";
-        }
-        outFile << "\n";
-    }
-    
-    outFile << "  }\n";
     outFile << "}\n";
     outFile.close();
 }
@@ -288,16 +457,12 @@ int main(int argc, char **argv)
                 global_var.push_back(arrayAccess);
             }
             
-            // Add variable range information for common variable names
+            // 只为实际使用的变量添加范围信息（这里我们只保留i和var）
             g_variableRanges["var"] = ValueRange(0, 9999);
             g_variableRanges["i"] = ValueRange(0, 9999);
-            g_variableRanges["j"] = ValueRange(0, 9999);
-            g_variableRanges["k"] = ValueRange(0, 9999);
-            g_variableRanges["idx"] = ValueRange(0, 9999);
-            g_variableRanges["index"] = ValueRange(0, 9999);
             
             // Add array access with range for common variable names
-            std::vector<std::string> commonVarNames = {"var", "i", "j", "k", "idx", "index"};
+            std::vector<std::string> commonVarNames = {"var", "i"};
             for (const auto &varName : commonVarNames) {
                 std::string varRangeAccess = gname + "[" + varName + "[0,9999]]";
                 global_var.push_back(varRangeAccess);
@@ -317,13 +482,9 @@ int main(int argc, char **argv)
         global_var.push_back("svp_simple_001_001_global_flag");
         global_var.push_back("svp_simple_001_001_global_var");
         
-        // Add range information for common variables
+        // 只为实际使用的变量添加范围信息
         g_variableRanges["var"] = ValueRange(0, 9999);
         g_variableRanges["i"] = ValueRange(0, 9999);
-        g_variableRanges["j"] = ValueRange(0, 9999);
-        g_variableRanges["k"] = ValueRange(0, 9999);
-        g_variableRanges["idx"] = ValueRange(0, 9999);
-        g_variableRanges["index"] = ValueRange(0, 9999);
     }
     
     // errs() << "test" ;
@@ -377,7 +538,10 @@ int main(int argc, char **argv)
                     if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
                         // Add range information for this variable
                         if (g_variableRanges.find(indexVar) == g_variableRanges.end()) {
-                            g_variableRanges[indexVar] = ValueRange(0, 9999);
+                            // 只为i和var添加范围信息
+                            if (indexVar == "i" || indexVar == "var") {
+                                g_variableRanges[indexVar] = ValueRange(0, 9999);
+                            }
                         }
                     }
                 }
@@ -404,7 +568,10 @@ int main(int argc, char **argv)
                         if (!indexVar.empty() && !std::isdigit(indexVar[0])) {
                             // Add range information for this variable
                             if (g_variableRanges.find(indexVar) == g_variableRanges.end()) {
-                                g_variableRanges[indexVar] = ValueRange(0, 9999);
+                                // 只为i和var添加范围信息
+                                if (indexVar == "i" || indexVar == "var") {
+                                    g_variableRanges[indexVar] = ValueRange(0, 9999);
+                                }
                             }
                         }
                     }
@@ -502,6 +669,10 @@ int main(int argc, char **argv)
     // 保存数据到文件
     // 在遍历完成后添加中断函数数量的输出
     std::cout << "Number of ISR functions: " << countUniqueIsrFunctions(isrInfo) << std::endl;
+    
+    // 清理未使用的变量
+    cleanGlobalVarList(Mod);
+    
     std::string outputFilename = generateOutputFilename(argv[1]);
     saveToFile(outputFilename, global_var, mainInfo, isrInfo);
     return 0;

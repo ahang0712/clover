@@ -130,3 +130,6 @@ For now, I must output:
 
 
 Elapsed Time: 120.2417140007019 seconds
+
+[System R1] Task failed: Connection error.
+Elapsed Time: 2.615046977996826 seconds

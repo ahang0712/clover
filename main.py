@@ -2,224 +2,188 @@ import time
 import os
 import re
 import json
-import concurrent.futures
-from openai import OpenAI
-from config import *
-from utils import read_file, read_json, add_line_numbers, load_prompt
+import asyncio
+from config import *  # 引入所有配置
+from utils import read_file, read_json, add_line_numbers
 from defect_patterns import PATTERN_REGEX, PATTERNS
 from code_parser import extract_variable_operations, annotate_code
 from api_client import APIClient
-from agent.expert_agent import ExpertAgent
-from agent.judge_agent import JudgeAgent
+from model_loader import LocalModel  # 恢复这个导入，api_client.py需要它
 from output import save_response
+from tqdm import tqdm
+import torch
+from agent.conversation_manager import ConversationManager
 
-messages = []  # 初始化会话历史记录列表
+# 异步处理单个缺陷模式任务（使用ConversationManager）
+async def handle_pattern_task(defect_mode, context, api_client, model, start_time):
+    print(f"[Debug] 进入handle_pattern_task: defect_mode={defect_mode}")
+    
+    # 创建对话管理器
+    conversation_manager = ConversationManager(api_client, model)
+    
+    # 使用对话管理器运行对话
+    return await conversation_manager.run_conversation(defect_mode, context, start_time)
 
-# 处理缺陷模式任务的函数
-def handle_pattern_task(defect_mode, context, api_client, model):
-    """
-    Handles expert/judge analysis for a specific defect pattern,
-    including multi-turn dialogue until Expert Agent returns "Abstain" or rounds exceed max_rounds.
-    If Expert Agent returns "No defects.", the process ends early.
-    """
-    pattern_info = PATTERNS.get(defect_mode)
-    if not pattern_info:
-        print(f"[Warning] Pattern info not found: {defect_mode}")
-        return
-
-    # 加载各种prompt和范例
-    system_prompt = load_prompt("prompt/common/system_message.md")
-    task_objective = load_prompt("prompt/expert/task_objective.md", pattern_name=pattern_info['pattern_name'])
-    detection_rules = load_prompt("prompt/expert/detection_rules.md")
-    domain_knowledge_md_file = pattern_info['domain_knowledge']
-    domain_knowledge = load_prompt(f"prompt/domain_knowledge/{domain_knowledge_md_file}")
-    example_md_file = pattern_info['pattern_example']
-    pattern_example = load_prompt(f"prompt/expert/{example_md_file}")
-    output_format = load_prompt("prompt/expert/output_format.md",
-                                pattern_name=pattern_info['pattern_name'],
-                                pattern_example=pattern_example,
-                                access_pattern=pattern_info['access_pattern']
-                                )
-
-    expert_prompt = (
-        f"<think>\n"
-        f"{task_objective}\n\n"
-        f"{domain_knowledge}\n\n"
-        f"{detection_rules}\n\n"
-        f"{output_format}\n\n"
-        f"---\n\n"
-        f"Global Variables to Focus on:\n[{context['variables_text']}]\n\n"
-        f"The global variable read/write operations, line numbers, and function information are as follows:\n{context['operations_text']}\n"
-        f"\nThe code to analyze is:\n```c\n{context['code_str']}\n```\n"
-        f"</think>"
-    )
-
-    # 加载Judge部分的prompt
-    judge_example_1 = load_prompt("prompt/judge/judge_example_1.md")
-    judge_example_2 = load_prompt("prompt/judge/judge_example_2.md")
-    judge_example_3 = load_prompt("prompt/judge/judge_example_3.md")
-    judge_example_4 = load_prompt("prompt/judge/judge_example_4.md")
-
-    judge_prompt = load_prompt(
-        "prompt/judge/judge_steps.md",
-        judge_example_1=judge_example_1,
-        judge_example_2=judge_example_2,
-        judge_example_3=judge_example_3,
-        judge_example_4=judge_example_4,
-    )
-
-    # 初始化API客户端和代理
-    api_client = APIClient()
-    expert_agent = ExpertAgent(api_client, model)
-    judge_agent = JudgeAgent(api_client, model)
-
-    max_rounds = 3
-    round_id = 1
-    all_responses = ""
-    start_time = time.time()
-
-    # 第一轮Expert Agent分析
-    response_expert = expert_agent.analyze(system_prompt, expert_prompt)
-    api_client.add_message("user", expert_prompt)  # 将 Expert Agent 输入加入信息池
-    api_client.add_message("assistant", response_expert)  # 将 Expert Agent 输出加入信息池
-    all_responses += f"[Expert Agent Response - Round {round_id}]\n{response_expert}\n\n"
-
-    # 如果Expert Agent返回 "No defects."，直接结束对话
-    if "No defects." in response_expert:
-        all_responses += "[Expert Agent] No defects found. Ending the conversation.\n"
-        save_response(context['response_file_path'], all_responses, time.time() - start_time)
-        return (defect_mode, all_responses)
-
-    def is_abstain(text):
-        return 'abstain' in text.strip().lower()
-
-    # 循环处理Expert Agent和Judge Agent的对话
-    while not is_abstain(response_expert) and round_id < max_rounds:
-        # 将Judge Agent 输入加入信息池
-        api_client.add_message("user", response_expert)
-        # 拼接 Judge Agent 的消息
-        judge_msg = "\n".join([msg["content"] for msg in messages]) + "\n" + judge_prompt
-        response_judge = judge_agent.judge(judge_msg)
-        api_client.add_message("assistant", response_judge)  # 将 Judge Agent 输出加入信息池
-        all_responses += f"[Judge Agent Response - Round {round_id}]\n{response_judge}\n\n"
-
-        # Expert Agent 再分析，prompt给judge的完整回复+pattern名说明
-        expert_followup_prompt = f"""
-### You are tasked with reviewing the revised report's code, specifically examining read and write operations on global variables.
-Focus on identifying any defects related to the specific pattern: {pattern_info['pattern_name']}.
-If you find any additional defects of this pattern, list them in the JSON format previously provided.
-If no additional defects are found, simply output the word "Abstain".
-"""
-        round_id += 1
-        response_expert = expert_agent.analyze(system_prompt, response_judge + "\n" + expert_followup_prompt)
-        api_client.add_message("user", response_judge)  # 将 Judge Agent 输入加入信息池
-        api_client.add_message("assistant", response_expert)  # 将 Expert Agent 输出加入信息池
-        all_responses += f"[Expert Agent Response - Round {round_id}]\n{response_expert}\n\n"
-
-        if is_abstain(response_expert):
-            break
-
-    save_response(context['response_file_path'], all_responses, time.time() - start_time)
-    return (defect_mode, all_responses)
-
-import time
-import concurrent.futures
-
-import time
-import concurrent.futures
-
-def main():
+async def main():
+    torch.cuda.empty_cache()
+    print(f"[Debug] 开始执行main函数")
     results = []
-    max_time = 0  # Variable to track the latest time
-    log_file_path = "/Users/hehang03/code/clover/dataset/c-src/response-1/qwen3-235b/max_time_log.txt"
-    # Iterate over i (from 1 to 31)
-    for i in range(7, 32):
-        j = 1  # Assuming `j` is constant for now, you can adjust as needed
-        file_template = f'{BASE_SRC_PATH}/Racebench_2.1/svp_simple_{{:03d}}/svp_simple_{{:03d}}_{{:03d}}'
-        defect_file_path = file_template.format(i, i, j) + '-output_defects.txt'
-        json_file_path = file_template.format(i, i, j) + '-output.json'
-        code_file_path = file_template.format(i, i, j) + '.c'
-        response_file_name = os.path.basename(code_file_path).replace('.c', '-response.txt')
-        response_file_base = os.path.join(RESPONSE_PATH, response_file_name)
+    max_time = 0
+    log_file_path = os.path.join(RESPONSE_PATH, "max_time_log.txt")
+    
+    # 创建响应目录
+    os.makedirs(RESPONSE_PATH, exist_ok=True)
+    print(f"[Debug] 响应目录已创建: {RESPONSE_PATH}")
+    
+    # 初始化API客户端
+    print(f"[Debug] 开始初始化API客户端")
+    api_client = APIClient()
+    print(f"[Debug] API客户端初始化完成，模型类型={api_client.model_type}")
+    
+    # 打印API密钥状态
+    if api_client.model_type == "online":
+        api_client.print_api_keys_status()
+    
+    # 获取本地模型
+    local_model = api_client.local_model if api_client.model_type == "local" else None
+    if local_model:
+        # 测试模型是否能响应简单提示词
+        print(f"[Debug] 开始测试模型基本功能")
+        test_prompt = "Hello, this is a test prompt. Please respond with one sentence."
+        try:
+            test_response = await local_model.generate_responses(
+                prompt=test_prompt, 
+                max_tokens=50
+            )
+            print(f"[Debug] 模型测试成功，响应: {str(test_response)[:100]}...")
+        except Exception as e:
+            print(f"[Error] 模型测试失败: {str(e)}")
+    else:
+        print(f"[Debug] 未使用本地模型")
 
-        # === Load all data ===
-        content = read_file(defect_file_path)
-        json_data = read_json(json_file_path)
-        code_lines = read_file(code_file_path).splitlines()
-        code_with_lines = add_line_numbers(code_lines)
+    try:
+        # 处理案例（示例：i=1）
+        for i in range(5,32):
+            j = 1
+            file_template = f"{BASE_SRC_PATH}/Racebench_2.1/svp_simple_{{:03d}}/svp_simple_{{:03d}}_{{:03d}}"
+            defect_file_path = file_template.format(i, i, j) + "-output_defects.txt"
+            json_file_path = file_template.format(i, i, j) + "-output.json"
+            code_file_path = file_template.format(i, i, j) + ".c"
+            response_file_name = os.path.basename(code_file_path).replace(".c", "-response.txt")
+            response_file_base = os.path.join(RESPONSE_PATH, response_file_name)
 
-        # === Extract variable operations & patterns ===
-        reports = content.split('---')
-        all_variables = set()
-        all_operations = {}
-        found_defect_modes = set()
+            # 读取文件内容
+            try:
+                print(f"[Debug] 开始读取文件内容")
+                content = read_file(defect_file_path)
+                json_data = read_json(json_file_path)
+                code_lines = read_file(code_file_path).splitlines()
+                print(f"[Debug] 文件读取成功: 缺陷内容长度={len(content)}, 代码行数={len(code_lines)}")
+            except Exception as e:
+                print(f"[Critical Error] 读取文件失败 (i={i}): {str(e)}")
+                continue
 
-        for report in reports:
-            matches = re.findall(PATTERN_REGEX, report)
-            for match in matches:
-                defect_mode, variable, location = match
-                all_variables.add(variable)
-                found_defect_modes.add(defect_mode)
-                operations = extract_variable_operations(variable, json_data)
-                all_operations.setdefault(variable, []).extend(operations)
+            # 提取缺陷模式和变量信息
+            code_with_lines = add_line_numbers(code_lines)
+            reports = content.split("---")
+            all_variables = set()
+            all_operations = {}
+            found_defect_modes = set()
+            
+            print(f"[Debug] 开始提取缺陷模式，报告数量={len(reports)}")
+            for report in reports:
+                matches = re.findall(PATTERN_REGEX, report)
+                for match in matches:
+                    defect_mode, variable, location = match
+                    all_variables.add(variable)
+                    found_defect_modes.add(defect_mode)
+                    operations = extract_variable_operations(variable, json_data)
+                    all_operations.setdefault(variable, []).extend(operations)
+            
+            print(f"[Debug] 缺陷模式提取完成: {found_defect_modes}")
+            if not found_defect_modes:
+                print(f"[Info] No defect modes found (i={i})")
+                continue
 
-        if not found_defect_modes:
-            print(f"[Info] No defects found for i={i}.")
-            continue
+            # 构建分析上下文
+            variables_text = ", ".join(sorted(all_variables))
+            unique_operations = []
+            for var in sorted(all_variables):
+                unique_operations.extend(list(dict.fromkeys(all_operations.get(var, []))))
+            operations_text = "\n".join(unique_operations)
+            annotated_code = annotate_code(code_with_lines, unique_operations)
+            code_str = "\n".join(annotated_code)
 
-        variables_text = ", ".join(sorted(all_variables))
-        unique_operations = []
-        for var in sorted(all_variables):
-            unique_operations.extend(list(dict.fromkeys(all_operations.get(var, []))))
-        operations_text = "\n".join(unique_operations)
-        annotated_code = annotate_code(code_with_lines, unique_operations)
-        code_str = "\n".join(annotated_code)
+            context_base = {
+                "variables_text": variables_text,
+                "operations_text": operations_text,
+                "code_str": code_str
+            }
 
-        context_base = {
-            'variables_text': variables_text,
-            'operations_text': operations_text,
-            'code_str': code_str
-        }
+            # 记录任务开始时间
+            start_time = time.time()
 
-        # === Shared api_client/model for all tasks ===
-        api_client = APIClient()
-        model = API_MODEL
-
-        # Track the time for each task
-        start_time = time.time()
-
-        # Run tasks in parallel for the defect modes
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = []
+            # 异步处理所有缺陷模式任务
+            tasks = []
+            print(f"[Debug] 开始创建异步任务，数量={len(found_defect_modes)}，单个任务超时限制: 10000秒")
             for defect_mode in found_defect_modes:
-                pattern_response_file = response_file_base.replace('.txt', f'-{defect_mode}.txt')
+                pattern_response_file = response_file_base.replace(".txt", f"-{defect_mode}.txt")
                 context = context_base.copy()
-                context['response_file_path'] = pattern_response_file
-                fut = executor.submit(handle_pattern_task, defect_mode, context, api_client, model)
-                futures.append(fut)
+                context["response_file_path"] = pattern_response_file
+                
+                # 创建基础任务
+                base_task = handle_pattern_task(defect_mode, context, api_client, local_model, start_time)
+                
+                # 先将协程包装为任务，再设置超时和名称
+                task = asyncio.create_task(base_task)
+                task.set_name(f"task_{defect_mode}")
+                
+                # 对任务应用超时控制
+                timeout_task = asyncio.wait_for(task, timeout=10000)
+                tasks.append(timeout_task)
 
-            for fut in concurrent.futures.as_completed(futures):
-                result = fut.result()
-                if result:
-                    results.append(result)
-                    print(f"Task result: {result[0]} Expert and Judge results written.")
+            # 等待所有任务完成
+            print(f"[Debug] 等待{len(tasks)}个任务完成...")
+            for task in asyncio.as_completed(tasks):
+                try:
+                    result = await task
+                    if result:
+                        results.append(result)
+                        print(f"[Completed] Defect mode: {result[0]}")
+                except asyncio.TimeoutError:
+                    # 超时由任务内部的CancelledError处理，此处仅记录
+                    print(f"[Timeout] 任务已超时，结果已保存")
+                except Exception as e:
+                    print(f"[Critical Error] 任务失败: {str(e)}")
+                    import traceback
+                    print(traceback.format_exc())
 
-        end_time = time.time()  # Record the time after the parallel tasks are completed
-        time_taken = end_time - start_time
-        max_time = max(max_time, time_taken)  # Track the latest time
+            # 计算耗时并更新日志
+            time_taken = time.time() - start_time
+            max_time = max(max_time, time_taken)
+            print(f"[Iteration completed] i={i}, 耗时: {time_taken:.2f}s")
+            
+            # 打印API密钥状态
+            if api_client.model_type == "online":
+                api_client.print_api_keys_status()
+            
+            with open(log_file_path, "a") as log_file:
+                log_file.write(f"Iteration i={i}: Time taken {time_taken:.2f}s, Max time {max_time:.2f}s\n")
 
-        print(f"Iteration {i} completed. Time taken: {time_taken:.2f} seconds.")
-        # 每次迭代时将最大时间写入文件
-        with open(log_file_path, "a") as log_file:
-            log_file.write(f"Iteration {i}: Time taken: {time_taken:.2f} seconds. Max time so far: {max_time:.2f} seconds.\n")
+    finally:
+        # 释放模型资源
+        if local_model:
+            print(f"[Debug] 释放模型资源")
+            try:
+                await local_model.close()
+                print(f"[Debug] 本地模型资源已释放")
+            except Exception as e:
+                print(f"[Error] 释放模型资源失败: {str(e)}")
 
-    print(f"Max time for all iterations: {max_time:.2f} seconds.")
-
-    # Record max_time to a file
+    print(f"[All tasks completed] Max time: {max_time:.2f}s")
     with open(log_file_path, "a") as log_file:
-        log_file.write(f"Maximum time for all iterations: {max_time:.2f} seconds.\n")
+        log_file.write(f"Maximum time across all tasks: {max_time:.2f}s\n")
 
 if __name__ == "__main__":
-    main()
-
-
+    print(f"[Debug] 程序开始执行，Python版本={__import__('sys').version}")
+    asyncio.run(main())

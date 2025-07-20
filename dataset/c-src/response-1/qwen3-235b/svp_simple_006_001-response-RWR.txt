@@ -103,3 +103,15 @@ Abstain
 
 
 Elapsed Time: 127.04339814186096 seconds
+
+[System R1] Task failed: Connection error.
+Elapsed Time: 3.644973039627075 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 2.2079200744628906 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 2.120375871658325 seconds
+
+[System R1] Task failed: Error code: 500 - {'status': 500, 'message': '请求异常', 'data': None}
+Elapsed Time: 2.3621950149536133 seconds
