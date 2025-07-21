@@ -31,7 +31,30 @@ shared1_uchar: line 6, Read Operation, main
         {
             "sharedVariable": "shared1_uchar",
             "accessPattern": ["Read", "Write", "Read"],
-            "lines": [5, 9, 6]
+            "details": [
+                {
+                    "codeSnippet": "reader1 = shared1_uchar + 1;",
+                    "function": "main",
+                    "lineNumber": "5",
+                    "accessType": "Read",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "shared1_uchar = 999;",
+                    "function": "isr_1",
+                    "lineNumber": "9",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "reader2 = shared1_uchar - 10",
+                    "function": "main",
+                    "lineNumber": "6",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
         }
     ]
 }

@@ -29,7 +29,30 @@ arr_case[0]: line 7, Read Operation, isr_1
         {
             "sharedVariable": "arr_case[0]",
             "accessPattern": ["Write", "Read", "Write"],
-            "lines": [3, 7, 4]
+            "details": [
+                {
+                    "codeSnippet": "arr_case[0] = 0x1;",
+                    "function": "main",
+                    "lineNumber": "3",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "tmp = arr_case[0];",
+                    "function": "isr_1",
+                    "lineNumber": "7",
+                    "accessType": "Read",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "arr_case[0] = 0x2;",
+                    "function": "main",
+                    "lineNumber": "4",
+                    "accessType": "Write",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
         }
     ]
 }

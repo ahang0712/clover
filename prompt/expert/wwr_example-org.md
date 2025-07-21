@@ -29,7 +29,30 @@ shared_case: line 8, Write Operation, case_isr1
         {
             "sharedVariable": "shared_case",
             "accessPattern": ["Write", "Write", "Read"],
-            "lines": [4, 8, 5]
+            "details": [
+                {
+                    "codeSnippet": "shared_case = 0;",
+                    "function": "main",
+                    "lineNumber": "4",
+                    "accessType": "Write",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "shared_case = 1;",
+                    "function": "isr_1",
+                    "lineNumber": "8",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "tmp = shared_case;",
+                    "function": "main",
+                    "lineNumber": "5",
+                    "accessType": "Read",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
         }
     ]
 }

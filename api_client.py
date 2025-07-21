@@ -125,6 +125,46 @@ class APIClient:
             
     async def _send_local_messages(self, messages):
         """发送本地模型请求"""
+        # 检查是否是批量消息
+        if isinstance(messages, list) and len(messages) > 0 and isinstance(messages[0], list):
+            # 批量处理多个消息组
+            print(f"[APIClient] 检测到批量消息，数量: {len(messages)}")
+            system_contents = []
+            user_contents = []
+            
+            # 从每组消息中提取system和user内容
+            for msg_group in messages:
+                sys_content = None
+                usr_content = None
+                
+                for msg in msg_group:
+                    if msg["role"] == "system":
+                        sys_content = msg["content"]
+                    elif msg["role"] == "user":
+                        usr_content = msg["content"]
+                
+                # 如果没有找到user内容，使用最后一条消息作为user内容
+                if not usr_content and msg_group:
+                    usr_content = msg_group[-1]["content"]
+                
+                system_contents.append(sys_content)
+                user_contents.append(usr_content)
+            
+            try:
+                # 使用批量处理方法
+                responses = await self.local_model.generate_batch_responses(
+                    prompts=user_contents,
+                    system_prompts=system_contents,
+                    max_tokens=self.max_tokens,
+                    temperature=self.temperature
+                )
+                return responses
+            except Exception as e:
+                print(f"[APIClient Error] 本地模型批量推理失败: {str(e)}")
+                # 批量处理失败时，不尝试在线API（复杂度过高），直接抛出异常
+                raise
+        
+        # 单个消息组处理（原有逻辑）
         system_content = None
         user_content = None
         

@@ -67,9 +67,15 @@ class LocalModel:
         
         print(f"[ModelLoader] 初始化完成，耗时: {time.time()-init_start_time:.2f}秒")
 
+        # 请求队列和批处理相关
+        self.request_queue = []
+        self.batch_size = 8  # 默认批处理大小
+        self.queue_lock = asyncio.Lock()  # 队列锁，防止并发访问冲突
+        self.batch_processing = False  # 批处理状态标志
+
     async def generate_responses(self, prompt, max_tokens=4096, temperature=0.01, num_responses=1, stream=False, system_prompt=None):
         """
-        强制单提示词处理，支持实时流式输出
+        支持单提示词处理，保持向后兼容性
         :param prompt: 用户提示词
         :param system_prompt: 系统提示词（可选）
         :param stream: 是否实时输出token（默认False）
@@ -79,7 +85,8 @@ class LocalModel:
         # 处理提示词格式
         if isinstance(prompt, list):
             if len(prompt) > 1:
-                print(f"[ModelLoader Warning] 仅处理首个提示词")
+                print(f"[ModelLoader] 检测到多个提示词，使用批处理模式")
+                return await self.generate_batch_responses(prompt, max_tokens, temperature, num_responses, stream, system_prompt)
             prompt = prompt[0]
         if not isinstance(prompt, str):
             prompt = str(prompt)
@@ -146,6 +153,115 @@ class LocalModel:
         
         except Exception as e:
             print(f"[ModelLoader Critical Error] 生成失败: {str(e)}")
+            import traceback
+            print(traceback.format_exc())
+            raise
+            
+    async def generate_batch_responses(self, prompts, max_tokens=4096, temperature=0.01, num_responses=1, stream=False, system_prompts=None):
+        """
+        批量处理多个提示词
+        :param prompts: 用户提示词列表
+        :param system_prompts: 系统提示词列表（可选，长度应与prompts相同或为None）
+        :param stream: 是否实时输出token（批处理模式下不支持，将被忽略）
+        """
+        if stream:
+            print("[ModelLoader Warning] 批处理模式不支持流式输出，已禁用")
+            stream = False
+            
+        generate_start = time.time()
+        
+        # 确保提示词是列表格式
+        if not isinstance(prompts, list):
+            prompts = [prompts]
+            
+        # 处理系统提示词
+        if system_prompts and not isinstance(system_prompts, list):
+            system_prompts = [system_prompts]
+        
+        # 如果提供了系统提示词列表，确保长度匹配
+        if system_prompts and len(system_prompts) != len(prompts):
+            if len(system_prompts) == 1:
+                # 如果只提供了一个系统提示词，复制到所有提示词
+                system_prompts = system_prompts * len(prompts)
+            else:
+                print(f"[ModelLoader Error] 系统提示词列表长度({len(system_prompts)})与提示词列表长度({len(prompts)})不匹配")
+                raise ValueError("系统提示词列表长度与提示词列表长度不匹配")
+        
+        # 准备批处理请求
+        final_prompts = []
+        request_ids = []
+        
+        print(f"[ModelLoader] 准备批量处理 {len(prompts)} 个提示词")
+        
+        # 构建每个提示词的最终形式
+        for i, prompt in enumerate(prompts):
+            if not isinstance(prompt, str):
+                prompt = str(prompt)
+                
+            # 获取对应的系统提示词
+            sys_prompt = None
+            if system_prompts:
+                sys_prompt = system_prompts[i]
+                
+            # 构建聊天消息
+            if sys_prompt:
+                messages = [
+                    {"role": "system", "content": sys_prompt},
+                    {"role": "user", "content": prompt}
+                ]
+                # 应用聊天模板
+                final_prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            else:
+                # 使用默认系统提示词
+                messages = [
+                    {"role": "system", "content": "Please reason step by step, and put your final answer within \\boxed{}."},
+                    {"role": "user", "content": prompt}
+                ]
+                final_prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+                
+            final_prompts.append(final_prompt)
+            request_ids.append(str(uuid.uuid4()))
+            
+        # 配置采样参数
+        sampling_params = SamplingParams(
+            temperature=temperature,
+            max_tokens=max_tokens,
+            n=num_responses,
+            top_p=0.1,
+            stop_token_ids=[self.tokenizer.eos_token_id],
+        )
+        
+        try:
+            # 批量提交请求
+            print(f"[ModelLoader] 批量提交 {len(final_prompts)} 个请求")
+            results = []  # 用于存储结果
+            
+            # 逐个提交请求，而不是批量提交
+            for i, prompt in enumerate(final_prompts):
+                print(f"[ModelLoader] 提交请求 {i+1}/{len(final_prompts)}")
+                request_id = request_ids[i]
+                
+                # 使用vLLM的API，确保提供request_id参数
+                async for request_output in self.engine.generate(
+                    prompt,  # 单个提示词
+                    sampling_params,
+                    request_id=request_id
+                ):
+                    # 收集完成的请求结果
+                    if request_output.finished:
+                        responses = [output.text for output in request_output.outputs]
+                        result = responses[0] if num_responses == 1 else responses
+                        results.append(result)
+                        print(f"[ModelLoader] 请求 {i+1}/{len(final_prompts)} 完成")
+                        break  # 一旦完成就退出循环
+            
+            generate_time = time.time() - generate_start
+            print(f"[ModelLoader] 批处理完成，总耗时: {generate_time:.2f}秒，平均每个请求: {generate_time/len(prompts):.2f}秒")
+            
+            return results
+            
+        except Exception as e:
+            print(f"[ModelLoader Critical Error] 批处理生成失败: {str(e)}")
             import traceback
             print(traceback.format_exc())
             raise

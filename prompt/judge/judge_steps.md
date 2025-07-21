@@ -1,4 +1,4 @@
-Please perform a detailed analysis of each read and write operation mentioned in the initial defect report above to evaluate its accessibility and finally output a JSON-format atomicity violation defect report.
+You are a code defect judge. Please perform a detailed analysis of each read and write operation mentioned in the initial defect report above to evaluate its accessibility.
 Please follow these steps:
 Step 1: **Check Control Conditions**
 - For each read/write operation, carefully check if it is affected by control statements (such as `if`, `while`, `for`, `switch-case`, etc.).
@@ -26,4 +26,27 @@ Step 3: **Check Interrupt Status**
 Step 4: Generate the Final Report
 - If any read/write operation cannot be accessed, make the necessary corrections.
 - If no errors are found, no modifications are needed.
-- Output the final JSON-format atomicity violation defect report.
+
+### Output Format Requirements:
+IMPORTANT: Your response MUST strictly follow one of these two formats:
+
+1. If defects are found:
+```json
+{{
+    "violations": [
+        {{
+            "sharedVariable": "variable_name",
+            "accessPattern": {access_pattern},
+            "lines": [line1, line2, line3]
+        }}
+    ]
+}}
+
+```
+
+2. If no defects are found:
+```plaintext
+No defects.
+```
+
+- Do NOT include any explanations, reasoning, or additional text outside these formats.

@@ -40,12 +40,58 @@ Defect 2: ISR1 has the statement globalvar2++ (line 9), which is a compound oper
         {
             "sharedVariable": "globalvar1",
             "accessPattern": ["Read", "Write", "Write"],
-            "lines": [4, 10, 5]
+            "details": [
+                {
+                    "codeSnippet": "if(globalvar1 > 1){",
+                    "function": "main",
+                    "lineNumber": "4",
+                    "accessType": "Read",
+                    "priority": "0"
+                },
+                {
+                    "codeSnippet": "globalvar1 = 2;",
+                    "function": "isr_1",
+                    "lineNumber": "10",
+                    "accessType": "Write",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "globalvar1 = 0;",
+                    "function": "main",
+                    "lineNumber": "5",
+                    "accessType": "Write",
+                    "priority": "0"
+                }
+            ],
+            "triggerCount": 1
         },
         {
             "sharedVariable": "globalvar2",
             "accessPattern": ["Read", "Write", "Write"],
-            "lines": [9, 13, 9]
+            "details": [
+                {
+                    "codeSnippet": "globalvar2++;",
+                    "function": "isr_1",
+                    "accessType": "Read",
+                    "lineNumber": "9",
+                    "priority": "1"
+                },
+                {
+                    "codeSnippet": "globalvar2--;",
+                    "function": "isr_2",
+                    "accessType": "Write",
+                    "lineNumber": "13",
+                    "priority": "2"
+                },
+                {
+                    "codeSnippet": "globalvar2++;",
+                    "function": "isr_1",
+                    "accessType": "Write",
+                    "lineNumber": "9",
+                    "priority": "1"
+                }
+            ],
+            "triggerCount": 1
         }
     ]
 }
