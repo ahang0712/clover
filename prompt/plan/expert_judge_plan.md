@@ -24,10 +24,12 @@ You must provide your expert-judge plan in JSON format as follows:
 {
   "expert_judge_tasks": [
     {
-      "type": "pattern",
-      "target": "Read, Write, Read",
-      "priority": 5,
-      "reason": "Check for atomicity violation pattern RWR"
+      "sharedVariables": ["shared1_uchar"],
+      "accessPattern": ["Read", "Write", "Read"]
+    },
+    {
+      "sharedVariables": ["global_var1", "global_var2"],
+      "accessPattern": ["Write", "Read", "Write"]
     }
   ]
 }
@@ -36,17 +38,17 @@ You must provide your expert-judge plan in JSON format as follows:
 ## Planning Rules
 
 1. **Pattern-based Tasks**:
-   - Always include tasks for checking each known atomicity violation pattern
-   - Assign highest priority (5) to pattern-based tasks
+   - For each known atomicity violation pattern, identify variables that might be affected
+   - Each task should specify both the shared variables and their access pattern
+   - Group variables that share the same access pattern in the same task
 
-2. **Variable-based Tasks**:
-   - When there are many potential defect variables ({defect_var_count} > 2) or many accesses ({defect_count} > 10), add variable-specific tasks
-   - Focus on variables with the most accesses
-   - Assign priority based on access frequency (max priority 4)
+2. **Variable Selection**:
+   - When there are many potential defect variables ({defect_var_count} > 2) or many accesses ({defect_count} > 10), prioritize variables with the most accesses
+   - For each variable or group of variables, specify the most likely access pattern that could lead to atomicity violations
 
-3. **Prioritization**:
-   - Use priority levels 1-5 (5 being highest)
-   - Consider both the pattern/variable importance and the likelihood of finding defects
+3. **Task Organization**:
+   - Group related variables that share the same access pattern
+   - Focus on the most critical variables and patterns first
    - Limit the total number of tasks to a reasonable amount (max 10)
 
 Output ONLY the JSON object without any additional explanation. 

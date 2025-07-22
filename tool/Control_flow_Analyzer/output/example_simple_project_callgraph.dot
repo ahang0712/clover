@@ -1,0 +1,38 @@
+digraph CallGraph {
+  node [shape=box];
+  subgraph "cluster_math_ops.c" {
+    label="math_ops.c";
+    style=filled;
+    color=lightgrey;
+    "add" [style=filled, fillcolor=lightblue];
+    "validate_input" [style=filled, fillcolor=lightblue];
+    "subtract" [style=filled, fillcolor=lightblue];
+    "multiply" [style=filled, fillcolor=lightblue];
+  }
+
+  subgraph "cluster_utils.c" {
+    label="utils.c";
+    style=filled;
+    color=lightgrey;
+    "print_result" [style=filled, fillcolor=lightblue];
+    "format_output" [style=filled, fillcolor=lightblue];
+    "log_message" [style=filled, fillcolor=lightblue];
+  }
+
+  subgraph "cluster_main.c" {
+    label="main.c";
+    style=filled;
+    color=lightgrey;
+    "main" [style=filled, fillcolor=lightblue];
+  }
+
+  "add" -> "validate_input";
+  "subtract" -> "validate_input";
+  "multiply" -> "validate_input";
+  "print_result" -> "format_output";
+  "main" -> "log_message";
+  "main" -> "subtract";
+  "main" -> "add";
+  "main" -> "print_result";
+  "main" -> "multiply";
+}

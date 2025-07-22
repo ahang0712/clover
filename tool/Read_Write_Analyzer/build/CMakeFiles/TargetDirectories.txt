@@ -1,0 +1,4 @@
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/build/CMakeFiles/rebuild_cache.dir
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/build/CMakeFiles/edit_cache.dir
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/build/CMakeFiles/llvm_api_demo.dir
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/build/CMakeFiles/intrinsics_gen.dir

@@ -1,0 +1,11 @@
+digraph CallGraph {
+  node [shape=box];
+  "main" [style=filled, fillcolor=lightblue];
+  "calculate_sum" [style=filled, fillcolor=lightblue];
+  "helper_function" [style=filled, fillcolor=lightblue];
+  "print_result" [style=filled, fillcolor=lightblue];
+  "main" -> "calculate_sum";
+  "main" -> "helper_function";
+  "main" -> "print_result";
+  "helper_function" -> "helper_function";
+}

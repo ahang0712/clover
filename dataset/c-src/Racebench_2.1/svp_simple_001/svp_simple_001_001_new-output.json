@@ -1,0 +1,83 @@
+{
+  "ISR_COUNT": 2,
+  "GLOBAL_VAR": [
+    "svp_simple_001_001_global_flag",
+    "svp_simple_001_001_global_array",
+    "svp_simple_001_001_global_array[0]",
+    "svp_simple_001_001_global_array[1]",
+    "svp_simple_001_001_global_array[9999]",
+    "svp_simple_001_001_global_array[TRIGGER]",
+    "svp_simple_001_001_global_array[1000]",
+    "svp_simple_001_001_global_array[var]",
+    "svp_simple_001_001_global_array[i]",
+    "svp_simple_001_001_global_array[var[0,9999]]",
+    "svp_simple_001_001_global_array[i[0,9999]]",
+    "svp_simple_001_001_global_var"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_001_001_global_array[var]",
+      "line": "19",
+      "function": "svp_simple_001_001_main",
+      "range": [0, 9999]
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_001_001_global_array[var]",
+      "line": "24",
+      "function": "svp_simple_001_001_main",
+      "range": [0, 9999]
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_001_001_global_flag",
+      "line": "31",
+      "function": "svp_simple_001_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_001_001_global_var",
+      "line": "33",
+      "function": "svp_simple_001_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_001_001_global_var",
+      "line": "34",
+      "function": "svp_simple_001_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_001_001_global_flag",
+      "line": "44",
+      "function": "svp_simple_001_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_001_001_global_array[9999]",
+      "line": "46",
+      "function": "svp_simple_001_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_001_001_global_array[0]",
+      "line": "50",
+      "function": "svp_simple_001_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_001_001_global_array[1000]",
+      "line": "53",
+      "function": "svp_simple_001_001_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_001_001_global_var",
+      "line": "56",
+      "function": "svp_simple_001_001_isr_2"
+    }
+  ]
+}

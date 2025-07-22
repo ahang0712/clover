@@ -48,9 +48,8 @@ async def handle_plan_task(code_str, api_client, model):
     # 输出Plan Agent分析结果
     print(f"[Debug] Plan Agent分析完成，使用了 {len(plan_result['used_tools'])} 个工具")
     print(f"[Debug] 工具执行顺序: {', '.join(plan_result.get('tool_sequence', []))}")
-    print(f"[Debug] Plan Agent安排了 {len(plan_result['expert_judge_plan'])} 个expert-judge任务")
     
-    # 提取工具使用计划和expert-judge计划的格式
+    # 提取工具使用计划
     tool_plan = plan_result.get("tool_plan_output", "")
     tool_pattern = r"<tool>(.*?)</tool>"
     tool_matches = re.findall(tool_pattern, tool_plan, re.DOTALL)
@@ -62,6 +61,15 @@ async def handle_plan_task(code_str, api_client, model):
         if message[0] == "expert_judge_plan_json":
             expert_judge_json = message[1]
             break
+    
+    # 解析expert-judge计划，获取任务数量和变量数量
+    try:
+        expert_judge_data = json.loads(expert_judge_json)
+        expert_judge_tasks = expert_judge_data.get("expert_judge_tasks", [])
+        var_count = sum(len(task.get("sharedVariables", [])) for task in expert_judge_tasks)
+        print(f"[Debug] Plan Agent安排了 {len(expert_judge_tasks)} 个expert-judge任务，涉及 {var_count} 个共享变量")
+    except Exception as e:
+        print(f"[Debug] 无法解析expert-judge计划: {str(e)}")
     
     # 将两轮输出保存到单独的文件中
     plan_result["tool_plan_text"] = tool_plan_text
@@ -175,7 +183,17 @@ async def main():
                 
                 # 将Plan Agent的分析结果添加到上下文中
                 context_base["plan_facts"] = plan_result["facts"]
-                context_base["expert_judge_plan"] = plan_result["expert_judge_plan"]
+                try:
+                    expert_judge_data = json.loads(plan_result["expert_judge_json"])
+                    context_base["expert_judge_tasks"] = expert_judge_data.get("expert_judge_tasks", [])
+                    
+                    # 打印任务信息
+                    task_count = len(context_base["expert_judge_tasks"])
+                    var_count = sum(len(task.get("sharedVariables", [])) for task in context_base["expert_judge_tasks"])
+                    print(f"[Debug] 加载了 {task_count} 个expert-judge任务，涉及 {var_count} 个共享变量")
+                except Exception as e:
+                    print(f"[Warning] 解析expert-judge任务失败: {str(e)}")
+                    context_base["expert_judge_tasks"] = []
                 
                 # 保存Plan Agent的分析结果到文件
                 plan_result_file = response_file_base.replace(".txt", "-plan.json")
@@ -279,6 +297,28 @@ async def main():
             print(f"[Debug] 释放模型资源")
             try:
                 await local_model.close()
+                print(f"[Debug] 本地模型资源已释放")
+            except Exception as e:
+                print(f"[Error] 释放模型资源失败: {str(e)}")
+
+    print(f"[All tasks completed] Max time: {max_time:.2f}s")
+    with open(log_file_path, "a") as log_file:
+        log_file.write(f"Maximum time across all tasks: {max_time:.2f}s\n")
+
+if __name__ == "__main__":
+    print(f"[Debug] 程序开始执行，Python版本={__import__('sys').version}")
+    asyncio.run(main())
+                print(f"[Debug] 本地模型资源已释放")
+            except Exception as e:
+                print(f"[Error] 释放模型资源失败: {str(e)}")
+
+    print(f"[All tasks completed] Max time: {max_time:.2f}s")
+    with open(log_file_path, "a") as log_file:
+        log_file.write(f"Maximum time across all tasks: {max_time:.2f}s\n")
+
+if __name__ == "__main__":
+    print(f"[Debug] 程序开始执行，Python版本={__import__('sys').version}")
+    asyncio.run(main())
                 print(f"[Debug] 本地模型资源已释放")
             except Exception as e:
                 print(f"[Error] 释放模型资源失败: {str(e)}")

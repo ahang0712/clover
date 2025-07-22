@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/cJSON.c
+string.h
+-
+stdio.h
+-
+math.h
+-
+stdlib.h
+-
+float.h
+-
+limits.h
+-
+ctype.h
+-
+cJSON.h
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/cJSON.h
+
+/Users/hehang03/code/clover/tool/Read_Write_Analyzer/cJSON.h
+

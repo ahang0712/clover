@@ -261,6 +261,32 @@ void saveToFile(const std::string &filename,
     {
         if (mainInfo[i].size() >= 4)
         { // Ensure we have all required fields
+            // 检查是否是对整个数组的操作（不带索引）
+            std::string varName = mainInfo[i][1];
+            bool isArrayWithoutIndex = false;
+            
+            // 如果变量名是数组名但不包含 '[' 字符，则认为是对整个数组的操作
+            if (varName.find("_array") != std::string::npos && varName.find('[') == std::string::npos) {
+                // 检查是否有对应的带索引的操作
+                for (size_t j = 0; j < mainInfo.size(); ++j) {
+                    if (j != i && mainInfo[j].size() >= 4) {
+                        std::string otherVarName = mainInfo[j][1];
+                        if (otherVarName.find(varName + "[") == 0 && 
+                            mainInfo[j][2] == mainInfo[i][2] && 
+                            mainInfo[j][3] == mainInfo[i][3]) {
+                            // 找到了对应的带索引的操作，跳过当前操作
+                            isArrayWithoutIndex = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // 如果是对整个数组的操作且有对应的带索引的操作，则跳过
+            if (isArrayWithoutIndex) {
+                continue;
+            }
+            
             outFile << "    {\n";
             outFile << "      \"operation\": ";
             writeJsonString(outFile, mainInfo[i][0]);
@@ -274,7 +300,6 @@ void saveToFile(const std::string &filename,
             
             // Check if we need to add range information
             bool hasRange = false;
-            std::string varName = mainInfo[i][1];
             size_t bracketPos = varName.find('[');
             if (bracketPos != std::string::npos && bracketPos + 1 < varName.size()) {
                 size_t closeBracketPos = varName.find(']', bracketPos);
@@ -289,7 +314,7 @@ void saveToFile(const std::string &filename,
             
             // Write function name - if there's a range, don't add a comma after it
             outFile << "      \"function\": ";
-            writeJsonString(outFile, mainInfo[i][3], !hasRange);
+            writeJsonString(outFile, mainInfo[i][3], true);
             
             // Add range information if needed
             if (hasRange) {
@@ -297,7 +322,7 @@ void saveToFile(const std::string &filename,
                 outFile << "      \"range\": [0, 9999]";
                 outFile << "\n";
             } else {
-            outFile << "\n";
+                outFile << "\n";
             }
             
             outFile << "    }" << (i == mainInfo.size() - 1 ? "" : ",") << "\n";
@@ -313,7 +338,34 @@ void saveToFile(const std::string &filename,
     for (const auto& isrGroup : isrInfo) {
         for (const auto& info : isrGroup) {
             if (info.size() >= 4) {
-                totalEntries++;
+                // 检查是否是对整个数组的操作（不带索引）
+                std::string varName = info[1];
+                bool isArrayWithoutIndex = false;
+                
+                // 如果变量名是数组名但不包含 '[' 字符，则认为是对整个数组的操作
+                if (varName.find("_array") != std::string::npos && varName.find('[') == std::string::npos) {
+                    // 检查是否有对应的带索引的操作
+                    for (const auto& isrGroup2 : isrInfo) {
+                        for (const auto& info2 : isrGroup2) {
+                            if (&info != &info2 && info2.size() >= 4) {
+                                std::string otherVarName = info2[1];
+                                if (otherVarName.find(varName + "[") == 0 && 
+                                    info2[2] == info[2] && 
+                                    info2[3] == info[3]) {
+                                    // 找到了对应的带索引的操作，跳过当前操作
+                                    isArrayWithoutIndex = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isArrayWithoutIndex) break;
+                    }
+                }
+                
+                // 如果是对整个数组的操作且有对应的带索引的操作，则不计入总数
+                if (!isArrayWithoutIndex) {
+                    totalEntries++;
+                }
             }
         }
     }
@@ -322,6 +374,35 @@ void saveToFile(const std::string &filename,
     for (const auto& isrGroup : isrInfo) {
         for (const auto& info : isrGroup) {
             if (info.size() >= 4) {
+                // 检查是否是对整个数组的操作（不带索引）
+                std::string varName = info[1];
+                bool isArrayWithoutIndex = false;
+                
+                // 如果变量名是数组名但不包含 '[' 字符，则认为是对整个数组的操作
+                if (varName.find("_array") != std::string::npos && varName.find('[') == std::string::npos) {
+                    // 检查是否有对应的带索引的操作
+                    for (const auto& isrGroup2 : isrInfo) {
+                        for (const auto& info2 : isrGroup2) {
+                            if (&info != &info2 && info2.size() >= 4) {
+                                std::string otherVarName = info2[1];
+                                if (otherVarName.find(varName + "[") == 0 && 
+                                    info2[2] == info[2] && 
+                                    info2[3] == info[3]) {
+                                    // 找到了对应的带索引的操作，跳过当前操作
+                                    isArrayWithoutIndex = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isArrayWithoutIndex) break;
+                    }
+                }
+                
+                // 如果是对整个数组的操作且有对应的带索引的操作，则跳过
+                if (isArrayWithoutIndex) {
+                    continue;
+                }
+                
                 outFile << "    {\n";
                 outFile << "      \"operation\": ";
                 writeJsonString(outFile, info[0]);
@@ -335,7 +416,6 @@ void saveToFile(const std::string &filename,
                 
                 // Check if we need to add range information
                 bool hasRange = false;
-                std::string varName = info[1];
                 size_t bracketPos = varName.find('[');
                 if (bracketPos != std::string::npos && bracketPos + 1 < varName.size()) {
                     size_t closeBracketPos = varName.find(']', bracketPos);
@@ -350,7 +430,7 @@ void saveToFile(const std::string &filename,
                 
                 // Write function name - if there's a range, don't add a comma after it
                 outFile << "      \"function\": ";
-                writeJsonString(outFile, info[3], !hasRange);
+                writeJsonString(outFile, info[3], true);
                 
                 // Add range information if needed
                 if (hasRange) {
@@ -358,7 +438,7 @@ void saveToFile(const std::string &filename,
                     outFile << "      \"range\": [0, 9999]";
                     outFile << "\n";
                 } else {
-                outFile << "\n";
+                    outFile << "\n";
                 }
                 
                 currentEntry++;
@@ -597,6 +677,86 @@ int main(int argc, char **argv)
 
     // std::vector<std::vector<std::vector<std::string>>> ret1RWR;
     // std::vector<std::vector<std::vector<std::string>>> ret2WWR;
+    // std::vector<std::vector<std::vector<std::string>>> ret3RWW;
+    // std::vector<std::vector<std::vector<std::string>>> ret4WRW;
+
+    // const char *desc1RWR = "This is a RWR bug !!!";
+    // const char *desc2WWR = "This is a WWR bug !!!";
+    // const char *desc3RWW = "This is a RWW bug !!!";
+    // const char *desc4WRW = "This is a WRW bug !!!";
+
+    // ret1RWR = pattern1RWR(mainInfo, isrInfo, mapCalledFun);
+    // ret2WWR = pattern2WWR(mainInfo, isrInfo, mapCalledFun);
+    // ret3RWW = pattern3RWW(mainInfo, isrInfo, mapCalledFun);
+    // ret4WRW = pattern4WRW(mainInfo, isrInfo, mapCalledFun);
+
+    // travers3D(ret1RWR);
+    // travers3D(ret2WWR);
+    // travers3D(ret3RWW);
+    // travers3D(ret4WRW);
+
+    // FILE *fp;
+    // char* s= "hello world！";
+    // char*filename = argv[1];
+    // sprintf(filename,"%d.txt",i);
+
+    // fp = fopen("/home/vip/hanghe/race-master/llvm-api-demo/output/file_1.txt", "a");
+
+    // if (!ret1RWR.empty())
+    // {
+    //     char *pJson = makeJson(ret1RWR, desc1RWR);
+    //     printf("Bugs found in RWR :\n%s\n", pJson);
+    //     fprintf(fp, "%s \n", pJson);
+    //     // travers3D(ret1RWR);
+    //     free(pJson);
+    // }
+
+    // if (!ret2WWR.empty())
+    // {
+    //     char *pJson = makeJson(ret2WWR, desc2WWR);
+    //     printf("Bugs found in WWR :\n%s\n", pJson);
+    //     fprintf(fp, "%s \n", pJson);
+    //     // travers3D(ret2WWR);
+    //     free(pJson);
+    // }
+
+    // if (!ret3RWW.empty())
+    // {
+    //     char *pJson = makeJson(ret3RWW, desc3RWW);
+    //     printf("Bugs found in RWW :\n%s\n", pJson);
+    //     fprintf(fp, "%s \n", pJson);
+    //     travers3D(ret3RWW);
+    //     free(pJson);
+    // }
+
+    // if (!ret4WRW.empty())
+    // {
+    //     char *pJson = makeJson(ret4WRW, desc4WRW);
+    //     printf("Bugs found in WRW :\n%s\n", pJson);
+    //     fprintf(fp, "%s \n", pJson);
+    //     // travers3D(ret4WRW);
+    //     free(pJson);
+    // }
+
+    // char * pJson = makeJson(ret,desc);
+    // printf("Results:\n%s\n", pJson);
+
+    // write to file
+
+    // fprintf(fp,"%s \n",s);
+    // fclose(fp);
+
+    // 保存数据到文件
+    // 在遍历完成后添加中断函数数量的输出
+    std::cout << "Number of ISR functions: " << countUniqueIsrFunctions(isrInfo) << std::endl;
+    
+    // 清理未使用的变量
+    cleanGlobalVarList(Mod);
+    
+    std::string outputFilename = generateOutputFilename(argv[1]);
+    saveToFile(outputFilename, global_var, mainInfo, isrInfo);
+    return 0;
+}
     // std::vector<std::vector<std::vector<std::string>>> ret3RWW;
     // std::vector<std::vector<std::vector<std::string>>> ret4WRW;
 

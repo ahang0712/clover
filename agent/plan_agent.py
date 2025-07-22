@@ -230,13 +230,10 @@ class PlanAgent(AgentBase):
         2. 对于每个缺陷模式，如果其关联的变量数量 >= 3 或任一变量的缺陷次数 > 5，则为每个变量创建单独的任务
         
         返回expert-judge计划列表，每个元素包含:
-        - type: "pattern" 或 "variable"
-        - target: 缺陷模式或变量名
-        - pattern: (仅变量任务) 关联的缺陷模式
-        - priority: 优先级（模式任务为5，变量任务为4）
-        - reason: 安排原因
+        - sharedVariables: 共享变量名列表
+        - accessPattern: 访问模式，如["Read", "Write", "Read"]
         """
-        expert_judge_plan = []
+        expert_judge_tasks = []
         
         # 1. 提取潜在缺陷模式和相关变量
         defect_patterns = self.known_patterns  # 默认使用所有已知模式
@@ -277,59 +274,111 @@ class PlanAgent(AgentBase):
         
         # 2. 为每个缺陷模式创建任务
         for pattern in defect_patterns:
-            # 创建模式任务
-            expert_judge_plan.append({
-                "type": "pattern",
-                "target": pattern,
-                "priority": 5,  # 模式任务优先级最高
-                "reason": f"Check for atomicity violation pattern {pattern}"
-            })
-            
             # 获取该模式涉及的变量
             pattern_vars = defect_vars_by_pattern.get(pattern, [])
+            
+            # 解析模式字符串，转换为访问操作列表
+            # 例如: "<Read, Write, Read>" -> ["Read", "Write", "Read"]
+            access_pattern = self._parse_pattern_to_access_list(pattern)
             
             # 检查是否需要为该模式创建变量任务
             if len(pattern_vars) >= self.DEFECT_VAR_THRESHOLD:
                 self.add_message("plan_info", f"Pattern {pattern} has {len(pattern_vars)} variables, creating variable tasks")
-                # 变量数量达到阈值，为每个变量创建任务
-                for var_name in pattern_vars:
-                    expert_judge_plan.append({
-                        "type": "variable",
-                        "target": var_name,
-                        "pattern": pattern,
-                        "priority": 4,  # 变量任务优先级次之
-                        "reason": f"Variable involved in {pattern} pattern with {var_access_counts.get(var_name, 0)} accesses"
-                    })
-            else:
-                # 检查是否有变量的访问次数超过阈值
+                
+                # 按访问频率对变量进行分组
+                high_freq_vars = []
+                normal_vars = []
+                
                 for var_name in pattern_vars:
                     if var_access_counts.get(var_name, 0) > self.DEFECT_COUNT_THRESHOLD:
-                        self.add_message("plan_info", f"Variable {var_name} has {var_access_counts.get(var_name)} accesses, creating variable task")
-                        # 变量访问次数达到阈值，创建变量任务
-                        expert_judge_plan.append({
-                            "type": "variable",
-                            "target": var_name,
-                            "pattern": pattern,
-                            "priority": 4,
-                            "reason": f"High-frequency variable in {pattern} pattern with {var_access_counts.get(var_name)} accesses"
+                        high_freq_vars.append(var_name)
+                    else:
+                        normal_vars.append(var_name)
+                
+                # 为高频变量创建单独的任务
+                for var_name in high_freq_vars:
+                    expert_judge_tasks.append({
+                        "sharedVariables": [var_name],
+                        "accessPattern": access_pattern
+                    })
+                
+                # 如果有普通频率的变量，将它们分组
+                if normal_vars:
+                    # 每组最多包含3个变量
+                    for i in range(0, len(normal_vars), 3):
+                        group = normal_vars[i:i+3]
+                        expert_judge_tasks.append({
+                            "sharedVariables": group,
+                            "accessPattern": access_pattern
                         })
+            else:
+                # 变量数量较少，将它们放在一个任务中
+                if pattern_vars:
+                    expert_judge_tasks.append({
+                        "sharedVariables": pattern_vars,
+                        "accessPattern": access_pattern
+                    })
         
         # 生成expert-judge计划的JSON格式输出
-        plan_json = self._generate_expert_judge_json(expert_judge_plan)
+        plan_json = self._generate_expert_judge_json(expert_judge_tasks)
         self.add_message("expert_judge_plan_json", plan_json)
         
-        return expert_judge_plan
+        return expert_judge_tasks
+    
+    def _parse_pattern_to_access_list(self, pattern: str) -> List[str]:
+        """
+        将模式字符串解析为访问操作列表
+        例如: "<Read, Write, Read>" -> ["Read", "Write", "Read"]
+        """
+        # 移除尖括号和空格，然后按逗号分割
+        if pattern.startswith("<") and pattern.endswith(">"):
+            pattern = pattern[1:-1]
         
-    def _generate_expert_judge_json(self, expert_judge_plan: List[Dict[str, Any]]) -> str:
+        return [op.strip() for op in pattern.split(",")]
+        
+    def _generate_expert_judge_json(self, expert_judge_tasks: List[Dict[str, Any]]) -> str:
         """
         生成expert-judge计划的JSON格式输出
         """
-        # 按优先级排序
-        sorted_plan = sorted(expert_judge_plan, key=lambda x: x.get("priority", 0), reverse=True)
-        
         # 构建JSON对象
         expert_judge_json = {
-            "expert_judge_tasks": sorted_plan
+            "expert_judge_tasks": expert_judge_tasks
+        }
+        
+        # 转换为JSON字符串，保持缩进格式
+        return json.dumps(expert_judge_json, indent=2, ensure_ascii=False)
+
+        # 移除尖括号和空格，然后按逗号分割
+        if pattern.startswith("<") and pattern.endswith(">"):
+            pattern = pattern[1:-1]
+        
+        return [op.strip() for op in pattern.split(",")]
+        
+    def _generate_expert_judge_json(self, expert_judge_tasks: List[Dict[str, Any]]) -> str:
+        """
+        生成expert-judge计划的JSON格式输出
+        """
+        # 构建JSON对象
+        expert_judge_json = {
+            "expert_judge_tasks": expert_judge_tasks
+        }
+        
+        # 转换为JSON字符串，保持缩进格式
+        return json.dumps(expert_judge_json, indent=2, ensure_ascii=False)
+
+        # 移除尖括号和空格，然后按逗号分割
+        if pattern.startswith("<") and pattern.endswith(">"):
+            pattern = pattern[1:-1]
+        
+        return [op.strip() for op in pattern.split(",")]
+        
+    def _generate_expert_judge_json(self, expert_judge_tasks: List[Dict[str, Any]]) -> str:
+        """
+        生成expert-judge计划的JSON格式输出
+        """
+        # 构建JSON对象
+        expert_judge_json = {
+            "expert_judge_tasks": expert_judge_tasks
         }
         
         # 转换为JSON字符串，保持缩进格式

@@ -1,0 +1,38 @@
+{
+  "functions": [
+    {
+      "name": "main",
+      "type": "defined"
+    },
+    {
+      "name": "calculate_sum",
+      "type": "defined"
+    },
+    {
+      "name": "helper_function",
+      "type": "defined"
+    },
+    {
+      "name": "print_result",
+      "type": "defined"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "main",
+      "callee": "calculate_sum"
+    },
+    {
+      "caller": "main",
+      "callee": "helper_function"
+    },
+    {
+      "caller": "main",
+      "callee": "print_result"
+    },
+    {
+      "caller": "helper_function",
+      "callee": "helper_function"
+    }
+  ]
+}
