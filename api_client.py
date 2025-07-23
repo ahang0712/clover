@@ -34,7 +34,10 @@ import asyncio
 import random
 from config import API_HOST, API_MODEL, MODEL_TYPE, MODEL_PATH, API_KEYS
 from openai import OpenAI
-from model_loader import LocalModel  # 导入本地模型
+
+# 只有在使用本地模型时才导入LocalModel
+if MODEL_TYPE == "local":
+    from model_loader import LocalModel
 
 class APIClient:
     def __init__(self, api_key=None, base_url=None, model=None, max_tokens=512, temperature=0.0):
@@ -45,6 +48,9 @@ class APIClient:
         self.api_keys = API_KEYS
         self.current_key_index = 0
         
+        # 强制使用本地工具（默认为False）
+        self.force_local_tools = False
+        
         if self.model_type == "online":
             # 初始化 OpenAI 客户端（在线模型）
             self.client = OpenAI(
@@ -52,6 +58,7 @@ class APIClient:
                 base_url=API_HOST
             )
             self.model = API_MODEL
+            self.local_model = None  # 在线模式不需要本地模型
         else:
             # 本地模型
             self.local_model = LocalModel(MODEL_PATH)  # 使用本地模型加载类
@@ -61,6 +68,15 @@ class APIClient:
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.messages = []
+        
+    def set_force_local_tools(self, force=True):
+        """设置是否强制使用本地工具"""
+        self.force_local_tools = force
+        print(f"[APIClient] 强制使用本地工具模式: {force}")
+        
+    def is_online_mode(self):
+        """判断是否在在线模式下运行"""
+        return self.model_type == "online" and not self.force_local_tools
 
     def get_next_api_key(self):
         """获取下一个API密钥（简单轮换）"""

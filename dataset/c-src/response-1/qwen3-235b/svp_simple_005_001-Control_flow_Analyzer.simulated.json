@@ -1,0 +1,17 @@
+{
+  "functions": [
+    "main",
+    "isr",
+    "helper"
+  ],
+  "calls": [
+    {
+      "caller": "main",
+      "callee": "helper"
+    },
+    {
+      "caller": "isr",
+      "callee": "helper"
+    }
+  ]
+}

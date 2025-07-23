@@ -39,7 +39,7 @@ class AgentBase:
         通用的异步处理方法，可被子类重写
         
         :param api_client: APIClient实例
-        :param model: 使用的模型名称
+        :param model: 使用的模型名称，在online模式下可以为None，此时使用api_client默认模型
         :param system_prompt: 系统提示词
         :param user_prompt: 用户提示词
         :return: 模型响应
@@ -50,6 +50,7 @@ class AgentBase:
         ]
         
         try:
+            # 如果model为None，使用api_client默认模型
             result = await api_client.send_messages(model, messages)
             self.add_message("info", f"{self.name} async processing completed")
             return result

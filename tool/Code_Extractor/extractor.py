@@ -243,23 +243,23 @@ def process_file(input_file, output_file, main_name=None, do_inline=False, keep_
     if main_name:
         if main_name in function_locations:
             main_func_info = call_graph[main_name]
-    else:
-        # 尝试找到标准main函数或类似main的函数
-        main_candidates = [
-            'main', 
-            'app_main', 
-            'svp_simple_main', 
-            'svp_simple_\d+_\d+_main'
-        ]
-        
-        for candidate in main_candidates:
-            for func_name in function_locations:
-                if re.fullmatch(candidate, func_name):
-                    main_func_info = call_graph[func_name]
-                    main_name = func_name
+        else:
+                # 尝试找到标准main函数或类似main的函数
+            main_candidates = [
+                'main', 
+                'app_main', 
+                'svp_simple_main', 
+                'svp_simple_\d+_\d+_main'
+            ]
+            
+            for candidate in main_candidates:
+                for func_name in function_locations:
+                    if re.fullmatch(candidate, func_name):
+                        main_func_info = call_graph[func_name]
+                        main_name = func_name
+                        break
+                if main_func_info:
                     break
-            if main_func_info:
-                break
     
     if not main_func_info and verbose:
         print("警告：未找到主函数")

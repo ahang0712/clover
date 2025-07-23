@@ -3,12 +3,15 @@ import os
 import re
 import json
 import asyncio
+import argparse
 from config import *  # 引入所有配置
 from utils import read_file, read_json, add_line_numbers
 from defect_patterns import PATTERN_REGEX, PATTERNS
 from code_parser import extract_variable_operations, annotate_code
 from api_client import APIClient
-from model_loader import LocalModel  # 恢复这个导入，api_client.py需要它
+# 只在本地模型模式下导入LocalModel
+if MODEL_TYPE == "local":
+    from model_loader import LocalModel
 from output import save_response
 from tqdm import tqdm
 import torch
@@ -36,50 +39,130 @@ async def handle_batch_tasks(defect_modes, contexts, api_client, model, start_ti
     return await conversation_manager.run_batch_conversation(defect_modes, contexts, start_time)
 
 # 异步处理Plan Agent任务
-async def handle_plan_task(code_str, api_client, model):
+async def handle_plan_task(code_str, api_client, model, input_file_name="input.c", force_local_tools=False):
     print(f"[Debug] 进入handle_plan_task: 使用Plan Agent分析代码")
     
-    # 创建Plan Agent
-    plan_agent = PlanAgent(api_client, model)
-    
-    # 使用Plan Agent分析代码
-    plan_result = await plan_agent.decide_tools(code_str)
-    
-    # 输出Plan Agent分析结果
-    print(f"[Debug] Plan Agent分析完成，使用了 {len(plan_result['used_tools'])} 个工具")
-    print(f"[Debug] 工具执行顺序: {', '.join(plan_result.get('tool_sequence', []))}")
-    
-    # 提取工具使用计划
-    tool_plan = plan_result.get("tool_plan_output", "")
-    tool_pattern = r"<tool>(.*?)</tool>"
-    tool_matches = re.findall(tool_pattern, tool_plan, re.DOTALL)
-    tool_plan_text = f"<tool>\n{tool_matches[0]}\n</tool>" if tool_matches else "<tool>\n未找到工具计划\n</tool>"
-    
-    # 从plan_result中提取expert-judge计划的JSON格式
-    expert_judge_json = ""
-    for message in plan_agent.messages:
-        if message[0] == "expert_judge_plan_json":
-            expert_judge_json = message[1]
-            break
-    
-    # 解析expert-judge计划，获取任务数量和变量数量
     try:
-        expert_judge_data = json.loads(expert_judge_json)
-        expert_judge_tasks = expert_judge_data.get("expert_judge_tasks", [])
-        var_count = sum(len(task.get("sharedVariables", [])) for task in expert_judge_tasks)
-        print(f"[Debug] Plan Agent安排了 {len(expert_judge_tasks)} 个expert-judge任务，涉及 {var_count} 个共享变量")
+        # 创建Plan Agent
+        # 确保api_client和model都不为空
+        if not api_client:
+            raise ValueError("api_client不能为空")
+        
+        # 如果model为None，使用api_client默认模型
+        if model is None and api_client.model_type == "online":
+            model = api_client.model
+            
+        # 确定原始文件名，确保使用绝对路径
+        original_file_name = os.path.abspath(input_file_name) if input_file_name else None
+        
+        # 如果文件存在，检查是否是相对路径
+        if original_file_name and not os.path.exists(original_file_name) and not os.path.isabs(original_file_name):
+            # 尝试转换为绝对路径
+            abs_path = os.path.join(os.getcwd(), original_file_name)
+            if os.path.exists(abs_path):
+                original_file_name = abs_path
+        
+        print(f"[Debug] 使用原始文件名: {original_file_name}")
+            
+        plan_agent = PlanAgent(api_client, model or "default_model", original_file_name=original_file_name)
+        
+        # 使用Plan Agent分析代码
+        plan_result = await plan_agent.decide_tools(code_str)
+        
+        # 输出Plan Agent分析结果
+        print(f"[Debug] Plan Agent分析完成，使用了 {len(plan_result['used_tools'])} 个工具")
+        print(f"[Debug] 工具执行顺序: {', '.join(plan_result.get('tool_sequence', []))}")
+        
+        # 提取工具使用计划
+        tool_plan = plan_result.get("tool_plan_output", "")
+        # 记录原始工具计划
+        print(f"[Debug] 原始工具计划: {tool_plan[:100]}...")
+        
+        # 增强提取工具计划的能力
+        tool_plan_text = "<tool>\n未能获取工具计划\n</tool>"
+        try:
+            # 如果工具计划已经是格式化的，直接使用
+            if tool_plan and "<tool>" in tool_plan and "</tool>" in tool_plan:
+                tool_plan_text = tool_plan
+                print(f"[Debug] 使用原始工具计划")
+            else:
+                # 尝试多种模式提取工具计划
+                tool_patterns = [
+                    r"<tool>(.*?)</tool>",  # 标准格式
+                    r"```(?:xml|html)?\s*<tool>(.*?)</tool>\s*```",  # 代码块中的格式
+                    r"<tool>\s*([\s\S]*?)\s*</tool>"  # 更宽松的匹配
+                ]
+                
+                for pattern in tool_patterns:
+                    tool_matches = re.findall(pattern, tool_plan, re.DOTALL)
+                    if tool_matches:
+                        tool_plan_text = f"<tool>\n{tool_matches[0].strip()}\n</tool>"
+                        print(f"[Debug] 成功提取工具计划，使用模式: {pattern}")
+                        break
+            
+            # 检查是否成功提取了工具计划
+            if tool_plan_text == "<tool>\n未能获取工具计划\n</tool>":
+                # 检查plan_result中是否有tool_sequence
+                if "tool_sequence" in plan_result and plan_result["tool_sequence"]:
+                    tool_sequence = plan_result["tool_sequence"]
+                    tool_plan_text = "<tool>\n" + "\n".join(tool_sequence) + "\n</tool>"
+                    print(f"[Debug] 从tool_sequence生成工具计划: {tool_plan_text}")
+                else:
+                    print(f"[Debug] 无法从原始工具计划中提取内容，使用默认文本")
+        except Exception as e:
+            print(f"[Error] 提取工具计划失败: {str(e)}")
+        
+        # 将工具计划保存到plan_result
+        plan_result["tool_plan_text"] = tool_plan_text
+        
+        # 从plan_result中提取expert-judge计划的JSON格式
+        expert_judge_json = "{}"  # 默认为空JSON对象
+        try:
+            # 由于expert-judge规划已被搁置，直接使用空对象
+            expert_judge_data = {"expert_judge_tasks": []}
+            expert_judge_json = json.dumps(expert_judge_data, indent=2, ensure_ascii=False)
+            print(f"[Debug] Expert-judge规划已被搁置，使用空任务列表")
+        except Exception as e:
+            print(f"[Debug] 无法解析expert-judge计划: {str(e)}")
+            print(f"[Warning] 解析expert-judge任务失败: {str(e)}")
+        
+        # 解析expert-judge计划，获取任务数量和变量数量
+        try:
+            expert_judge_data = json.loads(expert_judge_json)
+            expert_judge_tasks = expert_judge_data.get("expert_judge_tasks", [])
+            var_count = sum(len(task.get("sharedVariables", [])) for task in expert_judge_tasks)
+            print(f"[Debug] 加载了 {len(expert_judge_tasks)} 个expert-judge任务，涉及 {var_count} 个共享变量")
+        except Exception as e:
+            print(f"[Debug] 无法解析expert-judge计划: {str(e)}")
+            expert_judge_json = "{}"  # 重置为空JSON对象
+        
+        # 将两轮输出保存到单独的文件中
+        plan_result["tool_plan_text"] = tool_plan_text
+        plan_result["expert_judge_json"] = expert_judge_json
+        
+        return plan_result
     except Exception as e:
-        print(f"[Debug] 无法解析expert-judge计划: {str(e)}")
-    
-    # 将两轮输出保存到单独的文件中
-    plan_result["tool_plan_text"] = tool_plan_text
-    plan_result["expert_judge_json"] = expert_judge_json
-    
-    return plan_result
+        print(f"[Error] Plan Agent分析失败: {str(e)}")
+        # 返回一个空的结果，避免程序崩溃
+        return {
+            "facts": {},
+            "used_tools": [],
+            "tool_sequence": [],
+            "tool_plan_text": "<tool>\n未能获取工具计划\n</tool>",
+            "expert_judge_json": "{}"
+        }
 
 async def main():
+    # 解析命令行参数
+    parser = argparse.ArgumentParser(description="Clover - 代码分析工具")
+    parser.add_argument("--force-local-tools", action="store_true", help="强制使用本地工具而不是模拟输出")
+    args = parser.parse_args()
+    
     torch.cuda.empty_cache()
+    print(f"[Debug] 程序开始执行，Python版本={os.sys.version}")
     print(f"[Debug] 开始执行main函数")
+    if args.force_local_tools:
+        print(f"[Debug] 强制使用本地工具模式已启用")
     results = []
     max_time = 0
     log_file_path = os.path.join(RESPONSE_PATH, "max_time_log.txt")
@@ -91,6 +174,11 @@ async def main():
     # 初始化API客户端
     print(f"[Debug] 开始初始化API客户端")
     api_client = APIClient()
+    
+    # 设置是否强制使用本地工具
+    if args.force_local_tools:
+        api_client.set_force_local_tools(True)
+        
     print(f"[Debug] API客户端初始化完成，模型类型={api_client.model_type}")
     
     # 打印API密钥状态
@@ -116,7 +204,7 @@ async def main():
 
     try:
         # 处理案例（示例：i=1）
-        for i in range(5,32):
+        for i in range(5,6):
             j = 1
             file_template = f"{BASE_SRC_PATH}/Racebench_2.1/svp_simple_{{:03d}}/svp_simple_{{:03d}}_{{:03d}}"
             defect_file_path = file_template.format(i, i, j) + "-output_defects.txt"
@@ -179,7 +267,9 @@ async def main():
             # 首先调用Plan Agent进行代码分析和任务规划
             print(f"[Debug] 开始调用Plan Agent进行代码分析和任务规划")
             try:
-                plan_result = await handle_plan_task(code_str, api_client, local_model)
+                # 只传递文件名，而不是完整路径
+                input_file_name = os.path.basename(code_file_path)
+                plan_result = await handle_plan_task(code_str, api_client, local_model, input_file_name, args.force_local_tools)
                 
                 # 将Plan Agent的分析结果添加到上下文中
                 context_base["plan_facts"] = plan_result["facts"]
@@ -297,28 +387,6 @@ async def main():
             print(f"[Debug] 释放模型资源")
             try:
                 await local_model.close()
-                print(f"[Debug] 本地模型资源已释放")
-            except Exception as e:
-                print(f"[Error] 释放模型资源失败: {str(e)}")
-
-    print(f"[All tasks completed] Max time: {max_time:.2f}s")
-    with open(log_file_path, "a") as log_file:
-        log_file.write(f"Maximum time across all tasks: {max_time:.2f}s\n")
-
-if __name__ == "__main__":
-    print(f"[Debug] 程序开始执行，Python版本={__import__('sys').version}")
-    asyncio.run(main())
-                print(f"[Debug] 本地模型资源已释放")
-            except Exception as e:
-                print(f"[Error] 释放模型资源失败: {str(e)}")
-
-    print(f"[All tasks completed] Max time: {max_time:.2f}s")
-    with open(log_file_path, "a") as log_file:
-        log_file.write(f"Maximum time across all tasks: {max_time:.2f}s\n")
-
-if __name__ == "__main__":
-    print(f"[Debug] 程序开始执行，Python版本={__import__('sys').version}")
-    asyncio.run(main())
                 print(f"[Debug] 本地模型资源已释放")
             except Exception as e:
                 print(f"[Error] 释放模型资源失败: {str(e)}")
