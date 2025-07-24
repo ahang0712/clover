@@ -55,12 +55,21 @@ async def handle_plan_task(code_str, api_client, model, input_file_name="input.c
         # 确定原始文件名，确保使用绝对路径
         original_file_name = os.path.abspath(input_file_name) if input_file_name else None
         
-        # 如果文件存在，检查是否是相对路径
-        if original_file_name and not os.path.exists(original_file_name) and not os.path.isabs(original_file_name):
-            # 尝试转换为绝对路径
-            abs_path = os.path.join(os.getcwd(), original_file_name)
-            if os.path.exists(abs_path):
-                original_file_name = abs_path
+        # 检查文件是否存在
+        if original_file_name and not os.path.exists(original_file_name):
+            print(f"[Warning] 文件不存在: {original_file_name}")
+            # 尝试其他可能的路径
+            possible_paths = [
+                os.path.join(os.getcwd(), input_file_name),
+                os.path.join(BASE_SRC_PATH, os.path.basename(input_file_name)),
+                os.path.join(BASE_SRC_PATH, "Racebench_2.1", f"svp_simple_{os.path.basename(input_file_name).split('_')[2]}", os.path.basename(input_file_name))
+            ]
+            
+            for path in possible_paths:
+                if os.path.exists(path):
+                    original_file_name = path
+                    print(f"[Debug] 找到文件: {original_file_name}")
+                    break
         
         print(f"[Debug] 使用原始文件名: {original_file_name}")
             
@@ -204,7 +213,7 @@ async def main():
 
     try:
         # 处理案例（示例：i=1）
-        for i in range(5,6):
+        for i in range(2,3):
             j = 1
             file_template = f"{BASE_SRC_PATH}/Racebench_2.1/svp_simple_{{:03d}}/svp_simple_{{:03d}}_{{:03d}}"
             defect_file_path = file_template.format(i, i, j) + "-output_defects.txt"
@@ -267,8 +276,8 @@ async def main():
             # 首先调用Plan Agent进行代码分析和任务规划
             print(f"[Debug] 开始调用Plan Agent进行代码分析和任务规划")
             try:
-                # 只传递文件名，而不是完整路径
-                input_file_name = os.path.basename(code_file_path)
+                # 传递完整的文件路径，而不仅仅是文件名
+                input_file_name = code_file_path  # 使用完整路径
                 plan_result = await handle_plan_task(code_str, api_client, local_model, input_file_name, args.force_local_tools)
                 
                 # 将Plan Agent的分析结果添加到上下文中

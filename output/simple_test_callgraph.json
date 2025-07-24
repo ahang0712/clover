@@ -1,0 +1,30 @@
+{
+  "functions": [
+    {
+      "name": "svp_simple_005_001_main",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_005_001_isr_1",
+      "type": "defined"
+    },
+    {
+      "name": "init",
+      "type": "external"
+    },
+    {
+      "name": "idlerun",
+      "type": "external"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "svp_simple_005_001_main",
+      "callee": "init"
+    },
+    {
+      "caller": "svp_simple_005_001_isr_1",
+      "callee": "idlerun"
+    }
+  ]
+}

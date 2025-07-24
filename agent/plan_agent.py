@@ -47,7 +47,10 @@ class PlanAgent(AgentBase):
             "output_suffix": "-analysis.json",
             "output_key": "Read_Write_Analyzer",
             "required": True,
-            "description": "分析共享变量的读写操作"
+            "description": "分析共享变量的读写操作",
+            "use_mcp": True,  # 使用MCP装饰器
+            "mcp_module": "analyzer",  # MCP模块名
+            "mcp_function": "analyze_rw"  # MCP函数名
         },
         "Control_flow_Analyzer": {
             "path": "./tool/Control_flow_Analyzer",
@@ -115,8 +118,277 @@ class PlanAgent(AgentBase):
                 continue
                 
             tool_config = self.TOOL_CONFIG[tool_name]
+            # 添加调试信息
+            if tool_name == "Read_Write_Analyzer":
+                print(f"[DEBUG] Read_Write_Analyzer 配置: use_mcp={tool_config.get('use_mcp', False)}, mcp_module={tool_config.get('mcp_module', 'None')}, mcp_function={tool_config.get('mcp_function', 'None')}")
             out_path = "input.c".replace('.c', tool_config["output_suffix"])
             
+            # 单独处理MCP工具
+            if tool_name == "Read_Write_Analyzer" and tool_config.get("use_mcp", False):
+                # 在主try-except块外处理MCP工具
+                print("[DEBUG] 在主try-except块外处理MCP工具")
+                
+                try:
+                    # 使用MCP装饰器方式调用工具
+                    import importlib.util
+                    import sys
+                    import os
+                    
+                    # 构建模块路径
+                    module_path = os.path.abspath(os.path.join(tool_config["path"], f"{tool_config['mcp_module']}.py"))
+                    print(f"[Read_Write_Analyzer MCP] 加载模块: {module_path}")
+                    print(f"[DEBUG] 模块文件是否存在: {os.path.exists(module_path)}")
+                    
+                    # 检查当前工作目录
+                    print(f"[DEBUG] 当前工作目录: {os.getcwd()}")
+                    
+                    # 检查模块所在目录
+                    module_dir = os.path.dirname(module_path)
+                    print(f"[DEBUG] 模块所在目录: {module_dir}")
+                    print(f"[DEBUG] 模块所在目录是否存在: {os.path.exists(module_dir)}")
+                    
+                    # 列出模块所在目录的文件
+                    if os.path.exists(module_dir):
+                        print(f"[DEBUG] 模块所在目录文件列表: {os.listdir(module_dir)}")
+                    
+                    # 检查模块文件是否存在
+                    if not os.path.exists(module_path):
+                        print(f"[Read_Write_Analyzer MCP] 错误: 模块文件不存在: {module_path}")
+                        self.add_message("plan_error", f"MCP模块文件不存在: {module_path}")
+                        raise Exception(f"MCP模块文件不存在: {module_path}")
+                    
+                    # 动态加载模块
+                    print(f"[DEBUG] 尝试加载模块: {module_path}")
+                    spec = importlib.util.spec_from_file_location(tool_config['mcp_module'], module_path)
+                    if spec is None:
+                        print(f"[DEBUG] 无法创建spec，模块路径可能有问题: {module_path}")
+                        raise ImportError(f"无法创建spec，模块路径可能有问题: {module_path}")
+                    module = importlib.util.module_from_spec(spec)
+                    sys.modules[tool_config['mcp_module']] = module
+                    print(f"[DEBUG] 执行模块: {module}")
+                    spec.loader.exec_module(module)
+                    
+                    # 检查模块是否包含指定的函数
+                    func_name = tool_config['mcp_function']
+                    print(f"[DEBUG] 检查模块是否包含函数: {func_name}")
+                    if hasattr(module, func_name):
+                        print(f"[DEBUG] 模块包含函数: {func_name}")
+                    else:
+                        print(f"[DEBUG] 模块不包含函数: {func_name}")
+                        print(f"[DEBUG] 模块的属性: {dir(module)}")
+                        raise AttributeError(f"模块不包含函数: {func_name}")
+                    
+                    # 获取函数
+                    mcp_function = getattr(module, tool_config['mcp_function'])
+                    
+                    # 检查函数是否有MCP装饰器
+                    if hasattr(mcp_function, 'is_mcp_tool') and mcp_function.is_mcp_tool:
+                        print(f"[Read_Write_Analyzer MCP] 调用MCP函数: {tool_config['mcp_function']}")
+                        self.add_message("plan_info", f"调用MCP函数: {tool_config['mcp_function']}")
+                        
+                        # 创建临时C文件来保存代码内容
+                        import tempfile
+                        
+                        # 设置正确的文件路径
+                        if self.original_file_name:
+                            # 如果传入了原始文件名，优先使用传入的
+                            original_file_name = self.original_file_name
+                        else:
+                            # 尝试从代码内容中提取文件名
+                            file_pattern = r'svp_\w+_\d+_\d+'
+                            file_match = re.search(file_pattern, code)
+                            if file_match:
+                                file_base = file_match.group(0)
+                                # 构建完整路径
+                                original_file_name = f"/Users/hehang03/code/clover/dataset/c-src/Racebench_2.1/{file_base[:11]}/{file_base}.c"
+                                print(f"[LLVM处理] 从代码内容提取文件名: {file_base}")
+                            else:
+                                # 如果无法提取，使用默认路径
+                                original_file_name = "/Users/hehang03/code/clover/dataset/c-src/Racebench_2.1/svp_simple_005/svp_simple_005_001.c"
+                                print(f"[LLVM处理] 使用默认文件路径")
+                        
+                        # 确保使用绝对路径
+                        original_file_name = os.path.abspath(original_file_name)
+                        
+                        # 检查LLVM IR文件是否存在于Racebench_2.1目录中
+                        racebench_dir = "/Users/hehang03/code/clover/dataset/c-src/Racebench_2.1"
+                        file_base = os.path.basename(original_file_name).replace('.c', '')
+                        
+                        # 检查文件名是否符合svp_simple_XXX_YYY格式
+                        if file_base.startswith('svp_simple_'):
+                            # 提取svp_simple_XXX部分
+                            prefix = 'svp_simple_' + file_base.split('_')[2]
+                            file_dir = os.path.join(racebench_dir, prefix)
+                        else:
+                            # 使用默认目录
+                            file_dir = os.path.join(racebench_dir, 'svp_simple_005')
+                            
+                        print(f"[LLVM处理] 使用目录: {file_dir}")
+                        
+                        ll_file_in_racebench = os.path.join(file_dir, f"{file_base}.ll")
+                        opt_ll_file_in_racebench = os.path.join(file_dir, f"{file_base}-opt.ll")
+                        
+                        print(f"[LLVM处理] 检查Racebench_2.1目录中的LLVM IR文件: {ll_file_in_racebench}")
+                        found_llvm_ir = False
+                        if os.path.exists(ll_file_in_racebench):
+                            print(f"[LLVM处理] 在Racebench_2.1目录中找到LLVM IR文件: {ll_file_in_racebench}")
+                            ll_file = ll_file_in_racebench
+                            
+                            # 检查优化后的LLVM IR文件
+                            if os.path.exists(opt_ll_file_in_racebench):
+                                print(f"[LLVM处理] 在Racebench_2.1目录中找到优化后的LLVM IR文件: {opt_ll_file_in_racebench}")
+                                opt_ll_file = opt_ll_file_in_racebench
+                            else:
+                                print(f"[LLVM处理] 在Racebench_2.1目录中未找到优化后的LLVM IR文件，使用未优化的文件")
+                                opt_ll_file = ll_file_in_racebench
+                            
+                            # 使用找到的LLVM IR文件
+                            print(f"[LLVM处理] 使用找到的LLVM IR文件: {opt_ll_file}")
+                            found_llvm_ir = True
+                        
+                        # 如果在Racebench_2.1目录中找到了LLVM IR文件，直接使用它
+                        if found_llvm_ir:
+                            # 调用MCP函数
+                            # 使用绝对路径
+                            abs_out_path = os.path.abspath(out_path)
+                            print(f"[DEBUG] 调用MCP函数: {mcp_function.__name__}({opt_ll_file}, {abs_out_path})")
+                            result = mcp_function(opt_ll_file, abs_out_path)
+                            print(f"[DEBUG] MCP函数返回结果: {result}")
+                            
+                            # 检查结果
+                            if result['status'] == 'success':
+                                print(f"[Read_Write_Analyzer MCP] MCP函数执行成功")
+                                self.add_message("plan_success", f"MCP函数执行成功")
+                                
+                                # 检查输出文件是否存在
+                                if os.path.exists(abs_out_path):
+                                    with open(abs_out_path, 'r') as f:
+                                        outputs[tool_config["output_key"]] = json.load(f)
+                                    actual_used_tools.append(tool_name)
+                                    self.add_message("plan_success", f"{tool_name} 执行成功")
+                                else:
+                                    print(f"[Read_Write_Analyzer MCP] 警告: 输出文件不存在: {abs_out_path}")
+                                    self.add_message("plan_warning", f"输出文件不存在: {abs_out_path}")
+                                    outputs[tool_config["output_key"]] = self._create_default_output(code)
+                                    actual_used_tools.append(tool_name)
+                                
+                                # 跳过后续处理
+                                continue
+                            else:
+                                print(f"[Read_Write_Analyzer MCP] MCP函数执行失败: {result.get('message', '')}")
+                                self.add_message("plan_warning", f"MCP函数执行失败: {result.get('message', '')}")
+                                raise Exception(f"MCP函数执行失败: {result.get('message', '')}")
+                        
+                        # 如果在Racebench_2.1目录中没有找到LLVM IR文件，尝试使用原始文件路径
+                        opt_ll_file = original_file_name.replace('.c', '-opt.ll')
+                        
+                        # 检查优化后的LLVM IR文件是否存在
+                        if not os.path.exists(opt_ll_file):
+                            print(f"[Read_Write_Analyzer MCP] 警告: 优化后的LLVM IR文件不存在: {opt_ll_file}")
+                            # 尝试使用未优化的LLVM IR文件
+                            ll_file = original_file_name.replace('.c', '.ll')
+                            if not os.path.exists(ll_file):
+                                print(f"[Read_Write_Analyzer MCP] 警告: LLVM IR文件不存在，尝试生成: {ll_file}")
+                                
+                                # 尝试生成LLVM IR文件
+                                try:
+                                    # 确保原始C文件存在
+                                    if not os.path.exists(original_file_name):
+                                        print(f"[Read_Write_Analyzer MCP] 错误: 原始C文件不存在: {original_file_name}")
+                                        self.add_message("plan_error", f"原始C文件不存在: {original_file_name}")
+                                        raise Exception(f"原始C文件不存在: {original_file_name}")
+                                    
+                                    # 生成临时C文件
+                                    import tempfile
+                                    with tempfile.NamedTemporaryFile(suffix='.c', delete=False) as tmp_file:
+                                        # 确保写入的是纯C代码，去掉可能的行号
+                                        clean_code = code
+                                        # 检查是否包含行号（如"1: "这样的格式）
+                                        if re.search(r'^\d+:\s', code.split('\n')[0]):
+                                            # 去掉行号
+                                            clean_code = '\n'.join([line.split(':', 1)[1].lstrip() if ':' in line and line.split(':', 1)[0].strip().isdigit() else line for line in code.split('\n')])
+                                        tmp_file.write(clean_code.encode('utf-8'))
+                                        tmp_c_file = tmp_file.name
+                                    
+                                    print(f"[Read_Write_Analyzer MCP] 创建临时C文件: {tmp_c_file}")
+                                    
+                                    # 使用clang生成LLVM IR
+                                    import subprocess
+                                    clang_cmd = ["clang", "-O0", "-g", "-emit-llvm", "-S", tmp_c_file, "-o", ll_file]
+                                    print(f"[Read_Write_Analyzer MCP] 执行命令: {' '.join(clang_cmd)}")
+                                    
+                                    result = subprocess.run(clang_cmd, capture_output=True, text=True)
+                                    if result.returncode == 0:
+                                        print(f"[Read_Write_Analyzer MCP] 成功生成LLVM IR文件: {ll_file}")
+                                    else:
+                                        print(f"[Read_Write_Analyzer MCP] 生成LLVM IR文件失败: {result.stderr}")
+                                        self.add_message("plan_error", f"生成LLVM IR文件失败: {result.stderr}")
+                                        raise Exception(f"生成LLVM IR文件失败: {result.stderr}")
+                                    
+                                    # 使用opt优化LLVM IR
+                                    opt_cmd = ["opt", "-O2", ll_file, "-S", "-o", opt_ll_file]
+                                    print(f"[Read_Write_Analyzer MCP] 执行命令: {' '.join(opt_cmd)}")
+                                    
+                                    result = subprocess.run(opt_cmd, capture_output=True, text=True)
+                                    if result.returncode == 0:
+                                        print(f"[Read_Write_Analyzer MCP] 成功优化LLVM IR文件: {opt_ll_file}")
+                                    else:
+                                        print(f"[Read_Write_Analyzer MCP] 优化LLVM IR文件失败: {result.stderr}")
+                                        self.add_message("plan_warning", f"优化LLVM IR文件失败: {result.stderr}")
+                                        # 如果优化失败，使用未优化的LLVM IR
+                                        opt_ll_file = ll_file
+                                    
+                                    # 清理临时文件
+                                    os.unlink(tmp_c_file)
+                                except Exception as e:
+                                    print(f"[Read_Write_Analyzer MCP] 生成LLVM IR文件异常: {str(e)}")
+                                    self.add_message("plan_error", f"生成LLVM IR文件异常: {str(e)}")
+                                    raise Exception(f"生成LLVM IR文件异常: {str(e)}")
+                            else:
+                                # 使用未优化的LLVM IR
+                                opt_ll_file = ll_file
+                        
+                        # 调用MCP函数
+                        print(f"[DEBUG] 调用MCP函数: {mcp_function.__name__}({opt_ll_file}, {out_path})")
+                        result = mcp_function(opt_ll_file, out_path)
+                        print(f"[DEBUG] MCP函数返回结果: {result}")
+                        
+                        # 检查结果
+                        if result['status'] == 'success':
+                            print(f"[Read_Write_Analyzer MCP] MCP函数执行成功")
+                            self.add_message("plan_success", f"MCP函数执行成功")
+                            
+                            # 检查输出文件是否存在
+                            if os.path.exists(out_path):
+                                with open(out_path, 'r') as f:
+                                    outputs[tool_config["output_key"]] = json.load(f)
+                                actual_used_tools.append(tool_name)
+                                self.add_message("plan_success", f"{tool_name} 执行成功")
+                            else:
+                                print(f"[Read_Write_Analyzer MCP] 警告: 输出文件不存在: {out_path}")
+                                self.add_message("plan_warning", f"输出文件不存在: {out_path}")
+                                outputs[tool_config["output_key"]] = self._create_default_output(code)
+                                actual_used_tools.append(tool_name)
+                            
+                            # 跳过后续处理
+                            continue
+                        else:
+                            print(f"[Read_Write_Analyzer MCP] MCP函数执行失败: {result.get('message', '')}")
+                            self.add_message("plan_warning", f"MCP函数执行失败: {result.get('message', '')}")
+                            raise Exception(f"MCP函数执行失败: {result.get('message', '')}")
+                    else:
+                        print(f"[Read_Write_Analyzer MCP] 警告: 函数没有MCP装饰器")
+                        self.add_message("plan_warning", f"函数没有MCP装饰器")
+                except Exception as e:
+                    print(f"[Read_Write_Analyzer MCP] 加载模块异常: {str(e)}")
+                    self.add_message("plan_error", f"加载MCP模块异常: {str(e)}")
+                    import traceback
+                    print(f"[DEBUG] 异常堆栈: {traceback.format_exc()}")
+                
+                # 如果MCP方式失败，回退到原始方式
+                print(f"[Read_Write_Analyzer MCP] 回退到原始方式")
+                self.add_message("plan_warning", f"回退到原始方式")
+                
             try:
                 self.add_message("plan", f"Running {tool_name} on code")
                 # 使用MCP方式调用工具，可能带有参数
@@ -124,8 +396,102 @@ class PlanAgent(AgentBase):
                 if tool_params:
                     args.extend(tool_params)
                 
-                # 特殊处理Read_Write_Analyzer工具
-                if tool_name == "Read_Write_Analyzer":
+                # 特殊处理Control_flow_Analyzer工具
+                if tool_name == "Control_flow_Analyzer":
+                    # 创建临时C文件来保存代码内容
+                    import tempfile
+                    import os
+                    
+                    # 创建临时文件保存C代码
+                    with tempfile.NamedTemporaryFile(suffix='.c', delete=False) as tmp_file:
+                        # 确保写入的是纯C代码，去掉可能的行号
+                        clean_code = code
+                        # 检查是否包含行号（如"1: "这样的格式）
+                        if re.search(r'^\d+:\s', code.split('\n')[0]):
+                            # 去掉行号
+                            clean_code = '\n'.join([line.split(':', 1)[1].lstrip() if ':' in line and line.split(':', 1)[0].strip().isdigit() else line for line in code.split('\n')])
+                        tmp_file.write(clean_code.encode('utf-8'))
+                        tmp_c_file = tmp_file.name
+                    
+                    print(f"[Control_flow_Analyzer] 创建临时C文件: {tmp_c_file}")
+                    
+                    # 确保输出目录存在
+                    output_dir = os.path.dirname(out_path)
+                    os.makedirs(output_dir, exist_ok=True)
+                    
+                    # 使用修改后的run.sh脚本调用工具
+                    run_script = os.path.join(tool_config["path"], "run.sh")
+                    if not os.path.exists(run_script):
+                        print(f"[Control_flow_Analyzer] 错误: 运行脚本不存在: {run_script}")
+                        self.add_message("plan_error", f"运行脚本不存在: {run_script}")
+                        # 创建基本的调用图
+                        self._create_basic_callgraph(out_path, code)
+                        continue
+                    
+                    # 确保run.sh有执行权限
+                    try:
+                        os.chmod(run_script, 0o755)
+                        print(f"[Control_flow_Analyzer] 已设置run.sh执行权限")
+                    except Exception as e:
+                        print(f"[Control_flow_Analyzer] 设置执行权限失败: {str(e)}")
+                    
+                    # 构建命令参数
+                    basename = os.path.basename(tmp_c_file)
+                    name_without_ext = os.path.splitext(basename)[0]
+                    json_file = os.path.join(output_dir, f"{name_without_ext}_callgraph.json")
+                    
+                    cmd = [run_script, "-o", output_dir, tmp_c_file]
+                    print(f"[Control_flow_Analyzer] 执行命令: {' '.join(cmd)}")
+                    
+                    try:
+                        # 执行分析命令
+                        result = subprocess.run(cmd, capture_output=True, text=True)
+                        
+                        if result.returncode == 0:
+                            print(f"[Control_flow_Analyzer] 分析成功")
+                            if result.stdout:
+                                print(f"[Control_flow_Analyzer] 输出: {result.stdout[:200]}...")
+                            
+                            # 检查生成的JSON文件是否存在
+                            if os.path.exists(json_file):
+                                # 复制到预期的输出路径
+                                import shutil
+                                shutil.copy2(json_file, out_path)
+                                print(f"[Control_flow_Analyzer] 复制结果文件: {json_file} -> {out_path}")
+                            else:
+                                print(f"[Control_flow_Analyzer] 警告: 未找到生成的JSON文件: {json_file}")
+                                # 尝试查找其他可能的输出文件
+                                potential_files = glob.glob(os.path.join(output_dir, "*_callgraph.json"))
+                                if potential_files:
+                                    # 使用找到的第一个文件
+                                    found_file = potential_files[0]
+                                    shutil.copy2(found_file, out_path)
+                                    print(f"[Control_flow_Analyzer] 找到并复制替代文件: {found_file} -> {out_path}")
+                                else:
+                                    # 使用直接分析C代码的方法
+                                    print(f"[Control_flow_Analyzer] 使用直接分析C代码的方法")
+                                    self._create_basic_callgraph(out_path, code)
+                        else:
+                            print(f"[Control_flow_Analyzer] 分析失败: {result.stderr}")
+                            # 使用直接分析C代码的方法
+                            print(f"[Control_flow_Analyzer] 使用直接分析C代码的方法")
+                            self._create_basic_callgraph(out_path, code)
+                    except Exception as e:
+                        print(f"[Control_flow_Analyzer] 执行异常: {str(e)}")
+                        # 使用直接分析C代码的方法
+                        print(f"[Control_flow_Analyzer] 使用直接分析C代码的方法")
+                        self._create_basic_callgraph(out_path, code)
+                    
+                    # 清理临时文件
+                    try:
+                        os.unlink(tmp_c_file)
+                        print(f"[Control_flow_Analyzer] 删除临时文件: {tmp_c_file}")
+                    except Exception as e:
+                        print(f"[Control_flow_Analyzer] 删除临时文件失败: {str(e)}")
+                    
+                    # 跳过后续的工具调用
+                    continue
+                elif tool_name == "Read_Write_Analyzer" and not tool_config.get("use_mcp", False):
                     # 创建临时文件保存C代码、LLVM IR和优化后的LLVM IR
                     import tempfile
                     import subprocess
@@ -527,6 +893,53 @@ class PlanAgent(AgentBase):
                         # 如果opt异常，使用未优化的LLVM IR
                         opt_ll_file = ll_file
                         print(f"[LLVM处理] 使用未优化的LLVM IR: {opt_ll_file}")
+                    
+                    # 使用llvm_api_demo工具分析优化后的LLVM IR文件
+                    print(f"[Read_Write_Analyzer] 开始使用llvm_api_demo分析LLVM IR文件: {opt_ll_file}")
+                    self.add_message("plan_info", f"调用llvm_api_demo分析LLVM IR文件: {opt_ll_file}")
+                    
+                    # 构建llvm_api_demo工具路径
+                    llvm_api_demo_path = os.path.join(tool_config["path"], "llvm_api_demo")
+                    if not os.path.exists(llvm_api_demo_path):
+                        print(f"[Read_Write_Analyzer] 错误: llvm_api_demo工具不存在: {llvm_api_demo_path}")
+                        self.add_message("plan_error", f"llvm_api_demo工具不存在: {llvm_api_demo_path}")
+                        raise Exception(f"llvm_api_demo工具不存在: {llvm_api_demo_path}")
+                    
+                    # 确保llvm_api_demo有执行权限
+                    try:
+                        os.chmod(llvm_api_demo_path, 0o755)
+                        print(f"[Read_Write_Analyzer] 已设置llvm_api_demo执行权限")
+                    except Exception as e:
+                        print(f"[Read_Write_Analyzer] 设置执行权限失败: {str(e)}")
+                    
+                    # 构建输出JSON文件路径
+                    analysis_output = out_path
+                    print(f"[Read_Write_Analyzer] 分析结果输出路径: {analysis_output}")
+                    
+                    # 执行llvm_api_demo工具
+                    try:
+                        # 构建参数列表，传递优化后的LLVM IR文件和输出文件路径
+                        args = [opt_ll_file, analysis_output]
+                        print(f"[Read_Write_Analyzer] 执行命令: {llvm_api_demo_path} {' '.join(args)}")
+                        
+                        # 使用MCP方式调用工具，第一个参数是llvm_api_demo的路径，第二个参数是传递给工具的参数列表
+                        result = run_tool_mcp(llvm_api_demo_path, args)
+                        
+                        # 检查工具执行结果
+                        if result['result'] == 'success':
+                            print(f"[Read_Write_Analyzer] llvm_api_demo执行成功")
+                            if 'stdout' in result and result['stdout']:
+                                print(f"[Read_Write_Analyzer] 标准输出: {result['stdout'][:200]}...")
+                            self.add_message("plan_success", f"llvm_api_demo分析成功")
+                        else:
+                            print(f"[Read_Write_Analyzer] llvm_api_demo执行失败: {result.get('stderr', '')}")
+                            self.add_message("plan_warning", f"llvm_api_demo执行失败: {result.get('stderr', '')}")
+                            raise Exception(f"llvm_api_demo执行失败: {result.get('stderr', '')}")
+                        
+                    except Exception as e:
+                        print(f"[Read_Write_Analyzer] 执行llvm_api_demo异常: {str(e)}")
+                        self.add_message("plan_error", f"执行llvm_api_demo异常: {str(e)}")
+                        raise Exception(f"执行llvm_api_demo异常: {str(e)}")
                 else:
                     # 其他工具正常调用
                     print(f"[工具调用] 执行工具 {tool_name}, 路径: {tool_config['path']}")

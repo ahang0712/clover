@@ -14,8 +14,7 @@
     "casee2_global_var",
     "svp_simple_002_001_global_array[99999]"
   ],
-  "MAIN_INFO": [
-  ],
+  "MAIN_INFO": [],
   "ISR_INFO": [
     {
       "operation": "store",

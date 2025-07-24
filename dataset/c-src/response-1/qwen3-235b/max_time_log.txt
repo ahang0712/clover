@@ -126,3 +126,79 @@ Iteration i=5: Time taken 8.61s, Max time 8.61s
 Maximum time across all tasks: 8.61s
 Iteration i=5: Time taken 8.07s, Max time 8.07s
 Maximum time across all tasks: 8.07s
+Iteration i=5: Time taken 16.43s, Max time 16.43s
+Maximum time across all tasks: 16.43s
+Iteration i=5: Time taken 7.20s, Max time 7.20s
+Maximum time across all tasks: 7.20s
+Iteration i=5: Time taken 307.61s, Max time 307.61s
+Maximum time across all tasks: 307.61s
+Iteration i=5: Time taken 306.66s, Max time 306.66s
+Maximum time across all tasks: 306.66s
+Iteration i=5: Time taken 8.73s, Max time 8.73s
+Maximum time across all tasks: 8.73s
+Iteration i=5: Time taken 8.22s, Max time 8.22s
+Maximum time across all tasks: 8.22s
+Iteration i=5: Time taken 7.98s, Max time 7.98s
+Maximum time across all tasks: 7.98s
+Iteration i=5: Time taken 8.45s, Max time 8.45s
+Maximum time across all tasks: 8.45s
+Iteration i=5: Time taken 9.14s, Max time 9.14s
+Maximum time across all tasks: 9.14s
+Iteration i=5: Time taken 8.20s, Max time 8.20s
+Maximum time across all tasks: 8.20s
+Iteration i=5: Time taken 9.88s, Max time 9.88s
+Maximum time across all tasks: 9.88s
+Iteration i=5: Time taken 8.54s, Max time 8.54s
+Maximum time across all tasks: 8.54s
+Iteration i=5: Time taken 11.89s, Max time 11.89s
+Maximum time across all tasks: 11.89s
+Iteration i=5: Time taken 9.97s, Max time 9.97s
+Maximum time across all tasks: 9.97s
+Iteration i=5: Time taken 6.51s, Max time 6.51s
+Maximum time across all tasks: 6.51s
+Iteration i=5: Time taken 7.47s, Max time 7.47s
+Maximum time across all tasks: 7.47s
+Iteration i=5: Time taken 10.22s, Max time 10.22s
+Maximum time across all tasks: 10.22s
+Iteration i=5: Time taken 9.20s, Max time 9.20s
+Maximum time across all tasks: 9.20s
+Iteration i=5: Time taken 8.28s, Max time 8.28s
+Maximum time across all tasks: 8.28s
+Iteration i=5: Time taken 7.75s, Max time 7.75s
+Maximum time across all tasks: 7.75s
+Iteration i=5: Time taken 7.90s, Max time 7.90s
+Maximum time across all tasks: 7.90s
+Iteration i=5: Time taken 9.83s, Max time 9.83s
+Maximum time across all tasks: 9.83s
+Iteration i=5: Time taken 7.29s, Max time 7.29s
+Maximum time across all tasks: 7.29s
+Iteration i=5: Time taken 7.97s, Max time 7.97s
+Maximum time across all tasks: 7.97s
+Iteration i=5: Time taken 9.05s, Max time 9.05s
+Maximum time across all tasks: 9.05s
+Iteration i=5: Time taken 7.70s, Max time 7.70s
+Maximum time across all tasks: 7.70s
+Iteration i=5: Time taken 7.65s, Max time 7.65s
+Maximum time across all tasks: 7.65s
+Iteration i=5: Time taken 7.71s, Max time 7.71s
+Maximum time across all tasks: 7.71s
+Iteration i=5: Time taken 7.32s, Max time 7.32s
+Maximum time across all tasks: 7.32s
+Iteration i=5: Time taken 7.62s, Max time 7.62s
+Maximum time across all tasks: 7.62s
+Iteration i=5: Time taken 6.30s, Max time 6.30s
+Maximum time across all tasks: 6.30s
+Iteration i=5: Time taken 7.57s, Max time 7.57s
+Maximum time across all tasks: 7.57s
+Iteration i=5: Time taken 7.66s, Max time 7.66s
+Maximum time across all tasks: 7.66s
+Iteration i=5: Time taken 7.98s, Max time 7.98s
+Maximum time across all tasks: 7.98s
+Iteration i=5: Time taken 6.40s, Max time 6.40s
+Maximum time across all tasks: 6.40s
+Iteration i=2: Time taken 10.53s, Max time 10.53s
+Maximum time across all tasks: 10.53s
+Iteration i=2: Time taken 5.13s, Max time 5.13s
+Maximum time across all tasks: 5.13s
+Iteration i=2: Time taken 5.46s, Max time 5.46s
+Maximum time across all tasks: 5.46s

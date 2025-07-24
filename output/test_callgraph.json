@@ -1,0 +1,18 @@
+{
+  "functions": [
+    {
+      "name": "helper",
+      "type": "defined"
+    },
+    {
+      "name": "test_func",
+      "type": "defined"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "test_func",
+      "callee": "helper"
+    }
+  ]
+}
