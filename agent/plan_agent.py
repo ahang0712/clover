@@ -40,7 +40,10 @@ class PlanAgent(AgentBase):
             "output_suffix": "-snippets.c",
             "output_key": "Code_Extractor",
             "required": False,
-            "description": "提取相关代码片段进行分析"
+            "description": "提取相关代码片段进行分析",
+            "use_mcp": True,  # 使用MCP装饰器
+            "mcp_module": "extractor",  # MCP模块名
+            "mcp_function": "extract_code"  # MCP函数名
         },
         "Read_Write_Analyzer": {
             "path": "./tool/Read_Write_Analyzer",
@@ -57,7 +60,10 @@ class PlanAgent(AgentBase):
             "output_suffix": "-calls.json",
             "output_key": "Control_flow_Analyzer",
             "required": False,
-            "description": "分析函数调用关系和控制流"
+            "description": "分析函数调用关系和控制流",
+            "use_mcp": True,  # 使用MCP装饰器
+            "mcp_module": "analyzer",  # MCP模块名
+            "mcp_function": "analyze_control_flow"  # MCP函数名
         },
         "Defect_Highlight": {
             "path": "./tool/Highlight",
@@ -389,6 +395,310 @@ class PlanAgent(AgentBase):
                 print(f"[Read_Write_Analyzer MCP] 回退到原始方式")
                 self.add_message("plan_warning", f"回退到原始方式")
                 
+            elif tool_name == "Control_flow_Analyzer" and tool_config.get("use_mcp", False):
+                # 在主try-except块外处理MCP工具
+                print("[DEBUG] 在主try-except块外处理Control_flow_Analyzer MCP工具")
+                
+                try:
+                    # 使用MCP装饰器方式调用工具
+                    import importlib.util
+                    import sys
+                    import os
+                    
+                    # 构建模块路径
+                    module_path = os.path.abspath(os.path.join(tool_config["path"], f"{tool_config['mcp_module']}.py"))
+                    print(f"[{tool_name} MCP] 加载模块: {module_path}")
+                    print(f"[DEBUG] 模块文件是否存在: {os.path.exists(module_path)}")
+                    
+                    # 检查当前工作目录
+                    print(f"[DEBUG] 当前工作目录: {os.getcwd()}")
+                    
+                    # 检查模块所在目录
+                    module_dir = os.path.dirname(module_path)
+                    print(f"[DEBUG] 模块所在目录: {module_dir}")
+                    print(f"[DEBUG] 模块所在目录是否存在: {os.path.exists(module_dir)}")
+                    
+                    # 列出模块所在目录的文件
+                    if os.path.exists(module_dir):
+                        print(f"[DEBUG] 模块所在目录文件列表: {os.listdir(module_dir)}")
+                    
+                    # 检查模块文件是否存在
+                    if not os.path.exists(module_path):
+                        print(f"[{tool_name} MCP] 错误: 模块文件不存在: {module_path}")
+                        self.add_message("plan_error", f"MCP模块文件不存在: {module_path}")
+                        raise Exception(f"MCP模块文件不存在: {module_path}")
+                    
+                    # 动态加载模块
+                    print(f"[DEBUG] 尝试加载模块: {module_path}")
+                    spec = importlib.util.spec_from_file_location(tool_config['mcp_module'], module_path)
+                    if spec is None:
+                        print(f"[DEBUG] 无法创建spec，模块路径可能有问题: {module_path}")
+                        raise ImportError(f"无法创建spec，模块路径可能有问题: {module_path}")
+                    module = importlib.util.module_from_spec(spec)
+                    sys.modules[tool_config['mcp_module']] = module
+                    print(f"[DEBUG] 执行模块: {module}")
+                    spec.loader.exec_module(module)
+                    
+                    # 检查模块是否包含指定的函数
+                    func_name = tool_config['mcp_function']
+                    print(f"[DEBUG] 检查模块是否包含函数: {func_name}")
+                    if hasattr(module, func_name):
+                        print(f"[DEBUG] 模块包含函数: {func_name}")
+                    else:
+                        print(f"[DEBUG] 模块不包含函数: {func_name}")
+                        print(f"[DEBUG] 模块的属性: {dir(module)}")
+                        raise AttributeError(f"模块不包含函数: {func_name}")
+                    
+                    # 获取函数
+                    mcp_function = getattr(module, tool_config['mcp_function'])
+                    
+                    # 检查函数是否有MCP装饰器
+                    if hasattr(mcp_function, 'is_mcp_tool') and mcp_function.is_mcp_tool:
+                        print(f"[{tool_name} MCP] 调用MCP函数: {tool_config['mcp_function']}")
+                        self.add_message("plan_info", f"调用MCP函数: {tool_config['mcp_function']}")
+                        
+                        # 直接使用原始文件
+                        is_temp_file = False  # 标记是否是临时文件
+                        if self.original_file_name and os.path.exists(self.original_file_name):
+                            c_file = self.original_file_name
+                            print(f"[{tool_name} MCP] 使用原始C文件: {c_file}")
+                        else:
+                            # 如果没有原始文件，则创建临时文件
+                            import tempfile
+                            
+                            # 创建临时文件保存C代码
+                            with tempfile.NamedTemporaryFile(suffix='.c', delete=False) as tmp_file:
+                                # 确保写入的是纯C代码，去掉可能的行号
+                                clean_code = code
+                                # 检查是否包含行号（如"1: "这样的格式）
+                                if re.search(r'^\d+:\s', code.split('\n')[0]):
+                                    # 去掉行号
+                                    clean_code = '\n'.join([line.split(':', 1)[1].lstrip() if ':' in line and line.split(':', 1)[0].strip().isdigit() else line for line in code.split('\n')])
+                                tmp_file.write(clean_code.encode('utf-8'))
+                                c_file = tmp_file.name
+                                is_temp_file = True  # 标记为临时文件
+                            
+                            print(f"[{tool_name} MCP] 创建临时C文件: {c_file}")
+                        
+                        # 确保输出目录存在
+                        abs_out_path = os.path.abspath(out_path)
+                        os.makedirs(os.path.dirname(abs_out_path), exist_ok=True)
+                        
+                        # 调用MCP函数
+                        print(f"[DEBUG] 调用MCP函数: {mcp_function.__name__}({c_file}, {abs_out_path})")
+                        result = mcp_function(c_file, abs_out_path)
+                        print(f"[DEBUG] MCP函数返回结果: {result}")
+                        
+                        # 检查结果
+                        if result['status'] == 'success':
+                            print(f"[{tool_name} MCP] MCP函数执行成功")
+                            self.add_message("plan_success", f"MCP函数执行成功")
+                            
+                            # 检查输出文件是否存在
+                            if os.path.exists(abs_out_path):
+                                with open(abs_out_path, 'r') as f:
+                                    outputs[tool_config["output_key"]] = json.load(f)
+                                actual_used_tools.append(tool_name)
+                                self.add_message("plan_success", f"{tool_name} 执行成功")
+                            else:
+                                print(f"[{tool_name} MCP] 警告: 输出文件不存在: {abs_out_path}")
+                                self.add_message("plan_warning", f"输出文件不存在: {abs_out_path}")
+                                outputs[tool_config["output_key"]] = self._create_default_output(code)
+                                actual_used_tools.append(tool_name)
+                            
+                            # 清理临时文件
+                            if is_temp_file:
+                                try:
+                                    os.unlink(c_file)
+                                    print(f"[{tool_name} MCP] 删除临时文件: {c_file}")
+                                except Exception as e:
+                                    print(f"[{tool_name} MCP] 删除临时文件失败: {str(e)}")
+                            
+                            # 跳过后续处理
+                            continue
+                        else:
+                            print(f"[{tool_name} MCP] MCP函数执行失败: {result.get('message', '')}")
+                            self.add_message("plan_warning", f"MCP函数执行失败: {result.get('message', '')}")
+                            
+                            # 清理临时文件
+                            if is_temp_file:
+                                try:
+                                    os.unlink(c_file)
+                                    print(f"[{tool_name} MCP] 删除临时文件: {c_file}")
+                                except Exception as e:
+                                    print(f"[{tool_name} MCP] 删除临时文件失败: {str(e)}")
+                            
+                            raise Exception(f"MCP函数执行失败: {result.get('message', '')}")
+                    else:
+                        print(f"[{tool_name} MCP] 警告: 函数没有MCP装饰器")
+                        self.add_message("plan_warning", f"函数没有MCP装饰器")
+                except Exception as e:
+                    print(f"[{tool_name} MCP] 加载模块异常: {str(e)}")
+                    self.add_message("plan_error", f"加载MCP模块异常: {str(e)}")
+                    import traceback
+                    print(f"[DEBUG] 异常堆栈: {traceback.format_exc()}")
+                
+                # 如果MCP方式失败，回退到原始方式
+                print(f"[{tool_name} MCP] 回退到原始方式")
+                self.add_message("plan_warning", f"回退到原始方式")
+                
+            elif tool_name == "Code_Extractor" and tool_config.get("use_mcp", False):
+                # 在主try-except块外处理MCP工具
+                print("[DEBUG] 在主try-except块外处理Code_Extractor MCP工具")
+                
+                try:
+                    # 使用MCP装饰器方式调用工具
+                    import importlib.util
+                    import sys
+                    import os
+                    
+                    # 构建模块路径
+                    module_path = os.path.abspath(os.path.join(tool_config["path"], f"{tool_config['mcp_module']}.py"))
+                    print(f"[{tool_name} MCP] 加载模块: {module_path}")
+                    print(f"[DEBUG] 模块文件是否存在: {os.path.exists(module_path)}")
+                    
+                    # 检查当前工作目录
+                    print(f"[DEBUG] 当前工作目录: {os.getcwd()}")
+                    
+                    # 检查模块所在目录
+                    module_dir = os.path.dirname(module_path)
+                    print(f"[DEBUG] 模块所在目录: {module_dir}")
+                    print(f"[DEBUG] 模块所在目录是否存在: {os.path.exists(module_dir)}")
+                    
+                    # 列出模块所在目录的文件
+                    if os.path.exists(module_dir):
+                        print(f"[DEBUG] 模块所在目录文件列表: {os.listdir(module_dir)}")
+                    
+                    # 检查模块文件是否存在
+                    if not os.path.exists(module_path):
+                        print(f"[{tool_name} MCP] 错误: 模块文件不存在: {module_path}")
+                        self.add_message("plan_error", f"MCP模块文件不存在: {module_path}")
+                        raise Exception(f"MCP模块文件不存在: {module_path}")
+                    
+                    # 动态加载模块
+                    print(f"[DEBUG] 尝试加载模块: {module_path}")
+                    spec = importlib.util.spec_from_file_location(tool_config['mcp_module'], module_path)
+                    if spec is None:
+                        print(f"[DEBUG] 无法创建spec，模块路径可能有问题: {module_path}")
+                        raise ImportError(f"无法创建spec，模块路径可能有问题: {module_path}")
+                    module = importlib.util.module_from_spec(spec)
+                    sys.modules[tool_config['mcp_module']] = module
+                    print(f"[DEBUG] 执行模块: {module}")
+                    spec.loader.exec_module(module)
+                    
+                    # 检查模块是否包含指定的函数
+                    func_name = tool_config['mcp_function']
+                    print(f"[DEBUG] 检查模块是否包含函数: {func_name}")
+                    if hasattr(module, func_name):
+                        print(f"[DEBUG] 模块包含函数: {func_name}")
+                    else:
+                        print(f"[DEBUG] 模块不包含函数: {func_name}")
+                        print(f"[DEBUG] 模块的属性: {dir(module)}")
+                        raise AttributeError(f"模块不包含函数: {func_name}")
+                    
+                    # 获取函数
+                    mcp_function = getattr(module, tool_config['mcp_function'])
+                    
+                    # 检查函数是否有MCP装饰器
+                    if hasattr(mcp_function, 'is_mcp_tool') and mcp_function.is_mcp_tool:
+                        print(f"[{tool_name} MCP] 调用MCP函数: {tool_config['mcp_function']}")
+                        self.add_message("plan_info", f"调用MCP函数: {tool_config['mcp_function']}")
+                        
+                        # 直接使用原始文件
+                        is_temp_file = False  # 标记是否是临时文件
+                        if self.original_file_name and os.path.exists(self.original_file_name):
+                            c_file = self.original_file_name
+                            print(f"[{tool_name} MCP] 使用原始C文件: {c_file}")
+                        else:
+                            # 如果没有原始文件，则创建临时文件
+                            import tempfile
+                            
+                            # 创建临时文件保存C代码
+                            with tempfile.NamedTemporaryFile(suffix='.c', delete=False) as tmp_file:
+                                # 确保写入的是纯C代码，去掉可能的行号
+                                clean_code = code
+                                # 检查是否包含行号（如"1: "这样的格式）
+                                if re.search(r'^\d+:\s', code.split('\n')[0]):
+                                    # 去掉行号
+                                    clean_code = '\n'.join([line.split(':', 1)[1].lstrip() if ':' in line and line.split(':', 1)[0].strip().isdigit() else line for line in code.split('\n')])
+                                tmp_file.write(clean_code.encode('utf-8'))
+                                c_file = tmp_file.name
+                                is_temp_file = True  # 标记为临时文件
+                            
+                            print(f"[{tool_name} MCP] 创建临时C文件: {c_file}")
+                        
+                        # 确保输出目录存在
+                        abs_out_path = os.path.abspath(out_path)
+                        os.makedirs(os.path.dirname(abs_out_path), exist_ok=True)
+                        
+                        # 调用MCP函数
+                        print(f"[DEBUG] 调用MCP函数: {mcp_function.__name__}({c_file}, {abs_out_path})")
+                        result = mcp_function(c_file, abs_out_path)
+                        print(f"[DEBUG] MCP函数返回结果: {result}")
+                        
+                        # 检查结果
+                        if result['status'] == 'success':
+                            print(f"[{tool_name} MCP] MCP函数执行成功")
+                            self.add_message("plan_success", f"MCP函数执行成功")
+                            
+                            # 检查输出文件是否存在
+                            if os.path.exists(abs_out_path):
+                                # 尝试加载JSON
+                                try:
+                                    with open(abs_out_path, 'r') as f:
+                                        outputs[tool_config["output_key"]] = json.load(f)
+                                except json.JSONDecodeError:
+                                    # 如果不是JSON，则读取为文本并包装为JSON
+                                    with open(abs_out_path, 'r') as f:
+                                        content = f.read()
+                                        outputs[tool_config["output_key"]] = {
+                                            "snippets": content,
+                                            "status": "success"
+                                        }
+                                actual_used_tools.append(tool_name)
+                                self.add_message("plan_success", f"{tool_name} 执行成功")
+                            else:
+                                print(f"[{tool_name} MCP] 警告: 输出文件不存在: {abs_out_path}")
+                                self.add_message("plan_warning", f"输出文件不存在: {abs_out_path}")
+                                outputs[tool_config["output_key"]] = self._create_default_output(code)
+                                actual_used_tools.append(tool_name)
+                            
+                            # 清理临时文件
+                            if is_temp_file:
+                                try:
+                                    os.unlink(c_file)
+                                    print(f"[{tool_name} MCP] 删除临时文件: {c_file}")
+                                except Exception as e:
+                                    print(f"[{tool_name} MCP] 删除临时文件失败: {str(e)}")
+                            
+                            # 跳过后续处理
+                            continue
+                        else:
+                            print(f"[{tool_name} MCP] MCP函数执行失败: {result.get('message', '')}")
+                            self.add_message("plan_warning", f"MCP函数执行失败: {result.get('message', '')}")
+                            
+                            # 清理临时文件
+                            if is_temp_file:
+                                try:
+                                    os.unlink(c_file)
+                                    print(f"[{tool_name} MCP] 删除临时文件: {c_file}")
+                                except Exception as e:
+                                    print(f"[{tool_name} MCP] 删除临时文件失败: {str(e)}")
+                            
+                            raise Exception(f"MCP函数执行失败: {result.get('message', '')}")
+                    else:
+                        print(f"[{tool_name} MCP] 警告: 函数没有MCP装饰器")
+                        self.add_message("plan_warning", f"函数没有MCP装饰器")
+                except Exception as e:
+                    print(f"[{tool_name} MCP] 加载模块异常: {str(e)}")
+                    self.add_message("plan_error", f"加载MCP模块异常: {str(e)}")
+                    import traceback
+                    print(f"[DEBUG] 异常堆栈: {traceback.format_exc()}")
+                
+                # 如果MCP方式失败，回退到原始方式
+                print(f"[{tool_name} MCP] 回退到原始方式")
+                self.add_message("plan_warning", f"回退到原始方式")
+            
             try:
                 self.add_message("plan", f"Running {tool_name} on code")
                 # 使用MCP方式调用工具，可能带有参数

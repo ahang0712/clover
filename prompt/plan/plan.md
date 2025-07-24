@@ -16,7 +16,7 @@ You must explicitly list which tools you plan to call and in what order. Use the
 ```
 <tool>
 Tool1
-Tool2(param1, param2)
+Tool2
 Tool3
 </tool>
 ```
@@ -27,14 +27,6 @@ For example:
 Code_Extractor
 Read_Write_Analyzer
 Control_flow_Analyzer
-</tool>
-```
-
-You can also specify parameters for tools if needed:
-```
-<tool>
-Code_Extractor(function_name, line_start, line_end)
-Read_Write_Analyzer
 </tool>
 ```
 

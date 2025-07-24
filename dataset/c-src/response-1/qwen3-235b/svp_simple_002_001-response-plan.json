@@ -51,14 +51,42 @@
       ]
     },
     "Control_flow_Analyzer": {
-      "status": "failed",
-      "message": "工具执行失败或输出文件不存在，已创建默认输出。",
-      "code": "1: \n2: #include \"../common.h\"\n3: \n4: #define MAX_LENGTH 100000\n5: #define TRIGGER 9999\n6: \n7: volatile int svp_simple_002_001_global_array[MAX_LENGTH];\n8: volatile int casee2_global_var;\n9: \n10: void svp_simple_002_001_main() {\n11: init();\n12: idlerun();\n13: }\n14: \n15: void svp_simple_002_001_isr_1() {\n16: int mininum, maxnum;\n17: for (int i = 0; i < MAX_LENGTH; i++) {\n18: if (i == TRIGGER) svp_simple_002_001_global_array[TRIGGER] = 1;\n19: if (i == MAX_LENGTH + 1)\n20: svp_simple_002_001_global_array[TRIGGER] = 1;\n21: }\n22: mininum = svp_simple_002_001_global_array[TRIGGER] - 10;\n23: \n24: maxnum = svp_simple_002_001_global_array[0] + 10;\n25: }\n26: \n27: void svp_simple_002_001_isr_2() {\n28: idlerun();\n29: svp_simple_002_001_global_array[TRIGGER] = 999;\n30: \n31: }",
-      "variable_accesses": [],
-      "shared_variables": [],
-      "global_variables_to_detect": [],
-      "defect_patterns": [],
-      "defect_vars_by_pattern": {}
+      "functions": [
+        {
+          "name": "svp_simple_002_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_002_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_002_001_isr_2",
+          "type": "defined"
+        },
+        {
+          "name": "idlerun",
+          "type": "external"
+        },
+        {
+          "name": "init",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "svp_simple_002_001_main",
+          "callee": "init"
+        },
+        {
+          "caller": "svp_simple_002_001_main",
+          "callee": "idlerun"
+        },
+        {
+          "caller": "svp_simple_002_001_isr_2",
+          "callee": "idlerun"
+        }
+      ]
     },
     "Defect_Highlight": {
       "status": "failed",
