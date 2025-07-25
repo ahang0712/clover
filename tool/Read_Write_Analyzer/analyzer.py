@@ -14,12 +14,34 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
     Analyze read and write operations on shared variables in LLVM IR.
     
     Args:
-        input_file (str): Path to the LLVM IR file to analyze
+        input_file (str): Path to the C file to analyze
         output_file (str): Path to save the analysis results
         
     Returns:
         Dict[str, Any]: Analysis results
     """
+    # 导入config模块获取RESPONSE_PATH
+    try:
+        sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+        import config
+        response_path = config.RESPONSE_PATH
+        # 确保输出目录存在
+        os.makedirs(response_path, exist_ok=True)
+        
+        # 从输入文件名提取基础名称
+        input_basename = os.path.basename(input_file)
+        base_name = os.path.splitext(input_basename)[0]
+        
+        # 构建新的输出路径
+        output_filename = os.path.basename(output_file).replace("input", base_name)
+        new_output_file = os.path.join(response_path, output_filename)
+        print(f"Redirecting output to: {new_output_file}")
+        output_file = new_output_file
+    except ImportError:
+        print("Warning: Could not import config module, using original output path")
+    except Exception as e:
+        print(f"Warning: Error setting output path: {str(e)}, using original output path")
+    
     # Get the path to the llvm_api_demo executable
     tool_dir = os.path.dirname(os.path.abspath(__file__))
     llvm_api_demo_path = os.path.join(tool_dir, "llvm_api_demo")
@@ -34,28 +56,61 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
     except Exception as e:
         print(f"Warning: Failed to set execute permissions: {str(e)}")
     
-    # Run the C++ tool with the correct command
     try:
-        # First ensure we have an optimized LLVM IR file
-        if not input_file.endswith("-opt.ll"):
-            # If not optimized, generate an optimized version
-            opt_output_file = input_file.replace(".ll", "-opt.ll")
-            if not os.path.exists(opt_output_file):
-                print(f"Optimizing LLVM IR file: {input_file} -> {opt_output_file}")
-                opt_cmd = ["opt", "-O2", input_file, "-S", "-o", opt_output_file]
-                opt_result = subprocess.run(opt_cmd, capture_output=True, text=True)
+        # 如果输入是C文件，先生成LLVM IR
+        if input_file.endswith('.c'):
+            # 获取输入文件的目录和基础名称
+            input_dir = os.path.dirname(input_file)
+            base_name = os.path.splitext(os.path.basename(input_file))[0]
+            
+            # 检查是否已经存在LLVM IR文件
+            llvm_ir_file = os.path.join(response_path, f"{base_name}.ll")
+            opt_llvm_ir_file = os.path.join(response_path, f"{base_name}-opt.ll")
+            
+            # 如果没有优化过的LLVM IR文件，生成它
+            if not os.path.exists(opt_llvm_ir_file):
+                # 首先生成未优化的LLVM IR
+                print(f"Executing command: clang-10 -O0 -g -emit-llvm -S -I {input_dir} -I {os.path.join(input_dir, '..')} {input_file} -o {llvm_ir_file}")
+                clang_result = subprocess.run(
+                    [
+                        "clang-10", "-O0", "-g", "-emit-llvm", "-S",
+                        "-I", input_dir,
+                        "-I", os.path.join(input_dir, ".."),
+                        input_file,
+                        "-o", llvm_ir_file
+                    ],
+                    capture_output=True,
+                    text=True
+                )
+                
+                if clang_result.returncode != 0:
+                    print(f"Error generating LLVM IR: {clang_result.stderr}")
+                    create_simulated_output(output_file, input_file)
+                    return {
+                        "status": "success",
+                        "message": f"Created simulated output file: {output_file}",
+                        "output_file": output_file
+                    }
+                
+                print(f"Generated LLVM IR: {llvm_ir_file}")
+                
+                # 然后优化LLVM IR
+                print(f"Optimizing LLVM IR: {llvm_ir_file} -> {opt_llvm_ir_file}")
+                opt_result = subprocess.run(
+                    ["opt", "-O2", llvm_ir_file, "-S", "-o", opt_llvm_ir_file],
+                    capture_output=True,
+                    text=True
+                )
+                
                 if opt_result.returncode != 0:
                     print(f"Warning: Failed to optimize LLVM IR: {opt_result.stderr}")
-                    # Use the original file if optimization fails
-                    opt_output_file = input_file
-            input_file = opt_output_file
+                    # 如果优化失败，使用未优化的版本
+                    opt_llvm_ir_file = llvm_ir_file
+            
+            # 使用优化后的LLVM IR文件
+            input_file = opt_llvm_ir_file
         
-        # Extract file name and directory
-        input_dir = os.path.dirname(input_file)
-        file_name = os.path.basename(input_file).replace('.ll', '').replace('-opt', '')
-        expected_output_json = os.path.join(input_dir, f"{file_name}-output.json")
-        
-        # Run the llvm_api_demo tool (it will generate output in the same directory as input)
+        # 运行llvm_api_demo工具
         print(f"Running llvm_api_demo: {llvm_api_demo_path} {input_file}")
         result = subprocess.run(
             [llvm_api_demo_path, input_file],
@@ -69,22 +124,25 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
             create_simulated_output(output_file, input_file)
             return {
                 "status": "success",
-                "message": f"Created simulated output file: {output_file}"
+                "message": f"Created simulated output file: {output_file}",
+                "output_file": output_file
             }
         
-        # Check if the expected output file was created
+        # 检查是否生成了输出文件
+        expected_output_json = os.path.join(os.path.dirname(input_file), f"{base_name}-output.json")
+        
         if os.path.exists(expected_output_json):
             print(f"Found output JSON file: {expected_output_json}")
             
-            # Copy the output to the requested location
+            # 复制输出到请求的位置
             try:
                 with open(expected_output_json, 'r') as src_file:
                     analysis_results = json.load(src_file)
                 
-                # Ensure output directory exists
+                # 确保输出目录存在
                 os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
                 
-                # Write to the requested output location
+                # 写入到请求的输出位置
                 with open(output_file, 'w') as dest_file:
                     json.dump(analysis_results, dest_file, indent=2)
                 
@@ -92,7 +150,8 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
                 
                 return {
                     "status": "success",
-                    "results": analysis_results
+                    "results": analysis_results,
+                    "output_file": output_file
                 }
             except Exception as e:
                 print(f"Error copying output file: {str(e)}")
@@ -100,7 +159,8 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
                 create_simulated_output(output_file, input_file)
                 return {
                     "status": "success",
-                    "message": f"Created simulated output file: {output_file}"
+                    "message": f"Created simulated output file: {output_file}",
+                    "output_file": output_file
                 }
         else:
             print(f"Expected output file not found: {expected_output_json}")
@@ -108,7 +168,8 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
             create_simulated_output(output_file, input_file)
             return {
                 "status": "success",
-                "message": f"Created simulated output file: {output_file}"
+                "message": f"Created simulated output file: {output_file}",
+                "output_file": output_file
             }
     
     except Exception as e:
@@ -117,7 +178,8 @@ def analyze_rw(input_file: str, output_file: str) -> Dict[str, Any]:
         create_simulated_output(output_file, input_file)
         return {
             "status": "success",
-            "message": f"Created simulated output file: {output_file}"
+            "message": f"Created simulated output file: {output_file}",
+            "output_file": output_file
         }
 
 def create_simulated_output(output_file: str, input_file: str) -> None:

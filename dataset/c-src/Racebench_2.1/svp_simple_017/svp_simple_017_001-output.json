@@ -2,7 +2,17 @@
   "ISR_COUNT": 1,
   "GLOBAL_VAR": [
     "svp_simple_017_001_global_var",
-    "svp_simple_017_001_local_array"
+    "svp_simple_017_001_local_array",
+    "svp_simple_017_001_local_array[0]",
+    "svp_simple_017_001_local_array[1]",
+    "svp_simple_017_001_local_array[9999]",
+    "svp_simple_017_001_local_array[TRIGGER]",
+    "svp_simple_017_001_local_array[1000]",
+    "svp_simple_017_001_local_array[var]",
+    "svp_simple_017_001_local_array[i]",
+    "svp_simple_017_001_local_array[var[0,9999]]",
+    "svp_simple_017_001_local_array[i[0,9999]]",
+    "svp_simple_017_001_local_array[99]"
   ],
   "MAIN_INFO": [
     {
@@ -22,6 +32,13 @@
       "variable": "svp_simple_017_001_global_var",
       "line": "17",
       "function": "svp_simple_017_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_017_001_local_array[var]",
+      "line": "17",
+      "function": "svp_simple_017_001_main",
+      "range": [0, 9999]
     },
     {
       "operation": "load",
@@ -51,9 +68,10 @@
     },
     {
       "operation": "store",
-      "variable": "svp_simple_017_001_local_array",
+      "variable": "svp_simple_017_001_local_array[var]",
       "line": "26",
-      "function": "svp_simple_017_001_isr_1"
+      "function": "svp_simple_017_001_isr_1",
+      "range": [0, 9999]
     }
   ]
 }

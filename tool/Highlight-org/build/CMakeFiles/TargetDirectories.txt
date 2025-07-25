@@ -1,0 +1,7 @@
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/pattern_analyzer.dir
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/edit_cache.dir
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/rebuild_cache.dir
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/list_install_components.dir
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/install.dir
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/install/local.dir
+/Users/hehang03/code/clover/tool/Highlight/build/CMakeFiles/install/strip.dir

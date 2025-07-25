@@ -1,0 +1,6 @@
+Found defects in test_input.json:
+Defect_Pattern: WRW
+Variable: global_var
+Location: MAIN
+Description: WRW defect found: consecutive writes in main function with read in ISR
+---

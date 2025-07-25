@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "defects_found": true,
+  "defect_count": 1,
+  "defects": [
+    {
+      "variable": "global_var",
+      "type": "WRW",
+      "location": "MAIN",
+      "description": "WRW defect found: consecutive writes in main function with read in ISR"
+    }
+  ]
+}

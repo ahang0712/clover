@@ -1,0 +1,14 @@
+{
+  "GLOBAL_VAR": ["global_var", "global_array"],
+  "MAIN_INFO": [
+    {"variable": "global_var", "function": "main", "operation": "load"},
+    {"variable": "global_var", "function": "main", "operation": "store"},
+    {"variable": "global_var", "function": "main", "operation": "store"},
+    {"variable": "global_array", "function": "main", "operation": "store"}
+  ],
+  "ISR_INFO": [
+    {"variable": "global_var", "function": "isr_1", "operation": "load"},
+    {"variable": "global_array", "function": "isr_1", "operation": "load"}
+  ],
+  "ISR_COUNT": 1
+} 

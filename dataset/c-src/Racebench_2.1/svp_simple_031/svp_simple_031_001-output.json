@@ -2,14 +2,44 @@
   "ISR_COUNT": 1,
   "GLOBAL_VAR": [
     "svp_simple_031_001_tc_chan1_buff",
+    "svp_simple_031_001_tc_chan1_buff[0]",
+    "svp_simple_031_001_tc_chan1_buff[1]",
+    "svp_simple_031_001_tc_chan1_buff[9999]",
+    "svp_simple_031_001_tc_chan1_buff[TRIGGER]",
+    "svp_simple_031_001_tc_chan1_buff[1000]",
+    "svp_simple_031_001_tc_chan1_buff[var]",
+    "svp_simple_031_001_tc_chan1_buff[i]",
+    "svp_simple_031_001_tc_chan1_buff[var[0,9999]]",
+    "svp_simple_031_001_tc_chan1_buff[i[0,9999]]",
     "svp_simple_031_001_tc_buff_p",
     "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
     "svp_simple_031_001_tc_block_rcvd_bytes",
     "svp_simple_031_001_gloable_var1",
     "svp_simple_031_001_tc_block_rcvd_bytes_ch2",
-    "svp_simple_031_001_tc_chan2_buff"
+    "svp_simple_031_001_tc_chan2_buff",
+    "svp_simple_031_001_tc_chan2_buff[0]",
+    "svp_simple_031_001_tc_chan2_buff[1]",
+    "svp_simple_031_001_tc_chan2_buff[9999]",
+    "svp_simple_031_001_tc_chan2_buff[TRIGGER]",
+    "svp_simple_031_001_tc_chan2_buff[1000]",
+    "svp_simple_031_001_tc_chan2_buff[var]",
+    "svp_simple_031_001_tc_chan2_buff[i]",
+    "svp_simple_031_001_tc_chan2_buff[var[0,9999]]",
+    "svp_simple_031_001_tc_chan2_buff[i[0,9999]]",
+    "svp_simple_031_001_tc_chan1_buff[255]",
+    "svp_simple_031_001_tc_chan2_buff[255]",
+    ".struct.field[0]:int8",
+    ".struct.field[1]:int8",
+    ".struct.field[2]:int8",
+    "svp_simple_031_001_tc_buff_p_ptr"
   ],
   "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "svp_simple_031_001_tc_buff_p",
+      "line": "29",
+      "function": "svp_simple_031_001_main"
+    },
     {
       "operation": "load",
       "variable": "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
@@ -30,13 +60,49 @@
     },
     {
       "operation": "load",
+      "variable": "svp_simple_031_001_tc_buff_p_ptr",
+      "line": "34",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": ".struct.field[0]:int8",
+      "line": "34",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
       "variable": "svp_simple_031_001_tc_buff_p",
       "line": "35",
       "function": "svp_simple_031_001_main"
     },
     {
       "operation": "load",
+      "variable": "svp_simple_031_001_tc_buff_p_ptr",
+      "line": "35",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": ".struct.field[1]:int8",
+      "line": "35",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
       "variable": "svp_simple_031_001_tc_buff_p",
+      "line": "36",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_031_001_tc_buff_p_ptr",
+      "line": "36",
+      "function": "svp_simple_031_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": ".struct.field[2]:int8",
       "line": "36",
       "function": "svp_simple_031_001_main"
     },

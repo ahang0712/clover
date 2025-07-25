@@ -2,30 +2,67 @@
   "ISR_COUNT": 1,
   "GLOBAL_VAR": [
     "svp_simple_008_001_global_array",
-    "svp_simple_008_001_global_var"
+    "svp_simple_008_001_global_array[0]",
+    "svp_simple_008_001_global_array[1]",
+    "svp_simple_008_001_global_array[9999]",
+    "svp_simple_008_001_global_array[TRIGGER]",
+    "svp_simple_008_001_global_array[1000]",
+    "svp_simple_008_001_global_array[var]",
+    "svp_simple_008_001_global_array[i]",
+    "svp_simple_008_001_global_array[var[0,9999]]",
+    "svp_simple_008_001_global_array[i[0,9999]]",
+    "svp_simple_008_001_global_var",
+    "svp_simple_008_001_global_array[99]",
+    "svp_simple_008_001_global_array[3]",
+    "svp_simple_008_001_global_array[40]",
+    "svp_simple_008_001_global_array[4]"
   ],
   "MAIN_INFO": [
     {
       "operation": "store",
       "variable": "svp_simple_008_001_global_array",
+      "line": "0",
+      "function": "svp_simple_008_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_008_001_global_array[3]",
       "line": "18",
       "function": "svp_simple_008_001_main"
     },
     {
       "operation": "store",
       "variable": "svp_simple_008_001_global_array",
+      "line": "0",
+      "function": "svp_simple_008_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_008_001_global_array[40]",
       "line": "20",
       "function": "svp_simple_008_001_main"
     },
     {
       "operation": "load",
       "variable": "svp_simple_008_001_global_array",
+      "line": "0",
+      "function": "svp_simple_008_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_008_001_global_array[40]",
       "line": "31",
       "function": "svp_simple_008_001_main"
     },
     {
       "operation": "load",
       "variable": "svp_simple_008_001_global_array",
+      "line": "0",
+      "function": "svp_simple_008_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_008_001_global_array[4]",
       "line": "33",
       "function": "svp_simple_008_001_main"
     }
@@ -33,9 +70,10 @@
   "ISR_INFO": [
     {
       "operation": "store",
-      "variable": "svp_simple_008_001_global_array",
+      "variable": "svp_simple_008_001_global_array[var]",
       "line": "37",
-      "function": "svp_simple_008_001_isr_1"
+      "function": "svp_simple_008_001_isr_1",
+      "range": [0, 9999]
     }
   ]
 }

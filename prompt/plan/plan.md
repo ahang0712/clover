@@ -11,7 +11,7 @@ Given:
 
 ## Output Format
 
-You must explicitly list which tools you plan to call and in what order. Use the following format:
+You must explicitly list which tools you plan to call and in what order. Your output should ONLY contain the tool names within the specified format, nothing else:
 
 ```
 <tool>
@@ -21,7 +21,7 @@ Tool3
 </tool>
 ```
 
-For example: 
+For example, a complete valid output would be: 
 ```
 <tool>
 Code_Extractor
@@ -42,11 +42,15 @@ Control_flow_Analyzer
    - **Control_flow_Analyzer**: Use when understanding function calls and control flow is important
    - **Defect_Highlight**: Use when you need to identify potential atomicity violation patterns
 
-3. **Consider Code Characteristics**:
+3. **Call Tools On-Demand**: Only select tools that are necessary for the specific analysis task
+   - Don't include tools that won't contribute meaningful information
+   - Consider the specific characteristics of the code and the violation patterns
+
+4. **Consider Code Characteristics**:
    - Code complexity and size
    - Number of global/shared variables
    - Presence of interrupt handlers
    - Potential for race conditions
 
-Output ONLY your tool selection in the specified format without any additional explanation.
+Remember: Output ONLY your tool selection in the specified format without any additional explanation or reasoning.
 

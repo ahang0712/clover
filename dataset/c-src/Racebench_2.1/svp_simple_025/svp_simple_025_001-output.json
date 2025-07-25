@@ -2,7 +2,17 @@
   "ISR_COUNT": 1,
   "GLOBAL_VAR": [
     "svp_simple_025_001_global_var",
-    "svp_simple_025_001_global_array"
+    "svp_simple_025_001_global_array",
+    "svp_simple_025_001_global_array[0]",
+    "svp_simple_025_001_global_array[1]",
+    "svp_simple_025_001_global_array[9999]",
+    "svp_simple_025_001_global_array[TRIGGER]",
+    "svp_simple_025_001_global_array[1000]",
+    "svp_simple_025_001_global_array[var]",
+    "svp_simple_025_001_global_array[i]",
+    "svp_simple_025_001_global_array[var[0,9999]]",
+    "svp_simple_025_001_global_array[i[0,9999]]",
+    "svp_simple_025_001_global_array[99]"
   ],
   "MAIN_INFO": [
     {

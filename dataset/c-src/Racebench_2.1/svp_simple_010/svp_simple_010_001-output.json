@@ -2,30 +2,55 @@
   "ISR_COUNT": 1,
   "GLOBAL_VAR": [
     "svp_simple_010_001_global_union",
-    "svp_simple_010_001_global_struct"
+    "svp_simple_010_001_global_union.union.field[0]:int32",
+    "svp_simple_010_001_global_struct",
+    "svp_simple_010_001_global_struct.struct.field[0]:int8",
+    "svp_simple_010_001_global_struct.struct.field[1]:int32",
+    "svp_simple_010_001_global_union[0]",
+    "svp_simple_010_001_global_struct[0]",
+    "svp_simple_010_001_global_struct[1]",
+    "svp_simple_010_001_global_union.union.field[0]:int8"
   ],
   "MAIN_INFO": [
     {
       "operation": "store",
-      "variable": "svp_simple_010_001_global_union",
+      "variable": "svp_simple_010_001_global_union.union.field[0]:int8",
       "line": "25",
       "function": "svp_simple_010_001_main"
     },
     {
       "operation": "store",
-      "variable": "svp_simple_010_001_global_union",
+      "variable": "svp_simple_010_001_global_union.union.field[0]:int32",
+      "line": "0",
+      "function": "svp_simple_010_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_union[0]",
       "line": "26",
       "function": "svp_simple_010_001_main"
     },
     {
       "operation": "store",
-      "variable": "svp_simple_010_001_global_struct",
+      "variable": "svp_simple_010_001_global_struct.struct.field[0]:int8",
+      "line": "0",
+      "function": "svp_simple_010_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_struct[0]",
       "line": "28",
       "function": "svp_simple_010_001_main"
     },
     {
       "operation": "store",
-      "variable": "svp_simple_010_001_global_struct",
+      "variable": "svp_simple_010_001_global_struct.struct.field[1]:int32",
+      "line": "0",
+      "function": "svp_simple_010_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_010_001_global_struct[1]",
       "line": "29",
       "function": "svp_simple_010_001_main"
     }
@@ -33,13 +58,13 @@
   "ISR_INFO": [
     {
       "operation": "load",
-      "variable": "svp_simple_010_001_global_union",
+      "variable": "svp_simple_010_001_global_union.union.field[0]:int8",
       "line": "36",
       "function": "svp_simple_010_001_isr_1"
     },
     {
       "operation": "load",
-      "variable": "svp_simple_010_001_global_struct",
+      "variable": "svp_simple_010_001_global_struct[0]",
       "line": "38",
       "function": "svp_simple_010_001_isr_1"
     }

@@ -4,7 +4,9 @@
     "svp_simple_011_001_global_var1",
     "svp_simple_011_001_global_var2",
     "svp_simple_011_001_u",
-    "svp_simple_011_001_global_var3"
+    "svp_simple_011_001_global_var3",
+    "svp_simple_011_001_u -> svp_simple_011_001_global_var2",
+    "svp_simple_011_001_u -> svp_simple_011_001_global_var3"
   ],
   "MAIN_INFO": [
     {
@@ -20,14 +22,26 @@
       "function": "svp_simple_011_001_main"
     },
     {
-      "operation": "load",
-      "variable": "svp_simple_011_001_u",
-      "line": "19",
+      "operation": "store",
+      "variable": "svp_simple_011_001_u -> svp_simple_011_001_global_var2",
+      "line": "18",
       "function": "svp_simple_011_001_main"
     },
     {
       "operation": "load",
-      "variable": "svp_simple_011_001_u",
+      "variable": "svp_simple_011_001_u -> svp_simple_011_001_global_var2",
+      "line": "19",
+      "function": "svp_simple_011_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_011_001_u -> svp_simple_011_001_global_var3",
+      "line": "20",
+      "function": "svp_simple_011_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_011_001_u -> svp_simple_011_001_global_var3",
       "line": "21",
       "function": "svp_simple_011_001_main"
     }
@@ -41,7 +55,7 @@
     },
     {
       "operation": "load",
-      "variable": "svp_simple_011_001_u",
+      "variable": "svp_simple_011_001_u -> svp_simple_011_001_global_var3",
       "line": "28",
       "function": "svp_simple_011_001_isr_1"
     }

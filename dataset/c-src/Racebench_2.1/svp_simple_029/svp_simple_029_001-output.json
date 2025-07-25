@@ -6,7 +6,23 @@
     "svp_simple_029_001_ptr_SetTmData",
     "svp_simple_029_001_ptr_GetTmData",
     "svp_simple_029_001_tm_blocks",
-    "svp_simple_029_001_average_adjust_count"
+    "svp_simple_029_001_tm_blocks[0]",
+    "svp_simple_029_001_tm_blocks[1]",
+    "svp_simple_029_001_tm_blocks[9999]",
+    "svp_simple_029_001_tm_blocks[TRIGGER]",
+    "svp_simple_029_001_tm_blocks[1000]",
+    "svp_simple_029_001_tm_blocks[var]",
+    "svp_simple_029_001_tm_blocks[i]",
+    "svp_simple_029_001_tm_blocks[var[0,9999]]",
+    "svp_simple_029_001_tm_blocks[i[0,9999]]",
+    "svp_simple_029_001_average_adjust_count",
+    "svp_simple_029_001_tm_blocks[4095]",
+    "svp_simple_029_001_SetTmData",
+    "svp_simple_029_001_GetTmData",
+    "svp_simple_029_001_SetSelfCtrlFlag",
+    "svp_simple_029_001_ptr_SetTmData -> svp_simple_029_001_SetTmData",
+    "svp_simple_029_001_ptr_GetTmData -> svp_simple_029_001_GetTmData",
+    "svp_simple_029_001_ptr_SetSelfCtrlFlag -> svp_simple_029_001_SetSelfCtrlFlag"
   ],
   "MAIN_INFO": [
     {
@@ -16,8 +32,26 @@
       "function": "svp_simple_029_001_main"
     },
     {
+      "operation": "store",
+      "variable": "svp_simple_029_001_ptr_SetTmData -> svp_simple_029_001_SetTmData",
+      "line": "38",
+      "function": "svp_simple_029_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_029_001_ptr_GetTmData -> svp_simple_029_001_GetTmData",
+      "line": "39",
+      "function": "svp_simple_029_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_029_001_ptr_SetSelfCtrlFlag -> svp_simple_029_001_SetSelfCtrlFlag",
+      "line": "40",
+      "function": "svp_simple_029_001_main"
+    },
+    {
       "operation": "load",
-      "variable": "svp_simple_029_001_ptr_SetSelfCtrlFlag",
+      "variable": "svp_simple_029_001_ptr_SetSelfCtrlFlag -> svp_simple_029_001_SetSelfCtrlFlag",
       "line": "25",
       "function": "svp_simple_029_001_main"
     }
@@ -43,7 +77,7 @@
     },
     {
       "operation": "load",
-      "variable": "svp_simple_029_001_ptr_SetTmData",
+      "variable": "svp_simple_029_001_ptr_SetTmData -> svp_simple_029_001_SetTmData",
       "line": "74",
       "function": "svp_simple_029_001_isr_1"
     },
@@ -61,7 +95,7 @@
     },
     {
       "operation": "load",
-      "variable": "svp_simple_029_001_ptr_SetTmData",
+      "variable": "svp_simple_029_001_ptr_SetTmData -> svp_simple_029_001_SetTmData",
       "line": "78",
       "function": "svp_simple_029_001_isr_1"
     },

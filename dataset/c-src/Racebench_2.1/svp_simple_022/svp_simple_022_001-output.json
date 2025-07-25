@@ -3,8 +3,18 @@
   "GLOBAL_VAR": [
     "svp_simple_022_001_global_var1",
     "svp_simple_022_001_global_array",
+    "svp_simple_022_001_global_array[0]",
+    "svp_simple_022_001_global_array[1]",
+    "svp_simple_022_001_global_array[9999]",
+    "svp_simple_022_001_global_array[TRIGGER]",
+    "svp_simple_022_001_global_array[1000]",
+    "svp_simple_022_001_global_array[var]",
+    "svp_simple_022_001_global_array[i]",
+    "svp_simple_022_001_global_array[var[0,9999]]",
+    "svp_simple_022_001_global_array[i[0,9999]]",
     "svp_simple_022_001_global_var3",
-    "svp_simple_022_001_global_var2"
+    "svp_simple_022_001_global_var2",
+    "svp_simple_022_001_global_array[255]"
   ],
   "MAIN_INFO": [
     {
@@ -33,9 +43,10 @@
     },
     {
       "operation": "store",
-      "variable": "svp_simple_022_001_global_array",
+      "variable": "svp_simple_022_001_global_array[var]",
       "line": "21",
-      "function": "svp_simple_022_001_main"
+      "function": "svp_simple_022_001_main",
+      "range": [0, 9999]
     },
     {
       "operation": "load",

@@ -21,18 +21,60 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import mcp
 
 @mcp.tool(name="Code_Extractor", description="Extracts relevant code snippets for analysis")
-def extract_code(input_file: str, output_file: str) -> Dict[str, Any]:
+def extract_code(input_file: str, output_file: str, inline: bool = False, keep_all: bool = True, main_function: str = None, verbose: bool = False) -> Dict[str, Any]:
     """
     提取C代码中的关键片段，基于LLVM IR中间代码进行精确提取
     
     Args:
         input_file: 输入C文件路径
         output_file: 输出文件路径
+        inline: 是否内联函数
+        keep_all: 是否保留所有代码行
+        main_function: 指定主函数名
+        verbose: 是否显示详细输出
         
     Returns:
         Dict with status and results
     """
     try:
+        # 导入config模块获取RESPONSE_PATH
+        try:
+            sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+            import config
+            response_path = config.RESPONSE_PATH
+            # 确保输出目录存在
+            os.makedirs(response_path, exist_ok=True)
+            
+            # 从输入文件名提取基础名称
+            input_basename = os.path.basename(input_file)
+            # 提取C文件的基础名称
+            if input_basename.endswith(".c"):
+                # 如果是C文件，提取基本名称
+                base_name = input_basename.replace(".c", "")
+                if base_name.startswith("svp_") or "_" in base_name:
+                    # 如果文件名看起来像是测试用例，使用它作为前缀
+                    output_filename = os.path.basename(output_file).replace("input", base_name)
+                else:
+                    output_filename = os.path.basename(output_file)
+            else:
+                # 如果不是C文件，尝试从路径中提取测试用例名称
+                match = re.search(r'(svp_\w+_\d+)', input_file)
+                if match:
+                    base_name = match.group(1)
+                    output_filename = os.path.basename(output_file).replace("input", base_name)
+                else:
+                    # 如果无法提取，直接使用输出文件名
+                    output_filename = os.path.basename(output_file)
+            
+            # 构建新的输出路径
+            new_output_file = os.path.join(response_path, output_filename)
+            print(f"Redirecting output to: {new_output_file}")
+            output_file = new_output_file
+        except ImportError:
+            print("Warning: Could not import config module, using original output path")
+        except Exception as e:
+            print(f"Warning: Error setting output path: {str(e)}, using original output path")
+        
         print(f"Extracting code from {input_file}")
         
         # 确保输入文件存在
@@ -53,7 +95,8 @@ def extract_code(input_file: str, output_file: str) -> Dict[str, Any]:
             return {
                 "status": "success",
                 "message": "Used text-based extraction as fallback",
-                "snippets": snippets
+                "snippets": snippets,
+                "output_file": output_file
             }
         
         # 读取原始代码
@@ -66,6 +109,9 @@ def extract_code(input_file: str, output_file: str) -> Dict[str, Any]:
         # 基于提取的信息生成代码片段
         extracted_code = generate_extracted_code(original_code, functions, variables)
         
+        # 确保输出目录存在
+        os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
+        
         # 写入输出文件
         write_output(extracted_code, output_file)
     
@@ -76,13 +122,15 @@ def extract_code(input_file: str, output_file: str) -> Dict[str, Any]:
         print(f"Successfully extracted code to {output_file}")
         return {
             "status": "success",
-            "snippets": extracted_code
+            "snippets": extracted_code,
+            "output_file": output_file
         }
     except Exception as e:
         print(f"Error extracting code: {str(e)}")
         return {
             "status": "error",
-            "message": f"Error extracting code: {str(e)}"
+            "message": f"Error extracting code: {str(e)}",
+            "output_file": output_file if 'output_file' in locals() else None
         }
 
 def generate_llvm_ir(input_file: str) -> str:

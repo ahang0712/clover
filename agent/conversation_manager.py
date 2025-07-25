@@ -8,6 +8,7 @@ from agent.agent_base import AgentBase
 from agent.expert_agent import ExpertAgent
 from agent.judge_agent import JudgeAgent
 from output import save_response
+from config import AGENT_MODELS  # 导入Agent模型配置
 
 class ConversationManager(AgentBase):
     """
@@ -18,8 +19,17 @@ class ConversationManager(AgentBase):
         super().__init__(name)
         self.api_client = api_client
         self.model = model
-        self.expert_agent = ExpertAgent(api_client, model)
-        self.judge_agent = JudgeAgent(api_client, model)
+        
+        # 根据配置选择Expert和Judge的模型
+        if api_client.model_type == "online":
+            expert_model = AGENT_MODELS.get("expert", model)
+            judge_model = AGENT_MODELS.get("judge", model)
+        else:
+            expert_model = model  # 本地模型模式下使用传入的模型
+            judge_model = model
+            
+        self.expert_agent = ExpertAgent(api_client, expert_model)
+        self.judge_agent = JudgeAgent(api_client, judge_model)
         
         # 定义每轮任务说明
         self.expert_purposes = [

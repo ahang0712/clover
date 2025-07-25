@@ -3,6 +3,22 @@ import sys
 import os
 from typing import List, Dict, Any
 
+# 添加MCP装饰器函数
+def mcp_tool(func):
+    """MCP工具装饰器，标记函数为MCP工具"""
+    def wrapper(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            return {"status": "success", "message": "Tool executed successfully", "data": result}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+    
+    # 添加标记属性
+    wrapper.is_mcp_tool = True
+    wrapper.__name__ = func.__name__
+    wrapper.__doc__ = func.__doc__
+    return wrapper
+
 def find_consecutive_reads(operations: List[Dict[str, str]], variable: str) -> bool:
     """
     Find consecutive read operations for a given variable
@@ -363,6 +379,133 @@ def process_files(file_paths: List[str]) -> None:
             
         except Exception as e:
             print(f"Error processing file {file_path}: {e}")
+
+@mcp_tool
+def detect_defects(input_file: str, output_file: str) -> Dict[str, Any]:
+    """
+    MCP入口函数，用于检测缺陷
+    
+    参数:
+        input_file: 输入JSON文件路径
+        output_file: 输出文件路径
+    
+    返回:
+        包含状态和消息的字典
+    """
+    try:
+        print(f"Processing file: {input_file}")
+        
+        # 导入config模块获取RESPONSE_PATH
+        try:
+            sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+            import config
+            response_path = config.RESPONSE_PATH
+            # 确保输出目录存在
+            os.makedirs(response_path, exist_ok=True)
+            
+            # 从输入文件名提取基础名称
+            input_basename = os.path.basename(input_file)
+            if input_basename.startswith("input-"):
+                # 如果是固定的input前缀，替换为基于原始C文件的名称
+                if "analysis" in input_basename:
+                    # 从输入文件内容中提取原始文件名
+                    with open(input_file, 'r') as f:
+                        try:
+                            data = json.load(f)
+                            # 尝试从全局变量名中提取文件名前缀
+                            if "GLOBAL_VAR" in data and len(data["GLOBAL_VAR"]) > 0:
+                                first_var = data["GLOBAL_VAR"][0]
+                                # 假设变量名格式为 "filename_global_var"
+                                parts = first_var.split("_global_")
+                                if len(parts) > 0:
+                                    base_name = parts[0]
+                                    output_filename = os.path.basename(output_file).replace("input", base_name)
+                                else:
+                                    output_filename = os.path.basename(output_file)
+                            else:
+                                output_filename = os.path.basename(output_file)
+                        except json.JSONDecodeError:
+                            output_filename = os.path.basename(output_file)
+                else:
+                    # 如果无法从内容提取，使用输出文件名但替换前缀
+                    output_filename = os.path.basename(output_file)
+            else:
+                # 如果输入文件不是以input开头，直接使用输出文件名
+                output_filename = os.path.basename(output_file)
+                
+            # 构建新的输出路径
+            new_output_file = os.path.join(response_path, output_filename)
+            print(f"Redirecting output to: {new_output_file}")
+            output_file = new_output_file
+        except ImportError:
+            print("Warning: Could not import config module, using original output path")
+        except Exception as e:
+            print(f"Warning: Error setting output path: {str(e)}, using original output path")
+        
+        # 加载输入数据
+        with open(input_file, 'r') as f:
+            input_data = json.load(f)
+        
+        # 检测所有类型的缺陷
+        all_defects = []
+        all_defects.extend(detect_rwr_defects(input_data))
+        all_defects.extend(detect_rww_defects(input_data))
+        all_defects.extend(detect_wrw_defects(input_data))
+        all_defects.extend(detect_wwr_defects(input_data))
+        
+        # 创建结果对象
+        result = {
+            "status": "success",
+            "defects_found": len(all_defects) > 0,
+            "defect_count": len(all_defects),
+            "defects": all_defects
+        }
+        
+        # 确保输出目录存在
+        os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
+        
+        # 确定输出格式
+        is_json_output = output_file.endswith('.json')
+        
+        # 将结果写入输出文件
+        if is_json_output:
+            # JSON格式输出
+            with open(output_file, 'w') as f:
+                json.dump(result, f, indent=2)
+        else:
+            # 文本格式输出
+            with open(output_file, 'w') as f:
+                if not all_defects:
+                    print(f"No defects found in {input_file}.")
+                    f.write("No defects!")
+                else:
+                    f.write(f"Found defects in {input_file}:\n")
+                    print(f"Found defects in {input_file}:")
+                    
+                    # 分组缺陷
+                    defect_types = sorted(set(defect["type"] for defect in all_defects))
+                    for defect_type in defect_types:
+                        print(f"\n{defect_type} Defects:")
+                        
+                        type_defects = [d for d in all_defects if d["type"] == defect_type]
+                        for defect in type_defects:
+                            defect_info = (
+                                f"Defect_Pattern: {defect['type']}\n"
+                                f"Variable: {defect['variable']}\n"
+                                f"Location: {defect['location']}\n"
+                                f"Description: {defect['description']}\n"
+                                "---\n"
+                            )
+                            f.write(defect_info)
+                            print(defect_info, end='')
+        
+        print(f"\nResults saved to: {output_file}")
+        return {"status": "success", "message": "Tool executed successfully", "data": result, "output_file": output_file}
+            
+    except Exception as e:
+        error_message = f"Error processing file {input_file}: {e}"
+        print(error_message)
+        return {"status": "error", "message": error_message}
 
 def main():
     # Get file paths from command line arguments

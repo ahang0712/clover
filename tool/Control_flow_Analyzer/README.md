@@ -9,6 +9,7 @@
 - 识别内部函数和外部函数
 - 支持JSON和DOT格式输出
 - 可视化函数调用图（需要安装Graphviz）
+- 支持MCP (Multi-Call Protocol) 调用方式
 
 ## 依赖项
 
@@ -76,6 +77,24 @@ brew install graphviz
 ./run.sh --help
 ```
 
+### MCP (Multi-Call Protocol) 调用
+
+该工具支持MCP调用方式，可以通过以下方式在Python代码中调用：
+
+```python
+from tool.Control_flow_Analyzer.analyzer import analyze_control_flow
+
+# 调用MCP函数
+result = analyze_control_flow(c_file_path, output_json_path)
+
+# 检查结果
+if result['status'] == 'success':
+    print("分析成功")
+    print(f"生成的调用图文件: {result.get('callgraph_file', '')}")
+else:
+    print(f"分析失败: {result.get('message', '')}")
+```
+
 ## 输出格式
 
 ### JSON格式
@@ -85,6 +104,31 @@ JSON输出包含以下部分：
 - `files`：分析的文件列表及其包含的函数
 - `functions`：所有函数的列表，包括类型（defined或external）
 - `call_graph`：函数调用关系列表
+- `main_functions`：识别出的主函数列表
+- `isr_functions`：识别出的中断函数列表
+
+示例JSON输出：
+
+```json
+{
+  "files": {
+    "example.c": ["main", "foo", "bar"]
+  },
+  "functions": {
+    "main": {"type": "defined", "file": "example.c"},
+    "foo": {"type": "defined", "file": "example.c"},
+    "bar": {"type": "defined", "file": "example.c"},
+    "printf": {"type": "external"}
+  },
+  "call_graph": {
+    "main": ["foo", "printf"],
+    "foo": ["bar", "printf"],
+    "bar": ["printf"]
+  },
+  "main_functions": ["main"],
+  "isr_functions": []
+}
+```
 
 ### DOT格式
 
@@ -111,8 +155,13 @@ dot -Tpng output/example_callgraph.dot -o output/example_callgraph.png
 ./run.sh -m repo example_project
 ```
 
+## 集成到PlanAgent
+
+该工具已集成到PlanAgent中，可以通过MCP方式调用。PlanAgent会自动处理C文件编译和分析过程，并将结果添加到facts中。
+
 ## 注意事项
 
 - 该工具依赖于LLVM IR进行分析，因此需要能够成功编译C文件
 - 对于复杂的项目，可能需要提供编译标志或包含路径
-- 函数指针调用无法在静态分析中完全解析 
+- 函数指针调用无法在静态分析中完全解析
+- 工具会根据函数名称规则（如包含"main"的为主函数，包含"isr"的为中断函数）识别函数类型 

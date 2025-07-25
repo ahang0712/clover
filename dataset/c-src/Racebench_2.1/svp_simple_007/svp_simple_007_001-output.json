@@ -2,7 +2,18 @@
   "ISR_COUNT": 1,
   "GLOBAL_VAR": [
     "svp_simple_007_001_global_var",
-    "svp_simple_007_001_global_array"
+    "svp_simple_007_001_global_array",
+    "svp_simple_007_001_global_array[0]",
+    "svp_simple_007_001_global_array[1]",
+    "svp_simple_007_001_global_array[9999]",
+    "svp_simple_007_001_global_array[TRIGGER]",
+    "svp_simple_007_001_global_array[1000]",
+    "svp_simple_007_001_global_array[var]",
+    "svp_simple_007_001_global_array[i]",
+    "svp_simple_007_001_global_array[var[0,9999]]",
+    "svp_simple_007_001_global_array[i[0,9999]]",
+    "svp_simple_007_001_global_array[4]",
+    "svp_simple_007_001_global_array[2]"
   ],
   "MAIN_INFO": [
     {
@@ -13,9 +24,10 @@
     },
     {
       "operation": "store",
-      "variable": "svp_simple_007_001_global_array",
+      "variable": "svp_simple_007_001_global_array[var]",
       "line": "17",
-      "function": "svp_simple_007_001_main"
+      "function": "svp_simple_007_001_main",
+      "range": [0, 9999]
     },
     {
       "operation": "load",
@@ -25,25 +37,34 @@
     },
     {
       "operation": "load",
-      "variable": "svp_simple_007_001_global_array",
+      "variable": "svp_simple_007_001_global_array[var]",
       "line": "19",
-      "function": "svp_simple_007_001_main"
+      "function": "svp_simple_007_001_main",
+      "range": [0, 9999]
     },
     {
       "operation": "store",
-      "variable": "svp_simple_007_001_global_array",
+      "variable": "svp_simple_007_001_global_array[var]",
       "line": "23",
-      "function": "svp_simple_007_001_main"
+      "function": "svp_simple_007_001_main",
+      "range": [0, 9999]
     },
     {
       "operation": "store",
-      "variable": "svp_simple_007_001_global_array",
+      "variable": "svp_simple_007_001_global_array[var]",
       "line": "25",
-      "function": "svp_simple_007_001_main"
+      "function": "svp_simple_007_001_main",
+      "range": [0, 9999]
     },
     {
       "operation": "load",
       "variable": "svp_simple_007_001_global_array",
+      "line": "0",
+      "function": "svp_simple_007_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "svp_simple_007_001_global_array[2]",
       "line": "27",
       "function": "svp_simple_007_001_main"
     }
@@ -51,7 +72,7 @@
   "ISR_INFO": [
     {
       "operation": "store",
-      "variable": "svp_simple_007_001_global_array",
+      "variable": "svp_simple_007_001_global_array[2]",
       "line": "32",
       "function": "svp_simple_007_001_isr_1"
     },
@@ -75,9 +96,10 @@
     },
     {
       "operation": "store",
-      "variable": "svp_simple_007_001_global_array",
+      "variable": "svp_simple_007_001_global_array[var]",
       "line": "35",
-      "function": "svp_simple_007_001_isr_1"
+      "function": "svp_simple_007_001_isr_1",
+      "range": [0, 9999]
     }
   ]
 }

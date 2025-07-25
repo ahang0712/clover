@@ -12,6 +12,7 @@
 - **类型和结构保留**：保留必要的类型定义和结构体定义
 - **全局变量识别**：自动提取相关的全局变量
 - **预处理指令处理**：保留必要的宏定义和条件编译指令
+- **MCP调用支持**：支持Multi-Call Protocol调用方式，便于与其他工具集成
 
 ## 使用方法
 
@@ -57,6 +58,38 @@
    ```bash
    ./run.sh -i -k -v -m main example.c example_extracted.c
    ```
+
+### MCP (Multi-Call Protocol) 调用
+
+该工具支持MCP调用方式，可以通过以下方式在Python代码中调用：
+
+```python
+from tool.Code_Extractor.extractor import extract_code
+
+# 调用MCP函数
+result = extract_code(input_file_path, output_file_path)
+
+# 检查结果
+if result['status'] == 'success':
+    print("代码提取成功")
+    print(f"提取的代码保存在: {output_file_path}")
+else:
+    print(f"代码提取失败: {result.get('message', '')}")
+```
+
+MCP调用还支持以下可选参数：
+
+```python
+# 完整参数示例
+result = extract_code(
+    input_file_path,
+    output_file_path,
+    inline=True,           # 是否内联函数
+    keep_all=True,         # 是否保留所有代码行
+    main_function="svp_simple_001_001_main",  # 指定主函数名
+    verbose=True           # 是否显示详细输出
+)
+```
 
 ## 工作原理
 
@@ -119,6 +152,43 @@
 - 需要保持行号一致性的代码分析
 - 提取大型代码库中的关键部分
 - 分析和理解复杂代码中的函数调用关系
+
+## 集成到PlanAgent
+
+该工具已集成到PlanAgent中，可以通过MCP方式调用。PlanAgent会自动处理代码提取过程，并将结果添加到facts中。
+
+## 输出示例
+
+提取后的代码会保留原始行号结构，并通过注释标记不相关的部分：
+
+```c
+#include <stdio.h>
+
+// 保留的全局变量
+volatile int global_var;
+
+// 注释掉的未使用变量
+// int unused_var;
+
+// 保留的函数定义
+void isr_function() {
+    global_var = 1;  // 中断函数中的操作
+}
+
+int main() {
+    global_var = 0;  // 主函数中的操作
+    
+    // 一些业务逻辑
+    printf("Value: %d\n", global_var);
+    
+    return 0;
+}
+
+// 注释掉的未使用函数
+// void unused_function() {
+//     unused_var = 10;
+// }
+```
 
 ## 注意事项
 

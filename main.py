@@ -50,7 +50,8 @@ async def handle_plan_task(code_str, api_client, model, input_file_name="input.c
         
         # 如果model为None，使用api_client默认模型
         if model is None and api_client.model_type == "online":
-            model = api_client.model
+            # 使用为Plan Agent配置的模型
+            model = AGENT_MODELS.get("plan", api_client.model)
             
         # 确定原始文件名，确保使用绝对路径
         original_file_name = os.path.abspath(input_file_name) if input_file_name else None
@@ -278,7 +279,9 @@ async def main():
             try:
                 # 传递完整的文件路径，而不仅仅是文件名
                 input_file_name = code_file_path  # 使用完整路径
-                plan_result = await handle_plan_task(code_str, api_client, local_model, input_file_name, args.force_local_tools)
+                # 使用为Plan Agent配置的模型
+                plan_model = AGENT_MODELS.get("plan", api_client.model) if api_client.model_type == "online" else local_model
+                plan_result = await handle_plan_task(code_str, api_client, plan_model, input_file_name, args.force_local_tools)
                 
                 # 将Plan Agent的分析结果添加到上下文中
                 context_base["plan_facts"] = plan_result["facts"]
@@ -324,6 +327,14 @@ async def main():
             # 启用批量处理模式
             batch_processing = True if api_client.model_type == "local" and len(found_defect_modes) > 1 else False
             
+            # 为Expert和Judge Agent选择模型
+            expert_judge_model = None
+            if api_client.model_type == "online":
+                # 使用为Expert和Judge配置的模型
+                expert_judge_model = AGENT_MODELS.get("expert", api_client.model)
+            else:
+                expert_judge_model = local_model
+            
             if batch_processing:
                 print(f"[Debug] 启用批量处理模式，将 {len(found_defect_modes)} 个缺陷模式分析任务批量提交")
                 # 批量处理模式
@@ -339,7 +350,7 @@ async def main():
                     all_defect_modes.append(defect_mode)
                 
                 # 创建批量处理任务
-                batch_task = handle_batch_tasks(all_defect_modes, all_tasks_contexts, api_client, local_model, start_time)
+                batch_task = handle_batch_tasks(all_defect_modes, all_tasks_contexts, api_client, expert_judge_model, start_time)
                 task = asyncio.create_task(batch_task)
                 task.set_name(f"batch_tasks_{len(found_defect_modes)}")
                 timeout_task = asyncio.wait_for(task, timeout=10000)
@@ -352,7 +363,7 @@ async def main():
                     context["response_file_path"] = pattern_response_file
                     
                     # 创建基础任务
-                    base_task = handle_pattern_task(defect_mode, context, api_client, local_model, start_time)
+                    base_task = handle_pattern_task(defect_mode, context, api_client, expert_judge_model, start_time)
                     
                     # 先将协程包装为任务，再设置超时和名称
                     task = asyncio.create_task(base_task)
