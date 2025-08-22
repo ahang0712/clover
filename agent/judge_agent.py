@@ -95,7 +95,7 @@ class JudgeAgent(AgentBase):
         else:
             judge_user_prompt = (
                 f"{judge_context_info}\n"
-                f"{judge_history}\n/no_think"
+                f"{judge_history}\n"
             )
             
         return judge_user_prompt

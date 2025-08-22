@@ -81,13 +81,29 @@ class ExpertAgent(AgentBase):
     
     def build_expert_user_prompt(self, context):
         """构建专家代理的用户提示词"""
-        expert_user_prompt = (
+        # Build basic prompt components
+        prompt_parts = [
             f"Global Variables to Focus on:\n[{context['variables_text']}]\n\n"
             f"The global variable read/write operations, line numbers, and function information are as follows:\n{context['operations_text']}\n"
+        ]
+        
+        # Add defect highlight information if available
+        if "defects_text" in context and context["defects_text"]:
+            print(f"[DEBUG] Adding defect information to expert prompt:")
+            print(f"[DEBUG] Defects text: {context['defects_text']}")
+            prompt_parts.append(f"\n{context['defects_text']}\n")
+        else:
+            print(f"[DEBUG] No defect information available for expert prompt")
+        
+        # Add code section
+        prompt_parts.append(
             f"\nThe code to analyze is:\n```c\n{context['code_str']}\n```\n"
             f"/no_think"
         )
-        return expert_user_prompt
+        
+        final_prompt = "".join(prompt_parts)
+        print(f"[DEBUG] Final expert prompt length: {len(final_prompt)} characters")
+        return final_prompt
         
     def build_followup_system_prompt(self, pattern_name):
         """构建专家代理后续轮次的系统提示词"""

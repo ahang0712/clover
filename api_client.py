@@ -32,7 +32,7 @@ import json
 import time
 import asyncio
 import random
-from config import API_HOST, API_MODEL, MODEL_TYPE, MODEL_PATH, API_KEYS
+from config import API_HOST, API_MODEL, MODEL_TYPE, MODEL_PATH, API_KEYS, MAX_NEW_TOKENS
 from openai import OpenAI
 
 # 只有在使用本地模型时才导入LocalModel
@@ -40,7 +40,7 @@ if MODEL_TYPE == "local":
     from model_loader import LocalModel
 
 class APIClient:
-    def __init__(self, api_key=None, base_url=None, model=None, max_tokens=512, temperature=0.0):
+    def __init__(self, api_key=None, base_url=None, model=None, max_tokens=None, temperature=0.0):
         # 使用配置文件中的模型类型
         self.model_type = MODEL_TYPE  # 获取配置的模型类型（'local' 或 'online'）
         
@@ -65,7 +65,7 @@ class APIClient:
             self.model = "local-model"
 
         # 配置默认参数
-        self.max_tokens = max_tokens
+        self.max_tokens = max_tokens if max_tokens is not None else MAX_NEW_TOKENS
         self.temperature = temperature
         self.messages = []
         
