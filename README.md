@@ -28,10 +28,6 @@ Clover employs a **multi-agent collaborative framework** with iterative refineme
 > [!IMPORTANT]
 > 🚧 **Active Development**: We are continuously improving documentation and adding new features. Stay tuned for updates!
 
-<!-- **Contact:** [Hang He](mailto:hang.he@stu.ecnu.edu.cn), [Chengcheng Wan](https://chengcheng-wan.github.io/)
-
-## 📰 News
-- **[2025.04.01]** 📄 Paper published on [ArXiv](https://arxiv.org/pdf/2504.00521.pdf) -->
 
 ## ✨ Key Features
 
