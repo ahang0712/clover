@@ -28,10 +28,10 @@ Clover employs a **multi-agent collaborative framework** with iterative refineme
 > [!IMPORTANT]
 > 🚧 **Active Development**: We are continuously improving documentation and adding new features. Stay tuned for updates!
 
-**Contact:** [Hang He](mailto:hang.he@stu.ecnu.edu.cn), [Chengcheng Wan](https://chengcheng-wan.github.io/)
+<!-- **Contact:** [Hang He](mailto:hang.he@stu.ecnu.edu.cn), [Chengcheng Wan](https://chengcheng-wan.github.io/)
 
 ## 📰 News
-- **[2025.04.01]** 📄 Paper published on [ArXiv](https://arxiv.org/pdf/2504.00521.pdf)
+- **[2025.04.01]** 📄 Paper published on [ArXiv](https://arxiv.org/pdf/2504.00521.pdf) -->
 
 ## ✨ Key Features
 
@@ -194,7 +194,8 @@ clover/
 │   └── runner.py                   # Tool manager and orchestrator
 ├── 📊 dataset/                       # Benchmark datasets
 ├── 📈 results/                       # Analysis results
-└── 📋 requirements.txt               # Dependencies
+├── 📋 requirements.txt               # Dependencies
+└── 🔍 analyze_response_times.py      # Response time analysis tool
 ```
 
 ## 🔬 Technical Highlights
