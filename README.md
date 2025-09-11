@@ -44,6 +44,7 @@ Clover employs a **multi-agent collaborative framework** with iterative refineme
 - **Python 3.10+**
 - **LLVM 10.0.0** (for static analysis)
 - **Conda** (recommended for environment management)
+- **API Credentials** (for online LLM models) or **Local Model Setup** (for offline usage)
 
 ### Installation
 
@@ -96,7 +97,41 @@ clang++ main.cpp tool.cpp cJSON.c -o analyzer \
   -lstdc++ -lz -lrt -ldl -lpthread -lm
 ```
 
-**Step 4: Run Clover**
+**Step 4: Configure API Settings**
+```bash
+# Edit config.py to set up your API configuration
+# IMPORTANT: Update the following parameters in config.py:
+
+# 1. Choose model type: 'local' or 'online'
+MODEL_TYPE = "online"  # Set to "local" if using local models
+
+# 2. Configure API settings (for online models)
+API_HOST = "your-api-host"
+API_MODEL = "your-preferred-model"
+
+# 3. Add your API keys
+API_KEYS = [
+    "your-api-key-1",
+    "your-api-key-2",
+    # Add more keys as needed
+]
+
+# 4. Configure agent models (optional)
+AGENT_MODELS = {
+    "plan": "your-plan-model",
+    "expert": "your-expert-model", 
+    "judge": "your-judge-model"
+}
+
+# 5. Set dataset and output paths
+BASE_SRC_PATH = './dataset/c-src/'  # Input dataset path
+RESPONSE_PATH = './results/'        # Output results path
+```
+
+> [!WARNING]
+> **API Configuration Required**: You must configure your API settings in `config.py` before running Clover. The current config file contains placeholder values that need to be replaced with your actual API credentials and preferred models.
+
+**Step 5: Run Clover**
 ```bash
 # Return to project root
 cd ../../..
@@ -107,13 +142,18 @@ python main.py
 
 ### Example Usage
 ```bash
-# Analyze a C source file
+# 1. First, ensure config.py is properly configured with your API settings
+
+# 2. Analyze a C source file
 clang -O0 -g -emit-llvm -S target_file.c -o target_file.ll
 opt -O2 target_file.ll -S -o target_file-opt.ll
 
-# Run Clover analysis
+# 3. Run Clover analysis
 python main.py --input target_file.c --output results/
 ```
+
+> [!TIP]
+> **Before running**: Double-check that your `config.py` file has been properly configured with valid API credentials and model settings. The framework will not work with the default placeholder values.
 
 ## 🏗️ Architecture
 
@@ -164,7 +204,7 @@ graph TD
 ```
 clover/
 ├── 📄 main.py                        # Main entry point
-├── ⚙️ config.py                      # Configuration management
+├── ⚙️ config.py                      # Configuration management (⚠️ MUST BE CONFIGURED)
 ├── 🛠️ utils.py                       # Utility functions
 ├── 📊 code_parser.py                 # Code parsing logic
 ├── 🔍 defect_patterns.py             # Atomicity violation patterns
