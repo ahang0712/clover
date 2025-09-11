@@ -244,6 +244,7 @@ class PlanAgent(AgentBase):
         # === 5. 返回结果 ===
         plan_result = {
             "facts": facts,
+            "outputs": outputs,  # 添加原始工具输出数据
             "used_tools": actual_used_tools,
             "tool_sequence": [t[0] for t in tool_sequence],
             "tool_plan_output": tool_plan,
@@ -533,6 +534,12 @@ class PlanAgent(AgentBase):
                     print(f"[DEBUG] LLM原始响应: {response[:500]}...")
                     print(f"[DEBUG] 处理后JSON内容: {json_content[:500]}...")
                     
+                    # 检查响应是否包含实际的JSON内容
+                    if not json_content or json_content.startswith("I notice that") or "Highlight results table" in json_content:
+                        self.add_message("warning", "LLM返回的是说明文本而不是JSON，可能没有收到正确的Highlight数据")
+                        print(f"[Warning] LLM响应似乎是说明文本: {json_content[:200]}...")
+                        return self._plan_expert_judges_fallback(facts, rw_analysis)
+                    
                     # 解析任务规划结果
                     planning_result = json.loads(json_content)
                     print(f"[DEBUG] 解析后的规划结果键: {list(planning_result.keys())}")
@@ -745,6 +752,42 @@ class PlanAgent(AgentBase):
             if "Operation_Analyzer" in outputs:
                 op_data = outputs["Operation_Analyzer"]
                 
+                # 检查是否有新的输出格式，如果有则转换为期望的格式
+                if op_data and not op_data.get("MAIN_INFO") and not op_data.get("ISR_INFO"):
+                    print(f"[Debug] 检测到新的Operation_Analyzer输出格式，进行格式转换")
+                    
+                    # 转换新格式到期望的格式
+                    main_info_list = []
+                    isr_info_list = []
+                    
+                    # 处理variable_accesses字段
+                    if "variable_accesses" in op_data:
+                        for access in op_data["variable_accesses"]:
+                            var_name = access.get("variable", "")
+                            line_num = access.get("line", 0)
+                            access_type = access.get("access_type", "")
+                            function = access.get("function", "")
+                            is_isr = access.get("is_isr", False)
+                            
+                            # 创建操作信息
+                            op_info = {
+                                "variable": var_name,
+                                "line": line_num,
+                                "operation": "store" if access_type == "write" else "load",
+                                "function": function
+                            }
+                            
+                            if is_isr:
+                                isr_info_list.append(op_info)
+                            else:
+                                main_info_list.append(op_info)
+                    
+                    # 更新op_data
+                    op_data["MAIN_INFO"] = main_info_list
+                    op_data["ISR_INFO"] = isr_info_list
+                    
+                    print(f"[Debug] 格式转换完成: MAIN_INFO={len(main_info_list)}, ISR_INFO={len(isr_info_list)}")
+                
                 # 提取全局变量
                 if "GLOBAL_VAR" in op_data:
                     for var_info in op_data["GLOBAL_VAR"]:
@@ -777,7 +820,10 @@ class PlanAgent(AgentBase):
             if "Control_flow_Analyzer" in outputs:
                 cf_data = outputs["Control_flow_Analyzer"]
                 
-                # 提取调用图信息
+                # 保存完整的control flow数据供expert agent使用
+                fused_facts["control_flow_data"] = cf_data
+                
+                # 提取调用图信息（向后兼容）
                 if "callgraph" in cf_data:
                     fused_facts["callgraph"] = cf_data["callgraph"]
                 elif "calls" in cf_data:
@@ -788,6 +834,9 @@ class PlanAgent(AgentBase):
                         }
                         if call_info["caller"] and call_info["callee"]:
                             fused_facts["callgraph"].append(call_info)
+                elif "call_graph" in cf_data:
+                    # 使用新的call_graph格式
+                    fused_facts["callgraph"] = cf_data["call_graph"]
                 
                 # 提取优先级信息
                 if "priorities" in cf_data:
@@ -1071,6 +1120,11 @@ class PlanAgent(AgentBase):
         """
         基于Highlight结果构建用户提示词
         """
+        # 调试：打印highlight_results的结构
+        print(f"[DEBUG] highlight_results keys: {list(highlight_results.keys())}")
+        if "statistics" in highlight_results:
+            print(f"[DEBUG] statistics keys: {list(highlight_results['statistics'].keys())}")
+        
         # 从highlight_results中提取markdown表格
         markdown_table = highlight_results.get("statistics", {}).get("markdown_table", "")
         
@@ -1080,7 +1134,11 @@ class PlanAgent(AgentBase):
         
         # 如果仍然没有表格，从defects数据生成表格
         if not markdown_table:
+            print(f"[DEBUG] 从defects数据生成markdown表格")
             markdown_table = self._generate_markdown_table_from_defects(highlight_results)
+        
+        # 调试：打印生成的表格
+        print(f"[DEBUG] 生成的markdown表格:\n{markdown_table}")
         
         # 读取任务规划提示词模板
         try:
@@ -1089,6 +1147,10 @@ class PlanAgent(AgentBase):
             
             # 将markdown表格插入到模板中
             prompt = prompt_template.replace("{highlight_results_table}", markdown_table)
+            
+            # 调试：打印最终prompt的前500字符
+            print(f"[DEBUG] 最终prompt前500字符:\n{prompt[:500]}...")
+            
         except Exception as e:
             # 如果找不到模板文件，使用备用格式
             print(f"[Warning] 无法加载任务规划提示词模板: {e}")
@@ -1414,6 +1476,20 @@ class PlanAgent(AgentBase):
                     # Defect_Highlight工具的结果在嵌套的data字段中
                     if "data" in result and "data" in result["data"]:
                         processed_result = {"status": "success", "results": result["data"]["data"]}
+                    else:
+                        processed_result = {"status": "success", "results": result.get("results", {})}
+                elif tool_name == "Operation_Analyzer":
+                    # Operation_Analyzer工具的结果需要从output_file中读取
+                    output_file = result.get("output_file", "")
+                    if output_file and os.path.exists(output_file):
+                        try:
+                            with open(output_file, 'r', encoding='utf-8') as f:
+                                analysis_data = json.load(f)
+                            processed_result = {"status": "success", "results": analysis_data}
+                            print(f"[AsyncScheduler] Operation_Analyzer 从文件读取结果: {len(analysis_data)} 个字段")
+                        except Exception as e:
+                            print(f"[AsyncScheduler] 读取Operation_Analyzer输出文件失败: {str(e)}")
+                            processed_result = {"status": "success", "results": {}}
                     else:
                         processed_result = {"status": "success", "results": result.get("results", {})}
                 else:

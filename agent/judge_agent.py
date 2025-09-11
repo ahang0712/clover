@@ -47,7 +47,7 @@ class JudgeAgent(AgentBase):
         """加载判断代理所需的所有提示词"""
         # 加载判断代理的提示词
         judge_examples = [
-            load_prompt(f"prompt/judge/judge_example_{i}.md") for i in range(1, 5)
+            load_prompt(f"prompt/judge/judge_example_{i}.md") for i in range(1, 7)
         ]
         
         judge_prompt = load_prompt(
@@ -56,6 +56,8 @@ class JudgeAgent(AgentBase):
             judge_example_2=judge_examples[1],
             judge_example_3=judge_examples[2],
             judge_example_4=judge_examples[3],
+            judge_example_5=judge_examples[4],
+            judge_example_6=judge_examples[5],
         )
         
         return judge_prompt
@@ -64,7 +66,7 @@ class JudgeAgent(AgentBase):
         """加载包含特定模式信息的判断代理提示词"""
         # 加载判断代理的提示词
         judge_examples = [
-            load_prompt(f"prompt/judge/judge_example_{i}.md") for i in range(1, 5)
+            load_prompt(f"prompt/judge/judge_example_{i}.md") for i in range(1, 7)
         ]
         
         judge_prompt = load_prompt(
@@ -74,6 +76,8 @@ class JudgeAgent(AgentBase):
             judge_example_2=judge_examples[1],
             judge_example_3=judge_examples[2],
             judge_example_4=judge_examples[3],
+            judge_example_5=judge_examples[4],
+            judge_example_6=judge_examples[5],
         )
         
         return judge_prompt
