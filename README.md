@@ -112,7 +112,7 @@ clang -O0 -g -emit-llvm -S target_file.c -o target_file.ll
 opt -O2 target_file.ll -S -o target_file-opt.ll
 
 # Run Clover analysis
-python main.py --input target_file-opt.ll --output results/
+python main.py --input target_file.c --output results/
 ```
 
 ## 🏗️ Architecture
@@ -151,7 +151,7 @@ graph TD
 
 #### 3. **Expert Agent**
 - **Domain Knowledge**: Embedded systems and interrupt-driven programming expertise
-- **AV Pattern Recognition**: Identifies RWR, WRW, WWR, and RWW violation patterns
+- **AV Pattern Recognition**: Identifies <R,W,R>, <W,R,W>, <W,W,R>, and <R,W,W> violation patterns
 - **Defect Report Generation**: Creates structured violation reports with evidence
 
 #### 4. **Judge Agent**
@@ -234,19 +234,6 @@ python -m pytest preprocessing/tests/
 
 # Code formatting
 black . && isort .
-```
-
-## 📚 Citation
-
-If you use Clover in your research, please cite our paper:
-
-```bibtex
-@article{he2024clover,
-  title={Clover: Automated Detection of Atomicity Violations in Interrupt-Driven Systems},
-  author={He, Hang and Wan, Chengcheng},
-  journal={arXiv preprint arXiv:2504.00521},
-  year={2024}
-}
 ```
 
 ## 🙏 Acknowledgments
