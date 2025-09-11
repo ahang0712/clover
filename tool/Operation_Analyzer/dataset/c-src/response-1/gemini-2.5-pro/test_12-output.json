@@ -1,0 +1,80 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "svp_simple_012_001_global_var",
+    "svp_simple_012_001_global_pointer",
+    "p",
+    "p -> svp_simple_012_001_global_var",
+    "reader1:int32"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "p -> svp_simple_012_001_global_var",
+      "line": "6",
+      "function": "svp_simple_012_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "svp_simple_012_001_global_var",
+      "line": "7",
+      "function": "svp_simple_012_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "p -> svp_simple_012_001_global_var",
+      "line": "8",
+      "function": "svp_simple_012_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "svp_simple_012_001_global_var",
+      "line": "12",
+      "function": "svp_simple_012_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "reader1:int32",
+      "line": "12",
+      "function": "svp_simple_012_001_isr_1"
+    }
+  ],
+  "defects": [],
+  "defect_count": 0,
+  "line_mapping": {
+    "original_to_filtered": {
+      "2": 1,
+      "4": 2,
+      "6": 3,
+      "8": 4,
+      "9": 5,
+      "10": 6,
+      "12": 7,
+      "14": 8,
+      "15": 9,
+      "17": 10,
+      "18": 11,
+      "19": 12,
+      "20": 13
+    },
+    "filtered_to_original": {
+      "1": 2,
+      "2": 4,
+      "3": 6,
+      "4": 8,
+      "5": 9,
+      "6": 10,
+      "7": 12,
+      "8": 14,
+      "9": 15,
+      "10": 17,
+      "11": 18,
+      "12": 19,
+      "13": 20
+    },
+    "total_original_lines": 20,
+    "total_filtered_lines": 13
+  }
+}
