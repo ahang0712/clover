@@ -1,199 +1,195 @@
-# 代码提取器 (Code Extractor)
+# Code Extractor
 
-一个基于静态分析的C代码提取和压缩工具，专为AI模型输入优化设计。
+A static-analysis-based C code extraction and compaction tool designed to optimize inputs for AI models.
 
-## 功能特点
+## Features
 
-- **保持原始行号结构**：通过注释不需要的代码而不是删除，确保行号与原始文件完全一致
-- **关键函数提取**：自动识别并提取主函数和中断函数
-- **依赖函数保留**：自动分析并保留被主函数和中断函数调用的所有函数
-- **智能变量识别**：自动分析并保留主函数、中断函数及其调用函数中使用的变量，保持代码完整性
-- **函数内联**：可选择性地内联函数调用，减少代码冗余
-- **类型和结构保留**：保留必要的类型定义和结构体定义
-- **全局变量识别**：自动提取相关的全局变量
-- **预处理指令处理**：保留必要的宏定义和条件编译指令
-- **MCP调用支持**：支持Multi-Call Protocol调用方式，便于与其他工具集成
+- **Preserve original line numbers**: Comments out unneeded code instead of deleting it, so line numbers exactly match the original file
+- **Key function extraction**: Automatically identifies and extracts the main function and interrupt service routines (ISRs)
+- **Dependency retention**: Automatically analyzes and keeps all functions called by the main and ISR functions
+- **Intelligent variable detection**: Automatically analyzes and retains variables used in the main/ISR and their callees to preserve code integrity
+- **Function inlining**: Optionally inline function calls to reduce redundancy
+- **Type and struct retention**: Keep necessary typedefs and struct definitions
+- **Global variable identification**: Automatically extracts relevant global variables
+- **Preprocessor handling**: Preserve necessary macros and conditional compilation directives
+- **MCP support**: Supports Multi-Call Protocol for easy integration with other tools
 
-## 使用方法
+## Usage
 
-### 基本用法
+### Basic
 
 ```bash
 ./run.sh example.c
 ```
 
-将提取`example.c`中的主函数、中断函数及其依赖，并生成`example_extracted.c`。
+This extracts the main/ISR functions and their dependencies from `example.c`, and generates `example_extracted.c`.
 
-### 高级选项
+### Advanced Options
 
 ```bash
-./run.sh [选项] <输入文件> [输出文件]
+./run.sh [options] <input_file> [output_file]
 ```
 
-选项:
-- `-i, --inline` - 内联所有被调用的函数
-- `-m, --main <函数名>` - 指定主函数名（如果不是标准的main）
-- `-v, --verbose` - 显示详细输出
-- `-k, --keep-all` - 保留所有原始代码行（注释不需要的部分）
-- `-h, --help` - 显示帮助信息
+Options:
+- `-i, --inline` - Inline all called functions
+- `-m, --main <name>` - Specify the main function name (if not the standard `main`)
+- `-v, --verbose` - Verbose output
+- `-k, --keep-all` - Keep all original lines (comment out unneeded parts)
+- `-h, --help` - Show help
 
-### 示例
+### Examples
 
-1. 提取并内联函数，显示详细输出:
-   ```bash
-   ./run.sh -i -v example.c
-   ```
+1) Extract with inlining and verbose output:
+```bash
+./run.sh -i -v example.c
+```
 
-2. 指定主函数名称:
-   ```bash
-   ./run.sh -m svp_simple_021_001_main wdt_pci_1.c
-   ```
+2) Specify a non-standard main function:
+```bash
+./run.sh -m svp_simple_021_001_main wdt_pci_1.c
+```
 
-3. 保留所有原始代码行（通过注释）:
-   ```bash
-   ./run.sh -k example.c output.c
-   ```
+3) Keep all original lines (via comments):
+```bash
+./run.sh -k example.c output.c
+```
 
-4. 完整示例:
-   ```bash
-   ./run.sh -i -k -v -m main example.c example_extracted.c
-   ```
+4) Full example:
+```bash
+./run.sh -i -k -v -m main example.c example_extracted.c
+```
 
-### MCP (Multi-Call Protocol) 调用
+### MCP (Multi-Call Protocol)
 
-该工具支持MCP调用方式，可以通过以下方式在Python代码中调用：
+You can call the tool via MCP from Python:
 
 ```python
 from tool.Code_Extractor.extractor import extract_code
 
-# 调用MCP函数
+# Call MCP function
 result = extract_code(input_file_path, output_file_path)
 
-# 检查结果
+# Check result
 if result['status'] == 'success':
-    print("代码提取成功")
-    print(f"提取的代码保存在: {output_file_path}")
+    print("Code extraction succeeded")
+    print(f"Extracted code saved to: {output_file_path}")
 else:
-    print(f"代码提取失败: {result.get('message', '')}")
+    print(f"Code extraction failed: {result.get('message', '')}")
 ```
 
-MCP调用还支持以下可选参数：
+Optional parameters:
 
 ```python
-# 完整参数示例
+# Full parameter example
 result = extract_code(
     input_file_path,
     output_file_path,
-    inline=True,           # 是否内联函数
-    keep_all=True,         # 是否保留所有代码行
-    main_function="svp_simple_001_001_main",  # 指定主函数名
-    verbose=True           # 是否显示详细输出
+    inline=True,           # Inline functions
+    keep_all=True,         # Keep all lines
+    main_function="svp_simple_001_001_main",  # Specify main function
+    verbose=True           # Verbose output
 )
 ```
 
-## 工作原理
+## How It Works
 
-1. 使用正则表达式和静态分析来识别和提取函数定义
-2. 构建函数调用图，分析函数间依赖关系
-3. 识别主函数和中断函数
-4. 递归识别所有被主函数和中断函数直接或间接调用的函数
-5. 分析主函数、中断函数及其调用函数中使用的变量，保留这些变量的声明和定义
-6. 保留所有代码行，但通过注释标记不需要的部分
-7. 可选地内联函数调用，减少代码冗余
-8. 确保行号与原始文件完全一致，便于追踪和调试
+1. Use regex + static analysis to detect and extract function definitions
+2. Build a call graph to analyze inter-function dependencies
+3. Identify main and ISR functions
+4. Recursively find all functions directly or indirectly called by main/ISR
+5. Analyze variables used by main/ISR and their callees; preserve their declarations/definitions
+6. Keep all code lines but comment out unneeded parts
+7. Optionally inline function calls to reduce redundancy
+8. Guarantee exact line-number parity with the original file for traceability and debugging
 
-## 行号保留方式
+## Line Number Preservation
 
-代码提取器使用两种方式保持原始行号：
+Two modes to preserve original line numbers:
 
-1. **完全保留模式 (-k 选项)**：
-   - 保留所有原始代码行
-   - 不需要的代码被注释而不是删除
-   - 行号与原文件完全一致
+1. **Full Retention Mode (-k)**
+   - Keep all original lines
+   - Unneeded code is commented out rather than deleted
+   - Line numbers match the original exactly
 
-2. **标准模式**：
-   - 提取关键函数和必要的代码
-   - 不需要的代码被删除
-   - 可以减小文件大小，但行号会发生变化
+2. **Standard Mode**
+   - Extract key functions and necessary code
+   - Unneeded code is deleted
+   - Smaller output, but line numbers will change
 
-## 变量处理方式
+## Variable Handling
 
-代码提取器对变量的处理采用智能识别方式：
+1. **Keep used variables**
+   - Analyze all variables used in main/ISR and their callees
+   - Automatically keep their definitions and declarations
+   - Keep struct field definitions that are used
 
-1. **使用变量的保留**：
-   - 分析主函数、中断函数及其调用函数中使用的所有变量
-   - 自动保留这些变量的定义和声明
-   - 保留结构体中使用的字段定义
+2. **Handle unused variables**
+   - Comment out definitions of variables not used by the necessary functions
+   - Preserve context while reducing noise
 
-2. **未使用变量的处理**：
-   - 对于未在必要函数中使用的变量，将其定义注释
-   - 保持代码上下文的完整性，同时减少噪声
+## Function Dependencies
 
-## 函数依赖处理
+1. **Main and ISR**
+   - Automatically identify main (e.g., `main`) and ISR functions
+   - Treat them as program entry points
 
-代码提取器对函数依赖关系的处理：
+2. **Keep called functions**
+   - Recursively analyze all functions called directly or indirectly by main/ISR
+   - Preserve complete call chains for correctness
+   - In inline mode, only inline within main/ISR to keep call relations clear
 
-1. **主函数和中断函数**：
-   - 自动识别代码中的主函数（如main）和中断函数
-   - 这些函数被视为程序的入口点
+3. **Handle unused functions**
+   - Comment out functions not called by main/ISR
+   - Reduce unrelated code while preserving context via comments
 
-2. **被调用函数的保留**：
-   - 自动递归分析所有被主函数和中断函数直接或间接调用的函数
-   - 保留完整的函数调用链，确保代码的功能完整性
-   - 在内联模式下，只对主函数和中断函数进行内联处理，保留函数调用关系的清晰性
+## Use Cases
 
-3. **未使用函数的处理**：
-   - 对于未被主函数或中断函数调用的函数，将其定义注释
-   - 减少不相关代码，同时通过注释保留上下文
+- Compact code for AI model input (e.g., for Expert-Judge systems)
+- Analyses requiring strict line-number consistency
+- Extract key parts from large codebases
+- Understand and visualize function call relationships in complex code
 
-## 适用场景
+## Integration with PlanAgent
 
-- 代码压缩用于AI模型输入（如传递给Expert-Judge系统）
-- 需要保持行号一致性的代码分析
-- 提取大型代码库中的关键部分
-- 分析和理解复杂代码中的函数调用关系
+This tool is integrated with PlanAgent and can be invoked via MCP. PlanAgent will handle extraction and add results to facts.
 
-## 集成到PlanAgent
+## Output Example
 
-该工具已集成到PlanAgent中，可以通过MCP方式调用。PlanAgent会自动处理代码提取过程，并将结果添加到facts中。
-
-## 输出示例
-
-提取后的代码会保留原始行号结构，并通过注释标记不相关的部分：
+The extracted code preserves original line numbers and comments out irrelevant parts:
 
 ```c
 #include <stdio.h>
 
-// 保留的全局变量
+// Preserved global variable
 volatile int global_var;
 
-// 注释掉的未使用变量
+// Unused variable commented out
 // int unused_var;
 
-// 保留的函数定义
+// Preserved function definition
 void isr_function() {
-    global_var = 1;  // 中断函数中的操作
+    global_var = 1;  // Operation in ISR
 }
 
 int main() {
-    global_var = 0;  // 主函数中的操作
+    global_var = 0;  // Operation in main
     
-    // 一些业务逻辑
+    // Some business logic
     printf("Value: %d\n", global_var);
     
     return 0;
 }
 
-// 注释掉的未使用函数
+// Unused function commented out
 // void unused_function() {
 //     unused_var = 10;
 // }
 ```
 
-## 注意事项
+## Notes
 
-- 工具使用静态分析，可能无法正确处理高度动态的代码（如函数指针）
-- 复杂的预处理器宏可能会导致提取不准确
-- 为获得最佳结果，输入代码应该没有语法错误
-- `-k` 选项保留所有代码行，可能导致输出文件大于输入文件
-- 内联功能可能会增加生成文件的大小，但会减少函数依赖的复杂性 
+- The tool uses static analysis and may struggle with highly dynamic patterns (e.g., function pointers)
+- Complex preprocessor macros may reduce extraction accuracy
+- For best results, the input should be free of syntax errors
+- The `-k` option keeps all lines and can produce larger outputs than the input
+- Inlining may increase the output size but reduce dependency complexity 

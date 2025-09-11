@@ -1,87 +1,145 @@
-# Defect Highlight Tool
+# Code Filter
 
-这个工具用于检测并高亮C代码中潜在的并发缺陷，特别是与原子性违规相关的模式。
+## Overview
 
-## 支持的缺陷模式
+The Code Filter processes incoming code snippets by removing blank lines and comment-only lines while preserving the mapping between read/write operation line numbers and the displayed code. This is crucial for analyzer accuracy and readability of results.
 
-该工具可以检测以下四种标准缺陷模式：
+## Key Features
 
-1. **RWR (Read-Write-Read)**: 读-写-读模式，当一个函数读取变量后，被另一个函数写入，然后再次读取时可能导致不一致。
-2. **RWW (Read-Write-Write)**: 读-写-写模式，当一个函数读取变量并写入后，被另一个函数写入时可能导致数据丢失。
-3. **WRW (Write-Read-Write)**: 写-读-写模式，当一个函数写入变量后，被另一个函数读取，然后再次写入时可能导致数据不一致。
-4. **WWR (Write-Write-Read)**: 写-写-读模式，当一个函数写入变量后，被另一个函数写入，然后读取时可能导致读取到错误的值。
+1. **Remove blanks and comment-only lines**: Automatically detects and removes:
+   - Blank lines
+   - Comment-only lines (`//`, `/* */`, `*`)
+   - Non-essential preprocessor directives (retains important ones like `#include`, `#define`)
 
-## 使用方法
+2. **Preserve line mapping**: Maintains the mapping between original and filtered line numbers
 
-### 命令行使用
+3. **Update analysis results**: Automatically updates line numbers in analysis JSON to match the filtered code
+
+4. **Detailed statistics**: Provides comprehensive before/after statistics and mapping info
+
+## Usage
+
+### CLI
 
 ```bash
-python pattern.py <input_json_file> [<input_json_file2> ...]
+# Basic: filter code only
+python code_filter.py <input_file> <output_file>
+
+# Full: filter code and update analysis
+python code_filter.py <input_file> <output_file> <analysis_file> <updated_analysis_file>
 ```
 
-输入文件应该是JSON格式，包含以下字段：
-- `GLOBAL_VAR`: 全局变量列表
-- `MAIN_INFO`: 主函数中的操作列表
-- `ISR_INFO`: 中断函数中的操作列表
-- `ISR_COUNT`: 中断函数数量
+### Example
 
-每个操作应该包含以下字段：
-- `variable`: 变量名
-- `function`: 函数名
-- `operation`: 操作类型，"load"表示读取，"store"表示写入
-
-### MCP (Multi-Call Protocol) 调用
-
-该工具现在支持MCP调用方式，可以通过以下方式在Python代码中调用：
-
-```python
-from tool.Highlight.pattern import detect_defects
-
-# 调用MCP函数
-result = detect_defects(input_file_path, output_file_path)
-
-# 检查结果
-if result['status'] == 'success':
-    print("缺陷检测成功")
-    if 'data' in result and result['data'].get('defects_found', False):
-        print(f"发现 {result['data'].get('defect_count', 0)} 个缺陷")
-    else:
-        print("未发现缺陷")
-else:
-    print(f"缺陷检测失败: {result.get('message', '')}")
+```bash
+# Filter wdt_pci_1.c and update analysis results
+python tool/Highlight/code_filter.py \
+    dataset/RWIP/wdt/wdt_pci_1.c \
+    wdt_pci_1_filtered.c \
+    tool/Highlight/output_wdt_pci_1.json \
+    wdt_pci_1_updated_analysis.json
 ```
 
-## 输出格式
+## Output
 
-工具会生成一个文本文件，列出所有检测到的缺陷，每个缺陷包含以下信息：
+### Statistics
+After running, you will see:
+- Original line count
+- Filtered line count
+- Deleted line count
+- Line mapping examples
 
+### Sample output
 ```
-Defect_Pattern: <缺陷模式>
-Variable: <变量名>
-Location: <位置>
-Description: <描述>
----
+Filter completed:
+  Original lines: 1113
+  Filtered lines: 128
+  Deleted lines: 985
+  Analysis updated: wdt_pci_1_updated_analysis.json
+  Mapping examples (first 10):
+    82 -> 1
+    117 -> 2
+    185 -> 3
+    188 -> 4
+    190 -> 5
+    ...
 ```
 
-如果输出文件以`.json`结尾，还会生成一个JSON格式的输出，包含以下字段：
+## Updated Analysis JSON
 
+The updated analysis JSON contains:
+
+1. **Updated defect info**: All line numbers mapped to the filtered code
+2. **Line mapping table**: Full original → filtered line mapping
+3. **Stats**:
+   - `total_original_lines`: original code line count
+   - `total_filtered_lines`: filtered code line count
+
+### Mapping structure
 ```json
 {
-  "status": "success",
-  "defects_found": true,
-  "defect_count": 2,
-  "defects": [
-    {
-      "variable": "global_var",
-      "type": "WRW",
-      "location": "main",
-      "description": "WRW defect found: consecutive writes in main function with read in isr_1"
+  "line_mapping": {
+    "original_to_filtered": {
+      "1025": 104,
+      "1031": 106
     },
-    ...
-  ]
+    "filtered_to_original": {
+      "104": 1025,
+      "106": 1031
+    },
+    "total_original_lines": 1113,
+    "total_filtered_lines": 128
+  }
 }
 ```
 
-## 集成到PlanAgent
+## Python API
 
-该工具已集成到PlanAgent中，可以通过MCP方式调用。PlanAgent会自动处理输入和输出文件，并将结果添加到facts中。 
+```python
+from code_filter import CodeFilter, filter_code_file
+
+# Option 1: helper function
+result = filter_code_file(
+    input_file="input.c",
+    output_file="output.c", 
+    analysis_file="analysis.json",
+    updated_analysis_file="updated_analysis.json"
+)
+
+# Option 2: class API
+filter = CodeFilter()
+
+# Read and filter code
+with open("input.c", 'r') as f:
+    lines = f.readlines()
+filtered_lines = filter.filter_code(lines)
+
+# Update analysis results
+with open("analysis.json", 'r') as f:
+    analysis = json.load(f)
+updated_analysis = filter.update_analysis_result(analysis)
+
+# Get mapping info
+mapping_info = filter.get_line_mapping_info()
+```
+
+## Notes
+
+1. **Encoding**: Handles UTF-8 and Latin-1 automatically
+2. **Preserve important content**: Will not remove important preprocessor directives like `#include`, `#define`
+3. **Mapping integrity**: If some lines in the analysis cannot be mapped, original line numbers are retained with a warning flag
+4. **Backup**: Recommended to back up files before filtering
+
+## Use Cases
+
+1. **Code presentation**: Produce compact code snippets for demos or docs
+2. **Align analysis results**: Ensure analyzer outputs match displayed code line numbers
+3. **Reduce noise**: Remove irrelevant blanks/comments to highlight core logic
+4. **Save space**: Show more effective code in limited display space
+
+## Implementation Notes
+
+- **Regex-based detection**: Precise regex patterns to detect comment forms
+- **Bidirectional mapping**: Maintain original→filtered and filtered→original mappings
+- **Error handling**: Gracefully handle encoding and file access issues
+- **Type hints**: Use Python type hints for API safety 

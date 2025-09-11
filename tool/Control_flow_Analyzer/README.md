@@ -1,41 +1,41 @@
-# 控制流分析器 (Control Flow Analyzer)
+# Control Flow Analyzer
 
-这是一个基于LLVM的控制流分析工具，用于分析C代码的函数调用关系。它可以分析单个C文件或整个代码仓库，并生成函数调用图。
+An LLVM-based control flow analysis tool for C code that extracts function call relationships. It can analyze a single C file or an entire repository and generate call graphs.
 
-## 功能特点
+## Features
 
-- 分析单个C文件的函数调用关系
-- 分析整个代码仓库的函数调用关系
-- 识别内部函数和外部函数
-- 支持JSON和DOT格式输出
-- 可视化函数调用图（需要安装Graphviz）
-- 支持MCP (Multi-Call Protocol) 调用方式
+- Analyze function call relationships in a single C file
+- Analyze function call relationships across a repository
+- Distinguish between defined (internal) and external functions
+- Support JSON and DOT outputs
+- Visualize call graphs (Graphviz required)
+- Support MCP (Multi-Call Protocol)
 
-## 依赖项
+## Dependencies
 
 - LLVM 10.0.0
 - Clang 10.0.0
 - Python 3.6+
-- Graphviz（可选，用于生成PNG图像）
+- Graphviz (optional, for PNG rendering)
 
-## 安装
+## Installation
 
-1. 确保已安装LLVM和Clang 10.0.0：
+1. Ensure LLVM and Clang 10.0.0 are installed:
 
 ```bash
-# 下载预编译的LLVM和Clang
+# Download prebuilt LLVM/Clang
 curl -L https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-apple-darwin.tar.xz -o llvm10.tar.xz
 mkdir -p ~/llvm10
 tar -xf llvm10.tar.xz -C ~/llvm10
 ```
 
-2. 将LLVM工具添加到PATH：
+2. Add LLVM tools to PATH:
 
 ```bash
 export PATH="$HOME/llvm10/clang+llvm-10.0.0-x86_64-apple-darwin/bin:$PATH"
 ```
 
-3. 安装Graphviz（可选）：
+3. Install Graphviz (optional):
 
 ```bash
 # macOS
@@ -45,69 +45,69 @@ brew install graphviz
 # sudo apt-get install graphviz
 ```
 
-## 使用方法
+## Usage
 
-### 分析单个C文件
+### Analyze a single C file
 
 ```bash
 ./run.sh example.c
 ```
 
-### 分析整个代码仓库
+### Analyze an entire repository
 
 ```bash
 ./run.sh -m repo path/to/repository
 ```
 
-### 指定输出目录
+### Specify output directory
 
 ```bash
 ./run.sh -o output_dir example.c
 ```
 
-### 生成DOT格式输出
+### Generate DOT output
 
 ```bash
 ./run.sh -f dot example.c
 ```
 
-### 完整的命令行选项
+### Full CLI options
 
 ```bash
 ./run.sh --help
 ```
 
-### MCP (Multi-Call Protocol) 调用
+### MCP (Multi-Call Protocol)
 
-该工具支持MCP调用方式，可以通过以下方式在Python代码中调用：
+Call from Python:
 
 ```python
 from tool.Control_flow_Analyzer.analyzer import analyze_control_flow
 
-# 调用MCP函数
+# Call MCP function
 result = analyze_control_flow(c_file_path, output_json_path)
 
-# 检查结果
+# Check result
 if result['status'] == 'success':
-    print("分析成功")
-    print(f"生成的调用图文件: {result.get('callgraph_file', '')}")
+    print("Analysis succeeded")
+    print(f"Generated call graph file: {result.get('callgraph_file', '')}")
 else:
-    print(f"分析失败: {result.get('message', '')}")
+    print(f"Analysis failed: {result.get('message', '')}")
 ```
 
-## 输出格式
+## Output Formats
 
-### JSON格式
+### JSON
 
-JSON输出包含以下部分：
+The JSON output includes:
 
-- `files`：分析的文件列表及其包含的函数
-- `functions`：所有函数的列表，包括类型（defined或external）
-- `call_graph`：函数调用关系列表
-- `main_functions`：识别出的主函数列表
-- `isr_functions`：识别出的中断函数列表
+- `files`: analyzed files and their functions
+- `functions`: all functions with type (`defined` or `external`)
+- `call_graph`: call relationships
+- `main_functions`: identified main functions
+- `isr_functions`: identified interrupt service routines
 
-示例JSON输出：
+Example:
 
 ```json
 {
@@ -130,38 +130,38 @@ JSON输出包含以下部分：
 }
 ```
 
-### DOT格式
+### DOT
 
-DOT输出是一个可视化的函数调用图，可以使用Graphviz工具将其转换为PNG等图像格式：
+DOT output is a visual call graph. Convert to PNG using Graphviz:
 
 ```bash
 dot -Tpng output/example_callgraph.dot -o output/example_callgraph.png
 ```
 
-## 示例
+## Examples
 
-项目包含两个示例：
+Two examples are provided:
 
-1. `example.c`：单文件示例
-2. `example_project/`：多文件示例项目
+1. `example.c`: single-file example
+2. `example_project/`: multi-file example project
 
-### 运行示例
+### Run examples
 
 ```bash
-# 单文件示例
+# Single-file
 ./run.sh example.c
 
-# 多文件示例
+# Multi-file project
 ./run.sh -m repo example_project
 ```
 
-## 集成到PlanAgent
+## Integration with PlanAgent
 
-该工具已集成到PlanAgent中，可以通过MCP方式调用。PlanAgent会自动处理C文件编译和分析过程，并将结果添加到facts中。
+This tool is integrated with PlanAgent and can be invoked via MCP. PlanAgent compiles and analyzes C files and adds the results to facts.
 
-## 注意事项
+## Notes
 
-- 该工具依赖于LLVM IR进行分析，因此需要能够成功编译C文件
-- 对于复杂的项目，可能需要提供编译标志或包含路径
-- 函数指针调用无法在静态分析中完全解析
-- 工具会根据函数名称规则（如包含"main"的为主函数，包含"isr"的为中断函数）识别函数类型 
+- The tool analyzes LLVM IR, so input C files must compile successfully
+- Complex projects may require additional compile flags or include paths
+- Calls via function pointers cannot be fully resolved by static analysis
+- Function type identification uses simple name-based heuristics (e.g., names containing "main" for main and "isr" for ISR) 
