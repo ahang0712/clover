@@ -1,3 +1,0 @@
-writer1_isr/1/1
-closer1_isr/2/2
-closer2_isr/3/3

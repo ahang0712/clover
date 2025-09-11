@@ -1,2 +1,0 @@
-task_communicate_isr/2/2
-task_measure_isr/1/1

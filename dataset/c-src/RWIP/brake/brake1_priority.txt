@@ -1,2 +1,0 @@
-task_RR_Wheel_isr/2/2
-task_compute_isr/1/1
