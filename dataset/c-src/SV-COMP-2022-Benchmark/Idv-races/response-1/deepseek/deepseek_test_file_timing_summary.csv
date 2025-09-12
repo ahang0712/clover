@@ -1,6 +1,0 @@
-测试文件,执行时间(秒),数据来源,原始文件名
-svp_simple_300_001.c,29.697820901870728,timing_statistics.json,svp_simple_300_001.c_timing_statistics.json
-svp_simple_303_001.c,37.14302897453308,timing_statistics.json,svp_simple_303_001.c_timing_statistics.json
-svp_simple_304_001.c,41.14488697052002,timing_statistics.json,svp_simple_304_001.c_timing_statistics.json
-svp_simple_302_001.c,47.00643706321716,timing_statistics.json,svp_simple_302_001.c_timing_statistics.json
-svp_simple_301_001.c,28.502526998519897,timing_statistics.json,svp_simple_301_001.c_timing_statistics.json

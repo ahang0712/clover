@@ -1,8 +1,0 @@
-[Expert R1] (Detect atomicity violations in the code.)
-No defects.
-
-[System] Expert first round completed in 28.87 seconds
-
-[Expert R1] No defects found. Ending the conversation.
-
-Elapsed Time: 28.896545886993408 seconds
