@@ -124,8 +124,8 @@ AGENT_MODELS = {
 }
 
 # 5. Set dataset and output paths
-BASE_SRC_PATH = './dataset/c-src/'  # Input dataset path
-RESPONSE_PATH = './results/'        # Output results path
+BASE_SRC_PATH = './data/'  # Input dataset path
+RESPONSE_PATH = './output/'        # Output results path
 ```
 
 > [!WARNING]
@@ -228,7 +228,7 @@ clover/
 │   ├── Operation_Analyzer/         # Memory access analysis  
 │   ├── Control_Flow_Analyzer/      # Basic block analysis
 │   └── runner.py                   # Tool manager and orchestrator
-├── 📊 dataset/                       # Benchmark datasets
+├── 📊 data/                       # Benchmark datasets
 ├── 📊 result/                        # Experimental evaluation results
 │   ├── ablation_study.xlsx          # Component-wise performance analysis
 │   ├── comparative_study.xlsx       # Comparison with state-of-the-art tools
