@@ -229,7 +229,11 @@ clover/
 │   ├── Control_Flow_Analyzer/      # Basic block analysis
 │   └── runner.py                   # Tool manager and orchestrator
 ├── 📊 dataset/                       # Benchmark datasets
-├── 📈 results/                       # Analysis results
+├── 📊 result/                        # Experimental evaluation results
+│   ├── ablation_study.xlsx          # Component-wise performance analysis
+│   ├── comparative_study.xlsx       # Comparison with state-of-the-art tools
+│   └── different_LLMs.xlsx          # LLM performance comparison
+├── 📈 results/                       # Analysis outputs and generated results
 ├── 📋 requirements.txt               # Dependencies
 └── 🔍 analyze_response_times.py      # Response time analysis tool
 ```
@@ -259,6 +263,9 @@ Key improvements:
 - **🎯 Higher Precision**: 40%+ reduction in false positives
 - **🔍 Better Recall**: Enhanced detection of complex violation patterns  
 - **⚡ Practical Applicability**: Handles large-scale embedded codebases
+
+> [!NOTE]
+> **📊 Detailed Results Available**: Comprehensive experimental data, including ablation studies, comparative analysis, and LLM performance comparisons, are available in the [`/result`](./result/) directory with full documentation and reproducibility instructions.
 
 ## 🤝 Contributing
 
