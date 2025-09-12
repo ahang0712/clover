@@ -1,2 +1,0 @@
-No defects.
-Execution time: 20.19 seconds
