@@ -1,0 +1,151 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [12, 20, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [12, 21, 12]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 4.75 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Let me analyze each read/write operation for the global variable `num` to determine if they can actually be executed.
+
+## Step 1: Check Control Conditions
+
+### Analysis of `svp_simple_326_001_main()`:
+- **Line 31**: `num = 1` - This is a direct assignment, no control conditions
+- **Line 33**: `if (num!=1)` - This reads `num` to check the condition
+  - `num` was just set to 1 on line 31, so `num!=1` is false
+  - Therefore, the code block containing `reach_error()` and `abort()` will never be executed
+
+### Analysis of `svp_simple_326_001_isr_1()`:
+- **Line 10**: `while (num > 0)` - This reads `num` to check the condition
+- **Line 11**: `int tmp = num-1` - This reads `num`
+- **Line 12**: `num=tmp` - This writes to `num`
+  - These operations are guarded by `num > 0`
+  - Since `num` is initialized to 1 in main, this condition can be satisfied
+
+### Analysis of `svp_simple_326_001_isr_2()`:
+- **Line 20**: `while (num == 0)` - This reads `num` to check the condition
+- **Line 21**: `int tmp = num-1` - This reads `num`
+- **Line 22**: `num=tmp` - This writes to `num`
+  - These operations are guarded by `num == 0`
+  - Since `num` is initialized to 1 in main, this condition is initially false
+
+## Step 2: Pay Attention to Control Condition Changes
+
+The control conditions can change based on:
+1. ISR1 can decrement `num` from 1 to 0
+2. ISR2 can decrement `num` from 0 to -1
+
+## Step 3: Check Interrupt Status
+
+The code does not contain any `disable_isr()` or `enable_isr()` calls, so all interrupts are enabled by default.
+
+## Step 4: Summary of Analysis
+
+### Operations that can be executed:
+1. **Line 12** (ISR1): `num=tmp` - Can execute when `num > 0`
+2. **Line 20** (ISR2): `while (num == 0)` - Can execute after ISR1 sets `num = 0`
+3. **Line 21** (ISR2): `int tmp = num-1` - Can execute when `num == 0`
+4. **Line 22** (ISR2): `num=tmp` - Can execute when `num == 0`
+
+### Atomicity Violations:
+- The violations reported involve accesses at lines [12, 20, 12] and [12, 21, 12]
+- These represent potential atomicity violations between ISR1 and ISR2
+- Since both ISRs can execute (interrupts are enabled) and the control conditions can be satisfied, these violations are valid
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [12, 20, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [12, 21, 12]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Let me analyze the code for atomicity violations following the <Write, Read, Write> pattern.
+
+## Analysis of Global Variable `num`
+
+### Operations on `num`:
+- **Line 31**: `num = 1` (Write) - in main function (priority 0)
+- **Line 12**: `num = tmp` (Write) - in ISR1 (priority 1)
+- **Line 22**: `num = tmp` (Write) - in ISR2 (priority 2)
+- **Line 10**: `while (num > 0)` (Read) - in ISR1 (priority 1)
+- **Line 11**: `tmp = num-1` (Read) - in ISR1 (priority 1)
+- **Line 20**: `while (num == 0)` (Read) - in ISR2 (priority 2)
+- **Line 21**: `tmp = num-1` (Read) - in ISR2 (priority 2)
+- **Line 33**: `if (num!=1)` (Read) - in main function (priority 0)
+
+### Checking for <Write, Read, Write> Pattern
+
+Looking for consecutive writes by the same lower-priority task interrupted by a higher-priority read:
+
+1. **ISR1 (priority 1) writes**:
+   - Line 12: `num = tmp`
+   - This is within a while loop, so multiple writes can occur
+   - Can be interrupted by ISR2 (priority 2)
+
+2. **ISR2 (priority 2) writes**:
+   - Line 22: `num = tmp`
+   - This is the highest priority ISR, so cannot be interrupted by other ISRs
+   - Main function (priority 0) cannot interrupt ISR2
+
+3. **Main function (priority 0) writes**:
+   - Line 31: `num = 1`
+   - Only single write, no consecutive writes to form the pattern
+
+### Valid Violations Found:
+
+1. **ISR1 → ISR2 → ISR1**:
+   - ISR1 writes at line 12
+   - ISR2 reads at line 20 (while condition check)
+   - ISR1 writes again at line 12 (next iteration)
+
+2. **ISR1 → ISR2 → ISR1**:
+   - ISR1 writes at line 12
+   - ISR2 reads at line 21 (tmp = num-1)
+   - ISR1 writes again at line 12 (next iteration)
+
+These match the violations reported in the expert's analysis.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [12, 20, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [12, 21, 12]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 240.51740908622742 seconds

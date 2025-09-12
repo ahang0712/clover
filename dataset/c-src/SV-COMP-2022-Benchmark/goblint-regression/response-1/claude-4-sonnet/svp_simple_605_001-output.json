@@ -1,0 +1,28 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "glob1"
+  ],
+  "MAIN_INFO": [
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "glob1",
+      "line": "14",
+      "function": "svp_simple_605_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "glob1",
+      "line": "16",
+      "function": "svp_simple_605_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "glob1",
+      "line": "21",
+      "function": "svp_simple_605_001_isr_1"
+    }
+  ]
+}

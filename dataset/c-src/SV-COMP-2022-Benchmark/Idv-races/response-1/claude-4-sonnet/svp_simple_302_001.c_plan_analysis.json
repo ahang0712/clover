@@ -1,0 +1,901 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "pdev"
+    ],
+    "variable_types": {
+      "pdev": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "pdev",
+        "op": "store",
+        "function": "svp_simple_302_001_isr_1",
+        "line": "7"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "ldv_assert",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "ldv_assert",
+        "callee": "abort"
+      },
+      {
+        "caller": "module_init",
+        "callee": "ldv_assert"
+      },
+      {
+        "caller": "module_init",
+        "callee": "__VERIFIER_nondet_int"
+      },
+      {
+        "caller": "module_init",
+        "callee": "ldv_assert"
+      },
+      {
+        "caller": "module_init",
+        "callee": "ldv_assert"
+      },
+      {
+        "caller": "module_exit",
+        "callee": "ldv_assert"
+      },
+      {
+        "caller": "svp_simple_302_001_main",
+        "callee": "module_init"
+      },
+      {
+        "caller": "svp_simple_302_001_main",
+        "callee": "module_exit"
+      },
+      {
+        "caller": "svp_simple_302_001_main",
+        "callee": "module_exit"
+      },
+      {
+        "caller": "svp_simple_302_001_main",
+        "callee": "module_exit"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "ldv_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_302_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "module_init",
+          "type": "defined"
+        },
+        {
+          "name": "module_exit",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_302_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_nondet_int",
+          "type": "external"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "ldv_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "ldv_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_init",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_exit",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_init"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_exit"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_exit"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_exit"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 13,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            11,
+            18
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            11,
+            23
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            19,
+            11,
+            23
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            24,
+            11,
+            30
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            19,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            24,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            15,
+            11,
+            16
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            18,
+            11,
+            19
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            18,
+            11,
+            24
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            18,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            23,
+            11,
+            24
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            23,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            30,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "pdev"
+      ],
+      "MAIN_INFO": [],
+      "ISR_INFO": [
+        {
+          "operation": "store",
+          "variable": "pdev",
+          "line": "7",
+          "function": "svp_simple_302_001_isr_1"
+        }
+      ]
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "ldv_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_302_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "module_init",
+          "type": "defined"
+        },
+        {
+          "name": "module_exit",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_302_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_nondet_int",
+          "type": "external"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "ldv_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "ldv_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_init",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_exit",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_init"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_exit"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_exit"
+        },
+        {
+          "caller": "svp_simple_302_001_main",
+          "callee": "module_exit"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 13,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            11,
+            18
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            11,
+            23
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            19,
+            11,
+            23
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            24,
+            11,
+            30
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            19,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            24,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            15,
+            11,
+            16
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            18,
+            11,
+            19
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            18,
+            11,
+            24
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            18,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            23,
+            11,
+            24
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            23,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            30,
+            11,
+            31
+          ],
+          "sharedVariable": "pdev",
+          "type": "WWR"
+        }
+      ]
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 7\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 7\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/Idv-races/svp_simple_302_001.c",
+    "total_lines": 41,
+    "analyzed_lines": 33,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 692
+  }
+}

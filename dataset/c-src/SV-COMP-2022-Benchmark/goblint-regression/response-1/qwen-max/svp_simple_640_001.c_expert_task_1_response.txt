@@ -1,0 +1,83 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [9, 15, 10]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 3.63 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Analysis of `g` Access Operations
+
+1. **Read Operation at Line 14 (`__VERIFIER_assert(!(g == 0))`)**:
+   - This read operation is part of the `__VERIFIER_assert` function call in `svp_simple_640_001_isr_2`.
+   - The control condition here is implicit: the ISR `svp_simple_640_001_isr_2` must be executed for this read to occur.
+   - There are no explicit control conditions guarding the execution of this ISR in the provided code. Therefore, the read operation at line 14 can be executed whenever `svp_simple_640_001_isr_2` is triggered.
+
+2. **Write Operation at Line 8 (`g = 1`)**:
+   - This write operation occurs in `svp_simple_640_001_isr_1`.
+   - Similar to the read operation above, there are no explicit control conditions guarding the execution of this ISR. Therefore, the write operation at line 8 can be executed whenever `svp_simple_640_001_isr_1` is triggered.
+
+3. **Write Operation at Line 10 (`g = 0`)**:
+   - This write operation also occurs in `svp_simple_640_001_isr_1`.
+   - There are no explicit control conditions guarding this write operation. Therefore, it can be executed whenever `svp_simple_640_001_isr_1` is triggered.
+
+4. **Write Operation at Line 15 (`g = 0`)**:
+   - This write operation occurs in `svp_simple_640_001_isr_2`.
+   - Similar to the read operation in this ISR, there are no explicit control conditions guarding the execution of this ISR. Therefore, the write operation at line 15 can be executed whenever `svp_simple_640_001_isr_2` is triggered.
+
+#### Summary of Control Condition Analysis
+- None of the read/write operations on `g` are guarded by explicit control conditions that could prevent their execution. All operations can be executed when their respective ISRs are triggered.
+
+---
+
+### Step 2: Pay Attention to Control Condition Changes
+
+- There are no variables or conditions in the provided code that could dynamically change to prevent the execution of the ISRs (`svp_simple_640_001_isr_1` and `svp_simple_640_001_isr_2`).
+- Interrupt handling (preemption) could lead to interleaved execution of these ISRs, but there is no evidence in the code to suggest that the ISRs cannot execute independently.
+
+---
+
+### Step 3: Check Interrupt Status
+
+- The provided code does not include any calls to `disable_isr()` or `enable_isr()`. This implies that interrupts are globally enabled, and both `svp_simple_640_001_isr_1` and `svp_simple_640_001_isr_2` can preempt the main function or each other at any time.
+- Since there are no interrupt disabling/enabling mechanisms in the code, all read/write operations on `g` in the ISRs are accessible and can be executed.
+
+---
+
+### Step 4: Generate the Final Report
+
+#### Summary of Accessibility Analysis
+- **Read Operation at Line 14**: Can be executed when `svp_simple_640_001_isr_2` is triggered.
+- **Write Operation at Line 8**: Can be executed when `svp_simple_640_001_isr_1` is triggered.
+- **Write Operation at Line 10**: Can be executed when `svp_simple_640_001_isr_1` is triggered.
+- **Write Operation at Line 15**: Can be executed when `svp_simple_640_001_isr_2` is triggered.
+
+All operations on `g` are accessible and can be executed under normal interrupt preemption scenarios. Therefore, the reported atomicity violation involving the access pattern ["Read", "Write", "Write"] at lines [9, 15, 10] is valid.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": ["9", "15", "10"]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 88.40738582611084 seconds

@@ -1,0 +1,117 @@
+{
+  "ISR_COUNT": 2,
+  "GLOBAL_VAR": [
+    "g",
+    "cond.addr",
+    "tmp",
+    "got",
+    "arg.addr",
+    "argc.addr",
+    "argv.addr",
+    "num",
+    "i",
+    "argv.addr -> argv",
+    "got:int32",
+    "arg.addr:int8*"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "argc.addr",
+      "line": "0",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "argv.addr -> argv",
+      "line": "0",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "num",
+      "line": "81",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "82",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "i",
+      "line": "82",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "i",
+      "line": "82",
+      "function": "svp_simple_643_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "82",
+      "function": "svp_simple_643_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "got:int32",
+      "line": "56",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "58",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "60",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "61",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "63",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "63",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "store",
+      "variable": "got:int32",
+      "line": "64",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "got:int32",
+      "line": "67",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "0",
+      "function": "svp_simple_643_001_isr1"
+    }
+  ]
+}

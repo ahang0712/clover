@@ -1,0 +1,375 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "g",
+        "cond.addr",
+        "arg.addr:int8*"
+      ],
+      "variable_types": {
+        "g": "unknown",
+        "cond.addr": "unknown",
+        "arg.addr:int8*": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_634_001_main",
+          "line": "9"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_634_001_main",
+          "line": "10"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_634_001_main",
+          "line": "12"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_634_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_634_001_isr_1",
+          "line": "6"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_634_001_main",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_634_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_634_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_634_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_634_001_main",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_634_001_main",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              8,
+              14
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              8,
+              16
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "g",
+          "cond.addr",
+          "arg.addr:int8*"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "9",
+            "function": "svp_simple_634_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "10",
+            "function": "svp_simple_634_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "12",
+            "function": "svp_simple_634_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_634_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "6",
+            "function": "svp_simple_634_001_isr_1"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "5": 4,
+            "7": 5,
+            "8": 6,
+            "9": 7,
+            "11": 8,
+            "13": 9,
+            "14": 10,
+            "15": 11,
+            "16": 12,
+            "18": 13,
+            "19": 14
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 5,
+            "5": 7,
+            "6": 8,
+            "7": 9,
+            "8": 11,
+            "9": 13,
+            "10": 14,
+            "11": 15,
+            "12": 16,
+            "13": 18,
+            "14": 19
+          },
+          "total_original_lines": 19,
+          "total_filtered_lines": 14
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_634_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_634_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_634_001_main",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_634_001_main",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              8,
+              14
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              8,
+              16
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_634_001.c",
+      "total_lines": 19,
+      "analyzed_lines": 14,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 330
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the code:\n\n1. **Global variable**: `g` is initialized to 0 on line 5\n2. **ISR function**: `svp_simple_634_001_isr_1` writes to `g` on line 8 (`g = 1`)\n3. **Main function**: `svp_simple_634_001_main` has conditional logic that reads `g`\n\nAnalyzing the main function execution flow:\n- Line 13: `if (g)` - This is a read operation on `g`\n- Line 14: `__VERIFIER_assert(g)` - This contains another read operation on `g`\n- Line 16: `__VERIFIER_assert(!g)` - This also contains a read operation on `g`\n\nSince `__VERIFIER_assert` is a function call, I need to inline it:\n```c\nvoid __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();} } }\n```\n\nThe function reads the parameter `cond`, so:\n- `__VERIFIER_assert(g)` becomes `if(!(g))` - reading `g`\n- `__VERIFIER_assert(!g)` becomes `if(!(!g))` - reading `g`\n\nNow I can identify the atomicity violation patterns:\n\n**Scenario 1**: If the condition `g` is true (line 13), execution goes to line 14\n- a1: Read `g` on line 13 (condition check)\n- a2: Write `g = 1` on line 8 (ISR can interrupt)\n- a3: Read `g` on line 14 (in `__VERIFIER_assert(g)`)\n\n**Scenario 2**: If the condition `g` is false (line 13), execution goes to line 16\n- a1: Read `g` on line 13 (condition check)\n- a2: Write `g = 1` on line 8 (ISR can interrupt)\n- a3: Read `g` on line 16 (in `__VERIFIER_assert(!g)`)\n\nBoth scenarios show the <Read, Write, Read> pattern where the ISR can interrupt between the consecutive reads in the main function.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 8, 14]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 8, 16]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 8.64 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at this code, I need to analyze the global variable `g` for atomicity violations by examining all read/write operations and their accessibility.\n\n## Step 1: Check Control Conditions\n\n**Analysis of read/write operations:**\n\n1. **Line 8: `g = 1;` (Write in ISR)**\n   - This is in the ISR function `svp_simple_634_001_isr_1`\n   - No control conditions guard this operation\n   - The ISR can execute at any time when interrupts are enabled\n   - **Conclusion: This write operation can be executed**\n\n2. **Line 13: `if (g)` (Read in main)**\n   - This is a read operation that evaluates the condition\n   - No control conditions guard this operation\n   - This is at the start of the main function execution\n   - **Conclusion: This read operation can be executed**\n\n3. **Line 14: `__VERIFIER_assert(g);` (Read in main)**\n   - This operation is guarded by the condition `if (g)` from line 13\n   - For this to execute, the condition `g` must be true (non-zero)\n   - Variable `g` is initialized to 0 at line 5\n   - The ISR can change `g` from 0 to 1 at line 8\n   - If the ISR executes before or during the main function, `g` becomes 1, making the condition true\n   - **Conclusion: This read operation can be executed when g is non-zero**\n\n4. **Line 16: `__VERIFIER_assert(!g);` (Read in main)**\n   - This operation is guarded by the `else` branch of the condition from line 13\n   - For this to execute, the condition `g` must be false (zero)\n   - Variable `g` starts as 0, so initially this condition is satisfied\n   - **Conclusion: This read operation can be executed when g is zero**\n\n## Step 2: Pay Attention to Control Condition Changes\n\nThe ISR can change the value of `g` from 0 to 1, which affects the control flow in the main function. This means both branches (lines 14 and 16) are potentially reachable depending on when the ISR executes.\n\n## Step 3: Check Interrupt Status\n\nNo explicit interrupt disable/enable calls are present in the code, so interrupts are assumed to be enabled throughout execution, allowing the ISR to preempt the main function.\n\n## Step 4: Generate Final Report\n\n**Summary of analysis:**\n- Line 8 (Write): Can be executed - ISR has no guards\n- Line 13 (Read): Can be executed - no guards in main function  \n- Line 14 (Read): Can be executed - when g is non-zero after ISR execution\n- Line 16 (Read): Can be executed - when g remains zero\n\nAll operations are accessible, creating potential atomicity violations:\n\n1. **Violation 1**: Read(13) → Write(8) → Read(14)\n   - When the condition evaluates to true and ISR interrupts before line 14\n\n2. **Violation 2**: Read(13) → Write(8) → Read(16)  \n   - When the condition evaluates to false initially, but ISR could still interrupt before line 16\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [\"13\", \"8\", \"14\"]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [\"13\", \"8\", \"16\"]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at this code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the operations:\n\n1. **Line 5**: `int g = 0;` - Global variable initialization\n2. **Line 8**: `g = 1;` - Write operation in ISR `svp_simple_634_001_isr_1`\n3. **Line 13**: `if (g)` - Read operation in main function\n4. **Line 14**: `__VERIFIER_assert(g);` - Read operation (inlining the function call)\n5. **Line 16**: `__VERIFIER_assert(!g);` - Read operation (inlining the function call)\n\nAnalyzing the control flow and potential atomicity violations:\n\n**Scenario 1**: When the condition `g` evaluates to true on line 13, execution proceeds to line 14\n- a1: Read `g` on line 13 (condition evaluation)\n- a2: Write `g = 1` on line 8 (ISR can interrupt between line 13 and 14)\n- a3: Read `g` on line 14 (in `__VERIFIER_assert(g)`)\n\n**Scenario 2**: When the condition `g` evaluates to false on line 13, execution proceeds to line 16\n- a1: Read `g` on line 13 (condition evaluation)  \n- a2: Write `g = 1` on line 8 (ISR can interrupt between line 13 and 16)\n- a3: Read `g` on line 16 (in `__VERIFIER_assert(!g)`)\n\nBoth scenarios represent valid <Read, Write, Read> atomicity violations where the ISR can interrupt the main function between consecutive read operations.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 8, 14]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 8, 16]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_634_001.c",
+    "total_lines": 19,
+    "analyzed_lines": 14,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 330
+  }
+}

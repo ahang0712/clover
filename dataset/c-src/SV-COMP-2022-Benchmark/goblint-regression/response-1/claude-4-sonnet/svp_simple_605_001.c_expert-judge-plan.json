@@ -1,0 +1,41 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "varA",
+        "varB",
+        "varC",
+        "varD"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 8
+    },
+    {
+      "sharedVariables": [
+        "varE",
+        "varF"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 4
+    },
+    {
+      "sharedVariables": [
+        "varG"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 2
+    }
+  ]
+}

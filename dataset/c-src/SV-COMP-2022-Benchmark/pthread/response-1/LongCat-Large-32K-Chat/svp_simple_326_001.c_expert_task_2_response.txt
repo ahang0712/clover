@@ -1,0 +1,58 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 22, 12]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 1.40 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Operation in `svp_simple_326_001_isr_1`
+- **Line 10:** `while (num > 0)`
+  - **Control Condition:** `num > 0`
+  - **Initialization:** `num` is set to `1` in `svp_simple_326_001_main()` before any ISR runs.
+  - **Modification:** Decremented in the loop (`tmp = num - 1; num = tmp;`).
+  - **Reachability:** Since `num` starts at `1`, the condition `num > 0` is initially true, allowing entry into the loop.
+
+#### Operation in `svp_simple_326_001_isr_2`
+- **Line 20:** `while (num == 0)`
+  - **Control Condition:** `num == 0`
+  - **Initialization:** `num` is set to `1` in `svp_simple_326_001_main()`.
+  - **Modification:** No modification occurs in `svp_simple_326_001_isr_2` that would make `num` equal to `0`.
+  - **Reachability:** Given `num` is initialized to `1` and only decremented in ISR1, the condition `num == 0` is never satisfied.
+
+### Step 2: Pay Attention to Control Condition Changes
+- ISR1 modifies `num`, potentially affecting conditions in ISR2, but ISR2's condition (`num == 0`) remains unsatisfied.
+
+### Step 3: Check Interrupt Status
+- No explicit interrupt disabling/enabling logic impacts the execution of ISRs in this code snippet.
+
+### Summary
+- **Line 10 (`while (num > 0)`):** Executable because `num` starts at `1`.
+- **Line 22 (`int tmp = num-1`):** Not executable due to unsatisfiable condition (`num == 0`).
+- **Line 12 (`num=tmp`):** Executable within ISR1 as part of the loop body.
+
+### Conclusion
+The atomicity violation reported between lines 10, 22, and 12 involves a write operation in ISR2 (`line 22`) that cannot be executed due to an unsatisfiable control condition (`num == 0`). Thus, the reported violation is invalid.
+
+### Final Report
+```plaintext
+No defects.
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```plaintext
+Abstain
+```
+
+
+Elapsed Time: 31.931118965148926 seconds

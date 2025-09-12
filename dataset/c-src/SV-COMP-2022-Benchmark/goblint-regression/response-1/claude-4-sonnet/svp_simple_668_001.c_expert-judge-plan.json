@@ -1,0 +1,48 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "g1",
+        "g2"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ]
+    },
+    {
+      "sharedVariables": [
+        "g1",
+        "g2"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ]
+    },
+    {
+      "sharedVariables": [
+        "g1",
+        "g2"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ]
+    },
+    {
+      "sharedVariables": [
+        "g1",
+        "g2"
+      ],
+      "accessPattern": [
+        "Write",
+        "Read",
+        "Write"
+      ]
+    }
+  ]
+}

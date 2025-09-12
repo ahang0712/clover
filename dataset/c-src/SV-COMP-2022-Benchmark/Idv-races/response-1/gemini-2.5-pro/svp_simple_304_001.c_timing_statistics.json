@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "total_tasks": 3,
+    "total_parallel_time": 167.0913281440735,
+    "average_conversation_time": 80.20838928222656,
+    "max_conversation_time": 166.96450281143188,
+    "min_conversation_time": 28.8970947265625,
+    "parallel_efficiency": 1.4410288877948563
+  },
+  "task_details": [
+    {
+      "task_id": "expert_task_1",
+      "defect_mode": "WWR",
+      "variables": [
+        "pdev"
+      ],
+      "timing": {
+        "prepare_time": 1756980275.137332,
+        "real_start_time": 1756980275.2375941,
+        "end_time": 1756980442.219096,
+        "prepare_wait_duration": 0.10026216506958008,
+        "conversation_duration": 166.96450281143188,
+        "total_task_duration": 166.98150181770325
+      }
+    },
+    {
+      "task_id": "expert_task_2",
+      "defect_mode": "RWR",
+      "variables": [
+        "pdev"
+      ],
+      "timing": {
+        "prepare_time": 1756980275.137372,
+        "real_start_time": 1756980305.9340641,
+        "end_time": 1756980350.718722,
+        "prepare_wait_duration": 30.79669213294983,
+        "conversation_duration": 44.7635703086853,
+        "total_task_duration": 44.78465795516968
+      }
+    },
+    {
+      "task_id": "expert_task_3",
+      "defect_mode": "RWW",
+      "variables": [
+        "pdev"
+      ],
+      "timing": {
+        "prepare_time": 1756980275.137393,
+        "real_start_time": 1756980350.718911,
+        "end_time": 1756980379.634153,
+        "prepare_wait_duration": 75.5815179347992,
+        "conversation_duration": 28.8970947265625,
+        "total_task_duration": 28.915241956710815
+      }
+    }
+  ],
+  "timestamps": {
+    "parallel_start": 1756980275.1372008,
+    "actual_parallel_start": 1756980275.2375941,
+    "actual_parallel_end": 1756980442.219096
+  }
+}

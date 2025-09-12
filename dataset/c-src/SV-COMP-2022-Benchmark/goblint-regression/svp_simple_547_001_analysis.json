@@ -1,0 +1,34 @@
+{
+  "defect_count" : 1,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        12,
+        6,
+        13
+      ],
+      "sharedVariable" : "data",
+      "type" : "RWW"
+    }
+  ]
+}

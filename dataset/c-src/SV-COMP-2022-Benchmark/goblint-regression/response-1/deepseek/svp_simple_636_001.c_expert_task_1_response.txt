@@ -1,0 +1,65 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [28, 20, 30]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 1.20 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Let me analyze the code step by step:
+
+1. **Control Conditions Analysis**:
+   - The write operation at line 20 (`g = 3`) is guarded by `if (g == 1)` in ISR_1
+   - `g` is initialized to 0 at line 15
+   - In main(), `g` is set to 1 at line 26, then immediately set to 2 at line 28
+   - The ISR could only execute between these operations if it were triggered
+
+2. **Interrupt Status Analysis**:
+   - There are no `disable_isr()` or `enable_isr()` calls in the code
+   - This means interrupts could potentially occur at any time
+
+3. **Execution Path Analysis**:
+   - For line 20 (`g = 3`) to execute:
+     - ISR_1 must be triggered after line 26 (`g = 1`) but before line 28 (`g = 2`)
+     - This is a possible scenario since interrupts aren't disabled
+   - The read at line 30 (`__VERIFIER_assert(g == 2)`) will execute after line 28
+
+4. **Possible Interleaving**:
+   - Main: g = 1 (line 26)
+   - ISR_1 triggered: checks g == 1 (true), sets g = 3 (line 20)
+   - Main: g = 2 (line 28)
+   - Main: assert(g == 2) (line 30)
+   - This sequence would show the access pattern [Write (28), Write (20), Read (30)]
+
+The reported violation is valid because:
+- The ISR can interrupt between lines 26 and 28
+- When it does, it will modify g (line 20) between the two writes in main (lines 26 and 28)
+- The read at line 30 will then see the final value after these operations
+
+No changes needed to the report.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [28, 20, 30]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 28.84529399871826 seconds

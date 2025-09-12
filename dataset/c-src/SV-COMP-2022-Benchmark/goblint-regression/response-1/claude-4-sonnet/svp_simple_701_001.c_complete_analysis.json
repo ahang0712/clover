@@ -1,0 +1,452 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "g",
+        "h",
+        "i"
+      ],
+      "variable_types": {
+        "g": "unknown",
+        "h": "unknown",
+        "i": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_701_001_main",
+          "line": "37"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_701_001_main",
+          "line": "38"
+        },
+        {
+          "variable": "h",
+          "op": "store",
+          "function": "svp_simple_701_001_main",
+          "line": "39"
+        },
+        {
+          "variable": "h",
+          "op": "store",
+          "function": "svp_simple_701_001_main",
+          "line": "41"
+        },
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_701_001_main",
+          "line": "43"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_701_001_isr_1",
+          "line": "19"
+        },
+        {
+          "variable": "h",
+          "op": "load",
+          "function": "svp_simple_701_001_isr_1",
+          "line": "20"
+        },
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_701_001_isr_1",
+          "line": "25"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_701_001_isr_1",
+          "line": "26"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_701_001_isr_1",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "svp_simple_701_001_isr_1",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "svp_simple_701_001_isr_1",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "svp_simple_701_001_isr_1",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_701_001_isr_1",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_701_001_isr_1",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_701_001_main",
+          "callee": "__VERIFIER_nondet_int"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_701_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_701_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_701_001_main",
+            "callee": "__VERIFIER_nondet_int"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              37,
+              26,
+              43
+            ],
+            "sharedVariable": "i",
+            "type": "WRW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              39,
+              20,
+              41
+            ],
+            "sharedVariable": "h",
+            "type": "WRW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "g",
+          "h",
+          "i"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "37",
+            "function": "svp_simple_701_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "38",
+            "function": "svp_simple_701_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "h",
+            "line": "39",
+            "function": "svp_simple_701_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "h",
+            "line": "41",
+            "function": "svp_simple_701_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "43",
+            "function": "svp_simple_701_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "19",
+            "function": "svp_simple_701_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "h",
+            "line": "20",
+            "function": "svp_simple_701_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "25",
+            "function": "svp_simple_701_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "26",
+            "function": "svp_simple_701_001_isr_1"
+          }
+        ]
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_701_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_701_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_701_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_701_001_main",
+            "callee": "__VERIFIER_nondet_int"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              37,
+              26,
+              43
+            ],
+            "sharedVariable": "i",
+            "type": "WRW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              39,
+              20,
+              41
+            ],
+            "sharedVariable": "h",
+            "type": "WRW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"i\",\n        \"h\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"i\",\n        \"h\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_701_001.c",
+      "total_lines": 47,
+      "analyzed_lines": 47,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 742
+    }
+  },
+  "expert_judge_results": {
+    "expert_judge_task_1": [
+      "WRW",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variables `i` and `h` for atomicity violations following the <Write, Read, Write> pattern.\n\nLet me trace through the execution:\n\n**Main function (Priority 0):**\n- Line 37: `i = 11;` (Write to i)\n- Line 39: `h = x - 17;` (Write to h) \n- Line 41: `h = x;` (Write to h)\n- Line 43: `i = 3;` (Write to i)\n\n**ISR function (Priority 1):**\n- Line 20: `y = h;` (Read from h)\n- Line 26: `z = i;` (Read from i)\n\nNow I'll check for <Write, Read, Write> patterns where a higher-priority ISR reads between two consecutive writes in the main function:\n\n**For variable `i`:**\n- a1: Line 37 - Write `i = 11` (main function)\n- a2: Line 26 - Read `z = i` (ISR - higher priority)\n- a3: Line 43 - Write `i = 3` (main function)\n\nThis forms a valid <Write, Read, Write> pattern where the ISR can preempt between the two consecutive writes in main.\n\n**For variable `h`:**\n- a1: Line 39 - Write `h = x - 17` (main function)\n- a2: Line 20 - Read `y = h` (ISR - higher priority)  \n- a3: Line 41 - Write `h = x` (main function)\n\nThis also forms a valid <Write, Read, Write> pattern where the ISR can preempt between the two consecutive writes in main.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [37, 26, 43]\n        },\n        {\n            \"sharedVariable\": \"h\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [39, 20, 41]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the global variables `i` and `h` for atomicity violations following the <Write, Read, Write> pattern.\n\n**Step 1: Check Control Conditions**\n\nFor the main function operations:\n- Lines 37, 39, 41, 43 are all guarded by `if (x > -1000)` where x is a nondeterministic value\n- This condition can be true at runtime, so these operations are accessible\n\nFor the ISR operations:\n- Lines 20, 26 are guarded by `if (x < 1000)` where x is a nondeterministic value  \n- This condition can be true at runtime, so these operations are accessible\n\n**Step 2: Check Control Condition Changes**\n- No interrupt handling code modifies these control conditions\n\n**Step 3: Check Interrupt Status**\n- No disable_isr() or enable_isr() calls are present\n- The ISR can preempt the main function at any point\n\n**Step 4: Analyze Access Patterns**\n\n**For variable `i`:**\n- Line 37: `i = 11;` (Write in main)\n- Line 26: `z = i;` (Read in ISR - can preempt main)\n- Line 43: `i = 3;` (Write in main)\n\nThis forms a <Write, Read, Write> pattern where the ISR can preempt between consecutive writes.\n\n**For variable `h`:**\n- Line 39: `h = x - 17;` (Write in main)\n- Line 20: `y = h;` (Read in ISR - can preempt main)\n- Line 41: `h = x;` (Write in main)\n\nThis also forms a <Write, Read, Write> pattern where the ISR can preempt between consecutive writes.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [37, 26, 43]\n        },\n        {\n            \"sharedVariable\": \"h\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [39, 20, 41]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variables `i` and `h` for atomicity violations following the <Write, Read, Write> pattern.\n\n**Step 1: Identify Operations**\n\n**Main function (Priority 0):**\n- Line 37: `i = 11;` (Write to i)\n- Line 39: `h = x - 17;` (Write to h) \n- Line 41: `h = x;` (Write to h)\n- Line 43: `i = 3;` (Write to i)\n\n**ISR function (Priority 1):**\n- Line 20: `y = h;` (Read from h)\n- Line 26: `z = i;` (Read from i)\n\n**Step 2: Check Control Flow**\n- Main function operations are guarded by `if (x > -1000)` - can be true\n- ISR operations are guarded by `if (x < 1000)` - can be true\n- Both conditions can be satisfied simultaneously, making all operations reachable\n\n**Step 3: Analyze <Write, Read, Write> Patterns**\n\n**For variable `i`:**\n- a1: Line 37 - Write `i = 11` (main function)\n- a2: Line 26 - Read `z = i` (ISR - higher priority can preempt)\n- a3: Line 43 - Write `i = 3` (main function)\n\n**For variable `h`:**\n- a1: Line 39 - Write `h = x - 17` (main function)\n- a2: Line 20 - Read `y = h` (ISR - higher priority can preempt)\n- a3: Line 41 - Write `h = x` (main function)\n\nBoth patterns represent valid atomicity violations where the ISR can preempt between consecutive writes in the main function.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [37, 26, 43]\n        },\n        {\n            \"sharedVariable\": \"h\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [39, 20, 41]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_701_001.c",
+    "total_lines": 47,
+    "analyzed_lines": 47,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 742
+  }
+}

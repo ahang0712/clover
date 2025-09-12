@@ -1,0 +1,20 @@
+digraph "CFG for 'req_isr_1' function" {
+	label="CFG for 'req_isr_1' function";
+
+	Node0x7fe2d600de40 [shape=record,label="{%0:\l  store i32 0, i32* @irq, align 4, !dbg !37\l  store i32 5, i32* @global_id, align 4, !dbg !38\l  store i32 5, i32* @global_dev, align 4, !dbg !38\l  store i32 5, i32* @global_id, align 4, !dbg !40\l  store i32 5, i32* @global_dev, align 4, !dbg !41\l  %1 = load i32, i32* @global_dev, align 4, !dbg !42\l  %2 = icmp ne i32 %1, 2, !dbg !44\l  br i1 %2, label %3, label %4, !dbg !45\l|{<s0>T|<s1>F}}"];
+	Node0x7fe2d600de40:s0 -> Node0x7fe2d600e840;
+	Node0x7fe2d600de40:s1 -> Node0x7fe2d600e8c0;
+	Node0x7fe2d600e840 [shape=record,label="{%3:\l3:                                                \l  br label %4, !dbg !46\l}"];
+	Node0x7fe2d600e840 -> Node0x7fe2d600e8c0;
+	Node0x7fe2d600e8c0 [shape=record,label="{%4:\l4:                                                \l  %5 = load i32, i32* @irq, align 4, !dbg !48\l  %6 = icmp sgt i32 %5, -1, !dbg !50\l  br i1 %6, label %7, label %12, !dbg !51\l|{<s0>T|<s1>F}}"];
+	Node0x7fe2d600e8c0:s0 -> Node0x7fe2d600eec0;
+	Node0x7fe2d600e8c0:s1 -> Node0x7fe2d600ef40;
+	Node0x7fe2d600eec0 [shape=record,label="{%7:\l7:                                                \l  %8 = load i32, i32* @global_id, align 4, !dbg !52\l  %9 = icmp ne i32 %8, 2, !dbg !55\l  br i1 %9, label %10, label %11, !dbg !56\l|{<s0>T|<s1>F}}"];
+	Node0x7fe2d600eec0:s0 -> Node0x7fe2d600f440;
+	Node0x7fe2d600eec0:s1 -> Node0x7fe2d600f4c0;
+	Node0x7fe2d600f440 [shape=record,label="{%10:\l10:                                               \l  br label %11, !dbg !57\l}"];
+	Node0x7fe2d600f440 -> Node0x7fe2d600f4c0;
+	Node0x7fe2d600f4c0 [shape=record,label="{%11:\l11:                                               \l  br label %12, !dbg !59\l}"];
+	Node0x7fe2d600f4c0 -> Node0x7fe2d600ef40;
+	Node0x7fe2d600ef40 [shape=record,label="{%12:\l12:                                               \l  store i32 -1, i32* @global_id, align 4, !dbg !60\l  store i32 -1, i32* @global_dev, align 4, !dbg !60\l  store i32 -1, i32* @global_id, align 4, !dbg !62\l  store i32 -1, i32* @global_dev, align 4, !dbg !63\l  %13 = load i32, i32* @cnt5, align 4, !dbg !64\l  %14 = add nsw i32 %13, 1, !dbg !64\l  store i32 %14, i32* @cnt5, align 4, !dbg !64\l  ret void, !dbg !65\l}"];
+}

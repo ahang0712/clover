@@ -1,0 +1,62 @@
+{
+  "defect_count" : 2,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        37,
+        26,
+        43
+      ],
+      "sharedVariable" : "i",
+      "type" : "WRW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        39,
+        20,
+        41
+      ],
+      "sharedVariable" : "h",
+      "type" : "WRW"
+    }
+  ]
+}

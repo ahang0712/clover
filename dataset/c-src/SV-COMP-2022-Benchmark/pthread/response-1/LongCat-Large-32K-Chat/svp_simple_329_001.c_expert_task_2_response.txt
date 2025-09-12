@@ -1,0 +1,92 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [14, 20, 14]
+        },
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [20, 14, 20]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 3.38 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Operation 1: `i = j + 1;` at Line 14
+- **Control Condition**: None directly guarding this line within `svp_simple_329_001_isr_1`.
+- **Variable Value Tracking**:
+  - `i` and `j` are initialized to 3 and 6 respectively.
+  - `j` is read and used to update `i`.
+- **Execution Path Analysis**:
+  - This loop executes `NUM` times updating `i` with `j + 1`.
+  - No conditions prevent execution within the loop.
+
+#### Operation 2: `j = i + 1;` at Line 20
+- **Control Condition**: None directly guarding this line within `svp_simple_329_001_isr_2`.
+- **Variable Value Tracking**:
+  - `i` is read and used to update `j`.
+- **Execution Path Analysis**:
+  - This loop executes `NUM` times updating `j` with `i + 1`.
+  - No conditions prevent execution within the loop.
+
+### Step 2: Pay Attention to Control Condition Changes
+- Both ISRs modify shared variables (`i` and `j`) without synchronization mechanisms like locks or atomic blocks.
+- Interrupts can preempt each other, causing race conditions.
+
+### Step 3: Check Interrupt Status
+- No explicit interrupt disabling/enabling logic is present in the provided code snippet.
+- Assuming interrupts are enabled, both ISRs can preempt `svp_simple_329_001_main`.
+
+### Summary of Analysis
+- **Line 14 (`i = j + 1;`)**: Executable. Modifies `i` using `j`.
+- **Line 20 (`j = i + 1;`)**: Executable. Modifies `j` using `i`.
+
+Both operations are reachable and executable given the loops they reside in. The absence of synchronization primitives results in potential atomicity violations.
+
+### Final Report
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [14, 20, 14]
+        },
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [20, 14, 20]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [14, 20, 14]
+        },
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [20, 14, 20]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 40.23758268356323 seconds

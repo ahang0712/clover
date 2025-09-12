@@ -1,0 +1,10 @@
+digraph "CFG for 'req_isr_2' function" {
+	label="CFG for 'req_isr_2' function";
+
+	Node0x7fe2d6010970 [shape=record,label="{%0:\l  store i32 0, i32* @irq, align 4, !dbg !37\l  store i32 7, i32* @global_id, align 4, !dbg !38\l  store i32 7, i32* @global_dev, align 4, !dbg !39\l  %1 = load i32, i32* @global_dev, align 4, !dbg !40\l  %2 = icmp ne i32 %1, 7, !dbg !42\l  br i1 %2, label %3, label %4, !dbg !43\l|{<s0>T|<s1>F}}"];
+	Node0x7fe2d6010970:s0 -> Node0x7fe2d6011180;
+	Node0x7fe2d6010970:s1 -> Node0x7fe2d6011200;
+	Node0x7fe2d6011180 [shape=record,label="{%3:\l3:                                                \l  br label %4, !dbg !44\l}"];
+	Node0x7fe2d6011180 -> Node0x7fe2d6011200;
+	Node0x7fe2d6011200 [shape=record,label="{%4:\l4:                                                \l  %5 = load i32, i32* @cnt7, align 4, !dbg !46\l  %6 = add nsw i32 %5, 1, !dbg !46\l  store i32 %6, i32* @cnt7, align 4, !dbg !46\l  ret void, !dbg !47\l}"];
+}

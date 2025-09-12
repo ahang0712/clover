@@ -1,0 +1,62 @@
+{
+  "defect_count" : 2,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        28,
+        51,
+        30
+      ],
+      "sharedVariable" : "svp_simple_013_001_global_var2",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        24,
+        50,
+        26
+      ],
+      "sharedVariable" : "svp_simple_013_001_global_var1",
+      "type" : "RWR"
+    }
+  ]
+}

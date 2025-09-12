@@ -1,0 +1,113 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "g2",
+    "cond.addr",
+    "arg.addr:int8*",
+    "tmp3:int32",
+    "tmp4:int32"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "g2",
+      "line": "12",
+      "function": "svp_simple_619_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "UNMAPPED_0",
+      "function": "svp_simple_619_001_isr_1",
+      "warning": "Line 0 could not be mapped"
+    },
+    {
+      "operation": "load",
+      "variable": "g2",
+      "line": "6",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "tmp3:int32",
+      "line": "6",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "tmp3:int32",
+      "line": "7",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "g2",
+      "line": "7",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "g2",
+      "line": "8",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "tmp4:int32",
+      "line": "8",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "tmp4:int32",
+      "line": "9",
+      "function": "svp_simple_619_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "g2",
+      "line": "9",
+      "function": "svp_simple_619_001_isr_1"
+    }
+  ],
+  "defects": [],
+  "defect_count": 0,
+  "line_mapping": {
+    "original_to_filtered": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "5": 4,
+      "7": 5,
+      "9": 6,
+      "10": 7,
+      "13": 8,
+      "14": 9,
+      "17": 10,
+      "19": 11,
+      "21": 12,
+      "23": 13,
+      "24": 14
+    },
+    "filtered_to_original": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 5,
+      "5": 7,
+      "6": 9,
+      "7": 10,
+      "8": 13,
+      "9": 14,
+      "10": 17,
+      "11": 19,
+      "12": 21,
+      "13": 23,
+      "14": 24
+    },
+    "total_original_lines": 24,
+    "total_filtered_lines": 14
+  }
+}

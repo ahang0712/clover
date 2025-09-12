@@ -1,0 +1,83 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "lines": [
+                14,
+                20,
+                14
+            ]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 18.69 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+- **Operation 1: Write to `i` at line 14 in `svp_simple_329_001_isr_1`**
+  - **Control Condition:** This write operation is inside the `for` loop: `for (int k = 0; k < NUM; k++)`.
+  - **Condition Analysis:** The macro `NUM` is defined as `10`. The loop variable `k` is initialized to `0` and incremented in each iteration. The loop's body will be executed as long as `k` is less than `10`. This condition is satisfied for `k` values from `0` to `9`.
+  - **Conclusion:** The write operation `i = j + 1;` at line 14 is executed 10 times whenever `svp_simple_329_001_isr_1` is triggered. The operation is accessible.
+
+- **Operation 2: Read of `i` at line 20 in `svp_simple_329_001_isr_2`**
+  - **Control Condition:** This read operation is part of the assignment `j = i + 1;`, which is inside the `for` loop: `for (int k = 0; k < NUM; k++)`.
+  - **Condition Analysis:** The macro `NUM` is defined as `10`. The loop variable `k` is initialized to `0` and incremented in each iteration. The loop's body will be executed as long as `k` is less than `10`. This condition is satisfied for `k` values from `0` to `9`.
+  - **Conclusion:** The read of `i` at line 20 is executed 10 times whenever `svp_simple_329_001_isr_2` is triggered. The operation is accessible.
+
+- **Operation 3: Second Write to `i` at line 14 in `svp_simple_329_001_isr_1`**
+  - **Control Condition:** This is the same operation as the first one, occurring in a subsequent iteration of the same `for` loop.
+  - **Condition Analysis:** As established above, the loop runs 10 times. Therefore, a second write to `i` can occur after the first write and after a potential preemption.
+  - **Conclusion:** The write operation at line 14 is accessible in multiple loop iterations.
+
+### Step 2: Pay Attention to Control Condition Changes
+The control conditions for the operations are simple `for` loops with local counters. Their execution is not affected by the state of other tasks or ISRs.
+
+### Step 3: Check Interrupt Status
+- The code does not contain any `enable_isr()` or `disable_isr()` calls.
+- The function names and comments indicate an environment with two ISRs of different priorities: `svp_simple_329_001_isr_1` (priority 1) and `svp_simple_329_001_isr_2` (priority 2).
+- Assuming a higher number indicates higher priority, `isr_2` can preempt `isr_1`.
+- This preemption allows for the following interleaving, which constitutes an atomicity violation:
+  1. `isr_1` executes `i = j + 1;` (Write to `i`).
+  2. `isr_2` preempts `isr_1`.
+  3. `isr_2` executes `j = i + 1;` (Read of `i`).
+  4. `isr_2` completes, and `isr_1` resumes.
+  5. `isr_1` continues its loop and executes `i = j + 1;` again in a subsequent iteration (second Write to `i`).
+- This sequence matches the reported 'Write-Read-Write' pattern.
+
+### Step 4: Generate the Final Report
+All read/write operations mentioned in the initial defect report are guarded by `for` loops that are guaranteed to execute 10 times. The interrupt model allows for the higher-priority `isr_2` to preempt the lower-priority `isr_1`, making the reported interleaving scenario possible. Therefore, the atomicity violation is a true positive.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "lines": [
+                14,
+                20,
+                14
+            ]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 116.3716652393341 seconds

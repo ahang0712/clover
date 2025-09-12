@@ -1,0 +1,30 @@
+{
+  "functions": [
+    {
+      "name": "svp_simple_519_001_isr_1",
+      "type": "defined"
+    },
+    {
+      "name": "add1",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_519_001_main",
+      "type": "defined"
+    },
+    {
+      "name": "printf",
+      "type": "external"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "svp_simple_519_001_main",
+      "callee": "printf"
+    },
+    {
+      "caller": "svp_simple_519_001_main",
+      "callee": "add1"
+    }
+  ]
+}

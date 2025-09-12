@@ -1,0 +1,368 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "g",
+      "cond.addr",
+      "x",
+      "y",
+      "r",
+      "arg.addr:int8*"
+    ],
+    "variable_types": {
+      "g": "unknown",
+      "cond.addr": "unknown",
+      "x": "unknown",
+      "y": "unknown",
+      "r": "unknown",
+      "arg.addr:int8*": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "x",
+        "op": "store",
+        "function": "svp_simple_697_001_main",
+        "line": "10"
+      },
+      {
+        "variable": "y",
+        "op": "store",
+        "function": "svp_simple_697_001_main",
+        "line": "11"
+      },
+      {
+        "variable": "r",
+        "op": "store",
+        "function": "svp_simple_697_001_main",
+        "line": "12"
+      },
+      {
+        "variable": "r",
+        "op": "load",
+        "function": "svp_simple_697_001_main",
+        "line": "13"
+      },
+      {
+        "variable": "g",
+        "op": "store",
+        "function": "svp_simple_697_001_main",
+        "line": "13"
+      },
+      {
+        "variable": "g",
+        "op": "load",
+        "function": "svp_simple_697_001_main",
+        "line": "14"
+      },
+      {
+        "variable": "x",
+        "op": "store",
+        "function": "svp_simple_697_001_main",
+        "line": "14"
+      },
+      {
+        "variable": "g",
+        "op": "load",
+        "function": "svp_simple_697_001_main",
+        "line": "15"
+      },
+      {
+        "variable": "y",
+        "op": "store",
+        "function": "svp_simple_697_001_main",
+        "line": "15"
+      },
+      {
+        "variable": "x",
+        "op": "load",
+        "function": "svp_simple_697_001_main",
+        "line": "16"
+      },
+      {
+        "variable": "y",
+        "op": "load",
+        "function": "svp_simple_697_001_main",
+        "line": "16"
+      },
+      {
+        "variable": "arg.addr:int8*",
+        "op": "store",
+        "function": "svp_simple_697_001_isr_1",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "g",
+        "op": "store",
+        "function": "svp_simple_697_001_isr_1",
+        "line": "7"
+      }
+    ],
+    "Defect_Highlight": {
+      "defect_count": 2,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            22,
+            12,
+            23
+          ],
+          "sharedVariable": "g",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            20,
+            12,
+            22
+          ],
+          "sharedVariable": "g",
+          "type": "WWR"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "g",
+        "cond.addr",
+        "x",
+        "y",
+        "r",
+        "arg.addr:int8*"
+      ],
+      "MAIN_INFO": [
+        {
+          "operation": "store",
+          "variable": "x",
+          "line": "10",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "y",
+          "line": "11",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "r",
+          "line": "12",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "r",
+          "line": "13",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "g",
+          "line": "13",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "g",
+          "line": "14",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "x",
+          "line": "14",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "g",
+          "line": "15",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "y",
+          "line": "15",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "x",
+          "line": "16",
+          "function": "svp_simple_697_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "y",
+          "line": "16",
+          "function": "svp_simple_697_001_main"
+        }
+      ],
+      "ISR_INFO": [
+        {
+          "operation": "store",
+          "variable": "arg.addr:int8*",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_697_001_isr_1",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "store",
+          "variable": "g",
+          "line": "7",
+          "function": "svp_simple_697_001_isr_1"
+        }
+      ],
+      "defects": [],
+      "defect_count": 0,
+      "line_mapping": {
+        "original_to_filtered": {
+          "2": 1,
+          "3": 2,
+          "4": 3,
+          "6": 4,
+          "9": 5,
+          "11": 6,
+          "12": 7,
+          "13": 8,
+          "15": 9,
+          "16": 10,
+          "17": 11,
+          "18": 12,
+          "20": 13,
+          "22": 14,
+          "23": 15,
+          "24": 16,
+          "25": 17,
+          "26": 18
+        },
+        "filtered_to_original": {
+          "1": 2,
+          "2": 3,
+          "3": 4,
+          "4": 6,
+          "5": 9,
+          "6": 11,
+          "7": 12,
+          "8": 13,
+          "9": 15,
+          "10": 16,
+          "11": 17,
+          "12": 18,
+          "13": 20,
+          "14": 22,
+          "15": 23,
+          "16": 24,
+          "17": 25,
+          "18": 26
+        },
+        "total_original_lines": 26,
+        "total_filtered_lines": 18
+      }
+    },
+    "Defect_Highlight": {
+      "defect_count": 2,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            22,
+            12,
+            23
+          ],
+          "sharedVariable": "g",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            20,
+            12,
+            22
+          ],
+          "sharedVariable": "g",
+          "type": "WWR"
+        }
+      ]
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_697_001.c",
+    "total_lines": 26,
+    "analyzed_lines": 18,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 482
+  }
+}

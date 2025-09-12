@@ -1,0 +1,146 @@
+{
+  "defect_count" : 5,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        29,
+        49,
+        33
+      ],
+      "sharedVariable" : "svp_simple_019_001_global_var1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        29,
+        49,
+        38
+      ],
+      "sharedVariable" : "svp_simple_019_001_global_var1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        33,
+        49,
+        38
+      ],
+      "sharedVariable" : "svp_simple_019_001_global_var1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        32,
+        47,
+        37
+      ],
+      "sharedVariable" : "svp_simple_019_001_global_condition3",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        24,
+        45,
+        26
+      ],
+      "sharedVariable" : "svp_simple_019_001_global_var2",
+      "type" : "RWR"
+    }
+  ]
+}

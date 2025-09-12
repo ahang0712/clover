@@ -1,0 +1,100 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [15, 10, 16]
+        },
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [15, 10, 18]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 4.68 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Let me analyze each read/write operation for the global variable `g` to determine if the reported atomicity violations are valid.
+
+## Step 1: Check Control Conditions
+
+### Operations in main function:
+- **Line 15**: `if (g)` - This reads `g` to evaluate the condition
+- **Line 16**: `__VERIFIER_assert(g)` - This reads `g` (only executed if `g != 0`)
+- **Line 18**: `__VERIFIER_assert(!g)` - This reads `g` (only executed if `g == 0`)
+- **Line 20**: `g = 1` - This writes to `g`
+
+### Operations in ISR:
+- **Line 10**: `g = 1` - This writes to `g` in ISR
+
+## Step 2: Variable Value Tracking
+
+- `g` is initialized to 0 at line 6
+- In `svp_simple_633_001_main()`:
+  - At line 15: `g` is read for the first time, value is 0
+  - Since `g == 0`, the `else` branch at line 18 will be taken
+  - At line 20: `g` is set to 1
+- In `svp_simple_633_001_isr_1()`: `g` is set to 1 at line 10
+
+## Step 3: Interrupt Status Analysis
+
+The code does not contain any `disable_isr()` or `enable_isr()` calls. This means:
+- All interrupts are enabled by default
+- ISR `svp_simple_633_001_isr_1` can preempt the main function at any point
+
+## Step 4: Detailed Analysis of Reported Violations
+
+### Violation 1: Lines [15, 10, 16]
+- **Line 15**: Read `g` in main (value is 0)
+- **Line 10**: Write `g = 1` in ISR (can preempt between lines 15-16)
+- **Line 16**: Read `g` in main (only if `g != 0`)
+
+However, since `g == 0` at line 15, the condition `if (g)` is false, so line 16 is never executed. This violation is invalid.
+
+### Violation 2: Lines [15, 10, 18]
+- **Line 15**: Read `g` in main (value is 0)
+- **Line 10**: Write `g = 1` in ISR (can preempt between lines 15-18)
+- **Line 18**: Read `g` in main (only if `g == 0`)
+
+Since `g == 0` at line 15, the `else` branch is taken and line 18 will be executed. The ISR can indeed preempt between lines 15 and 18, changing `g` from 0 to 1. This creates a valid atomicity violation where:
+- Main reads `g == 0` at line 15
+- ISR writes `g = 1` at line 10
+- Main reads `g == 1` at line 18 (but expected `g == 0`)
+
+## Summary of Analysis
+- Line 16 is never executed because `g == 0` at line 15
+- Line 18 is always executed because `g == 0` at line 15
+- The ISR can preempt the main function, creating a valid violation for lines [15, 10, 18]
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [15, 10, 18]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [15, 10, 18]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 77.00106501579285 seconds

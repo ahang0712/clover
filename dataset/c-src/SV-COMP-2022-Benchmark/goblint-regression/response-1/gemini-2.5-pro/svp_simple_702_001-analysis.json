@@ -1,0 +1,363 @@
+{
+  "ISR_COUNT": 2,
+  "GLOBAL_VAR": [
+    "g",
+    "h",
+    "i",
+    "cond.addr",
+    "a.addr",
+    "b.addr",
+    "x",
+    "arg.addr:int8*",
+    "x:int32",
+    "y:int32",
+    "z:int32",
+    "a.addr:int32",
+    "b.addr:int32"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "x",
+      "line": "28",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "x",
+      "line": "29",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "30",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "x",
+      "line": "31",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "31",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "x",
+      "line": "32",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "h",
+      "line": "32",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "x",
+      "line": "33",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "h",
+      "line": "33",
+      "function": "svp_simple_702_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "34",
+      "function": "svp_simple_702_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "UNMAPPED_0",
+      "function": "svp_simple_702_001_isr_1",
+      "warning": "Line 0 could not be mapped"
+    },
+    {
+      "operation": "store",
+      "variable": "x:int32",
+      "line": "14",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "y:int32",
+      "line": "15",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "z:int32",
+      "line": "16",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "x:int32",
+      "line": "17",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "18",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "x:int32",
+      "line": "18",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "h",
+      "line": "19",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "y:int32",
+      "line": "19",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "y:int32",
+      "line": "20",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "x:int32",
+      "line": "20",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "x:int32",
+      "line": "21",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "y:int32",
+      "line": "21",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "x:int32",
+      "line": "22",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "22",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "i",
+      "line": "23",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "z:int32",
+      "line": "23",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "z:int32",
+      "line": "24",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "x:int32",
+      "line": "24",
+      "function": "svp_simple_702_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "a.addr:int32",
+      "line": "UNMAPPED_0",
+      "function": "isr_plus",
+      "warning": "Line 0 could not be mapped"
+    },
+    {
+      "operation": "store",
+      "variable": "b.addr:int32",
+      "line": "UNMAPPED_0",
+      "function": "isr_plus",
+      "warning": "Line 0 could not be mapped"
+    },
+    {
+      "operation": "load",
+      "variable": "b.addr:int32",
+      "line": "44",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "a.addr:int32",
+      "line": "44",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "b.addr:int32",
+      "line": "44",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "b.addr:int32",
+      "line": "45",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "a.addr:int32",
+      "line": "45",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "b.addr:int32",
+      "line": "45",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "a.addr:int32",
+      "line": "46",
+      "function": "isr_plus"
+    },
+    {
+      "operation": "load",
+      "variable": "b.addr:int32",
+      "line": "46",
+      "function": "isr_plus"
+    }
+  ],
+  "defects": [],
+  "defect_count": 0,
+  "line_mapping": {
+    "original_to_filtered": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "9": 7,
+      "12": 8,
+      "13": 9,
+      "15": 10,
+      "16": 11,
+      "17": 12,
+      "20": 13,
+      "21": 14,
+      "22": 15,
+      "23": 16,
+      "24": 17,
+      "25": 18,
+      "26": 19,
+      "27": 20,
+      "29": 21,
+      "31": 22,
+      "32": 23,
+      "33": 24,
+      "35": 25,
+      "37": 26,
+      "39": 27,
+      "40": 28,
+      "41": 29,
+      "43": 30,
+      "44": 31,
+      "45": 32,
+      "47": 33,
+      "49": 34,
+      "51": 35,
+      "52": 36,
+      "53": 37,
+      "55": 38,
+      "56": 39,
+      "57": 40,
+      "58": 41,
+      "59": 42,
+      "60": 43,
+      "61": 44,
+      "62": 45,
+      "63": 46,
+      "64": 47
+    },
+    "filtered_to_original": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 9,
+      "8": 12,
+      "9": 13,
+      "10": 15,
+      "11": 16,
+      "12": 17,
+      "13": 20,
+      "14": 21,
+      "15": 22,
+      "16": 23,
+      "17": 24,
+      "18": 25,
+      "19": 26,
+      "20": 27,
+      "21": 29,
+      "22": 31,
+      "23": 32,
+      "24": 33,
+      "25": 35,
+      "26": 37,
+      "27": 39,
+      "28": 40,
+      "29": 41,
+      "30": 43,
+      "31": 44,
+      "32": 45,
+      "33": 47,
+      "34": 49,
+      "35": 51,
+      "36": 52,
+      "37": 53,
+      "38": 55,
+      "39": 56,
+      "40": 57,
+      "41": 58,
+      "42": 59,
+      "43": 60,
+      "44": 61,
+      "45": 62,
+      "46": 63,
+      "47": 64
+    },
+    "total_original_lines": 64,
+    "total_filtered_lines": 47
+  }
+}

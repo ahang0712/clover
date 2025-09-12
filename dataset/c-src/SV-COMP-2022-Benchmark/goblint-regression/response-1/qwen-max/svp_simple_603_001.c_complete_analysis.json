@@ -1,0 +1,483 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "glob1",
+        "cond.addr",
+        "arg.addr:int8*",
+        "t:int32"
+      ],
+      "variable_types": {
+        "glob1": "unknown",
+        "cond.addr": "unknown",
+        "arg.addr:int8*": "unknown",
+        "t:int32": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "glob1",
+          "op": "load",
+          "function": "svp_simple_603_001_main",
+          "line": "28"
+        },
+        {
+          "variable": "glob1",
+          "op": "load",
+          "function": "svp_simple_603_001_main",
+          "line": "29"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "t:int32",
+          "op": "store",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "18"
+        },
+        {
+          "variable": "t:int32",
+          "op": "load",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "19"
+        },
+        {
+          "variable": "glob1",
+          "op": "store",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "21"
+        },
+        {
+          "variable": "glob1",
+          "op": "load",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "23"
+        },
+        {
+          "variable": "t:int32",
+          "op": "store",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "23"
+        },
+        {
+          "variable": "glob1",
+          "op": "store",
+          "function": "svp_simple_603_001_isr_1",
+          "line": "24"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_603_001_isr_1",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "svp_simple_603_001_main",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_603_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_603_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_603_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_603_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_603_001_main",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_603_001_main",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              33,
+              25,
+              34
+            ],
+            "sharedVariable": "glob1",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              33,
+              28,
+              34
+            ],
+            "sharedVariable": "glob1",
+            "type": "RWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "glob1",
+          "cond.addr",
+          "arg.addr:int8*",
+          "t:int32"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "glob1",
+            "line": "28",
+            "function": "svp_simple_603_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "glob1",
+            "line": "29",
+            "function": "svp_simple_603_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_603_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "t:int32",
+            "line": "18",
+            "function": "svp_simple_603_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "t:int32",
+            "line": "19",
+            "function": "svp_simple_603_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "glob1",
+            "line": "21",
+            "function": "svp_simple_603_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "glob1",
+            "line": "23",
+            "function": "svp_simple_603_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "t:int32",
+            "line": "23",
+            "function": "svp_simple_603_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "glob1",
+            "line": "24",
+            "function": "svp_simple_603_001_isr_1"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "11": 11,
+            "12": 12,
+            "13": 13,
+            "15": 14,
+            "17": 15,
+            "19": 16,
+            "20": 17,
+            "21": 18,
+            "23": 19,
+            "24": 20,
+            "25": 21,
+            "26": 22,
+            "27": 23,
+            "28": 24,
+            "29": 25,
+            "31": 26,
+            "32": 27,
+            "33": 28,
+            "34": 29,
+            "35": 30,
+            "36": 31
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "11": 11,
+            "12": 12,
+            "13": 13,
+            "14": 15,
+            "15": 17,
+            "16": 19,
+            "17": 20,
+            "18": 21,
+            "19": 23,
+            "20": 24,
+            "21": 25,
+            "22": 26,
+            "23": 27,
+            "24": 28,
+            "25": 29,
+            "26": 31,
+            "27": 32,
+            "28": 33,
+            "29": 34,
+            "30": 35,
+            "31": 36
+          },
+          "total_original_lines": 36,
+          "total_filtered_lines": 31
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_603_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_603_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_603_001_isr_1",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_603_001_main",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_603_001_main",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              33,
+              25,
+              34
+            ],
+            "sharedVariable": "glob1",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              33,
+              28,
+              34
+            ],
+            "sharedVariable": "glob1",
+            "type": "RWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_603_001.c",
+      "total_lines": 36,
+      "analyzed_lines": 31,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 484
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"glob1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [33, 25, 34]\n        },\n        {\n            \"sharedVariable\": \"glob1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [33, 28, 34]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 5.08 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n### Step-by-Step Analysis\n\n#### **Step 1: Check Control Conditions**\n\n---\n\n**Operation 1: Read `glob1` at line 33 (`__VERIFIER_assert(glob1 == 0);`)**\n- **Control Condition**: There is no explicit control condition guarding this read operation. The `__VERIFIER_assert` function directly evaluates the condition `glob1 == 0`.\n- **Execution Path**:\n  - The `svp_simple_603_001_main` function starts execution and calls `__VERIFIER_assert(glob1 == 0)` at line 33.\n  - Since there are no conditions preventing this read, it will always execute.\n- **Conclusion**: This read operation can be executed.\n\n---\n\n**Operation 2: Write `glob1 = 1` at line 25 (`glob1 = 1;`)**\n- **Control Condition**: This write operation is guarded by the condition `if (t == 42)` at line 23.\n- **Variable Value Tracking**:\n  - The variable `t` is assigned a value by `__VERIFIER_nondet_int()` at line 21. This function generates a non-deterministic integer value.\n  - The condition `t == 42` can be satisfied if `__VERIFIER_nondet_int()` returns 42.\n- **Execution Path**:\n  - If `t == 42`, the block containing `glob1 = 1` is entered, and the write operation executes.\n- **Conclusion**: This write operation can be executed if `t == 42`.\n\n---\n\n**Operation 3: Read `glob1` at line 27 (`t = glob1;`)**\n- **Control Condition**: There is no explicit control condition guarding this read operation. It is executed unconditionally in the ISR.\n- **Execution Path**:\n  - After the conditional block (lines 23–26), the ISR proceeds to execute `t = glob1;` at line 27.\n- **Conclusion**: This read operation can be executed.\n\n---\n\n**Operation 4: Write `glob1 = 0` at line 28 (`glob1 = 0;`)**\n- **Control Condition**: There is no explicit control condition guarding this write operation. It is executed unconditionally in the ISR.\n- **Execution Path**:\n  - After the read operation at line 27, the ISR proceeds to execute `glob1 = 0;` at line 28.\n- **Conclusion**: This write operation can be executed.\n\n---\n\n**Operation 5: Read `glob1` at line 34 (`__VERIFIER_assert(glob1 == 0);`)**\n- **Control Condition**: There is no explicit control condition guarding this read operation. The `__VERIFIER_assert` function directly evaluates the condition `glob1 == 0`.\n- **Execution Path**:\n  - The `svp_simple_603_001_main` function continues execution and calls `__VERIFIER_assert(glob1 == 0)` at line 34.\n  - Since there are no conditions preventing this read, it will always execute.\n- **Conclusion**: This read operation can be executed.\n\n---\n\n#### **Step 2: Pay Attention to Control Condition Changes**\n\n- The only control condition that could change is `if (t == 42)` in the ISR (`svp_simple_603_001_isr_1`).\n- The variable `t` is assigned a non-deterministic value by `__VERIFIER_nondet_int()`. If `t == 42`, the write operation `glob1 = 1` is executed. Otherwise, it is skipped.\n- No other code modifies `t` or alters the truth value of `if (t == 42)`.\n\n---\n\n#### **Step 3: Check Interrupt Status**\n\n- There are no calls to `disable_isr()` or `enable_isr()` in the provided code.\n- Therefore, all operations in the ISR (`svp_simple_603_001_isr_1`) are potentially executable, assuming the ISR is triggered.\n\n---\n\n#### **Step 4: Generate the Final Report**\n\n**Summary of Analysis**:\n1. **Read `glob1` at line 33**: Can be executed.\n2. **Write `glob1 = 1` at line 25**: Can be executed if `t == 42`.\n3. **Read `glob1` at line 27**: Can be executed.\n4. **Write `glob1 = 0` at line 28**: Can be executed.\n5. **Read `glob1` at line 34**: Can be executed.\n\nAll operations mentioned in the initial defect report can be executed under certain conditions. Therefore, the reported atomicity violations remain valid.\n\n---\n\n### Final Output\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"glob1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [33, 25, 34]\n        },\n        {\n            \"sharedVariable\": \"glob1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [33, 28, 34]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"glob1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [33, 25, 34]\n        },\n        {\n            \"sharedVariable\": \"glob1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [33, 28, 34]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_603_001.c",
+    "total_lines": 36,
+    "analyzed_lines": 31,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 484
+  }
+}

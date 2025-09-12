@@ -1,0 +1,118 @@
+{
+  "defect_count" : 4,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        28,
+        41,
+        35
+      ],
+      "sharedVariable" : "svp_simple_018_001_para2",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        28,
+        41,
+        36
+      ],
+      "sharedVariable" : "svp_simple_018_001_para2",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        35,
+        41,
+        36
+      ],
+      "sharedVariable" : "svp_simple_018_001_para2",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        27,
+        46,
+        34
+      ],
+      "sharedVariable" : "svp_simple_018_001_para1",
+      "type" : "RWR"
+    }
+  ]
+}

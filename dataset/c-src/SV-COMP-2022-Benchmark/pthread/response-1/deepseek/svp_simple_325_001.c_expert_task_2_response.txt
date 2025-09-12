@@ -1,0 +1,43 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 21, 11]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [12, 23, 13]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 5.42 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 21, 11]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [12, 23, 13]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 25.921996116638184 seconds

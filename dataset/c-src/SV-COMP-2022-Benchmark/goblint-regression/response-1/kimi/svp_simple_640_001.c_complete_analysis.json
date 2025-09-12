@@ -1,0 +1,505 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "g",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[0]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[9999]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[TRIGGER]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1000]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i[0,9999]]",
+        ".str",
+        ".str[0]",
+        ".str[1]",
+        ".str[7]",
+        "cond.addr",
+        "argc.addr",
+        "argv.addr",
+        "argv.addr -> argv",
+        "ptr.addr:int8*"
+      ],
+      "variable_types": {
+        "g": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[0]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[9999]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[TRIGGER]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1000]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i[0,9999]]": "unknown",
+        ".str": "unknown",
+        ".str[0]": "unknown",
+        ".str[1]": "unknown",
+        ".str[7]": "unknown",
+        "cond.addr": "unknown",
+        "argc.addr": "unknown",
+        "argv.addr": "unknown",
+        "argv.addr -> argv": "unknown",
+        "ptr.addr:int8*": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "argc.addr",
+          "op": "store",
+          "function": "svp_simple_640_001_main",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "argv.addr -> argv",
+          "op": "store",
+          "function": "svp_simple_640_001_main",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "ptr.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "8"
+        },
+        {
+          "variable": "ptr.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_2",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_640_001_isr_2",
+          "line": "11"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_2",
+          "line": "12"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_640_001_isr_1",
+          "callee": "printf"
+        },
+        {
+          "caller": "svp_simple_640_001_isr_2",
+          "callee": "__VERIFIER_assert"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_1",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_2",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              9,
+              15,
+              10
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              15,
+              9
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "g",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[0]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[9999]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[TRIGGER]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1000]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i[0,9999]]",
+          ".str",
+          ".str[0]",
+          ".str[1]",
+          ".str[7]",
+          "cond.addr",
+          "argc.addr",
+          "argv.addr",
+          "argv.addr -> argv",
+          "ptr.addr:int8*"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "argc.addr",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_main",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "argv.addr -> argv",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_main",
+            "warning": "Line 0 could not be mapped"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "ptr.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "6",
+            "function": "svp_simple_640_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "7",
+            "function": "svp_simple_640_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "8",
+            "function": "svp_simple_640_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "ptr.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_isr_2",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "11",
+            "function": "svp_simple_640_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "12",
+            "function": "svp_simple_640_001_isr_2"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "5": 4,
+            "7": 5,
+            "8": 6,
+            "9": 7,
+            "10": 8,
+            "11": 9,
+            "13": 10,
+            "14": 11,
+            "15": 12,
+            "16": 13,
+            "18": 14,
+            "19": 15,
+            "21": 16,
+            "23": 17,
+            "24": 18
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 5,
+            "5": 7,
+            "6": 8,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 13,
+            "11": 14,
+            "12": 15,
+            "13": 16,
+            "14": 18,
+            "15": 19,
+            "16": 21,
+            "17": 23,
+            "18": 24
+          },
+          "total_original_lines": 24,
+          "total_filtered_lines": 18
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_1",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_2",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              9,
+              15,
+              10
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              15,
+              9
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c",
+      "total_lines": 24,
+      "analyzed_lines": 18,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 437
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [9, 15, 10]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 3.14 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLet me analyze each read/write operation for the global variable `g` to determine if they can be executed.\n\n## Step 1: Check Control Conditions\n\n### Operations in svp_simple_640_001_isr_1:\n- Line 8: `g = 1` - This is a direct assignment, no control conditions\n- Line 9: `printf(\"g is %i\", g)` - This reads `g`, no control conditions\n- Line 10: `g = 0` - This is a direct assignment, no control conditions\n\n### Operations in svp_simple_640_001_isr_2:\n- Line 14: `__VERIFIER_assert(!(g == 0))` - This reads `g` in the assertion condition\n- Line 15: `g = 0` - This is a direct assignment, no control conditions\n\n### Operations in svp_simple_640_001_main:\n- No operations on `g` in the main function\n\n## Step 2: Check Interrupt Status\n\nThe code does not contain any `disable_isr()` or `enable_isr()` calls, so all interrupts are enabled by default.\n\n## Step 3: Determine Execution Possibility\n\nSince there are no control conditions guarding any of the operations on `g`, and no interrupt disabling mechanisms, all operations can potentially execute:\n\n- Lines 8, 9, 10 in svp_simple_640_001_isr_1 can execute when this ISR runs\n- Lines 14, 15 in svp_simple_640_001_isr_2 can execute when this ISR runs\n\n## Step 4: Analyze the Reported Violation\n\nThe reported violation claims an atomicity violation with access pattern [\"Read\", \"Write\", \"Write\"] on lines [9, 15, 10].\n\nHowever, looking at the actual operations:\n- Line 9: Read of `g` in printf\n- Line 15: Write of `g` (assignment to 0)\n- Line 10: Write of `g` (assignment to 0)\n\nThis pattern represents a potential atomicity violation where a read operation (line 9) might not be atomic with respect to the write operations (lines 15 and 10).\n\nSince all these operations can execute (no unsatisfiable control conditions or disabled interrupts), the reported violation is valid.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [9, 15, 10]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLet me analyze the code for atomicity violations with the <Read, Write, Write> pattern.\n\n## Analysis of Global Variable `g`\n\n### Operations on `g`:\n- Line 8: `g = 1` (Write) in svp_simple_640_001_isr_1\n- Line 9: `printf(\"g is %i\", g)` (Read) in svp_simple_640_001_isr_1\n- Line 10: `g = 0` (Write) in svp_simple_640_001_isr_1\n- Line 14: `__VERIFIER_assert(!(g == 0))` (Read) in svp_simple_640_001_isr_2\n- Line 15: `g = 0` (Write) in svp_simple_640_001_isr_2\n\n### Checking for <Read, Write, Write> Pattern\n\nLooking for sequences where:\n1. A lower-priority task reads `g`\n2. A higher-priority ISR writes to `g`\n3. The same lower-priority task writes to `g` based on the read value\n\nHowever, I need to check if there are any priority levels specified. Since the code doesn't specify interrupt priorities, I'll assume standard priority relationships.\n\n### Valid Violations Found:\n\n1. **Between ISR_1 and ISR_2**:\n   - Line 9 (Read in ISR_1): `printf(\"g is %i\", g)`\n   - Line 15 (Write in ISR_2): `g = 0`\n   - Line 10 (Write in ISR_1): `g = 0`\n\nThis forms a valid <Read, Write, Write> pattern where the read at line 9 could be followed by a write from ISR_2 at line 15, then the write at line 10 in ISR_1.\n\n2. **Additional violation**:\n   - Line 14 (Read in ISR_2): `__VERIFIER_assert(!(g == 0))`\n   - Line 8 (Write in ISR_1): `g = 1`\n   - Line 15 (Write in ISR_2): `g = 0`\n\nThis also forms a valid <Read, Write, Write> pattern.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [9, 15, 10]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [14, 8, 15]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_task_2": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [8, 15, 9]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 2.82 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLet me analyze each read/write operation for the global variable `g` to determine if they can be executed.\n\n## Step 1: Check Control Conditions\n\n### Operations in svp_simple_640_001_isr_1:\n- Line 8: `g = 1` - This is a direct assignment with no control conditions\n- Line 9: `printf(\"g is %i\", g)` - This read operation is executed unconditionally after line 8\n- Line 10: `g = 0` - This is a direct assignment with no control conditions\n\n### Operations in svp_simple_640_001_isr_2:\n- Line 14: `__VERIFIER_assert(!(g == 0))` - This contains a read operation `g == 0` within the assertion\n- Line 15: `g = 0` - This write operation is executed unconditionally after the assertion\n\n### Operations in svp_simple_640_001_main:\n- No operations on `g` in the main function\n\n## Step 2: Check Interrupt Status\n\nThe code does not contain any `disable_isr()` or `enable_isr()` calls, so all interrupts are enabled by default.\n\n## Step 3: Execution Analysis\n\nSince the code uses pthread-style interrupts (as indicated by the function signatures with `void* ptr`), both ISRs can potentially execute concurrently with the main function and with each other. The `sleep(1)` in main provides a window for interrupts to occur.\n\n## Step 4: Summary of Analysis\n\nAll read/write operations on `g` can be executed:\n- Lines 8, 9, 10 in svp_simple_640_001_isr_1 can execute when this ISR is triggered\n- Lines 14, 15 in svp_simple_640_001_isr_2 can execute when this ISR is triggered\n- There are no control conditions preventing any of these operations\n\nThe reported violation involves:\n- Write at line 8 (g = 1)\n- Write at line 15 (g = 0) \n- Read at line 9 (printf reading g)\n\nAll these operations can indeed be executed, so the violation remains valid.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [8, 15, 9]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [8, 15, 9]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c",
+    "total_lines": 24,
+    "analyzed_lines": 18,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 437
+  }
+}

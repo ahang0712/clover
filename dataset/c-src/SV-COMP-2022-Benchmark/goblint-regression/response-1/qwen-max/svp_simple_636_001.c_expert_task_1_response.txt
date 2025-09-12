@@ -1,0 +1,87 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [28, 20, 30]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 3.49 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Analysis of `g = 2;` (Line 28)
+- **Control Condition**: None. This write operation is directly executed in the main function without any guarding conditions.
+- **Execution Path**: The program initializes `g` to 0 at line 15, then writes `g = 1` at line 26, and subsequently writes `g = 2` at line 28.
+- **Conclusion**: The write operation `g = 2;` at line 28 is always executed during the normal flow of the main function.
+
+#### Analysis of `g = 3;` (Line 20)
+- **Control Condition**: The write operation `g = 3;` is guarded by the condition `if (g == 1)` at line 19.
+- **Variable Value Tracking**:
+  - `g` is initialized to 0 at line 15.
+  - In the main function, `g` is set to 1 at line 26.
+  - Before `g` is written to 2 at line 28, the ISR (`svp_simple_636_001_isr_1`) could preempt the main function.
+  - If the ISR executes between lines 26 and 28, the condition `g == 1` will evaluate to true, allowing `g = 3;` to execute.
+- **Execution Path**:
+  - The ISR can preempt the main function after `g = 1` (line 26) but before `g = 2` (line 28).
+  - During this window, the condition `g == 1` is satisfied, and the write operation `g = 3;` is executed.
+- **Conclusion**: The write operation `g = 3;` at line 20 can be executed if the ISR preempts the main function at the appropriate time.
+
+#### Analysis of `__VERIFIER_assert(g == 2);` (Line 30)
+- **Control Condition**: None. This read operation is directly executed in the main function without any guarding conditions.
+- **Execution Path**: The assertion checks the value of `g` after the write operations at lines 26 and 28. If the ISR modifies `g` to 3, the assertion will fail.
+- **Conclusion**: The read operation at line 30 is always executed during the normal flow of the main function.
+
+---
+
+### Step 2: Pay Attention to Control Condition Changes
+
+- The ISR modifies the value of `g` based on the condition `if (g == 1)`. This condition depends on the timing of the ISR execution relative to the main function.
+- If the ISR executes between lines 26 and 28, it changes `g` from 1 to 3, which affects the subsequent assertion in the main function.
+
+---
+
+### Step 3: Check Interrupt Status
+
+- There are no explicit calls to `disable_isr()` or `enable_isr()` in the provided code.
+- By default, interrupts are assumed to be enabled unless explicitly disabled.
+- Therefore, the ISR can preempt the main function at any point unless otherwise specified.
+
+---
+
+### Step 4: Generate the Final Report
+
+#### Summary of Analysis
+- **Line 28 (`g = 2;`)**: Always executed in the main function.
+- **Line 20 (`g = 3;`)**: Can be executed if the ISR preempts the main function between lines 26 and 28.
+- **Line 30 (`__VERIFIER_assert(g == 2);`)**: Always executed in the main function.
+
+#### Atomicity Violation
+- The reported atomicity violation involving the access pattern ["Write", "Write", "Read"] at lines [28, 20, 30] is valid because:
+  - The write operation at line 28 (`g = 2;`) and the write operation at line 20 (`g = 3;`) can occur concurrently due to the ISR's preemption.
+  - The read operation at line 30 (`__VERIFIER_assert(g == 2);`) depends on the final value of `g`, which may be inconsistent due to the lack of atomicity.
+
+#### Final Output
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [28, 20, 30]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 85.29064393043518 seconds

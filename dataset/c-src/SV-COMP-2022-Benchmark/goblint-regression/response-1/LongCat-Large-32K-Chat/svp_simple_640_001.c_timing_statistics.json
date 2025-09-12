@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "total_tasks": 4,
+    "total_parallel_time": 43.99171280860901,
+    "average_conversation_time": 21.18644380569458,
+    "max_conversation_time": 42.47158718109131,
+    "min_conversation_time": 0.7298259735107422,
+    "parallel_efficiency": 1.930823300743761
+  },
+  "task_details": [
+    {
+      "task_id": "expert_task_1",
+      "defect_mode": "RWW",
+      "variables": [
+        "g"
+      ],
+      "timing": {
+        "prepare_time": 1756918209.680585,
+        "real_start_time": 1756918209.780993,
+        "end_time": 1756918252.302047,
+        "prepare_wait_duration": 0.10040807723999023,
+        "conversation_duration": 42.47158718109131,
+        "total_task_duration": 42.52105402946472
+      }
+    },
+    {
+      "task_id": "expert_task_2",
+      "defect_mode": "RWR",
+      "variables": [],
+      "timing": {
+        "prepare_time": 1756918209.680629,
+        "real_start_time": 1756918212.035342,
+        "end_time": 1756918212.96101,
+        "prepare_wait_duration": 2.354712963104248,
+        "conversation_duration": 0.8799970149993896,
+        "total_task_duration": 0.9256680011749268
+      }
+    },
+    {
+      "task_id": "expert_task_3",
+      "defect_mode": "WWR",
+      "variables": [
+        "g"
+      ],
+      "timing": {
+        "prepare_time": 1756918209.680654,
+        "real_start_time": 1756918212.961073,
+        "end_time": 1756918253.671998,
+        "prepare_wait_duration": 3.280418872833252,
+        "conversation_duration": 40.66436505317688,
+        "total_task_duration": 40.71092510223389
+      }
+    },
+    {
+      "task_id": "expert_task_4",
+      "defect_mode": "WRW",
+      "variables": [],
+      "timing": {
+        "prepare_time": 1756918209.680667,
+        "real_start_time": 1756918216.708173,
+        "end_time": 1756918217.4848409,
+        "prepare_wait_duration": 7.027506113052368,
+        "conversation_duration": 0.7298259735107422,
+        "total_task_duration": 0.7766678333282471
+      }
+    }
+  ],
+  "timestamps": {
+    "parallel_start": 1756918209.680453,
+    "actual_parallel_start": 1756918209.780993,
+    "actual_parallel_end": 1756918253.671998
+  }
+}

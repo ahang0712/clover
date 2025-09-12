@@ -1,0 +1,63 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:data1",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[0]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[1]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[9999]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[TRIGGER]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[1000]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[var]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[i]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[var[0,9999]]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:.str[i[0,9999]]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_536_001.c:data2",
+    "data1",
+    ".str",
+    ".str[0]",
+    ".str[1]",
+    ".str[2]",
+    "data2"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "data1",
+      "line": "17",
+      "function": "svp_simple_536_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "data2",
+      "line": "18",
+      "function": "svp_simple_536_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "data2",
+      "line": "19",
+      "function": "svp_simple_536_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "data1",
+      "line": "8",
+      "function": "svp_simple_536_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "data1",
+      "line": "9",
+      "function": "svp_simple_536_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "data2",
+      "line": "12",
+      "function": "svp_simple_536_001_isr_1"
+    }
+  ]
+}

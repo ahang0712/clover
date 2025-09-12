@@ -1,0 +1,114 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "glob",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[0]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[1]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[9999]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[TRIGGER]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[1000]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[var]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[i]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[var[0,9999]]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str[i[0,9999]]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[0]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[1]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[9999]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[TRIGGER]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[1000]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[var]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[i]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[var[0,9999]]",
+    "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_512_001.c:.str.1[i[0,9999]]",
+    ".str",
+    ".str[0]",
+    ".str[1]",
+    ".str[21]",
+    ".str.1",
+    ".str.1[0]",
+    ".str.1[1]",
+    ".str.1[20]",
+    "i",
+    "tmp",
+    "arg.addr:int8*",
+    "tmp:int32"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "16",
+      "function": "svp_simple_512_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "i",
+      "line": "17",
+      "function": "svp_simple_512_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "i",
+      "line": "19",
+      "function": "svp_simple_512_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "glob",
+      "line": "21",
+      "function": "svp_simple_512_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "tmp",
+      "line": "21",
+      "function": "svp_simple_512_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "tmp",
+      "line": "22",
+      "function": "svp_simple_512_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "glob",
+      "line": "22",
+      "function": "svp_simple_512_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "0",
+      "function": "svp_simple_512_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "glob",
+      "line": "9",
+      "function": "svp_simple_512_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "tmp:int32",
+      "line": "9",
+      "function": "svp_simple_512_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "tmp:int32",
+      "line": "10",
+      "function": "svp_simple_512_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "glob",
+      "line": "10",
+      "function": "svp_simple_512_001_isr_1"
+    }
+  ]
+}

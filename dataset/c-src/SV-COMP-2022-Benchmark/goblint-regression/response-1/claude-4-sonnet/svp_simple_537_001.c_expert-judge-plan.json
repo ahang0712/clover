@@ -1,0 +1,60 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "varA"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 7
+    },
+    {
+      "sharedVariables": [
+        "varB",
+        "varC",
+        "varD",
+        "varE",
+        "varF",
+        "varG",
+        "varH",
+        "varI",
+        "varJ",
+        "varK"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 15
+    },
+    {
+      "sharedVariables": [
+        "varL",
+        "varM",
+        "varN"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 4
+    },
+    {
+      "sharedVariables": [
+        "varO",
+        "varP"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 3
+    }
+  ]
+}

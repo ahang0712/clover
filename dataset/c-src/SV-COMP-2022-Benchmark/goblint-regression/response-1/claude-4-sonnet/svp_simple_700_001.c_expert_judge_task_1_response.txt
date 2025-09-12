@@ -1,0 +1,127 @@
+[Expert R1] (Detect atomicity violations in the code.)
+Looking at the code, I need to analyze the global variable `h` for atomicity violations following the <Write, Read, Write> pattern.
+
+Let me trace the operations on variable `h`:
+
+1. **Line 18**: `h = x - 17;` - Write operation in `svp_simple_700_001_isr_1`
+2. **Line 20**: `h = x;` - Write operation in `svp_simple_700_001_isr_1`
+3. **Line 31**: `y = h;` - Read operation in `svp_simple_700_001_isr_2`
+4. **Line 54**: `y = h;` - Read operation in `svp_simple_700_001_main`
+
+Now I need to determine the priority levels. Based on the function names and typical embedded system conventions:
+- `svp_simple_700_001_main` - Main function (Priority 0)
+- `svp_simple_700_001_isr_1` - ISR 1 (Priority 1)
+- `svp_simple_700_001_isr_2` - ISR 2 (Priority 2)
+
+For the <Write, Read, Write> pattern, I need:
+- **a1**: Write by lower-priority task
+- **a2**: Read by higher-priority task
+- **a3**: Write by the same lower-priority task as a1
+
+Analyzing the candidate defect (lines 18, 31, 20):
+- **Line 18**: Write to `h` by ISR1 (priority 1)
+- **Line 31**: Read from `h` by ISR2 (priority 2) 
+- **Line 20**: Write to `h` by ISR1 (priority 1)
+
+This matches the pattern:
+- ISR1 writes to `h` (line 18: `h = x - 17`)
+- ISR2 (higher priority) can preempt ISR1 and read the intermediate value (line 31: `y = h`)
+- ISR1 continues and writes again to `h` (line 20: `h = x`)
+
+The two writes on lines 18 and 20 are consecutive operations in ISR1, and ISR2 can interrupt between them to read the intermediate value, creating an atomicity violation.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "h",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [18, 31, 20]
+        }
+    ]
+}
+```
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Looking at the code, I need to analyze the accessibility of the read/write operations on variable `h`.
+
+**Step 1: Check Control Conditions**
+
+For the reported violation involving lines 18, 31, and 20:
+
+- **Line 18** (`h = x - 17;`): This is inside the condition `if (x > -1000)` in `svp_simple_700_001_isr_1`. Since `x` is assigned a nondeterministic value from `__VERIFIER_nondet_int()`, this condition can be true at runtime.
+
+- **Line 20** (`h = x;`): This is also inside the same condition `if (x > -1000)` in `svp_simple_700_001_isr_1`. The condition can be true at runtime.
+
+- **Line 31** (`y = h;`): This is in `svp_simple_700_001_isr_2` with no control conditions - it's always accessible.
+
+**Step 2: Pay Attention to Control Condition Changes**
+No interrupt handlers modify the control conditions that affect these operations.
+
+**Step 3: Check Interrupt Status**
+The code doesn't show any `disable_isr()` or `enable_isr()` calls, so all interrupts are assumed to be enabled and can preempt as per their priority levels.
+
+**Step 4: Generate Final Report**
+All operations are accessible:
+- Lines 18 and 20 can execute when the condition `x > -1000` is true
+- Line 31 is always accessible
+- The interrupts can preempt according to their priority levels
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "h",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [18, 31, 20]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Looking at the code, I need to analyze the global variable `h` for atomicity violations following the <Write, Read, Write> pattern.
+
+Let me trace the operations on variable `h`:
+
+1. **Line 18**: `h = x - 17;` - Write operation in `svp_simple_700_001_isr_1`
+2. **Line 20**: `h = x;` - Write operation in `svp_simple_700_001_isr_1`
+3. **Line 31**: `y = h;` - Read operation in `svp_simple_700_001_isr_2`
+4. **Line 54**: `y = h;` - Read operation in `svp_simple_700_001_main`
+
+Based on the function names and typical embedded system conventions:
+- `svp_simple_700_001_main` - Main function (Priority 0)
+- `svp_simple_700_001_isr_1` - ISR 1 (Priority 1)
+- `svp_simple_700_001_isr_2` - ISR 2 (Priority 2)
+
+For the <Write, Read, Write> pattern, I need:
+- **a1**: Write by lower-priority task
+- **a2**: Read by higher-priority task  
+- **a3**: Write by the same lower-priority task as a1
+
+Analyzing the potential violation (lines 18, 31, 20):
+- **Line 18**: Write to `h` by ISR1 (priority 1): `h = x - 17`
+- **Line 31**: Read from `h` by ISR2 (priority 2): `y = h`
+- **Line 20**: Write to `h` by ISR1 (priority 1): `h = x`
+
+This matches the pattern where:
+- ISR1 writes to `h` (line 18)
+- ISR2 (higher priority) can preempt ISR1 and read the intermediate value (line 31)
+- ISR1 continues and writes again to `h` (line 20)
+
+The two writes on lines 18 and 20 are consecutive operations in ISR1, and ISR2 can interrupt between them to read the intermediate value, creating an atomicity violation.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "h",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [18, 31, 20]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 22.954078912734985 seconds

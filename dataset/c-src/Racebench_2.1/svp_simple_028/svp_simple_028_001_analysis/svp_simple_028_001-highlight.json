@@ -1,0 +1,174 @@
+{
+  "defect_count" : 6,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        14,
+        38,
+        15
+      ],
+      "sharedVariable" : "svp_simple_028_001_gloable_var",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        14,
+        34,
+        15
+      ],
+      "sharedVariable" : "svp_simple_028_001_gloable_var",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        14,
+        28,
+        15
+      ],
+      "sharedVariable" : "svp_simple_028_001_gloable_var",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        34,
+        38,
+        34
+      ],
+      "sharedVariable" : "svp_simple_028_001_gloable_var",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        28,
+        38,
+        28
+      ],
+      "sharedVariable" : "svp_simple_028_001_gloable_var",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        28,
+        34,
+        28
+      ],
+      "sharedVariable" : "svp_simple_028_001_gloable_var",
+      "type" : "RWW"
+    }
+  ]
+}

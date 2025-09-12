@@ -1,0 +1,90 @@
+{
+  "defect_count" : 3,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        10,
+        18,
+        11
+      ],
+      "sharedVariable" : "svp_simple_016_001_global_var1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        11,
+        18,
+        12
+      ],
+      "sharedVariable" : "svp_simple_016_001_global_var1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        9,
+        18,
+        10
+      ],
+      "sharedVariable" : "svp_simple_016_001_global_var1",
+      "type" : "WWR"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "glob1",
+      "cond.addr",
+      "arg.addr:int8*"
+    ],
+    "variable_types": {
+      "glob1": "unknown",
+      "cond.addr": "unknown",
+      "arg.addr:int8*": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_610_001_main",
+        "line": "10"
+      },
+      {
+        "variable": "arg.addr:int8*",
+        "op": "store",
+        "function": "svp_simple_610_001_isr_1",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "glob1",
+        "op": "store",
+        "function": "svp_simple_610_001_isr_1",
+        "line": "6"
+      },
+      {
+        "variable": "glob1",
+        "op": "store",
+        "function": "svp_simple_610_001_isr_1",
+        "line": "7"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "abort"
+      },
+      {
+        "caller": "svp_simple_610_001_main",
+        "callee": "__VERIFIER_assert"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_610_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_610_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_610_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "outputs": {
+    "Code_Extractor": {},
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "glob1",
+        "cond.addr",
+        "arg.addr:int8*"
+      ],
+      "MAIN_INFO": [
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "10",
+          "function": "svp_simple_610_001_main"
+        }
+      ],
+      "ISR_INFO": [
+        {
+          "operation": "store",
+          "variable": "arg.addr:int8*",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_610_001_isr_1",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "store",
+          "variable": "glob1",
+          "line": "6",
+          "function": "svp_simple_610_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "glob1",
+          "line": "7",
+          "function": "svp_simple_610_001_isr_1"
+        }
+      ],
+      "defects": [],
+      "defect_count": 0,
+      "line_mapping": {
+        "original_to_filtered": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "5": 4,
+          "7": 5,
+          "10": 6,
+          "15": 7,
+          "20": 8,
+          "22": 9,
+          "26": 10,
+          "29": 11,
+          "30": 12
+        },
+        "filtered_to_original": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 5,
+          "5": 7,
+          "6": 10,
+          "7": 15,
+          "8": 20,
+          "9": 22,
+          "10": 26,
+          "11": 29,
+          "12": 30
+        },
+        "total_original_lines": 30,
+        "total_filtered_lines": 12
+      }
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_610_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_610_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_610_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "used_tools": [
+    "Code_Extractor",
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Code_Extractor",
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"var1\",\n        \"var2\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 5\n    },\n    {\n      \"sharedVariables\": [\n        \"var3\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"var4\",\n        \"var5\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    },\n    {\n      \"sharedVariables\": [\n        \"var6\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 3\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"var1\",\n        \"var2\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 5\n    },\n    {\n      \"sharedVariables\": [\n        \"var3\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"var4\",\n        \"var5\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    },\n    {\n      \"sharedVariables\": [\n        \"var6\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 3\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_610_001.c",
+    "total_lines": 30,
+    "analyzed_lines": 12,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 711
+  }
+}

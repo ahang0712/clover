@@ -1,0 +1,174 @@
+{
+  "defect_count" : 6,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        46,
+        37,
+        47
+      ],
+      "sharedVariable" : "glob1",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        46,
+        39,
+        47
+      ],
+      "sharedVariable" : "glob1",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        50,
+        37,
+        51
+      ],
+      "sharedVariable" : "glob1",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        50,
+        39,
+        51
+      ],
+      "sharedVariable" : "glob1",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        47,
+        37,
+        49
+      ],
+      "sharedVariable" : "glob1",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        47,
+        39,
+        49
+      ],
+      "sharedVariable" : "glob1",
+      "type" : "WWR"
+    }
+  ]
+}

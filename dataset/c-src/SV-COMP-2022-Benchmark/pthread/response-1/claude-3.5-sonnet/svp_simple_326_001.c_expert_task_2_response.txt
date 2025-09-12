@@ -1,0 +1,107 @@
+[Expert R1] (Detect atomicity violations in the code.)
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [11, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [20, 12, 22]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [21, 12, 22]
+        }
+    ]
+}
+
+[System] Expert first round completed in 4.22 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Step 1: Check Control Conditions
+
+For each read/write operation mentioned in the defect report:
+
+1. Line 10 (Read): `while (num > 0)`
+   - This is a control condition itself.
+   - It can be satisfied when `num` is greater than 0.
+   - `num` is initialized to 1 in the main function (line 31), so this condition can be satisfied.
+
+2. Line 11 (Read): `int tmp = num-1`
+   - This is guarded by the condition `while (num > 0)`.
+   - It can be executed when `num` is greater than 0.
+   - As explained above, this condition can be satisfied.
+
+3. Line 12 (Write): `num=tmp`
+   - This is also guarded by the condition `while (num > 0)`.
+   - It can be executed when `num` is greater than 0.
+   - As explained above, this condition can be satisfied.
+
+4. Line 20 (Read): `while (num == 0)`
+   - This is a control condition itself.
+   - It can be satisfied when `num` is equal to 0.
+   - `num` is initialized to 1 in the main function, but it can become 0 after the execution of isr_1.
+
+5. Line 21 (Read): `int tmp = num-1`
+   - This is guarded by the condition `while (num == 0)`.
+   - It can be executed when `num` is equal to 0.
+   - As explained above, this condition can be satisfied.
+
+6. Line 22 (Write): `num=tmp`
+   - This is also guarded by the condition `while (num == 0)`.
+   - It can be executed when `num` is equal to 0.
+   - As explained above, this condition can be satisfied.
+
+All read/write operations mentioned in the defect report can be executed under certain conditions.
+
+Step 2: Pay Attention to Control Condition Changes
+
+The value of `num` can be changed by both isr_1 and isr_2, which can affect the control conditions in both interrupt service routines.
+
+Step 3: Check Interrupt Status
+
+There are no explicit interrupt disable/enable operations in the code. We assume that both interrupts can be triggered at any time.
+
+Step 4: Generate the Final Report
+
+Based on the analysis, all read/write operations mentioned in the initial defect report can be executed. There's no need to remove any atomicity violations from the report.
+
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [11, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [20, 12, 22]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [21, 12, 22]
+        }
+    ]
+}
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 54.292954206466675 seconds

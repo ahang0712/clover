@@ -1,0 +1,120 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [28, 63, 29]
+        },
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [45, 63, 46]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 5.61 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Let me analyze each read/write operation for the global variable `g` to determine if they can actually be executed.
+
+## Step 1: Check Control Conditions
+
+### Analysis of `pqueue_put()` function:
+- **Line 28**: `int tmp = g + 1;` - This read operation is guarded by `if (g < 1000)` on line 26
+- **Line 29**: `g = tmp;` - This write operation is also guarded by `if (g < 1000)` on line 26
+
+### Analysis of `pqueue_get()` function:
+- **Line 40**: `__VERIFIER_assert(g == 0);` - This read operation is always executed
+- **Line 42**: `__VERIFIER_assert(g != 0);` - This read operation is always executed
+- **Line 45**: `int tmp = g - 1;` - This read operation is guarded by `if (g > 0)` on line 43
+- **Line 46**: `g = tmp;` - This write operation is also guarded by `if (g > 0)` on line 43
+
+### Analysis of `isr_pqueue_get()` function:
+- **Line 58**: `__VERIFIER_assert(g == 0);` - This read operation is always executed
+- **Line 60**: `__VERIFIER_assert(g != 0);` - This read operation is always executed
+- **Line 61**: `if (g > 0)` - This read operation is always executed
+- **Line 63**: `g--;` - This write operation is guarded by `if (g > 0)` on line 61
+
+## Step 2: Variable Value Tracking and Execution Path Analysis
+
+### Initial state:
+- `g` is initialized to 0 on line 15
+
+### Execution flow:
+1. `svp_simple_643_001_main()` starts execution
+2. `pqueue_init()` is called, setting `g = 0` (line 19)
+3. A loop runs 4 times (i=1,2,3,4), calling `pqueue_put()` each time
+4. In `pqueue_put()`:
+   - First call: `g = 0 < 1000`, so `g` becomes 1
+   - Second call: `g = 1 < 1000`, so `g` becomes 2
+   - Third call: `g = 2 < 1000`, so `g` becomes 3
+   - Fourth call: `g = 3 < 1000`, so `g` becomes 4
+5. After the loop, `g = 4`
+
+### Analysis of control conditions:
+- In `pqueue_put()`: `g < 1000` is always true during the 4 calls (g goes from 0 to 4)
+- In `pqueue_get()` and `isr_pqueue_get()`: `g > 0` is true when `g = 4` (after the loop)
+
+## Step 3: Check Interrupt Status
+
+The code does not contain any `disable_isr()` or `enable_isr()` calls. This means:
+- All interrupts are enabled by default
+- The ISR `svp_simple_643_001_isr1` can preempt the main function at any time
+
+## Step 4: Summary of Analysis
+
+### Operations that can be executed:
+1. **Line 28** (`int tmp = g + 1;` in `pqueue_put`): Can be executed when `g < 1000`
+2. **Line 29** (`g = tmp;` in `pqueue_put`): Can be executed when `g < 1000`
+3. **Line 45** (`int tmp = g - 1;` in `pqueue_get`): Can be executed when `g > 0`
+4. **Line 46** (`g = tmp;` in `pqueue_get`): Can be executed when `g > 0`
+5. **Line 63** (`g--;` in `isr_pqueue_get`): Can be executed when `g > 0`
+
+### Atomicity violations:
+The reported violations involve concurrent access between:
+1. Lines 28, 63, 29: Read at 28, Write at 63, Write at 29
+2. Lines 45, 63, 46: Read at 45, Write at 63, Write at 46
+
+All these operations can indeed be executed based on the actual program flow and variable values.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [28, 63, 29]
+        },
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [45, 63, 46]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [28, 63, 29]
+        },
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [45, 63, 46]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 157.93212914466858 seconds

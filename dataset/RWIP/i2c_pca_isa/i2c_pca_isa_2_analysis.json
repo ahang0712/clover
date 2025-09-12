@@ -1,0 +1,1042 @@
+{
+  "defect_count" : 37,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        286,
+        364,
+        294
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        286,
+        366,
+        294
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        286,
+        328,
+        294
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        286,
+        348,
+        294
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        289,
+        364,
+        293
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        289,
+        365,
+        293
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        289,
+        327,
+        293
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        289,
+        347,
+        293
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        288,
+        363,
+        375
+      ],
+      "sharedVariable" : "irq",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        288,
+        325,
+        375
+      ],
+      "sharedVariable" : "irq",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        288,
+        345,
+        375
+      ],
+      "sharedVariable" : "irq",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        283,
+        333,
+        293
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WRW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        283,
+        353,
+        293
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WRW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        284,
+        364,
+        286
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        284,
+        366,
+        286
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        284,
+        328,
+        286
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        284,
+        348,
+        286
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        328,
+        364,
+        330
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        328,
+        366,
+        330
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        328,
+        348,
+        330
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        348,
+        364,
+        350
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        348,
+        366,
+        350
+      ],
+      "sharedVariable" : "global_dev",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        283,
+        364,
+        289
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        283,
+        365,
+        289
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        283,
+        327,
+        289
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        283,
+        347,
+        289
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        327,
+        364,
+        333
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        327,
+        365,
+        333
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        327,
+        347,
+        333
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        347,
+        364,
+        353
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        347,
+        365,
+        353
+      ],
+      "sharedVariable" : "global_id",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        281,
+        363,
+        288
+      ],
+      "sharedVariable" : "irq",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        281,
+        325,
+        288
+      ],
+      "sharedVariable" : "irq",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        281,
+        345,
+        288
+      ],
+      "sharedVariable" : "irq",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        325,
+        363,
+        332
+      ],
+      "sharedVariable" : "irq",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        325,
+        345,
+        332
+      ],
+      "sharedVariable" : "irq",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        345,
+        363,
+        352
+      ],
+      "sharedVariable" : "irq",
+      "type" : "WWR"
+    }
+  ]
+}

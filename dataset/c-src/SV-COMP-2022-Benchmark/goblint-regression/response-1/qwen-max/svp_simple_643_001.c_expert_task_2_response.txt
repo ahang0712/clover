@@ -1,0 +1,98 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [26, 63, 28]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 2.88 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### **Operation 1: Read at Line 26**
+- **Control Condition**: The read operation `g < 1000` is part of the condition in the `if` statement at line 26.
+- **Variable Value Tracking**:
+  - `g` is initialized to `0` in `pqueue_init()` (line 19).
+  - `g` is incremented in `pqueue_put()` (lines 28–29) and decremented in `pqueue_get()` (lines 45–46) and `isr_pqueue_get()` (line 63).
+  - In `svp_simple_643_001_main()`, `pqueue_init()` is called first, resetting `g` to `0`. Then, `pqueue_put()` is called four times in a loop (lines 82–85), incrementing `g` to `4`.
+  - The ISR `isr_pqueue_get()` can decrement `g` if it executes.
+- **Execution Path Analysis**:
+  - The `if` condition `g < 1000` will always evaluate to `true` during the execution of `svp_simple_643_001_main()` because `g` starts at `0` and is incremented only up to `4`.
+  - The ISR `isr_pqueue_get()` could preempt and decrement `g`, but this does not affect the evaluation of the condition `g < 1000` because `g` will still be less than `1000`.
+- **Conclusion**: The read operation at line 26 can always be executed.
+
+#### **Operation 2: Write at Line 63**
+- **Control Condition**: The write operation `g--` is inside the `if` block at line 61, guarded by the condition `g > 0`.
+- **Variable Value Tracking**:
+  - As described above, `g` starts at `0` and is incremented to `4` by `pqueue_put()`.
+  - The ISR `isr_pqueue_get()` can decrement `g` if it executes.
+- **Execution Path Analysis**:
+  - For the condition `g > 0` to be satisfied, `g` must be greater than `0` when `isr_pqueue_get()` is executed.
+  - In `svp_simple_643_001_main()`, `g` is incremented to `4` before the ISR is triggered. Thus, the condition `g > 0` can be satisfied, allowing the write operation at line 63 to execute.
+- **Conclusion**: The write operation at line 63 can be executed when `g > 0`.
+
+#### **Operation 3: Read at Line 28**
+- **Control Condition**: The read operation `g + 1` is part of the assignment to `tmp` at line 28, which is inside the `if` block at line 26.
+- **Variable Value Tracking**:
+  - As analyzed for Operation 1, the condition `g < 1000` is always satisfied during the execution of `svp_simple_643_001_main()`.
+- **Execution Path Analysis**:
+  - Since the condition `g < 1000` is satisfied, the code block containing the read operation at line 28 will always execute.
+- **Conclusion**: The read operation at line 28 can always be executed.
+
+---
+
+### Step 2: Pay Attention to Control Condition Changes
+- The ISR `isr_pqueue_get()` modifies `g` by decrementing it (line 63). This could affect the truth value of control conditions involving `g` in other functions, such as `pqueue_put()` and `pqueue_get()`.
+- However, in this specific code, the modifications to `g` by the ISR do not prevent the control conditions from being satisfied. The ISR simply adjusts `g` within the range where the conditions remain valid.
+
+---
+
+### Step 3: Check Interrupt Status
+- There are no explicit calls to `disable_isr()` or `enable_isr()` in the provided code. Therefore, interrupts are assumed to be enabled throughout the program execution.
+- Both `pqueue_put()` and `isr_pqueue_get()` can execute concurrently, leading to potential atomicity violations.
+
+---
+
+### Step 4: Generate the Final Report
+
+#### Summary of Analysis
+- **Read at Line 26**: Can always be executed because the condition `g < 1000` is always satisfied.
+- **Write at Line 63**: Can be executed when `g > 0`, which is true after `pqueue_put()` increments `g`.
+- **Read at Line 28**: Can always be executed because the condition `g < 1000` is always satisfied.
+
+Since all operations in the reported atomicity violation can be executed, the reported violation is valid.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [26, 63, 28]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [26, 63, 28]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 161.1415228843689 seconds

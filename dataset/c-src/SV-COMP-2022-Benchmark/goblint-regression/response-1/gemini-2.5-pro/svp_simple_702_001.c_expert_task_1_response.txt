@@ -1,0 +1,114 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "lines": [
+                43,
+                32,
+                49
+            ]
+        },
+        {
+            "sharedVariable": "h",
+            "accessPattern": [
+                "Write",
+                "Read",
+                "Write"
+            ],
+            "lines": [
+                45,
+                26,
+                47
+            ]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 19.98 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Analysis of Violation 1: Shared Variable `i`
+
+- **Access 1: Write to `i` at line 43 in `svp_simple_702_001_main`**
+  - **Operation**: `i = 11;`
+  - **Guarding Condition**: The operation is inside the `if (x > -1000)` block at line 41.
+  - **Variable Analysis**: The variable `x` is initialized at line 40 with `__VERIFIER_nondet_int()`, which can return any integer value.
+  - **Satisfiability**: The condition `x > -1000` can be satisfied if `__VERIFIER_nondet_int()` returns a value greater than -1000 (e.g., 0, 1, 100).
+  - **Conclusion**: The write operation at line 43 is **executable**.
+
+- **Access 2: Read from `i` at line 32 in `svp_simple_702_001_isr_1`**
+  - **Operation**: `z = i;`
+  - **Guarding Condition**: The operation is inside the `if (x < 1000)` block at line 24.
+  - **Variable Analysis**: The variable `x` is initialized at line 21 with `__VERIFIER_nondet_int()`, which can return any integer value.
+  - **Satisfiability**: The condition `x < 1000` can be satisfied if `__VERIFIER_nondet_int()` returns a value less than 1000 (e.g., 0, 1, 999).
+  - **Execution Path Analysis**: Within this `if` block, there is a write to `i` at line 31 (`i = plus(x, 31);`) that occurs *before* the read at line 32. Therefore, the read at line 32 will always get the value written at line 31 within the same ISR execution. It will never read a value written by the `main` function (e.g., at line 43).
+  - **Conclusion**: While the code block is reachable, the read at line 32 is not exposed to the write at line 43. The `Write(main) -> Read(isr)` sequence required for this atomicity violation is **not possible**.
+
+- **Access 3: Write to `i` at line 49 in `svp_simple_702_001_main`**
+  - **Operation**: `i = 3;`
+  - **Guarding Condition**: This operation is in the same `if (x > -1000)` block as the write at line 43.
+  - **Satisfiability**: The condition can be satisfied for the same reasons as the first access.
+  - **Conclusion**: The write operation at line 49 is **executable**.
+
+- **Summary for Violation 1**: The reported atomicity violation `Write(43) -> Read(32) -> Write(49)` is a **false positive**. The read at line 32 is preceded by a write to the same variable `i` at line 31 within the same ISR. This internal write prevents the read from being exposed to the value written in `main` at line 43, breaking the chain of events required for the violation.
+
+---
+
+#### Analysis of Violation 2: Shared Variable `h`
+
+- **Access 1: Write to `h` at line 45 in `svp_simple_702_001_main`**
+  - **Operation**: `h = plus(x, -17);`
+  - **Guarding Condition**: The operation is inside the `if (x > -1000)` block at line 41.
+  - **Variable Analysis**: `x` is a non-deterministic integer.
+  - **Satisfiability**: The condition `x > -1000` is satisfiable.
+  - **Conclusion**: The write operation at line 45 is **executable**.
+
+- **Access 2: Read from `h` at line 26 in `svp_simple_702_001_isr_1`**
+  - **Operation**: `y = h;`
+  - **Guarding Condition**: The operation is inside the `if (x < 1000)` block at line 24.
+  - **Variable Analysis**: `x` is a non-deterministic integer.
+  - **Satisfiability**: The condition `x < 1000` is satisfiable.
+  - **Conclusion**: The read operation at line 26 is **executable**.
+
+- **Access 3: Write to `h` at line 47 in `svp_simple_702_001_main`**
+  - **Operation**: `h = x;`
+  - **Guarding Condition**: This operation is in the same `if (x > -1000)` block as the write at line 45.
+  - **Satisfiability**: The condition is satisfiable.
+  - **Conclusion**: The write operation at line 47 is **executable**.
+
+- **Feasibility of the W-R-W Sequence**: The violation `Write(45) -> Read(26) -> Write(47)` requires an interrupt to occur between the execution of line 45 and line 47.
+  - **Execution Path Analysis**:
+    1. In `main`, assume `x` is a value `V` where `V > -1000`.
+    2. Line 44 executes: `g = V;`
+    3. Line 45 executes: `h = V - 17;`
+    4. An interrupt occurs, and `svp_simple_702_001_isr_1` begins execution.
+    5. The `if (x < 1000)` condition in the ISR is met.
+    6. Line 25 executes: The ISR's local `x` is set to the value of `g`, which is `V`.
+    7. Line 26 executes: `y` is set to the value of `h`, which is `V - 17`.
+    8. Line 29 executes: `__VERIFIER_assert(x == y);`. This becomes `__VERIFIER_assert(V == V - 17);`. This condition is always false.
+    9. The assertion fails, causing `reach_error()` and `abort()` to be called. The program terminates.
+  - **Conclusion**: Because the program aborts inside the ISR, execution never returns to the `main` function. Therefore, the write to `h` at line 47 is **not reachable** in any execution path where the read at line 26 has occurred after the write at line 45. The `Read -> Write` part of the sequence is impossible.
+
+- **Summary for Violation 2**: The reported atomicity violation `Write(45) -> Read(26) -> Write(47)` is a **false positive**. The control flow, specifically the failing assertion at line 29, prevents the program from completing the required sequence of operations.
+
+### Step 4: Generate the Final Report
+
+Both reported atomicity violations have been found to be false positives due to control flow constraints that make the specified access patterns impossible at runtime.
+
+No defects.
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 102.66579699516296 seconds

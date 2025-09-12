@@ -1,0 +1,100 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [14, 20, 14]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 2.87 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Analysis of `svp_simple_329_001_isr_1` (Priority 1)
+- **Line 14**: `i = j + 1;`
+  - This write operation is inside a `for` loop (`for (int k = 0; k < NUM; k++)`).
+  - The control condition for the loop is `k < NUM`, where `NUM` is defined as `10`.
+  - `k` starts at `0` and increments by `1` in each iteration. Therefore, the loop will execute exactly `10` times.
+  - No other conditions guard this operation, so `i = j + 1;` will be executed `10` times.
+
+#### Analysis of `svp_simple_329_001_isr_2` (Priority 2)
+- **Line 20**: `j = i + 1;`
+  - This write operation is also inside a `for` loop (`for (int k = 0; k < NUM; k++)`).
+  - Similar to the analysis for `svp_simple_329_001_isr_1`, the loop will execute exactly `10` times because `NUM` is `10`.
+  - No other conditions guard this operation, so `j = i + 1;` will be executed `10` times.
+
+#### Analysis of `svp_simple_329_001_main`
+- **Line 27**: `int condI = i > LIMIT;`
+  - This read operation on `i` is unconditional and will always execute when the `main` function runs.
+- **Line 29**: `int condJ = j > LIMIT;`
+  - This read operation on `j` is unconditional and will always execute when the `main` function runs.
+- **Line 32**: `if (condI || condJ)`
+  - The condition `condI || condJ` depends on the values of `condI` and `condJ`, which are derived from the global variables `i` and `j`.
+  - Initially, `i = 3` and `j = 6`. Since `LIMIT` is defined as `(2 * NUM + 6) = 26`, both `condI` and `condJ` will evaluate to `false` initially.
+  - However, if `i` or `j` is updated by `svp_simple_329_001_isr_1` or `svp_simple_329_001_isr_2` before this condition is evaluated, the values of `condI` and `condJ` could change.
+  - The `if` block containing the `ERROR` label will execute only if `condI || condJ` evaluates to `true`.
+
+---
+
+### Step 2: Pay Attention to Control Condition Changes
+- Both `svp_simple_329_001_isr_1` and `svp_simple_329_001_isr_2` modify the shared variables `i` and `j` without any atomicity protection.
+- Interrupt preemption between these ISRs can lead to interleaved reads and writes, potentially causing atomicity violations.
+
+---
+
+### Step 3: Check Interrupt Status
+- There are no explicit `disable_isr` or `enable_isr` calls in the provided code.
+- By default, all interrupts are assumed to be enabled unless explicitly disabled.
+- Since both ISRs (`svp_simple_329_001_isr_1` and `svp_simple_329_001_isr_2`) have different priorities, they can preempt each other:
+  - ISR 2 (priority 2) can preempt ISR 1 (priority 1).
+  - ISR 1 cannot preempt ISR 2 because it has a lower priority.
+
+---
+
+### Step 4: Generate the Final Report
+
+#### Summary of Read/Write Operations
+1. **Line 14 (`i = j + 1;`)**: This operation is guarded by the `for` loop condition `k < NUM`, which is always satisfied during the loop's execution. Therefore, this write operation will occur.
+2. **Line 20 (`j = i + 1;`)**: Similarly, this operation is guarded by the `for` loop condition `k < NUM`, which is always satisfied. This write operation will also occur.
+3. **Line 27 (`int condI = i > LIMIT;`)**: This read operation on `i` is unconditional and will always execute.
+4. **Line 29 (`int condJ = j > LIMIT;`)**: This read operation on `j` is unconditional and will always execute.
+
+#### Atomicity Violation Analysis
+- The reported violation involves the shared variable `j` with the access pattern `["Read", "Write", "Read"]` at lines `[14, 20, 14]`.
+- The read operation on `j` at line 14 can indeed be preempted by ISR 2, which writes to `j` at line 20. After ISR 2 completes, ISR 1 resumes and performs another read on `j` at line 14.
+- This interleaving of operations constitutes an atomicity violation.
+
+#### Final Output
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [14, 20, 14]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [14, 20, 14]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 120.28875207901001 seconds

@@ -1,0 +1,111 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "g",
+    "cond.addr",
+    "arg.addr:int8*"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "22",
+      "function": "svp_simple_636_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "23",
+      "function": "svp_simple_636_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "24",
+      "function": "svp_simple_636_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "UNMAPPED_0",
+      "function": "svp_simple_636_001_isr_1",
+      "warning": "Line 0 could not be mapped"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "17",
+      "function": "svp_simple_636_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "18",
+      "function": "svp_simple_636_001_isr_1"
+    }
+  ],
+  "defects": [],
+  "defect_count": 0,
+  "line_mapping": {
+    "original_to_filtered": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13,
+      "15": 14,
+      "17": 15,
+      "18": 16,
+      "19": 17,
+      "20": 18,
+      "21": 19,
+      "23": 20,
+      "24": 21,
+      "26": 22,
+      "28": 23,
+      "30": 24,
+      "31": 25,
+      "32": 26
+    },
+    "filtered_to_original": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13,
+      "14": 15,
+      "15": 17,
+      "16": 18,
+      "17": 19,
+      "18": 20,
+      "19": 21,
+      "20": 23,
+      "21": 24,
+      "22": 26,
+      "23": 28,
+      "24": 30,
+      "25": 31,
+      "26": 32
+    },
+    "total_original_lines": 32,
+    "total_filtered_lines": 26
+  }
+}

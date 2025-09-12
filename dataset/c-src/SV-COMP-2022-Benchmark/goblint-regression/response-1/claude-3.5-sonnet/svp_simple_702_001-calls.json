@@ -1,0 +1,106 @@
+{
+  "functions": [
+    {
+      "name": "reach_error",
+      "type": "defined"
+    },
+    {
+      "name": "__VERIFIER_assert",
+      "type": "defined"
+    },
+    {
+      "name": "assume_abort_if_not",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_702_001_isr_1",
+      "type": "defined"
+    },
+    {
+      "name": "plus",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_702_001_main",
+      "type": "defined"
+    },
+    {
+      "name": "isr_plus",
+      "type": "defined"
+    },
+    {
+      "name": "__VERIFIER_nondet_int",
+      "type": "external"
+    },
+    {
+      "name": "abort",
+      "type": "external"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "__VERIFIER_assert",
+      "callee": "reach_error"
+    },
+    {
+      "caller": "__VERIFIER_assert",
+      "callee": "abort"
+    },
+    {
+      "caller": "assume_abort_if_not",
+      "callee": "abort"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "__VERIFIER_nondet_int"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "__VERIFIER_nondet_int"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "__VERIFIER_nondet_int"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "__VERIFIER_assert"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "__VERIFIER_assert"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "plus"
+    },
+    {
+      "caller": "svp_simple_702_001_isr_1",
+      "callee": "__VERIFIER_assert"
+    },
+    {
+      "caller": "plus",
+      "callee": "assume_abort_if_not"
+    },
+    {
+      "caller": "plus",
+      "callee": "assume_abort_if_not"
+    },
+    {
+      "caller": "svp_simple_702_001_main",
+      "callee": "__VERIFIER_nondet_int"
+    },
+    {
+      "caller": "svp_simple_702_001_main",
+      "callee": "plus"
+    },
+    {
+      "caller": "isr_plus",
+      "callee": "assume_abort_if_not"
+    },
+    {
+      "caller": "isr_plus",
+      "callee": "assume_abort_if_not"
+    }
+  ]
+}

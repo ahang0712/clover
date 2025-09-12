@@ -1,0 +1,75 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "tx_in_progress",
+        "tx_aborted"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 9
+    },
+    {
+      "sharedVariables": [
+        "current_transaction",
+        "global_counter"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 3
+    },
+    {
+      "sharedVariables": [
+        "lock_table",
+        "dirty_pages"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 10
+    },
+    {
+      "sharedVariables": [
+        "free_list"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 1
+    },
+    {
+      "sharedVariables": [
+        "log_file",
+        "page_cache"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 5
+    },
+    {
+      "sharedVariables": [
+        "wal_buffer",
+        "recovery_mode"
+      ],
+      "accessPattern": [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "defect_count": 5
+    }
+  ]
+}

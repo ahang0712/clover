@@ -1,0 +1,1078 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "pdev",
+        "expression.addr",
+        "retval",
+        "arg.addr:int8*"
+      ],
+      "variable_types": {
+        "pdev": "unknown",
+        "expression.addr": "unknown",
+        "retval": "unknown",
+        "arg.addr:int8*": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_304_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "pdev",
+          "op": "store",
+          "function": "svp_simple_304_001_isr_1",
+          "line": "9"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "ldv_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "ldv_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_init",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "module_init",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_exit",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "module_exit",
+          "callee": "ldv_assert"
+        },
+        {
+          "caller": "svp_simple_304_001_main",
+          "callee": "module_init"
+        },
+        {
+          "caller": "svp_simple_304_001_main",
+          "callee": "module_exit"
+        },
+        {
+          "caller": "svp_simple_304_001_main",
+          "callee": "module_exit"
+        },
+        {
+          "caller": "svp_simple_304_001_main",
+          "callee": "module_exit"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "ldv_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_304_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "module_init",
+            "type": "defined"
+          },
+          {
+            "name": "module_exit",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_304_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "ldv_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "ldv_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "module_init",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "module_init",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "module_init",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "module_exit",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "module_exit",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_init"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_exit"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_exit"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_exit"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 14,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              24
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              25,
+              14,
+              31
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              32,
+              14,
+              33
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              25
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              25,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              25,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              19,
+              14,
+              20
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              14,
+              25
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              31,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              33,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "pdev",
+          "expression.addr",
+          "retval",
+          "arg.addr:int8*"
+        ],
+        "MAIN_INFO": [],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_304_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "pdev",
+            "line": "9",
+            "function": "svp_simple_304_001_isr_1"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "2": 1,
+            "3": 2,
+            "4": 3,
+            "6": 4,
+            "7": 5,
+            "8": 6,
+            "10": 7,
+            "12": 8,
+            "14": 9,
+            "16": 10,
+            "18": 11,
+            "19": 12,
+            "20": 13,
+            "21": 14,
+            "22": 15,
+            "23": 16,
+            "24": 17,
+            "25": 18,
+            "26": 19,
+            "27": 20,
+            "29": 21,
+            "30": 22,
+            "31": 23,
+            "32": 24,
+            "33": 25,
+            "34": 26,
+            "35": 27,
+            "37": 28,
+            "38": 29,
+            "39": 30,
+            "40": 31,
+            "41": 32,
+            "42": 33,
+            "43": 34,
+            "44": 35
+          },
+          "filtered_to_original": {
+            "1": 2,
+            "2": 3,
+            "3": 4,
+            "4": 6,
+            "5": 7,
+            "6": 8,
+            "7": 10,
+            "8": 12,
+            "9": 14,
+            "10": 16,
+            "11": 18,
+            "12": 19,
+            "13": 20,
+            "14": 21,
+            "15": 22,
+            "16": 23,
+            "17": 24,
+            "18": 25,
+            "19": 26,
+            "20": 27,
+            "21": 29,
+            "22": 30,
+            "23": 31,
+            "24": 32,
+            "25": 33,
+            "26": 34,
+            "27": 35,
+            "28": 37,
+            "29": 38,
+            "30": 39,
+            "31": 40,
+            "32": 41,
+            "33": 42,
+            "34": 43,
+            "35": 44
+          },
+          "total_original_lines": 44,
+          "total_filtered_lines": 35
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "ldv_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_304_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "module_init",
+            "type": "defined"
+          },
+          {
+            "name": "module_exit",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_304_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "ldv_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "ldv_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "module_init",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "module_init",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "module_init",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "module_exit",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "module_exit",
+            "callee": "ldv_assert"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_init"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_exit"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_exit"
+          },
+          {
+            "caller": "svp_simple_304_001_main",
+            "callee": "module_exit"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 14,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              24
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              25,
+              14,
+              31
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              32,
+              14,
+              33
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              25
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              20,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              25,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              25,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              19,
+              14,
+              20
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              14,
+              25
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              31,
+              14,
+              32
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              33,
+              14,
+              34
+            ],
+            "sharedVariable": "pdev",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 3\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 5\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 3\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 5\n    },\n    {\n      \"sharedVariables\": [\n        \"pdev\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/Idv-races/svp_simple_304_001.c",
+      "total_lines": 44,
+      "analyzed_lines": 35,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 774
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [20, 14, 24]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [25, 14, 31]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [32, 14, 33]\n        }\n    ]\n}\n\n[System] Expert first round completed in 4.07 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nI will analyze each read and write operation mentioned in the initial defect report to evaluate its accessibility.\n\n1. Operation: Read on line 20\n   - This read is in the function `module_init()`.\n   - It's not guarded by any control conditions.\n   - It can be executed when `module_init()` is called in `svp_simple_304_001_main()`.\n\n2. Operation: Write on line 14\n   - This write is in the function `svp_simple_304_001_isr_1()`.\n   - It's not guarded by any control conditions within the function.\n   - However, we don't have information about when or how this interrupt service routine (ISR) is triggered.\n\n3. Operation: Write on line 24\n   - This write is in the function `module_init()`.\n   - It's guarded by the condition `if(__VERIFIER_nondet_int())`.\n   - The function `__VERIFIER_nondet_int()` returns a non-deterministic integer value.\n   - This write can be executed if `__VERIFIER_nondet_int()` returns 0 or any value that evaluates to false.\n\n4. Operation: Read on line 25\n   - This read is in the function `module_init()`.\n   - It's guarded by the same condition as the write on line 24.\n   - It can be executed if `__VERIFIER_nondet_int()` returns 0 or any value that evaluates to false.\n\n5. Operation: Write on line 31\n   - This write is in the function `module_exit()`.\n   - It's not guarded by any control conditions.\n   - It can be executed when `module_exit()` is called in `svp_simple_304_001_main()`.\n\n6. Operation: Read on line 32\n   - This read is in the function `module_exit()`.\n   - It's not guarded by any control conditions.\n   - It can be executed when `module_exit()` is called in `svp_simple_304_001_main()`.\n\n7. Operation: Write on line 33\n   - This write is in the function `module_exit()`.\n   - It's not guarded by any control conditions.\n   - It can be executed when `module_exit()` is called in `svp_simple_304_001_main()`.\n\nBased on this analysis, all the read and write operations mentioned in the initial defect report can be executed under certain conditions. The ISR function `svp_simple_304_001_isr_1()` can potentially interrupt the execution of `module_init()` or `module_exit()` at any point, leading to the reported atomicity violations.\n\nTherefore, the initial defect report remains valid, and no modifications are needed.\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [20, 14, 24]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [25, 14, 31]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [32, 14, 33]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ],
+    "expert_task_2": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [20, 14, 25]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [20, 14, 32]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [20, 14, 34]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [25, 14, 32]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [25, 14, 34]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [32, 14, 34]\n        }\n    ]\n}\n\n[System] Expert first round completed in 5.91 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nStep 1: Check Control Conditions\n\n1. Read operation on line 20:\n   - This operation is within the module_init() function.\n   - It's not guarded by any control condition.\n   - It can be executed when module_init() is called.\n\n2. Write operation on line 14:\n   - This operation is within the svp_simple_304_001_isr_1() function.\n   - It's not guarded by any control condition.\n   - It can be executed when the ISR is triggered.\n\n3. Read operation on line 25:\n   - This operation is within the module_init() function.\n   - It's guarded by the condition `if(__VERIFIER_nondet_int())` on line 21.\n   - The condition must be false for this operation to be executed.\n   - __VERIFIER_nondet_int() returns a non-deterministic integer, so this condition can be satisfied.\n\n4. Read operation on line 32:\n   - This operation is within the module_exit() function.\n   - It's not guarded by any control condition.\n   - It can be executed when module_exit() is called.\n\n5. Read operation on line 34:\n   - This operation is within the module_exit() function.\n   - It's not guarded by any control condition.\n   - It can be executed when module_exit() is called.\n\nStep 2: Pay Attention to Control Condition Changes\n- There are no apparent changes to control conditions by interrupts in this code.\n\nStep 3: Check Interrupt Status\n- There are no explicit disable_isr() or enable_isr() calls in the code.\n- We cannot determine the interrupt status at different points in the code.\n\nStep 4: Generate the Final Report\n\nSummary of analysis:\n- All read/write operations mentioned in the initial defect report can be executed under certain conditions.\n- The operation on line 25 depends on a non-deterministic condition, but it can still be executed.\n- There are no unsatisfiable control conditions or known interrupt status changes that would prevent any of these operations from executing.\n\nTherefore, all reported atomicity violations remain valid.\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [20, 14, 25]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [20, 14, 32]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [20, 14, 34]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [25, 14, 32]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [25, 14, 34]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [32, 14, 34]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ],
+    "expert_task_3": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [19, 14, 20]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [24, 14, 25]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 14, 32]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [33, 14, 34]\n        }\n    ]\n}\n\n[System] Expert first round completed in 4.44 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nTo evaluate the accessibility of each read and write operation, I'll analyze the control conditions and interrupt status for each reported violation:\n\n1. Write on line 19, Write on line 14, Read on line 20:\n   - Line 19 is in module_init(), which is called by svp_simple_304_001_main().\n   - Line 14 is in svp_simple_304_001_isr_1(), an interrupt service routine.\n   - Line 20 is also in module_init().\n   - There are no control conditions guarding these operations.\n   - There's no information about interrupt enabling/disabling.\n\n2. Write on line 24, Write on line 14, Read on line 25:\n   - Lines 24 and 25 are in module_init(), inside an if statement (line 21).\n   - The if condition uses __VERIFIER_nondet_int(), which can return any integer value.\n   - These lines are reachable if __VERIFIER_nondet_int() returns a non-zero value.\n\n3. Write on line 31, Write on line 14, Read on line 32:\n   - Lines 31 and 32 are in module_exit().\n   - module_exit() is called multiple times in svp_simple_304_001_main().\n   - There are no control conditions guarding these operations.\n\n4. Write on line 33, Write on line 14, Read on line 34:\n   - Similar to the previous violation, these lines are in module_exit().\n   - There are no control conditions guarding these operations.\n\nAll reported read/write operations can be executed based on the given code. There's no information about interrupt disabling that would prevent the ISR from running. Therefore, all violations remain valid.\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [19, 14, 20]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [24, 14, 25]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 14, 32]\n        },\n        {\n            \"sharedVariable\": \"pdev\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [33, 14, 34]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/Idv-races/svp_simple_304_001.c",
+    "total_lines": 44,
+    "analyzed_lines": 35,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 774
+  }
+}

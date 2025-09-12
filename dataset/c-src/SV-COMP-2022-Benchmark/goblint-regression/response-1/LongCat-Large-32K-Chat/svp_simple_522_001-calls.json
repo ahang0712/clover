@@ -1,0 +1,34 @@
+{
+  "functions": [
+    {
+      "name": "svp_simple_522_001_isr_1",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_522_001_main",
+      "type": "defined"
+    },
+    {
+      "name": "__VERIFIER_nondet_int",
+      "type": "external"
+    },
+    {
+      "name": "printf",
+      "type": "external"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "svp_simple_522_001_isr_1",
+      "callee": "printf"
+    },
+    {
+      "caller": "svp_simple_522_001_main",
+      "callee": "__VERIFIER_nondet_int"
+    },
+    {
+      "caller": "svp_simple_522_001_main",
+      "callee": "printf"
+    }
+  ]
+}

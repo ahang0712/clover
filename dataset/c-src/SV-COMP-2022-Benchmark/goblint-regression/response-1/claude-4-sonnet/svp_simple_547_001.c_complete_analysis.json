@@ -1,0 +1,194 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "data"
+      ],
+      "variable_types": {
+        "data": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "data",
+          "op": "load",
+          "function": "svp_simple_547_001_main",
+          "line": "12"
+        },
+        {
+          "variable": "data",
+          "op": "store",
+          "function": "svp_simple_547_001_main",
+          "line": "13"
+        },
+        {
+          "variable": "data",
+          "op": "load",
+          "function": "svp_simple_547_001_isr_1",
+          "line": "5"
+        },
+        {
+          "variable": "data",
+          "op": "store",
+          "function": "svp_simple_547_001_isr_1",
+          "line": "6"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "svp_simple_547_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_547_001_main",
+            "type": "defined"
+          }
+        ],
+        "call_graph": []
+      },
+      "Defect_Highlight": {
+        "defect_count": 1,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              12,
+              6,
+              13
+            ],
+            "sharedVariable": "data",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "data"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "data",
+            "line": "12",
+            "function": "svp_simple_547_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "data",
+            "line": "13",
+            "function": "svp_simple_547_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "data",
+            "line": "5",
+            "function": "svp_simple_547_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "data",
+            "line": "6",
+            "function": "svp_simple_547_001_isr_1"
+          }
+        ]
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "svp_simple_547_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_547_001_main",
+            "type": "defined"
+          }
+        ],
+        "call_graph": []
+      },
+      "Defect_Highlight": {
+        "defect_count": 1,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              12,
+              6,
+              13
+            ],
+            "sharedVariable": "data",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"data\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"data\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_547_001.c",
+      "total_lines": 17,
+      "analyzed_lines": 17,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 220
+    }
+  },
+  "expert_judge_results": {
+    "expert_judge_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the provided code, I need to analyze the atomicity violation pattern <Read, Write, Write> for the global variable `data`.\n\nLet me trace through the operations:\n\n**Main function operations:**\n- Line 12: `int tmp = data + 1;` - Read operation on `data`\n- Line 13: `data = tmp;` - Write operation on `data`\n\n**ISR function operations:**\n- Line 5: `int tmp = data + 1;` - Read operation on `data`  \n- Line 6: `data = tmp;` - Write operation on `data`\n\nFor the <Read, Write, Write> pattern, I need:\n- a1: Read operation by lower-priority task\n- a2: Write operation by higher-priority ISR\n- a3: Write operation by the same lower-priority task as a1\n\nSince no priority information is explicitly provided for the ISR, I'll assume the standard embedded systems convention where ISRs have higher priority than the main function.\n\n**Analyzing the candidate defect:**\n- a1 (Read): Line 12 - main function reads `data`\n- a2 (Write): Line 6 - ISR writes to `data` (can preempt main)\n- a3 (Write): Line 13 - main function writes to `data`\n\nThis forms a valid <Read, Write, Write> atomicity violation where:\n1. Main reads `data` (line 12)\n2. ISR can preempt and write to `data` (line 6)\n3. Main continues and writes to `data` (line 13), but this write is based on the stale value read in step 1\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [12, 6, 13]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the atomicity violation pattern for the global variable `data`.\n\n**Step 1: Check Control Conditions**\n- Line 5: `int tmp = data + 1;` (Read in ISR) - No control conditions\n- Line 6: `data = tmp;` (Write in ISR) - No control conditions  \n- Line 12: `int tmp = data + 1;` (Read in main) - No control conditions\n- Line 13: `data = tmp;` (Write in main) - No control conditions\n\nAll operations are unconditional and will execute.\n\n**Step 2: Pay Attention to Control Condition Changes**\nNo control conditions exist that could be modified.\n\n**Step 3: Check Interrupt Status**\nNo `disable_isr()` or `enable_isr()` calls are present. The ISR can preempt the main function at any point.\n\n**Step 4: Analyze Atomicity Violation**\nThe pattern <Read, Write, Write> can occur as follows:\n- a1 (Read): Line 12 - main function reads `data`\n- a2 (Write): Line 6 - ISR preempts and writes to `data`\n- a3 (Write): Line 13 - main function continues and writes to `data` based on stale value\n\nThis creates a valid atomicity violation where the main function's read-modify-write sequence can be interrupted by the ISR's write operation.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [12, 6, 13]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the provided code, I need to analyze the atomicity violation pattern <Read, Write, Write> for the global variable `data`.\n\n**Code Analysis:**\n\n**Main function operations:**\n- Line 12: `int tmp = data + 1;` - Read operation on `data`\n- Line 13: `data = tmp;` - Write operation on `data`\n\n**ISR function operations:**\n- Line 5: `int tmp = data + 1;` - Read operation on `data`  \n- Line 6: `data = tmp;` - Write operation on `data`\n\n**Atomicity Violation Detection:**\n\nFor the <Read, Write, Write> pattern, I need:\n- a1: Read operation by lower-priority task\n- a2: Write operation by higher-priority ISR  \n- a3: Write operation by the same lower-priority task as a1\n\nAssuming standard embedded systems convention where ISRs have higher priority than the main function:\n\n**Valid violation identified:**\n- a1 (Read): Line 12 - main function reads `data`\n- a2 (Write): Line 6 - ISR can preempt and write to `data`\n- a3 (Write): Line 13 - main function writes to `data` based on stale value from line 12\n\nThis creates an atomicity violation where the main function's read-modify-write sequence (lines 12-13) can be interrupted by the ISR's write operation (line 6), causing the main function to overwrite the ISR's modification with a value based on stale data.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [12, 6, 13]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_547_001.c",
+    "total_lines": 17,
+    "analyzed_lines": 17,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 220
+  }
+}

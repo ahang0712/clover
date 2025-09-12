@@ -1,0 +1,521 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "glob",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[0]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[1]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[9999]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[TRIGGER]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[1000]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[var]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[i]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[var[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[i[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[0]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[1]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[9999]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[TRIGGER]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[1000]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[var]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[i]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[var[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[i[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[0]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[1]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[9999]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[TRIGGER]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[1000]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[var]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[i]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[var[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[i[0,9999]]",
+        ".str",
+        ".str[0]",
+        ".str[1]",
+        ".str[13]",
+        ".str.1",
+        ".str.1[0]",
+        ".str.1[1]",
+        ".str.1[21]",
+        ".str.2",
+        ".str.2[0]",
+        ".str.2[1]",
+        ".str.2[20]",
+        "i",
+        "arg.addr:int8*"
+      ],
+      "variable_types": {
+        "glob": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[0]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[1]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[9999]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[TRIGGER]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[1000]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[var]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[i]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[var[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[i[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[0]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[1]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[9999]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[TRIGGER]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[1000]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[var]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[i]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[var[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[i[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[0]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[1]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[9999]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[TRIGGER]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[1000]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[var]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[i]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[var[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[i[0,9999]]": "unknown",
+        ".str": "unknown",
+        ".str[0]": "unknown",
+        ".str[1]": "unknown",
+        ".str[13]": "unknown",
+        ".str.1": "unknown",
+        ".str.1[0]": "unknown",
+        ".str.1[1]": "unknown",
+        ".str.1[21]": "unknown",
+        ".str.2": "unknown",
+        ".str.2[0]": "unknown",
+        ".str.2[1]": "unknown",
+        ".str.2[20]": "unknown",
+        "i": "unknown",
+        "arg.addr:int8*": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_521_001_main",
+          "line": "7"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_521_001_main",
+          "line": "10"
+        },
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_521_001_main",
+          "line": "10"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_521_001_main",
+          "line": "11"
+        },
+        {
+          "variable": "glob",
+          "op": "load",
+          "function": "svp_simple_521_001_main",
+          "line": "12"
+        },
+        {
+          "variable": "glob",
+          "op": "store",
+          "function": "svp_simple_521_001_main",
+          "line": "12"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_521_001_main",
+          "line": "14"
+        },
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_521_001_main",
+          "line": "14"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_521_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "glob",
+          "op": "load",
+          "function": "svp_simple_521_001_isr_1",
+          "line": "4"
+        },
+        {
+          "variable": "glob",
+          "op": "store",
+          "function": "svp_simple_521_001_isr_1",
+          "line": "4"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "svp_simple_521_001_main",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "svp_simple_521_001_main",
+          "callee": "printf"
+        },
+        {
+          "caller": "svp_simple_521_001_main",
+          "callee": "printf"
+        },
+        {
+          "caller": "svp_simple_521_001_main",
+          "callee": "printf"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "svp_simple_521_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_521_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "printf"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 1,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              11,
+              24
+            ],
+            "sharedVariable": "glob",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "glob",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[0]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[1]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[9999]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[TRIGGER]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[1000]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[var]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[i]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[var[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str[i[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[0]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[1]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[9999]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[TRIGGER]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[1000]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[var]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[i]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[var[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.1[i[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[0]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[1]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[9999]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[TRIGGER]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[1000]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[var]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[i]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[var[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c:.str.2[i[0,9999]]",
+          ".str",
+          ".str[0]",
+          ".str[1]",
+          ".str[13]",
+          ".str.1",
+          ".str.1[0]",
+          ".str.1[1]",
+          ".str.1[21]",
+          ".str.2",
+          ".str.2[0]",
+          ".str.2[1]",
+          ".str.2[20]",
+          "i",
+          "arg.addr:int8*"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "7",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "10",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "10",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "11",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "glob",
+            "line": "12",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "glob",
+            "line": "12",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "14",
+            "function": "svp_simple_521_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "14",
+            "function": "svp_simple_521_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_521_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "glob",
+            "line": "4",
+            "function": "svp_simple_521_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "glob",
+            "line": "4",
+            "function": "svp_simple_521_001_isr_1"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "2": 1,
+            "6": 2,
+            "9": 3,
+            "11": 4,
+            "13": 5,
+            "15": 6,
+            "16": 7,
+            "19": 8,
+            "21": 9,
+            "22": 10,
+            "23": 11,
+            "24": 12,
+            "25": 13,
+            "26": 14,
+            "29": 15,
+            "30": 16
+          },
+          "filtered_to_original": {
+            "1": 2,
+            "2": 6,
+            "3": 9,
+            "4": 11,
+            "5": 13,
+            "6": 15,
+            "7": 16,
+            "8": 19,
+            "9": 21,
+            "10": 22,
+            "11": 23,
+            "12": 24,
+            "13": 25,
+            "14": 26,
+            "15": 29,
+            "16": 30
+          },
+          "total_original_lines": 30,
+          "total_filtered_lines": 16
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "svp_simple_521_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_521_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_521_001_main",
+            "callee": "printf"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 1,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              24,
+              11,
+              24
+            ],
+            "sharedVariable": "glob",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c",
+      "total_lines": 30,
+      "analyzed_lines": 16,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 349
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"glob\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [24, 11, 24]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 2.99 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLet me analyze each read/write operation for the global variable `glob`.\n\n## Step 1: Check Control Conditions\n\n### Operation at line 11 (in svp_simple_521_001_isr_1):\n- This is `glob++` which involves both read and write operations\n- This operation is in an interrupt handler (ISR)\n- No control conditions guard this operation - it will execute whenever the ISR is triggered\n\n### Operation at line 24 (in svp_simple_521_001_main):\n- This is `glob++` which involves both read and write operations\n- This operation is guarded by the condition `if (i-1)` at line 23\n- **Variable Value Tracking**:\n  - `i` is initialized at line 16: `int i = __VERIFIER_nondet_int();`\n  - `i` is incremented at line 22: `i++`\n  - The condition `i-1` evaluates to true when `i != 1`\n  - Since `__VERIFIER_nondet_int()` can return any integer value, `i` can have any value after initialization\n  - After `i++`, `i` can be any integer except the original value\n  - Therefore, `i-1` can be true (when `i != 1`) or false (when `i == 1`)\n  - The operation at line 24 can be executed when `i != 1`\n\n## Step 2: Check Control Condition Changes\n- There are no operations in the ISR that modify variables used in the main function's control conditions\n- The ISR only modifies `glob`, which is not used in any control conditions\n\n## Step 3: Check Interrupt Status\n- The code does not contain any `disable_isr()` or `enable_isr()` calls\n- Therefore, interrupts are always enabled and the ISR can preempt the main function at any time\n\n## Step 4: Summary of Analysis\n\n### Operations that can be executed:\n1. **Line 11 (ISR)**: `glob++` - Can always execute when ISR is triggered\n2. **Line 24 (main)**: `glob++` - Can execute when `i != 1` after the increment at line 22\n\n### Atomicity Violation Analysis:\n- The violation reported involves the pattern [Read, Write, Write] at lines [24, 11, 24]\n- This represents:\n  - Read at line 24 (part of `glob++` in main)\n  - Write at line 11 (part of `glob++` in ISR)\n  - Write at line 24 (part of `glob++` in main)\n\nSince both operations can be executed (the ISR can preempt the main function at any point, and the main function's operation can execute when `i != 1`), this atomicity violation is valid.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"glob\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [24, 11, 24]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"glob\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [24, 11, 24]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_521_001.c",
+    "total_lines": 30,
+    "analyzed_lines": 16,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 349
+  }
+}

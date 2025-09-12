@@ -1,0 +1,618 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "i",
+        "j",
+        "argc.addr",
+        "argv.addr",
+        "condI",
+        "condJ",
+        "retval",
+        "argv.addr -> argv",
+        "arg.addr:int8*",
+        "k:int32"
+      ],
+      "variable_types": {
+        "i": "unknown",
+        "j": "unknown",
+        "argc.addr": "unknown",
+        "argv.addr": "unknown",
+        "condI": "unknown",
+        "condJ": "unknown",
+        "retval": "unknown",
+        "argv.addr -> argv": "unknown",
+        "arg.addr:int8*": "unknown",
+        "k:int32": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "argc.addr",
+          "op": "store",
+          "function": "svp_simple_331_001_main",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "argv.addr -> argv",
+          "op": "store",
+          "function": "svp_simple_331_001_main",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "19"
+        },
+        {
+          "variable": "condI",
+          "op": "store",
+          "function": "svp_simple_331_001_main",
+          "line": "19"
+        },
+        {
+          "variable": "j",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "20"
+        },
+        {
+          "variable": "condJ",
+          "op": "store",
+          "function": "svp_simple_331_001_main",
+          "line": "20"
+        },
+        {
+          "variable": "condI",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "21"
+        },
+        {
+          "variable": "condJ",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "21"
+        },
+        {
+          "variable": "retval",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "24"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "k:int32",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "k:int32",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "j",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "10"
+        },
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "10"
+        },
+        {
+          "variable": "k:int32",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "k:int32",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "k:int32",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "k:int32",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "15"
+        },
+        {
+          "variable": "j",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "15"
+        },
+        {
+          "variable": "k:int32",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "k:int32",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "14"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "svp_simple_331_001_main",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "svp_simple_331_001_main",
+          "callee": "abort"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "j",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "i",
+            "type": "WRW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "i",
+          "j",
+          "argc.addr",
+          "argv.addr",
+          "condI",
+          "condJ",
+          "retval",
+          "argv.addr -> argv",
+          "arg.addr:int8*",
+          "k:int32"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "argc.addr",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_331_001_main",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "argv.addr -> argv",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_331_001_main",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "19",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "condI",
+            "line": "19",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "j",
+            "line": "20",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "condJ",
+            "line": "20",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "condI",
+            "line": "21",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "condJ",
+            "line": "21",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "retval",
+            "line": "24",
+            "function": "svp_simple_331_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_331_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "k:int32",
+            "line": "9",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "k:int32",
+            "line": "9",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "j",
+            "line": "10",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "10",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "k:int32",
+            "line": "9",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "k:int32",
+            "line": "9",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_331_001_isr_2",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "k:int32",
+            "line": "14",
+            "function": "svp_simple_331_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "k:int32",
+            "line": "14",
+            "function": "svp_simple_331_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "15",
+            "function": "svp_simple_331_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "j",
+            "line": "15",
+            "function": "svp_simple_331_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "k:int32",
+            "line": "14",
+            "function": "svp_simple_331_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "k:int32",
+            "line": "14",
+            "function": "svp_simple_331_001_isr_2"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "2": 1,
+            "3": 2,
+            "5": 3,
+            "7": 4,
+            "9": 5,
+            "11": 6,
+            "12": 7,
+            "14": 8,
+            "15": 9,
+            "16": 10,
+            "17": 11,
+            "19": 12,
+            "21": 13,
+            "22": 14,
+            "23": 15,
+            "24": 16,
+            "26": 17,
+            "28": 18,
+            "30": 19,
+            "32": 20,
+            "34": 21,
+            "35": 22,
+            "36": 23,
+            "37": 24
+          },
+          "filtered_to_original": {
+            "1": 2,
+            "2": 3,
+            "3": 5,
+            "4": 7,
+            "5": 9,
+            "6": 11,
+            "7": 12,
+            "8": 14,
+            "9": 15,
+            "10": 16,
+            "11": 17,
+            "12": 19,
+            "13": 21,
+            "14": 22,
+            "15": 23,
+            "16": 24,
+            "17": 26,
+            "18": 28,
+            "19": 30,
+            "20": 32,
+            "21": 34,
+            "22": 35,
+            "23": 36,
+            "24": 37
+          },
+          "total_original_lines": 37,
+          "total_filtered_lines": 24
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "j",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "i",
+            "type": "WRW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"j\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"i\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"j\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"i\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_331_001.c",
+      "total_lines": 38,
+      "analyzed_lines": 24,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 595
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"j\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 3.34 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n### Step 1: Check Control Conditions\n\n#### **Analysis of `svp_simple_331_001_isr_1`**\n- **Line 16 (`i = j + 1;`)**\n  - This write operation is inside a `for` loop that runs `NUM` (20) iterations.\n  - The `for` loop itself has no additional control conditions other than its bounds (`k < NUM`), which will always be satisfied for 20 iterations.\n  - There are no external conditions guarding this loop, so the write operation at line 16 will execute repeatedly during the ISR's execution.\n\n#### **Analysis of `svp_simple_331_001_isr_2`**\n- **Line 23 (`j = i + 1;`)**\n  - This write operation is also inside a `for` loop that runs `NUM` (20) iterations.\n  - Similar to `svp_simple_331_001_isr_1`, the `for` loop has no additional control conditions other than its bounds (`k < NUM`), which will always be satisfied for 20 iterations.\n  - There are no external conditions guarding this loop, so the write operation at line 23 will execute repeatedly during the ISR's execution.\n\n#### **Analysis of `svp_simple_331_001_main`**\n- **Line 30 (`int condI = i > LIMIT;`)**\n  - This read operation on `i` is executed unconditionally in the main function. It is not guarded by any control condition and will always execute.\n- **Line 32 (`int condJ = j > LIMIT;`)**\n  - This read operation on `j` is executed unconditionally in the main function. It is not guarded by any control condition and will always execute.\n- **Lines 34–35 (`if (condI || condJ) { reach_error(); abort(); }`)**\n  - These lines depend on the values of `condI` and `condJ`, which are derived from the reads on `i` and `j` at lines 30 and 32.\n  - However, these reads are guaranteed to execute because they are unconditional.\n\n---\n\n### Step 2: Pay Attention to Control Condition Changes\n- **Interrupts and Variable Updates**\n  - Both `svp_simple_331_001_isr_1` and `svp_simple_331_001_isr_2` modify `i` and `j` repeatedly in their loops.\n  - Since these ISRs have different priorities (priority 1 and priority 2), preemption can occur:\n    - `svp_simple_331_001_isr_2` (priority 2) can preempt `svp_simple_331_001_isr_1` (priority 1).\n    - This preemption introduces interleaving between the read/write operations on `i` and `j`.\n\n---\n\n### Step 3: Check Interrupt Status\n- **Interrupts in the Code**\n  - The code does not explicitly disable or enable interrupts using `disable_isr()` or `enable_isr()`.\n  - By default, both ISRs are enabled and can preempt each other based on their priorities.\n  - Therefore, all read/write operations in the ISRs are accessible and can execute concurrently.\n\n---\n\n### Step 4: Generate the Final Report\n\n#### **Summary of Analysis**\n1. **Line 16 (`i = j + 1;`)** in `svp_simple_331_001_isr_1`:\n   - This write operation is executed repeatedly in a loop and is accessible due to the absence of disabling interrupts.\n2. **Line 23 (`j = i + 1;`)** in `svp_simple_331_001_isr_2`:\n   - This write operation is executed repeatedly in a loop and is accessible due to the absence of disabling interrupts.\n3. **Line 16 (`i = j + 1;`)** in `svp_simple_331_001_isr_1` (read operation):\n   - This read operation on `j` occurs as part of the assignment and is accessible.\n4. **Line 30 (`int condI = i > LIMIT;`)** in `svp_simple_331_001_main`:\n   - This read operation on `i` is unconditional and always executed.\n5. **Line 32 (`int condJ = j > LIMIT;`)** in `svp_simple_331_001_main`:\n   - This read operation on `j` is unconditional and always executed.\n\n#### **Atomicity Violation**\n- The reported atomicity violation involving the access pattern `[\"Read\", \"Write\", \"Read\"]` on `j` at lines `[16, 23, 16]` is valid:\n  - The read operation on `j` at line 16 in `svp_simple_331_001_isr_1` can be preempted by `svp_simple_331_001_isr_2`, which writes to `j` at line 23.\n  - After preemption, control returns to `svp_simple_331_001_isr_1`, where another read operation on `j` occurs at line 16.\n  - This interleaving results in an atomicity violation.\n\n---\n\n### Final Output\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"j\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"j\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_task_2": [
+      "WRW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 3.83 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLet's analyze the code step by step to determine if the reported atomicity violation is valid.\n\n### Step 1: **Check Control Conditions**\n\n#### `svp_simple_331_001_isr_1` (Priority 1)\n- **Write Operation on `i` at Line 16**:\n  - This operation is inside a `for` loop that iterates from `k = 0` to `k < NUM`.\n  - The loop control condition is `k < NUM`, where `NUM` is defined as 20.\n  - Since `k` starts at 0 and increments by 1 each iteration, this condition will be satisfied 20 times, allowing the write operation `i = j + 1;` to execute 20 times.\n  - There are no additional conditions guarding this write operation.\n\n#### `svp_simple_331_001_isr_2` (Priority 2)\n- **Read Operation on `i` at Line 23**:\n  - This operation is also inside a `for` loop with the same control condition `k < NUM`.\n  - Similar to ISR 1, this condition will be satisfied 20 times, allowing the read operation `j = i + 1;` to execute 20 times.\n  - There are no additional conditions guarding this read operation.\n\n#### `svp_simple_331_001_main`\n- **Read Operations on `i` and `j` at Lines 30 and 32**:\n  - These operations are part of the expressions `i > LIMIT` and `j > LIMIT`.\n  - Both variables `i` and `j` are initialized to 3 and 6 respectively, which are below the `LIMIT` value of 46 (`2*NUM+6`).\n  - Without any modifications in the main function or other parts of the program, these conditions (`condI` and `condJ`) will always evaluate to `false`.\n  - Therefore, the block containing `reach_error();abort();` will never be executed because the `if` condition `(condI || condJ)` can never be true under the current initialization and without further updates to `i` or `j`.\n\n### Step 2: **Pay Attention to Control Condition Changes**\n- Both ISRs (`svp_simple_331_001_isr_1` and `svp_simple_331_001_isr_2`) modify the values of `i` and `j`. \n- In `svp_simple_331_001_isr_1`, `i` is updated to `j + 1` repeatedly. Similarly, in `svp_simple_331_001_isr_2`, `j` is updated to `i + 1` repeatedly.\n- However, since these ISRs are not explicitly enabled or disabled in the provided code snippet, we cannot guarantee their execution unless interrupts are globally enabled elsewhere in the system.\n- If these ISRs are preempting each other, they could lead to interleaved accesses to `i` and `j`.\n\n### Step 3: **Check Interrupt Status**\n- The provided code does not include explicit calls to `disable_isr()` or `enable_isr()`. Therefore, we must assume that interrupts are enabled by default, allowing both ISRs to execute and preempt each other.\n\n### Summary of Analysis\n- **Line 16 (Write to `i`)**: Can be executed multiple times due to the loop in `svp_simple_331_001_isr_1`.\n- **Line 23 (Read from `i`)**: Can be executed multiple times due to the loop in `svp_simple_331_001_isr_2`.\n- **Line 30 and 32 (Reads from `i` and `j`)**: These operations are guarded by conditions that are never satisfied based on the initial values of `i` and `j` and the absence of updates in the main function. Thus, they do not contribute to atomicity violations.\n- **Atomicity Violation**: The sequence of operations `Write(i)` → `Read(i)` → `Write(i)` can indeed occur due to the interleaving of `svp_simple_331_001_isr_1` and `svp_simple_331_001_isr_2`.\n\n### Final Report\nSince the reported atomicity violation involving `i` is valid, the defect report remains unchanged.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_331_001.c",
+    "total_lines": 38,
+    "analyzed_lines": 24,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 595
+  }
+}

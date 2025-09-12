@@ -1,0 +1,239 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "myglobal",
+        "arg.addr:int8*"
+      ],
+      "variable_types": {
+        "myglobal": "unknown",
+        "arg.addr:int8*": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_508_001_main",
+          "line": "6"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_508_001_main",
+          "line": "6"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_508_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_508_001_isr_1",
+          "line": "3"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_508_001_isr_1",
+          "line": "3"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "svp_simple_508_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_508_001_main",
+            "type": "defined"
+          }
+        ],
+        "call_graph": []
+      },
+      "Defect_Highlight": {
+        "defect_count": 1,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              12,
+              6,
+              12
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "myglobal",
+          "arg.addr:int8*"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "6",
+            "function": "svp_simple_508_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "6",
+            "function": "svp_simple_508_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_508_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "3",
+            "function": "svp_simple_508_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "3",
+            "function": "svp_simple_508_001_isr_1"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "2": 1,
+            "5": 2,
+            "6": 3,
+            "8": 4,
+            "10": 5,
+            "12": 6,
+            "14": 7,
+            "15": 8
+          },
+          "filtered_to_original": {
+            "1": 2,
+            "2": 5,
+            "3": 6,
+            "4": 8,
+            "5": 10,
+            "6": 12,
+            "7": 14,
+            "8": 15
+          },
+          "total_original_lines": 15,
+          "total_filtered_lines": 8
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "svp_simple_508_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_508_001_main",
+            "type": "defined"
+          }
+        ],
+        "call_graph": []
+      },
+      "Defect_Highlight": {
+        "defect_count": 1,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              12,
+              6,
+              12
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_508_001.c",
+      "total_lines": 15,
+      "analyzed_lines": 8,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 182
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [12, 6, 12]\n        }\n    ]\n}\n\n[System] Expert first round completed in 2.78 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nStep 1: Check Control Conditions\nFor the read/write operations mentioned in the initial defect report:\n\n1. Line 12 (main function): `myglobal=myglobal+1;`\n   - This operation is not guarded by any control conditions.\n   - It can be executed as it's directly in the main function body.\n\n2. Line 6 (ISR): `myglobal=myglobal+1;`\n   - This operation is not guarded by any control conditions within the ISR.\n   - It can be executed when the interrupt is triggered and the ISR is called.\n\nStep 2: Pay Attention to Control Condition Changes\nThere are no control conditions that change in this code snippet.\n\nStep 3: Check Interrupt Status\nThere are no explicit interrupt enable/disable operations in the provided code. We don't have information about the interrupt status or when the ISR might be triggered.\n\nStep 4: Generate the Final Report\nBased on the analysis:\n- The read and write operations in the main function (line 12) can be executed.\n- The write operation in the ISR (line 6) can be executed when the interrupt is triggered.\n- We don't have information about interrupt status or when the ISR might be triggered, so we assume it could potentially interrupt the main function at any point.\n\nGiven this analysis, the reported atomicity violation remains valid. The final report is:\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [12, 6, 12]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_508_001.c",
+    "total_lines": 15,
+    "analyzed_lines": 8,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 182
+  }
+}

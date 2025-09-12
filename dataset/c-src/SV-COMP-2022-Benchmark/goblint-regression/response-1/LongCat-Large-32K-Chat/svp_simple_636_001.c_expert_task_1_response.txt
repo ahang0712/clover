@@ -1,0 +1,61 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [26, 20, 30]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 2.71 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Operation 1: Write `g = 1;` at Line 26
+- **Control Conditions**: None
+- **Execution**: This line is directly executed in the main function without any conditional guards.
+- **Conclusion**: Always executed.
+
+#### Operation 2: Write `g = 3;` at Line 20
+- **Control Conditions**: `if (g == 1)`
+  - **Variable Value Tracking**:
+    - `g` is initialized to 0.
+    - At line 26, `g` is set to 1.
+    - At line 28, `g` is set to 2 before the ISR could potentially modify it.
+  - **Execution Path Analysis**:
+    - By the time ISR `svp_simple_636_001_isr_1` executes, `g` has already been set to 2 by line 28 in `svp_simple_636_001_main`.
+    - Thus, the condition `g == 1` is never true when the ISR runs.
+- **Conclusion**: Never executed.
+
+#### Operation 3: Read `g` at Line 30
+- **Control Conditions**: Within `__VERIFIER_assert(g == 2)`
+  - **Variable Value Tracking**:
+    - As established, `g` is set to 2 before reaching this assertion.
+  - **Execution Path Analysis**:
+    - The assertion checks if `g` equals 2, which is true given the sequence of assignments.
+- **Conclusion**: Always executed.
+
+### Step 2 & 3: Interrupt Status and Control Condition Changes
+- No interrupts are disabled or enabled that affect the control flow related to `g` in a manner that would alter the conclusions drawn from Step 1.
+
+### Summary
+- The write operation at line 20 (`g = 3`) is never executed because the condition `g == 1` is never satisfied due to the sequence of operations in the main function.
+- Therefore, the atomicity violation reported involving lines 26, 20, and 30 is invalid.
+
+### Final Report
+```plaintext
+No defects.
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```plaintext
+No defects.
+```
+
+
+Elapsed Time: 30.462653875350952 seconds

@@ -1,0 +1,505 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "g",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[0]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[9999]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[TRIGGER]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1000]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i[0,9999]]",
+        ".str",
+        ".str[0]",
+        ".str[1]",
+        ".str[7]",
+        "cond.addr",
+        "argc.addr",
+        "argv.addr",
+        "argv.addr -> argv",
+        "ptr.addr:int8*"
+      ],
+      "variable_types": {
+        "g": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[0]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[9999]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[TRIGGER]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1000]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i[0,9999]]": "unknown",
+        ".str": "unknown",
+        ".str[0]": "unknown",
+        ".str[1]": "unknown",
+        ".str[7]": "unknown",
+        "cond.addr": "unknown",
+        "argc.addr": "unknown",
+        "argv.addr": "unknown",
+        "argv.addr -> argv": "unknown",
+        "ptr.addr:int8*": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "argc.addr",
+          "op": "store",
+          "function": "svp_simple_640_001_main",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "argv.addr -> argv",
+          "op": "store",
+          "function": "svp_simple_640_001_main",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "ptr.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_1",
+          "line": "8"
+        },
+        {
+          "variable": "ptr.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_2",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_640_001_isr_2",
+          "line": "11"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_640_001_isr_2",
+          "line": "12"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_640_001_isr_1",
+          "callee": "printf"
+        },
+        {
+          "caller": "svp_simple_640_001_isr_2",
+          "callee": "__VERIFIER_assert"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_1",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_2",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              9,
+              15,
+              10
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              15,
+              9
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "g",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[0]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[9999]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[TRIGGER]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[1000]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[var[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c:.str[i[0,9999]]",
+          ".str",
+          ".str[0]",
+          ".str[1]",
+          ".str[7]",
+          "cond.addr",
+          "argc.addr",
+          "argv.addr",
+          "argv.addr -> argv",
+          "ptr.addr:int8*"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "argc.addr",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_main",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "argv.addr -> argv",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_main",
+            "warning": "Line 0 could not be mapped"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "ptr.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "6",
+            "function": "svp_simple_640_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "7",
+            "function": "svp_simple_640_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "8",
+            "function": "svp_simple_640_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "ptr.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_640_001_isr_2",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "11",
+            "function": "svp_simple_640_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "12",
+            "function": "svp_simple_640_001_isr_2"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "5": 4,
+            "7": 5,
+            "8": 6,
+            "9": 7,
+            "10": 8,
+            "11": 9,
+            "13": 10,
+            "14": 11,
+            "15": 12,
+            "16": 13,
+            "18": 14,
+            "19": 15,
+            "21": 16,
+            "23": 17,
+            "24": 18
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 5,
+            "5": 7,
+            "6": 8,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 13,
+            "11": 14,
+            "12": 15,
+            "13": 16,
+            "14": 18,
+            "15": 19,
+            "16": 21,
+            "17": 23,
+            "18": 24
+          },
+          "total_original_lines": 24,
+          "total_filtered_lines": 18
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_640_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_1",
+            "callee": "printf"
+          },
+          {
+            "caller": "svp_simple_640_001_isr_2",
+            "callee": "__VERIFIER_assert"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              9,
+              15,
+              10
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              15,
+              9
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c",
+      "total_lines": 24,
+      "analyzed_lines": 18,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 437
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [9, 15, 10]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 1.35 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [9, 15, 10]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ],
+    "expert_task_2": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [8, 15, 9]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 1.19 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [8, 15, 9]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_640_001.c",
+    "total_lines": 24,
+    "analyzed_lines": 18,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 437
+  }
+}

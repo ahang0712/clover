@@ -1,0 +1,104 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "g_config",
+        "g_state"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 8
+    },
+    {
+      "sharedVariables": [
+        "g_buffer",
+        "g_flags",
+        "g_mode"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 6
+    },
+    {
+      "sharedVariables": [
+        "g_data",
+        "g_status"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 7
+    },
+    {
+      "sharedVariables": [
+        "g_cache",
+        "g_counter",
+        "g_index"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 5
+    },
+    {
+      "sharedVariables": [
+        "g_lock",
+        "g_value"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 6
+    },
+    {
+      "sharedVariables": [
+        "g_ptr",
+        "g_size",
+        "g_timeout"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 4
+    },
+    {
+      "sharedVariables": [
+        "g_ctx",
+        "g_result"
+      ],
+      "accessPattern": [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "defect_count": 5
+    },
+    {
+      "sharedVariables": [
+        "g_handle",
+        "g_error",
+        "g_temp"
+      ],
+      "accessPattern": [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "defect_count": 3
+    }
+  ]
+}

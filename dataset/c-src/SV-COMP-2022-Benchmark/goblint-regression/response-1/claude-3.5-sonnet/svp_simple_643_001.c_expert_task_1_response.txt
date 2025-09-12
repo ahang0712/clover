@@ -1,0 +1,70 @@
+[Expert R1] (Detect atomicity violations in the code.)
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [28, 63, 29]
+        }
+    ]
+}
+
+[System] Expert first round completed in 3.55 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Step 1: Check Control Conditions
+
+For each read/write operation mentioned in the initial defect report:
+
+1. g read on line 28:
+   - Control condition: if (g < 1000) on line 26
+   - This condition can be satisfied as g is initialized to 0 in pqueue_init() and can be incremented in pqueue_put()
+   - The read operation is executed when evaluating the condition
+
+2. g write on line 63:
+   - Control conditions: 
+     a) if (g > 0) on line 61
+     b) __VERIFIER_assert(g == 0) on line 58
+     c) __VERIFIER_assert(g != 0) on line 60
+   - Conditions b and c contradict each other, making it impossible for the code to reach line 63
+   - The write operation cannot be executed
+
+3. g write on line 29:
+   - Control condition: if (g < 1000) on line 26
+   - This condition can be satisfied as g is initialized to 0 in pqueue_init() and can be incremented in pqueue_put()
+   - The write operation can be executed when the condition is true
+
+Step 2: Pay Attention to Control Condition Changes
+- There are no apparent changes to control conditions by interrupts in this code.
+
+Step 3: Check Interrupt Status
+- There are no explicit interrupt enable/disable operations in the provided code.
+
+Step 4: Generate the Final Report
+
+Summary of analysis:
+- The read operation on line 28 can be executed.
+- The write operation on line 63 cannot be executed due to contradictory assertions.
+- The write operation on line 29 can be executed.
+
+Based on this analysis, we need to remove the write operation on line 63 from the reported atomicity violation.
+
+Final Report:
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write"],
+            "lines": ["28", "29"]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 48.55770802497864 seconds

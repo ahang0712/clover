@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "total_tasks": 1,
+    "total_parallel_time": 17.376961708068848,
+    "average_conversation_time": 17.235207080841064,
+    "max_conversation_time": 17.235207080841064,
+    "min_conversation_time": 17.235207080841064,
+    "parallel_efficiency": 0.9977075403211337
+  },
+  "task_details": [
+    {
+      "task_id": "expert_judge_task_1",
+      "defect_mode": "RWW",
+      "variables": [
+        "myglobal"
+      ],
+      "timing": {
+        "prepare_time": 1756287982.5834172,
+        "real_start_time": 1756287982.684554,
+        "end_time": 1756287999.959363,
+        "prepare_wait_duration": 0.10113692283630371,
+        "conversation_duration": 17.235207080841064,
+        "total_task_duration": 17.274808883666992
+      }
+    }
+  ],
+  "timestamps": {
+    "parallel_start": 1756287982.5827992,
+    "actual_parallel_start": 1756287982.684554,
+    "actual_parallel_end": 1756287999.959363
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "glob"
+    ],
+    "variable_types": {
+      "glob": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "glob",
+        "op": "load",
+        "function": "svp_simple_506_001_isr_1",
+        "line": "17"
+      },
+      {
+        "variable": "glob",
+        "op": "load",
+        "function": "svp_simple_506_001_isr_1",
+        "line": "18"
+      },
+      {
+        "variable": "glob",
+        "op": "store",
+        "function": "svp_simple_506_001_isr_1",
+        "line": "18"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "f",
+        "callee": "exit"
+      },
+      {
+        "caller": "svp_simple_506_001_main",
+        "callee": "f"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "f",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_506_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_506_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "exit",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "f",
+          "callee": "exit"
+        },
+        {
+          "caller": "svp_simple_506_001_main",
+          "callee": "f"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 4,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            10,
+            18,
+            10
+          ],
+          "sharedVariable": "glob",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            9,
+            18,
+            10
+          ],
+          "sharedVariable": "glob",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Read",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            10,
+            17,
+            30
+          ],
+          "sharedVariable": "glob",
+          "type": "WRW"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Read",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            10,
+            18,
+            30
+          ],
+          "sharedVariable": "glob",
+          "type": "WRW"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "glob"
+      ],
+      "MAIN_INFO": [],
+      "ISR_INFO": [
+        {
+          "operation": "load",
+          "variable": "glob",
+          "line": "17",
+          "function": "svp_simple_506_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "glob",
+          "line": "18",
+          "function": "svp_simple_506_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "glob",
+          "line": "18",
+          "function": "svp_simple_506_001_isr_1"
+        }
+      ]
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "f",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_506_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_506_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "exit",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "f",
+          "callee": "exit"
+        },
+        {
+          "caller": "svp_simple_506_001_main",
+          "callee": "f"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 4,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            10,
+            18,
+            10
+          ],
+          "sharedVariable": "glob",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            9,
+            18,
+            10
+          ],
+          "sharedVariable": "glob",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Read",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            10,
+            17,
+            30
+          ],
+          "sharedVariable": "glob",
+          "type": "WRW"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Read",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            10,
+            18,
+            30
+          ],
+          "sharedVariable": "glob",
+          "type": "WRW"
+        }
+      ]
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"glob\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_506_001.c",
+    "total_lines": 32,
+    "analyzed_lines": 32,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 326
+  }
+}

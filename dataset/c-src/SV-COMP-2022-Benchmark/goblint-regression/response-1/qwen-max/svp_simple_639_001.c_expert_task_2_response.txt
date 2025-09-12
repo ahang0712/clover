@@ -1,0 +1,101 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [13, 19, 14]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 3.22 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### **Analysis of ISR `svp_simple_639_001_isr_1`**
+- **Line 11 (`g = 1;`)**:
+  - This is a write operation to the global variable `g`.
+  - It is not guarded by any control condition. Therefore, this operation can always be executed when `svp_simple_639_001_isr_1` is triggered.
+
+- **Line 13 (`__VERIFIER_assert(g == 1);`)**:
+  - This involves a read operation on `g` as part of the assertion condition.
+  - The assertion itself does not have any control conditions guarding it. It will always execute when `svp_simple_639_001_isr_1` is triggered.
+
+- **Line 14 (`printf("g is %i", g);`)**:
+  - This involves a read operation on `g` to pass its value to the `printf` function.
+  - Like the previous operations, this is not guarded by any control condition and will always execute when `svp_simple_639_001_isr_1` is triggered.
+
+- **Line 15 (`g = 0;`)**:
+  - This is another write operation to `g`.
+  - It is also unguarded and will always execute when `svp_simple_639_001_isr_1` is triggered.
+
+#### **Analysis of ISR `svp_simple_639_001_isr_2`**
+- **Line 19 (`g = 0;`)**:
+  - This is a write operation to `g`.
+  - It is not guarded by any control condition and will always execute when `svp_simple_639_001_isr_2` is triggered.
+
+#### **Analysis of Main Function `svp_simple_639_001_main`**
+- **Line 26 (`sleep(1);`)**:
+  - This line does not involve any access to the shared variable `g`. Therefore, it is irrelevant to the atomicity violation analysis.
+
+---
+
+### Step 2: Pay Attention to Control Condition Changes
+- There are no variables or conditions in the code that could dynamically change the truth value of control conditions. All accesses to `g` are unconditional and will execute whenever their respective ISRs are triggered.
+
+---
+
+### Step 3: Check Interrupt Status
+- The code does not contain any calls to `disable_isr()` or `enable_isr()`. Therefore, we assume that interrupts for both `svp_simple_639_001_isr_1` and `svp_simple_639_001_isr_2` are enabled throughout the program execution.
+- As a result, both ISRs can preempt each other or the main function at any time.
+
+---
+
+### Step 4: Generate the Final Report
+
+#### Summary of Analysis
+- **Line 13 (`__VERIFIER_assert(g == 1);`)**:
+  - This is a read operation on `g`. It will always execute when `svp_simple_639_001_isr_1` is triggered.
+- **Line 19 (`g = 0;`)**:
+  - This is a write operation on `g`. It will always execute when `svp_simple_639_001_isr_2` is triggered.
+- **Line 14 (`printf("g is %i", g);`)**:
+  - This is a read operation on `g`. It will always execute when `svp_simple_639_001_isr_1` is triggered.
+
+The reported atomicity violation involves the following sequence:
+1. A read operation on `g` (Line 13).
+2. A write operation on `g` (Line 19).
+3. Another read operation on `g` (Line 14).
+
+Since all these operations can be executed under normal interrupt conditions, the reported atomicity violation is valid.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [13, 19, 14]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [13, 19, 14]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 118.1609148979187 seconds

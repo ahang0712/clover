@@ -1,0 +1,135 @@
+[Expert R1] (Detect atomicity violations in the code.)
+Looking at the code, I need to analyze the global variable `g` for atomicity violations following the <Write, Read, Write> pattern.
+
+Let me trace through the operations on variable `g`:
+
+**Main function (svp_simple_636_001_main) - Priority 0:**
+- Line 26: `g = 1;` (Write operation)
+- Line 28: `g = 2;` (Write operation)
+- Line 30: `__VERIFIER_assert(g == 2);` (Read operation)
+
+**ISR (svp_simple_636_001_isr_1) - Higher priority:**
+- Line 19: `if (g == 1)` (Read operation)
+- Line 20: `g = 3;` (Write operation)
+
+Now I need to check for the <Write, Read, Write> pattern where:
+- a1: Write operation by lower-priority task (main)
+- a2: Read operation by higher-priority task (ISR)
+- a3: Write operation by the same lower-priority task (main)
+
+Analyzing the sequence:
+1. Main function writes `g = 1` at line 26
+2. Before main can execute line 28 (`g = 2`), the ISR can preempt
+3. ISR reads `g` at line 19 (checking if `g == 1`)
+4. Main function continues and writes `g = 2` at line 28
+
+This matches the <Write, Read, Write> pattern:
+- a1: Line 26 (Write by main)
+- a2: Line 19 (Read by ISR)
+- a3: Line 28 (Write by main)
+
+The two write operations (lines 26 and 28) are consecutive operations in the main function, and the ISR can preempt between them to read the intermediate value.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [26, 19, 28]
+        }
+    ]
+}
+```
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Looking at the code, I need to analyze the global variable `g` for atomicity violations.
+
+**Step 1: Check Control Conditions**
+
+Main function operations:
+- Line 26: `g = 1;` (Write operation) - unconditional
+- Line 28: `g = 2;` (Write operation) - unconditional  
+- Line 30: `__VERIFIER_assert(g == 2);` (Read operation) - unconditional
+
+ISR operations:
+- Line 19: `if (g == 1)` (Read operation) - unconditional read
+- Line 20: `g = 3;` (Write operation) - conditional on `g == 1`
+
+**Step 2: Pay Attention to Control Condition Changes**
+
+The main function sets `g = 1` at line 26, which makes the condition `g == 1` in the ISR true. This means the write operation at line 20 can be executed.
+
+**Step 3: Check Interrupt Status**
+
+No disable_isr() or enable_isr() calls are present in the code, so interrupts are enabled throughout execution and the ISR can preempt the main function.
+
+**Step 4: Analyze Access Patterns**
+
+The sequence can be:
+1. Main function writes `g = 1` (line 26)
+2. ISR preempts and reads `g` (line 19, condition `g == 1` is true)
+3. ISR writes `g = 3` (line 20, since condition was true)
+4. Main function continues and writes `g = 2` (line 28)
+
+This creates a Write-Read-Write pattern: [26, 19, 28]
+
+However, there's also another valid Write-Read-Write pattern:
+1. Main function writes `g = 1` (line 26)  
+2. ISR preempts and reads `g` (line 19)
+3. Main function continues and writes `g = 2` (line 28)
+
+This gives us the pattern: [26, 19, 28]
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [26, 19, 28]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Looking at the code, I need to analyze the global variable `g` for atomicity violations following the <Write, Read, Write> pattern.
+
+**Operations on variable `g`:**
+
+**Main function (svp_simple_636_001_main) - Lower priority:**
+- Line 26: `g = 1;` (Write operation)
+- Line 28: `g = 2;` (Write operation)
+- Line 30: `__VERIFIER_assert(g == 2);` (Read operation)
+
+**ISR (svp_simple_636_001_isr_1) - Higher priority:**
+- Line 19: `if (g == 1)` (Read operation)
+- Line 20: `g = 3;` (Write operation - conditional)
+
+**Analysis for <Write, Read, Write> pattern:**
+
+The sequence can occur as follows:
+1. Main function writes `g = 1` at line 26 (a1: Write by lower-priority task)
+2. Before main executes line 28, ISR preempts and reads `g` at line 19 (a2: Read by higher-priority task)
+3. Main function continues and writes `g = 2` at line 28 (a3: Write by same lower-priority task)
+
+This matches the <Write, Read, Write> pattern where:
+- The two write operations (lines 26 and 28) are consecutive in the main function
+- The ISR can preempt between them to read the intermediate value
+- The read operation observes the intermediate state that should not be visible
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [26, 19, 28]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 88.86244511604309 seconds

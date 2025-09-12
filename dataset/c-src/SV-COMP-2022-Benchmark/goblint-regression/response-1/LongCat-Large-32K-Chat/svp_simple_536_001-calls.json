@@ -1,0 +1,26 @@
+{
+  "functions": [
+    {
+      "name": "svp_simple_536_001_isr_1",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_536_001_main",
+      "type": "defined"
+    },
+    {
+      "name": "printf",
+      "type": "external"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "svp_simple_536_001_isr_1",
+      "callee": "printf"
+    },
+    {
+      "caller": "svp_simple_536_001_main",
+      "callee": "printf"
+    }
+  ]
+}

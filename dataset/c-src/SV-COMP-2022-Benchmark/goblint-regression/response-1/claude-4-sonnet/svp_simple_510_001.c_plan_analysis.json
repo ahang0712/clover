@@ -1,0 +1,162 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "myglobal"
+    ],
+    "variable_types": {
+      "myglobal": "unknown"
+    },
+    "callgraph": [
+      {
+        "caller": "svp_simple_510_001_isr_1",
+        "callee": "munge"
+      },
+      {
+        "caller": "svp_simple_510_001_main",
+        "callee": "munge"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "munge",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_510_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_510_001_main",
+          "type": "defined"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "svp_simple_510_001_isr_1",
+          "callee": "munge"
+        },
+        {
+          "caller": "svp_simple_510_001_main",
+          "callee": "munge"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 1,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            8,
+            8,
+            8
+          ],
+          "sharedVariable": "myglobal",
+          "type": "RWW"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 0,
+      "GLOBAL_VAR": [
+        "myglobal"
+      ],
+      "MAIN_INFO": [],
+      "ISR_INFO": []
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "munge",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_510_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_510_001_main",
+          "type": "defined"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "svp_simple_510_001_isr_1",
+          "callee": "munge"
+        },
+        {
+          "caller": "svp_simple_510_001_main",
+          "callee": "munge"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 1,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            8,
+            8,
+            8
+          ],
+          "sharedVariable": "myglobal",
+          "type": "RWW"
+        }
+      ]
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_510_001.c",
+    "total_lines": 23,
+    "analyzed_lines": 23,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 193
+  }
+}

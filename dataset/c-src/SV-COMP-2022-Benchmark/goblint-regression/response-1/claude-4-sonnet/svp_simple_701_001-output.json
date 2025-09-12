@@ -1,0 +1,66 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "g",
+    "h",
+    "i"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "37",
+      "function": "svp_simple_701_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "38",
+      "function": "svp_simple_701_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "h",
+      "line": "39",
+      "function": "svp_simple_701_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "h",
+      "line": "41",
+      "function": "svp_simple_701_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "43",
+      "function": "svp_simple_701_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "19",
+      "function": "svp_simple_701_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "h",
+      "line": "20",
+      "function": "svp_simple_701_001_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "i",
+      "line": "25",
+      "function": "svp_simple_701_001_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "i",
+      "line": "26",
+      "function": "svp_simple_701_001_isr_1"
+    }
+  ]
+}

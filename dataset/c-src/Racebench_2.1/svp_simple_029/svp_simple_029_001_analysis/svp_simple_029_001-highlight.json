@@ -1,0 +1,34 @@
+{
+  "defect_count" : 1,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][expr",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        65,
+        68,
+        68
+      ],
+      "sharedVariable" : "svp_simple_029_001_tm_blocks",
+      "type" : "RWW"
+    }
+  ]
+}

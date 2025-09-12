@@ -1,0 +1,5 @@
+digraph "CFG for 'svp_simple_009_001_main' function" {
+	label="CFG for 'svp_simple_009_001_main' function";
+
+	Node0x7fe2d6012770 [shape=record,label="{%0:\l  call void @req1(), !dbg !37\l  call void @req2(), !dbg !38\l  ret i32 0, !dbg !39\l}"];
+}

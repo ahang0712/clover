@@ -1,0 +1,15 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "myglobal"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 1
+    }
+  ]
+}

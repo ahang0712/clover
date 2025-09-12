@@ -1,0 +1,87 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "glob",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [24, 11, 24]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 2.99 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Let me analyze each read/write operation for the global variable `glob`.
+
+## Step 1: Check Control Conditions
+
+### Operation at line 11 (in svp_simple_521_001_isr_1):
+- This is `glob++` which involves both read and write operations
+- This operation is in an interrupt handler (ISR)
+- No control conditions guard this operation - it will execute whenever the ISR is triggered
+
+### Operation at line 24 (in svp_simple_521_001_main):
+- This is `glob++` which involves both read and write operations
+- This operation is guarded by the condition `if (i-1)` at line 23
+- **Variable Value Tracking**:
+  - `i` is initialized at line 16: `int i = __VERIFIER_nondet_int();`
+  - `i` is incremented at line 22: `i++`
+  - The condition `i-1` evaluates to true when `i != 1`
+  - Since `__VERIFIER_nondet_int()` can return any integer value, `i` can have any value after initialization
+  - After `i++`, `i` can be any integer except the original value
+  - Therefore, `i-1` can be true (when `i != 1`) or false (when `i == 1`)
+  - The operation at line 24 can be executed when `i != 1`
+
+## Step 2: Check Control Condition Changes
+- There are no operations in the ISR that modify variables used in the main function's control conditions
+- The ISR only modifies `glob`, which is not used in any control conditions
+
+## Step 3: Check Interrupt Status
+- The code does not contain any `disable_isr()` or `enable_isr()` calls
+- Therefore, interrupts are always enabled and the ISR can preempt the main function at any time
+
+## Step 4: Summary of Analysis
+
+### Operations that can be executed:
+1. **Line 11 (ISR)**: `glob++` - Can always execute when ISR is triggered
+2. **Line 24 (main)**: `glob++` - Can execute when `i != 1` after the increment at line 22
+
+### Atomicity Violation Analysis:
+- The violation reported involves the pattern [Read, Write, Write] at lines [24, 11, 24]
+- This represents:
+  - Read at line 24 (part of `glob++` in main)
+  - Write at line 11 (part of `glob++` in ISR)
+  - Write at line 24 (part of `glob++` in main)
+
+Since both operations can be executed (the ISR can preempt the main function at any point, and the main function's operation can execute when `i != 1`), this atomicity violation is valid.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "glob",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [24, 11, 24]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "glob",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [24, 11, 24]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 39.30314803123474 seconds

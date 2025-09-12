@@ -1,0 +1,34 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "g"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "20",
+      "function": "svp_simple_697_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "22",
+      "function": "svp_simple_697_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "23",
+      "function": "svp_simple_697_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "12",
+      "function": "svp_simple_697_001_isr_1"
+    }
+  ]
+}

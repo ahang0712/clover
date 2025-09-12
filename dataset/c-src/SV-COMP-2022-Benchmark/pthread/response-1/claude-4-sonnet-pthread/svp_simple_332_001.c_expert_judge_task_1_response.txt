@@ -1,0 +1,133 @@
+[Expert R1] (Detect atomicity violations in the code.)
+Looking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Read, Write, Read> pattern.
+
+Let me trace through the operations:
+
+**Global variable operations:**
+- Line 14: `i = j + 1;` - Read operation on `j`, Write operation on `i`
+- Line 20: `j = i + 1;` - Read operation on `i`, Write operation on `j`  
+- Line 26: `int condI = i >= LIMIT;` - Read operation on `i`
+- Line 28: `int condJ = j >= LIMIT;` - Read operation on `j`
+
+**Priority levels:**
+- Main function: lowest priority
+- ISR1: priority 1
+- ISR2: priority 2 (highest)
+
+**Analysis for variable `j`:**
+
+The candidate defect suggests a pattern at lines 14, 20, 14. Let me analyze this:
+
+1. **First Read (line 14)**: In ISR1, `j` is read in the expression `i = j + 1;`
+2. **Write (line 20)**: In ISR2, `j` is written in the expression `j = i + 1;`
+3. **Second Read (line 14)**: In ISR1, `j` is read again in a subsequent loop iteration
+
+Since ISR1 runs in a loop (`for (int k = 0; k < NUM; k++)`), the read operation on `j` at line 14 occurs multiple times. Between iterations of ISR1's loop, the higher priority ISR2 can preempt and modify `j` at line 20.
+
+The atomicity violation occurs when:
+- ISR1 reads `j` in one loop iteration (line 14)
+- ISR2 preempts and writes to `j` (line 20) 
+- ISR1 continues and reads `j` in the next loop iteration (line 14)
+
+This creates a <Read, Write, Read> pattern where ISR1 expects `j` to have the same value across loop iterations, but ISR2 modifies it.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [14, 20, 14]
+        }
+    ]
+}
+```
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Looking at the code, I need to analyze the accessibility of the read/write operations for variable `j`.
+
+**Step 1: Check Control Conditions**
+
+For the reported violation pattern [14, 20, 14]:
+
+- **Line 14 (First Read)**: `i = j + 1;` in ISR1
+  - This is inside a for loop: `for (int k = 0; k < NUM; k++)`
+  - Since `NUM = 20`, the condition `k < 20` will be true for iterations k=0 through k=19
+  - This read operation is accessible
+
+- **Line 20 (Write)**: `j = i + 1;` in ISR2  
+  - This is inside a for loop: `for (int k = 0; k < NUM; k++)`
+  - Since `NUM = 20`, the condition `k < 20` will be true for iterations k=0 through k=19
+  - This write operation is accessible
+
+- **Line 14 (Second Read)**: Same as first read, occurs in subsequent loop iterations
+  - This read operation is accessible
+
+**Step 2: Check Control Condition Changes**
+- No interrupt handlers modify the loop control variables or NUM constant
+- The loop conditions remain valid throughout execution
+
+**Step 3: Check Interrupt Status**
+- No disable_isr() or enable_isr() calls are present in the code
+- All interrupts are enabled by default
+- ISR2 (priority 2) can preempt ISR1 (priority 1)
+- Both ISRs can preempt the main function
+
+**Step 4: Verify Atomicity Violation**
+The violation is valid because:
+1. ISR1 reads `j` in one loop iteration (line 14)
+2. ISR2 can preempt and write to `j` (line 20) 
+3. ISR1 continues and reads `j` in the next loop iteration (line 14)
+
+All operations are accessible and the atomicity violation can occur.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [14, 20, 14]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Looking at the code, I need to analyze the global variable `j` for atomicity violations following the <Read, Write, Read> pattern.
+
+**Global variable operations on `j`:**
+- Line 14: `i = j + 1;` - Read operation on `j` (in ISR1, priority 1)
+- Line 20: `j = i + 1;` - Write operation on `j` (in ISR2, priority 2)  
+- Line 28: `int condJ = j >= LIMIT;` - Read operation on `j` (in main function)
+
+**Priority levels:**
+- Main function: lowest priority
+- ISR1: priority 1
+- ISR2: priority 2 (highest)
+
+**Analysis for variable `j`:**
+
+Since ISR1 runs in a loop (`for (int k = 0; k < NUM; k++)` where `NUM = 20`), the read operation on `j` at line 14 occurs multiple times across loop iterations. Between these iterations, the higher priority ISR2 can preempt ISR1 and modify `j` at line 20.
+
+The atomicity violation occurs when:
+1. ISR1 reads `j` in one loop iteration (line 14)
+2. ISR2 preempts and writes to `j` (line 20)
+3. ISR1 continues and reads `j` in the next loop iteration (line 14)
+
+This creates a <Read, Write, Read> pattern where ISR1 expects `j` to have consistent values across consecutive loop iterations, but ISR2 modifies it between reads.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [14, 20, 14]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 40.0910370349884 seconds

@@ -1,0 +1,162 @@
+[Expert R1] (Detect atomicity violations in the code.)
+Looking at the code, I need to analyze the atomicity violation pattern <Write, Write, Read> for the global variable `num`.
+
+Let me trace through the execution:
+
+1. **Main function** (lowest priority):
+   - Line 31: `num = 1` (Write operation - a1)
+   - Line 33: `if (num!=1)` (Read operation - a3)
+
+2. **ISR1** (priority 1):
+   - Line 12: `num=tmp` (Write operation - potential a2)
+
+3. **ISR2** (priority 2):
+   - Line 22: `num=tmp` (Write operation - potential a2)
+
+Now I'll check the candidate defects:
+
+**Defect 1: Lines 31, 22, 33**
+- a1 (line 31): Main writes `num = 1`
+- a2 (line 22): ISR2 writes `num = tmp` where `tmp = num-1`
+- a3 (line 33): Main reads `num` in condition `if (num!=1)`
+
+For ISR2 to execute line 22, it must enter the while loop at line 20: `while (num == 0)`. But after main sets `num = 1` at line 31, `num` is not 0, so ISR2's while loop condition `num == 0` is false and the loop body (including line 22) won't execute.
+
+**Defect 2: Lines 31, 12, 33**
+- a1 (line 31): Main writes `num = 1`
+- a2 (line 12): ISR1 writes `num = tmp` where `tmp = num-1`
+- a3 (line 33): Main reads `num` in condition `if (num!=1)`
+
+For ISR1 to execute line 12, it must enter the while loop at line 10: `while (num > 0)`. After main sets `num = 1` at line 31, the condition `num > 0` is true (since 1 > 0), so ISR1 can enter the loop and execute line 12, writing `num = 0` (since `tmp = num-1 = 1-1 = 0`).
+
+This creates a valid atomicity violation:
+1. Main writes `num = 1` (expecting to read it back as 1)
+2. ISR1 preempts and writes `num = 0`
+3. Main reads `num` and gets 0 instead of the expected 1
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Looking at this code, I need to analyze each read/write operation mentioned in the defect report to determine if they can actually be executed.
+
+## Step 1: Check Control Conditions
+
+Let me analyze each operation:
+
+**Main function operations:**
+- Line 31: `num = 1` (Write) - No control conditions, always executed
+- Line 33: `if (num!=1)` (Read) - No control conditions, always executed
+
+**ISR1 operations:**
+- Line 10: `while (num > 0)` (Read) - No control conditions guarding this read
+- Line 11: `int tmp = num-1` (Read) - Guarded by `while (num > 0)` condition
+- Line 12: `num=tmp` (Write) - Guarded by `while (num > 0)` condition
+
+For ISR1's guarded operations to execute:
+- The condition `num > 0` must be true
+- After main sets `num = 1` at line 31, we have `num = 1 > 0`, so the condition is satisfied
+- ISR1 can enter the loop and execute lines 11 and 12
+
+**ISR2 operations:**
+- Line 20: `while (num == 0)` (Read) - No control conditions guarding this read
+- Line 21: `int tmp = num-1` (Read) - Guarded by `while (num == 0)` condition  
+- Line 22: `num=tmp` (Write) - Guarded by `while (num == 0)` condition
+
+For ISR2's guarded operations to execute:
+- The condition `num == 0` must be true
+- After main sets `num = 1` at line 31, we have `num = 1`, so `num == 0` is false
+- ISR2 cannot enter the loop, so lines 21 and 22 cannot be executed
+
+## Step 2: Check Control Condition Changes
+
+ISR1 can modify `num` from 1 to 0, but this doesn't help ISR2 because:
+- ISR2 has higher priority (2) than ISR1 (priority 1)
+- If ISR2 could preempt, it would do so before ISR1 changes `num`
+- When `num = 1`, ISR2's condition `num == 0` is false, so ISR2 won't execute
+
+## Step 3: Check Interrupt Status
+
+No explicit interrupt enable/disable calls are present, so all interrupts are assumed enabled.
+
+## Step 4: Analysis Summary
+
+**Operations that can be executed:**
+- Line 31 (main): `num = 1` - Always executed
+- Line 33 (main): Read in `if (num!=1)` - Always executed  
+- Line 10 (ISR1): Read in `while (num > 0)` - Always executed
+- Line 11 (ISR1): `int tmp = num-1` - Can be executed when `num > 0` (true after line 31)
+- Line 12 (ISR1): `num=tmp` - Can be executed when `num > 0` (true after line 31)
+- Line 20 (ISR2): Read in `while (num == 0)` - Always executed
+
+**Operations that cannot be executed:**
+- Line 21 (ISR2): `int tmp = num-1` - Cannot be executed because `num == 0` is false after main sets `num = 1`
+- Line 22 (ISR2): `num=tmp` - Cannot be executed because `num == 0` is false after main sets `num = 1`
+
+Therefore, any atomicity violation involving line 22 (ISR2 write) should be removed, but the violation involving line 12 (ISR1 write) is valid.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33],
+            "triggerCount": "1"
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Looking at the code, I need to analyze the atomicity violation pattern <Write, Write, Read> for the global variable `num`.
+
+Let me trace through the execution:
+
+**Main function** (lowest priority):
+- Line 31: `num = 1` (Write operation - a1)
+- Line 33: `if (num!=1)` (Read operation - a3)
+
+**ISR1** (priority 1):
+- Line 12: `num=tmp` (Write operation - potential a2)
+
+**ISR2** (priority 2):
+- Line 22: `num=tmp` (Write operation - potential a2)
+
+Now I'll check for valid violations:
+
+**Checking ISR1 violation (Lines 31, 12, 33):**
+- a1 (line 31): Main writes `num = 1`
+- a2 (line 12): ISR1 writes `num = tmp` where `tmp = num-1`
+- a3 (line 33): Main reads `num` in condition `if (num!=1)`
+
+For ISR1 to execute line 12, it must satisfy the while loop condition at line 10: `while (num > 0)`. After main sets `num = 1` at line 31, the condition `num > 0` is true (since 1 > 0), so ISR1 can enter the loop and execute line 12, writing `num = 0` (since `tmp = num-1 = 1-1 = 0`).
+
+This creates a valid atomicity violation where main expects to read 1 but gets 0.
+
+**Checking ISR2 violation (Lines 31, 22, 33):**
+For ISR2 to execute line 22, it must satisfy the while loop condition at line 20: `while (num == 0)`. After main sets `num = 1` at line 31, `num` is not 0, so ISR2's while loop condition `num == 0` is false and the loop body (including line 22) won't execute.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 115.83472633361816 seconds

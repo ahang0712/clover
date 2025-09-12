@@ -1,0 +1,315 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "g2",
+      "cond.addr",
+      "arg.addr:int8*",
+      "tmp3:int32",
+      "tmp4:int32"
+    ],
+    "variable_types": {
+      "g2": "unknown",
+      "cond.addr": "unknown",
+      "arg.addr:int8*": "unknown",
+      "tmp3:int32": "unknown",
+      "tmp4:int32": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "g2",
+        "op": "load",
+        "function": "svp_simple_619_001_main",
+        "line": "12"
+      },
+      {
+        "variable": "arg.addr:int8*",
+        "op": "store",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "g2",
+        "op": "load",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "6"
+      },
+      {
+        "variable": "tmp3:int32",
+        "op": "store",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "6"
+      },
+      {
+        "variable": "tmp3:int32",
+        "op": "load",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "7"
+      },
+      {
+        "variable": "g2",
+        "op": "store",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "7"
+      },
+      {
+        "variable": "g2",
+        "op": "load",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "8"
+      },
+      {
+        "variable": "tmp4:int32",
+        "op": "store",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "8"
+      },
+      {
+        "variable": "tmp4:int32",
+        "op": "load",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "9"
+      },
+      {
+        "variable": "g2",
+        "op": "store",
+        "function": "svp_simple_619_001_isr_1",
+        "line": "9"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "abort"
+      },
+      {
+        "caller": "svp_simple_619_001_main",
+        "callee": "__VERIFIER_assert"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_619_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_619_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_619_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "g2",
+        "cond.addr",
+        "arg.addr:int8*",
+        "tmp3:int32",
+        "tmp4:int32"
+      ],
+      "MAIN_INFO": [
+        {
+          "operation": "load",
+          "variable": "g2",
+          "line": "12",
+          "function": "svp_simple_619_001_main"
+        }
+      ],
+      "ISR_INFO": [
+        {
+          "operation": "store",
+          "variable": "arg.addr:int8*",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_619_001_isr_1",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "load",
+          "variable": "g2",
+          "line": "6",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "tmp3:int32",
+          "line": "6",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "tmp3:int32",
+          "line": "7",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "g2",
+          "line": "7",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "g2",
+          "line": "8",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "tmp4:int32",
+          "line": "8",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "tmp4:int32",
+          "line": "9",
+          "function": "svp_simple_619_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "g2",
+          "line": "9",
+          "function": "svp_simple_619_001_isr_1"
+        }
+      ],
+      "defects": [],
+      "defect_count": 0,
+      "line_mapping": {
+        "original_to_filtered": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "5": 4,
+          "7": 5,
+          "9": 6,
+          "10": 7,
+          "13": 8,
+          "14": 9,
+          "17": 10,
+          "19": 11,
+          "21": 12,
+          "23": 13,
+          "24": 14
+        },
+        "filtered_to_original": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 5,
+          "5": 7,
+          "6": 9,
+          "7": 10,
+          "8": 13,
+          "9": 14,
+          "10": 17,
+          "11": 19,
+          "12": 21,
+          "13": 23,
+          "14": 24
+        },
+        "total_original_lines": 24,
+        "total_filtered_lines": 14
+      }
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_619_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_619_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_619_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"tx_in_progress\",\n        \"tx_aborted\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 9\n    },\n    {\n      \"sharedVariables\": [\n        \"current_transaction\",\n        \"global_counter\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 3\n    },\n    {\n      \"sharedVariables\": [\n        \"lock_table\",\n        \"dirty_pages\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 10\n    },\n    {\n      \"sharedVariables\": [\n        \"free_list\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"log_file\",\n        \"page_cache\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 5\n    },\n    {\n      \"sharedVariables\": [\n        \"wal_buffer\",\n        \"recovery_mode\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 5\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"tx_in_progress\",\n        \"tx_aborted\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 9\n    },\n    {\n      \"sharedVariables\": [\n        \"current_transaction\",\n        \"global_counter\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 3\n    },\n    {\n      \"sharedVariables\": [\n        \"lock_table\",\n        \"dirty_pages\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 10\n    },\n    {\n      \"sharedVariables\": [\n        \"free_list\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"log_file\",\n        \"page_cache\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 5\n    },\n    {\n      \"sharedVariables\": [\n        \"wal_buffer\",\n        \"recovery_mode\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 5\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_619_001.c",
+    "total_lines": 24,
+    "analyzed_lines": 14,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 374
+  }
+}

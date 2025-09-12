@@ -1,0 +1,142 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 22, 33]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 4.32 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Let me analyze each read/write operation for the global variable `num` to determine if they can actually be executed.
+
+## Step 1: Check Control Conditions
+
+### Analysis of `svp_simple_326_001_main()`:
+- **Line 31**: `num = 1` - This is a direct assignment, no control conditions
+- **Line 33**: `if (num!=1)` - This reads `num` to check the condition
+  - At this point, `num` was just set to 1 on line 31, so `num != 1` is false
+  - Therefore, the code block containing `reach_error()` on line 35 will never be executed
+
+### Analysis of `svp_simple_326_001_isr_1()`:
+- **Line 10**: `while (num > 0)` - This reads `num` to check the condition
+- **Line 12**: `num = tmp` - This writes to `num`, guarded by `num > 0`
+  - For this to execute, `num` must be > 0 when the condition is checked
+
+### Analysis of `svp_simple_326_001_isr_2()`:
+- **Line 20**: `while (num == 0)` - This reads `num` to check the condition
+- **Line 22**: `num = tmp` - This writes to `num`, guarded by `num == 0`
+  - For this to execute, `num` must be == 0 when the condition is checked
+
+## Step 2: Check Interrupt Status
+
+Looking at the code, there are no `disable_isr()` or `enable_isr()` calls. This means:
+- Both ISRs can preempt the main function at any time
+- ISR1 (priority 1) can preempt ISR2 (priority 2) since it has higher priority
+- ISR2 can preempt the main function
+
+## Step 3: Detailed Execution Analysis
+
+### Initial State:
+- `num` is uninitialized (has indeterminate value) at program start
+- `num = 1` is executed in main() before any ISR can run
+
+### Execution Scenarios:
+
+1. **Main function execution**:
+   - `num = 1` (line 31) - always executes
+   - `if (num != 1)` (line 33) - evaluates to false since num=1, so the ERROR block is never reached
+
+2. **ISR1 execution**:
+   - When ISR1 runs, it checks `while (num > 0)`
+   - If ISR1 runs after main() sets num=1, then num=1 > 0, so the loop body executes
+   - Inside the loop: `tmp = num-1 = 0`, then `num = tmp = 0`
+   - On next iteration, num=0, so loop exits
+
+3. **ISR2 execution**:
+   - When ISR2 runs, it checks `while (num == 0)`
+   - If ISR2 runs after main() sets num=1, then num=1 != 0, so the loop body never executes
+   - If ISR2 runs after ISR1 has executed and set num=0, then num==0 is true, so the loop body executes
+   - Inside the loop: `tmp = num-1 = -1`, then `num = tmp = -1`
+   - On next iteration, num=-1 != 0, so loop exits
+
+## Step 4: Summary of Analysis
+
+- **Line 31 (num = 1)**: Always executes in main()
+- **Line 33 (if (num != 1))**: Always evaluates to false, so the ERROR block is never reached
+- **Line 12 (num = tmp in ISR1)**: Can execute when ISR1 runs and num > 0
+- **Line 22 (num = tmp in ISR2)**: Can execute when ISR2 runs and num == 0
+
+The reported violations involve:
+1. Lines [31, 22, 33] - Write at 31, Write at 22, Read at 33
+2. Lines [31, 12, 33] - Write at 31, Write at 12, Read at 33
+
+However, the read at line 33 will always see num=1 (the value set at line 31) because:
+- The condition `num != 1` is false, so this read operation is part of a condition that never leads to actual execution of dependent code
+- More importantly, the read at line 33 happens before any ISR can modify num (since ISRs can only run after main starts executing)
+
+Since the read at line 33 cannot actually observe the values written by lines 12 or 22 due to the control flow and timing, these reported violations are false positives.
+
+```json
+{
+    "violations": []
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Let me carefully re-examine the code for atomicity violations with the <Write, Write, Read> pattern.
+
+Looking at the global variable `num`:
+
+1. **Main function (priority 0)**:
+   - Line 31: `num = 1` (Write)
+   - Line 33: `if (num != 1)` (Read)
+
+2. **ISR1 (priority 1)**:
+   - Line 12: `num = tmp` (Write) - inside while loop when num > 0
+
+3. **ISR2 (priority 2)**:
+   - Line 22: `num = tmp` (Write) - inside while loop when num == 0
+
+The key insight is that the read at line 33 is checking if `num != 1`, and this check happens immediately after the write at line 31. The programmer's assumption is that `num` should still be 1 when this read occurs.
+
+However, both ISRs can preempt the main function:
+- ISR1 (priority 1) can write to `num` at line 12
+- ISR2 (priority 2) can write to `num` at line 22
+
+Both writes can occur between the write at line 31 and the read at line 33, violating the atomicity assumption.
+
+The violations are:
+1. Main writes 1 to num (line 31), ISR2 writes -1 to num (line 22), Main reads num (line 33)
+2. Main writes 1 to num (line 31), ISR1 writes 0 to num (line 12), Main reads num (line 33)
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 22, 33]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 220.20402908325195 seconds

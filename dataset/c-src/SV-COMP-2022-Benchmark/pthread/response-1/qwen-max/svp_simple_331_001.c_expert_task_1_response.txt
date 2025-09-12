@@ -1,0 +1,108 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 23, 16]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 3.34 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### **Analysis of `svp_simple_331_001_isr_1`**
+- **Line 16 (`i = j + 1;`)**
+  - This write operation is inside a `for` loop that runs `NUM` (20) iterations.
+  - The `for` loop itself has no additional control conditions other than its bounds (`k < NUM`), which will always be satisfied for 20 iterations.
+  - There are no external conditions guarding this loop, so the write operation at line 16 will execute repeatedly during the ISR's execution.
+
+#### **Analysis of `svp_simple_331_001_isr_2`**
+- **Line 23 (`j = i + 1;`)**
+  - This write operation is also inside a `for` loop that runs `NUM` (20) iterations.
+  - Similar to `svp_simple_331_001_isr_1`, the `for` loop has no additional control conditions other than its bounds (`k < NUM`), which will always be satisfied for 20 iterations.
+  - There are no external conditions guarding this loop, so the write operation at line 23 will execute repeatedly during the ISR's execution.
+
+#### **Analysis of `svp_simple_331_001_main`**
+- **Line 30 (`int condI = i > LIMIT;`)**
+  - This read operation on `i` is executed unconditionally in the main function. It is not guarded by any control condition and will always execute.
+- **Line 32 (`int condJ = j > LIMIT;`)**
+  - This read operation on `j` is executed unconditionally in the main function. It is not guarded by any control condition and will always execute.
+- **Lines 34–35 (`if (condI || condJ) { reach_error(); abort(); }`)**
+  - These lines depend on the values of `condI` and `condJ`, which are derived from the reads on `i` and `j` at lines 30 and 32.
+  - However, these reads are guaranteed to execute because they are unconditional.
+
+---
+
+### Step 2: Pay Attention to Control Condition Changes
+- **Interrupts and Variable Updates**
+  - Both `svp_simple_331_001_isr_1` and `svp_simple_331_001_isr_2` modify `i` and `j` repeatedly in their loops.
+  - Since these ISRs have different priorities (priority 1 and priority 2), preemption can occur:
+    - `svp_simple_331_001_isr_2` (priority 2) can preempt `svp_simple_331_001_isr_1` (priority 1).
+    - This preemption introduces interleaving between the read/write operations on `i` and `j`.
+
+---
+
+### Step 3: Check Interrupt Status
+- **Interrupts in the Code**
+  - The code does not explicitly disable or enable interrupts using `disable_isr()` or `enable_isr()`.
+  - By default, both ISRs are enabled and can preempt each other based on their priorities.
+  - Therefore, all read/write operations in the ISRs are accessible and can execute concurrently.
+
+---
+
+### Step 4: Generate the Final Report
+
+#### **Summary of Analysis**
+1. **Line 16 (`i = j + 1;`)** in `svp_simple_331_001_isr_1`:
+   - This write operation is executed repeatedly in a loop and is accessible due to the absence of disabling interrupts.
+2. **Line 23 (`j = i + 1;`)** in `svp_simple_331_001_isr_2`:
+   - This write operation is executed repeatedly in a loop and is accessible due to the absence of disabling interrupts.
+3. **Line 16 (`i = j + 1;`)** in `svp_simple_331_001_isr_1` (read operation):
+   - This read operation on `j` occurs as part of the assignment and is accessible.
+4. **Line 30 (`int condI = i > LIMIT;`)** in `svp_simple_331_001_main`:
+   - This read operation on `i` is unconditional and always executed.
+5. **Line 32 (`int condJ = j > LIMIT;`)** in `svp_simple_331_001_main`:
+   - This read operation on `j` is unconditional and always executed.
+
+#### **Atomicity Violation**
+- The reported atomicity violation involving the access pattern `["Read", "Write", "Read"]` on `j` at lines `[16, 23, 16]` is valid:
+  - The read operation on `j` at line 16 in `svp_simple_331_001_isr_1` can be preempted by `svp_simple_331_001_isr_2`, which writes to `j` at line 23.
+  - After preemption, control returns to `svp_simple_331_001_isr_1`, where another read operation on `j` occurs at line 16.
+  - This interleaving results in an atomicity violation.
+
+---
+
+### Final Output
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 23, 16]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "j",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 23, 16]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 94.89414191246033 seconds

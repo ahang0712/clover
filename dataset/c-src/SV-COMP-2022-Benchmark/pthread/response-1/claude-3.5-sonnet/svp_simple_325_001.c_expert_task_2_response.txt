@@ -1,0 +1,111 @@
+[Expert R1] (Detect atomicity violations in the code.)
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 21, 35]
+        },
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 11, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 23, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 13, 35]
+        }
+    ]
+}
+
+[System] Expert first round completed in 4.20 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Step 1: Check Control Conditions
+
+For each read/write operation mentioned in the defect report:
+
+1. data1 write on line 30:
+   - No control conditions guard this operation.
+   - It can be executed as it's in the main function.
+
+2. data1 write on line 21:
+   - No control conditions guard this operation within the ISR.
+   - It can be executed if ISR_2 is triggered.
+
+3. data1 write on line 11:
+   - No control conditions guard this operation within the ISR.
+   - It can be executed if ISR_1 is triggered.
+
+4. data1 read on line 35:
+   - No control conditions guard this operation.
+   - It can be executed as it's in the main function.
+
+5. data2 write on line 31:
+   - No control conditions guard this operation.
+   - It can be executed as it's in the main function.
+
+6. data2 write on line 23:
+   - No control conditions guard this operation within the ISR.
+   - It can be executed if ISR_2 is triggered.
+
+7. data2 write on line 13:
+   - No control conditions guard this operation within the ISR.
+   - It can be executed if ISR_1 is triggered.
+
+8. data2 read on line 35:
+   - No control conditions guard this operation.
+   - It can be executed as it's in the main function.
+
+Step 2: Pay Attention to Control Condition Changes
+- There are no control conditions that change due to interrupt handling in this code.
+
+Step 3: Check Interrupt Status
+- There are no explicit disable_isr() or enable_isr() calls in the code.
+- We assume that interrupts are enabled by default, allowing ISR_1 and ISR_2 to be triggered.
+
+Step 4: Generate the Final Report
+
+Summary of analysis:
+- All read/write operations mentioned in the initial defect report can be executed.
+- There are no unsatisfiable control conditions or disabled interrupts that would prevent execution.
+- The atomicity violations reported in the initial defect report are valid.
+
+Final Report:
+
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 21, 35]
+        },
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 11, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 23, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 13, 35]
+        }
+    ]
+}
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 37.9603488445282 seconds

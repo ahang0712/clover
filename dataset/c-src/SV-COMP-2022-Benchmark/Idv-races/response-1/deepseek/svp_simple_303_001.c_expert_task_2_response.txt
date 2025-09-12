@@ -1,0 +1,73 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 11, 21]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 11, 28]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 11, 30]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [21, 11, 28]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [21, 11, 30]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 14.25 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 11, 21]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 11, 28]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [16, 11, 30]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [21, 11, 28]
+        },
+        {
+            "sharedVariable": "pdev",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [21, 11, 30]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 32.65724515914917 seconds

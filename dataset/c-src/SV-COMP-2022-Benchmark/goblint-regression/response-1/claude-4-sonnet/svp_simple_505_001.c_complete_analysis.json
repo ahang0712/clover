@@ -1,0 +1,310 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "myglobal"
+      ],
+      "variable_types": {
+        "myglobal": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_505_001_main",
+          "line": "27"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_505_001_main",
+          "line": "28"
+        },
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "isr_fun",
+          "line": "9"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "isr_fun",
+          "line": "10"
+        },
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_505_001_isr_1",
+          "line": "17"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_505_001_isr_1",
+          "line": "18"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "isr_fun",
+          "callee": "__VERIFIER_nondet_int"
+        },
+        {
+          "caller": "svp_simple_505_001_isr_1",
+          "callee": "isr_fun"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "isr_fun",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_505_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_505_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "isr_fun",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_505_001_isr_1",
+            "callee": "isr_fun"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              18,
+              28
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              10,
+              28
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "myglobal"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "27",
+            "function": "svp_simple_505_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "28",
+            "function": "svp_simple_505_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "9",
+            "function": "isr_fun"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "10",
+            "function": "isr_fun"
+          },
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "17",
+            "function": "svp_simple_505_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "18",
+            "function": "svp_simple_505_001_isr_1"
+          }
+        ]
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "isr_fun",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_505_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_505_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_nondet_int",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "isr_fun",
+            "callee": "__VERIFIER_nondet_int"
+          },
+          {
+            "caller": "svp_simple_505_001_isr_1",
+            "callee": "isr_fun"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              18,
+              28
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              10,
+              28
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_505_001.c",
+      "total_lines": 32,
+      "analyzed_lines": 32,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 431
+    }
+  },
+  "expert_judge_results": {
+    "expert_judge_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the atomicity violations for the global variable `myglobal`.\n\nLet me trace through the operations:\n\n1. **Main function** (lines 27-28): Read `myglobal` at line 27, then write at line 28\n2. **svp_simple_505_001_isr_1** (lines 17-18): Read `myglobal` at line 17, then write at line 18\n3. **isr_fun** (lines 9-10): Read `myglobal` at line 9, then write at line 10\n\nFrom the call graph, `svp_simple_505_001_isr_1` calls `isr_fun` at line 20.\n\nFor the <Read, Write, Write> pattern, I need to identify where:\n- a1: Read by lower-priority task\n- a2: Write by higher-priority ISR  \n- a3: Write by the same lower-priority task (consecutive to a1)\n\n**Defect 1**: Main function interrupted by svp_simple_505_001_isr_1\n- a1: Main reads `myglobal` (line 27)\n- a2: ISR writes `myglobal` (line 18) - can preempt main\n- a3: Main writes `myglobal` (line 28) - consecutive to the read\n\n**Defect 2**: Main function interrupted by isr_fun (called from svp_simple_505_001_isr_1)\n- a1: Main reads `myglobal` (line 27)\n- a2: isr_fun writes `myglobal` (line 10) - can preempt main via the ISR call chain\n- a3: Main writes `myglobal` (line 28) - consecutive to the read\n\nBoth candidate defects are valid atomicity violations.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [27, 18, 28]\n        },\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [27, 10, 28]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at this code, I need to analyze the accessibility of each read/write operation on the global variable `myglobal`.\n\n**Step 1: Check Control Conditions**\nAll read/write operations are in the main execution flow without any conditional statements:\n- Line 9 (read) and line 10 (write) in `isr_fun()` - no control conditions\n- Line 17 (read) and line 18 (write) in `svp_simple_505_001_isr_1()` - no control conditions  \n- Line 27 (read) and line 28 (write) in `svp_simple_505_001_main()` - no control conditions\n\n**Step 2: Check Control Condition Changes**\nNo control conditions exist that could be modified by interrupts.\n\n**Step 3: Check Interrupt Status**\nThere are no `disable_isr()` or `enable_isr()` calls in the code. This means:\n- All interrupts are enabled by default\n- ISR functions can preempt the main function at any time\n- The ISR `svp_simple_505_001_isr_1` can interrupt the main function\n- When `svp_simple_505_001_isr_1` calls `isr_fun()` at line 20, `isr_fun()` executes as part of the interrupt context\n\n**Step 4: Accessibility Analysis**\nAll operations are accessible:\n- Main function operations (lines 27-28) can execute normally\n- ISR operations (lines 17-18) can preempt main function\n- `isr_fun()` operations (lines 9-10) can execute when called from the ISR\n\nThe reported atomicity violations are valid since all operations can be executed at runtime.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [27, 18, 28]\n        },\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [27, 10, 28]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the atomicity violations for the global variable `myglobal`.\n\nLet me trace through the operations:\n\n1. **Main function** (lines 27-28): Read `myglobal` at line 27, then write at line 28\n2. **svp_simple_505_001_isr_1** (lines 17-18): Read `myglobal` at line 17, then write at line 18\n3. **isr_fun** (lines 9-10): Read `myglobal` at line 9, then write at line 10\n\nFrom the call graph, `svp_simple_505_001_isr_1` calls `isr_fun` at line 20.\n\nFor the <Read, Write, Write> pattern, I need to identify where:\n- a1: Read by lower-priority task\n- a2: Write by higher-priority ISR  \n- a3: Write by the same lower-priority task (consecutive to a1)\n\n**Defect 1**: Main function interrupted by svp_simple_505_001_isr_1\n- a1: Main reads `myglobal` (line 27)\n- a2: ISR writes `myglobal` (line 18) - can preempt main\n- a3: Main writes `myglobal` (line 28) - consecutive to the read\n\n**Defect 2**: Main function interrupted by isr_fun (called from svp_simple_505_001_isr_1)\n- a1: Main reads `myglobal` (line 27)\n- a2: isr_fun writes `myglobal` (line 10) - can preempt main via the ISR call chain\n- a3: Main writes `myglobal` (line 28) - consecutive to the read\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [27, 18, 28]\n        },\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [27, 10, 28]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_505_001.c",
+    "total_lines": 32,
+    "analyzed_lines": 32,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 431
+  }
+}

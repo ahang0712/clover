@@ -1,0 +1,84 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 22, 33]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 1.75 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Operation at Line 31 (`num = 1;`)
+- **Control Conditions**: None
+- **Execution**: Always executed in `svp_simple_326_001_main`.
+
+#### Operation at Line 12 (`num = tmp;`)
+- **Control Conditions**: `while (num > 0)`
+  - **Variable Tracking**: `num` is set to 1 in `main` before this ISR runs.
+  - **Execution Path**: Since `num` starts at 1, the loop condition `num > 0` is initially true, allowing entry into the loop.
+  - **Conclusion**: This operation can execute.
+
+#### Operation at Line 22 (`num = tmp;`)
+- **Control Conditions**: `while (num == 0)`
+  - **Variable Tracking**: `num` is initialized to 1 in `main`.
+  - **Execution Path**: The condition `num == 0` is never true because `num` is set to 1 before `isr_2` can run.
+  - **Conclusion**: This operation cannot execute.
+
+#### Operation at Line 33 (`if (num != 1)`)
+- **Control Conditions**: `if (num != 1)`
+  - **Variable Tracking**: `num` is set to 1 before this check.
+  - **Execution Path**: Since `num` is 1, the condition `num != 1` is false.
+  - **Conclusion**: The error block will not execute.
+
+### Step 2 & 3: Interrupt Status and Nesting
+- No explicit interrupt disabling/enabling impacts the execution paths considered.
+
+### Summary
+- **Line 31 (`num = 1;`)**: Executed.
+- **Line 12 (`num = tmp;`)**: Executed.
+- **Line 22 (`num = tmp;`)**: Never executed due to unsatisfiable condition.
+- **Line 33 (`if (num != 1)`)**: Never enters error block.
+
+### Final Report
+Given the analysis, the atomicity violations involving line 22 are invalid because they cannot occur.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 31.896309852600098 seconds

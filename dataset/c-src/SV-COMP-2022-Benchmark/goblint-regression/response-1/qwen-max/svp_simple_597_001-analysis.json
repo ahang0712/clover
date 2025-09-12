@@ -1,0 +1,47 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "myglobal",
+    "arg.addr:int8*"
+  ],
+  "MAIN_INFO": [],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "UNMAPPED_0",
+      "function": "svp_simple_597_001_isr_1",
+      "warning": "Line 0 could not be mapped"
+    },
+    {
+      "operation": "store",
+      "variable": "myglobal",
+      "line": "3",
+      "function": "svp_simple_597_001_isr_1"
+    }
+  ],
+  "defects": [],
+  "defect_count": 0,
+  "line_mapping": {
+    "original_to_filtered": {
+      "1": 1,
+      "3": 2,
+      "4": 3,
+      "6": 4,
+      "8": 5,
+      "9": 6,
+      "10": 7
+    },
+    "filtered_to_original": {
+      "1": 1,
+      "2": 3,
+      "3": 4,
+      "4": 6,
+      "5": 8,
+      "6": 9,
+      "7": 10
+    },
+    "total_original_lines": 10,
+    "total_filtered_lines": 7
+  }
+}

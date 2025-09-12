@@ -1,0 +1,203 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "g"
+    ],
+    "variable_types": {
+      "g": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "g",
+        "op": "store",
+        "function": "svp_simple_635_001_isr1",
+        "line": "15"
+      },
+      {
+        "variable": "g",
+        "op": "load",
+        "function": "svp_simple_635_001_isr1",
+        "line": "16"
+      },
+      {
+        "variable": "g",
+        "op": "load",
+        "function": "svp_simple_635_001_isr1",
+        "line": "17"
+      },
+      {
+        "variable": "g",
+        "op": "load",
+        "function": "svp_simple_635_001_isr1",
+        "line": "18"
+      },
+      {
+        "variable": "g",
+        "op": "store",
+        "function": "svp_simple_635_001_isr1",
+        "line": "18"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "abort"
+      },
+      {
+        "caller": "svp_simple_635_001_isr1",
+        "callee": "__VERIFIER_assert"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_635_001_isr1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_635_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_635_001_isr1",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "g"
+      ],
+      "MAIN_INFO": [],
+      "ISR_INFO": [
+        {
+          "operation": "store",
+          "variable": "g",
+          "line": "15",
+          "function": "svp_simple_635_001_isr1"
+        },
+        {
+          "operation": "load",
+          "variable": "g",
+          "line": "16",
+          "function": "svp_simple_635_001_isr1"
+        },
+        {
+          "operation": "load",
+          "variable": "g",
+          "line": "17",
+          "function": "svp_simple_635_001_isr1"
+        },
+        {
+          "operation": "load",
+          "variable": "g",
+          "line": "18",
+          "function": "svp_simple_635_001_isr1"
+        },
+        {
+          "operation": "store",
+          "variable": "g",
+          "line": "18",
+          "function": "svp_simple_635_001_isr1"
+        }
+      ]
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_635_001_isr1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_635_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_635_001_isr1",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"varA\",\n        \"varB\",\n        \"varC\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    },\n    {\n      \"sharedVariables\": [\n        \"varD\",\n        \"varE\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"varF\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"varA\",\n        \"varB\",\n        \"varC\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    },\n    {\n      \"sharedVariables\": [\n        \"varD\",\n        \"varE\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"varF\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_635_001.c",
+    "total_lines": 28,
+    "analyzed_lines": 28,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 362
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "g"
+  ],
+  "MAIN_INFO": [],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "58",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "60",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "61",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "63",
+      "function": "isr_pqueue_get"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "63",
+      "function": "isr_pqueue_get"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "global_dev",
+        "global_id",
+        "irq"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 11
+    },
+    {
+      "sharedVariables": [
+        "global_dev",
+        "global_id",
+        "irq"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 24
+    },
+    {
+      "sharedVariables": [
+        "global_id"
+      ],
+      "accessPattern": [
+        "Write",
+        "Read",
+        "Write"
+      ],
+      "defect_count": 2
+    }
+  ]
+}

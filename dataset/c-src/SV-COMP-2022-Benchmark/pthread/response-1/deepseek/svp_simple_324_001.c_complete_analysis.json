@@ -1,0 +1,704 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "data1",
+        "data2",
+        "arg.addr:int8*",
+        "tmp:int32",
+        "tmp1:int32"
+      ],
+      "variable_types": {
+        "data1": "unknown",
+        "data2": "unknown",
+        "arg.addr:int8*": "unknown",
+        "tmp:int32": "unknown",
+        "tmp1:int32": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "data1",
+          "op": "store",
+          "function": "svp_simple_324_001_main",
+          "line": "20"
+        },
+        {
+          "variable": "data2",
+          "op": "store",
+          "function": "svp_simple_324_001_main",
+          "line": "21"
+        },
+        {
+          "variable": "data1",
+          "op": "load",
+          "function": "svp_simple_324_001_main",
+          "line": "22"
+        },
+        {
+          "variable": "data2",
+          "op": "load",
+          "function": "svp_simple_324_001_main",
+          "line": "22"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "data1",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "tmp:int32",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "tmp:int32",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "data1",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "data2",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "8"
+        },
+        {
+          "variable": "tmp1:int32",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "8"
+        },
+        {
+          "variable": "tmp1:int32",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "data2",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "data1",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "13"
+        },
+        {
+          "variable": "tmp:int32",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "13"
+        },
+        {
+          "variable": "tmp:int32",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "data1",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "data2",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "15"
+        },
+        {
+          "variable": "tmp1:int32",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "15"
+        },
+        {
+          "variable": "tmp1:int32",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "16"
+        },
+        {
+          "variable": "data2",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "16"
+        }
+      ],
+      "Defect_Highlight": {
+        "defect_count": 6,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              20,
+              11
+            ],
+            "sharedVariable": "data2",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              18,
+              9
+            ],
+            "sharedVariable": "data1",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              20,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              11,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              18,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              9,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "data1",
+          "data2",
+          "arg.addr:int8*",
+          "tmp:int32",
+          "tmp1:int32"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "data1",
+            "line": "20",
+            "function": "svp_simple_324_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "data2",
+            "line": "21",
+            "function": "svp_simple_324_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "data1",
+            "line": "22",
+            "function": "svp_simple_324_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "data2",
+            "line": "22",
+            "function": "svp_simple_324_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_324_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "data1",
+            "line": "6",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "tmp:int32",
+            "line": "6",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "tmp:int32",
+            "line": "7",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "data1",
+            "line": "7",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "data2",
+            "line": "8",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "tmp1:int32",
+            "line": "8",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "tmp1:int32",
+            "line": "9",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "data2",
+            "line": "9",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_324_001_isr_2",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "data1",
+            "line": "13",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "tmp:int32",
+            "line": "13",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "tmp:int32",
+            "line": "14",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "data1",
+            "line": "14",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "data2",
+            "line": "15",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "tmp1:int32",
+            "line": "15",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "tmp1:int32",
+            "line": "16",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "data2",
+            "line": "16",
+            "function": "svp_simple_324_001_isr_2"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "4": 3,
+            "6": 4,
+            "7": 5,
+            "8": 6,
+            "9": 7,
+            "10": 8,
+            "11": 9,
+            "12": 10,
+            "15": 11,
+            "16": 12,
+            "17": 13,
+            "18": 14,
+            "19": 15,
+            "20": 16,
+            "21": 17,
+            "24": 18,
+            "25": 19,
+            "27": 20,
+            "28": 21,
+            "30": 22,
+            "31": 23,
+            "32": 24,
+            "33": 25,
+            "35": 26,
+            "36": 27
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 4,
+            "4": 6,
+            "5": 7,
+            "6": 8,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 12,
+            "11": 15,
+            "12": 16,
+            "13": 17,
+            "14": 18,
+            "15": 19,
+            "16": 20,
+            "17": 21,
+            "18": 24,
+            "19": 25,
+            "20": 27,
+            "21": 28,
+            "22": 30,
+            "23": 31,
+            "24": 32,
+            "25": 33,
+            "26": 35,
+            "27": 36
+          },
+          "total_original_lines": 36,
+          "total_filtered_lines": 27
+        }
+      },
+      "Defect_Highlight": {
+        "defect_count": 6,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              20,
+              11
+            ],
+            "sharedVariable": "data2",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              18,
+              9
+            ],
+            "sharedVariable": "data1",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              20,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              11,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              18,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              9,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"data2\",\n        \"data1\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"data2\",\n        \"data1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"data2\",\n        \"data1\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"data2\",\n        \"data1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_324_001.c",
+      "total_lines": 37,
+      "analyzed_lines": 27,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 514
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [28, 20, 30]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [28, 11, 30]\n        },\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [27, 18, 30]\n        },\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [27, 9, 30]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 2.35 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [28, 20, 30]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [28, 11, 30]\n        },\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [27, 18, 30]\n        },\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [27, 9, 30]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ],
+    "expert_task_2": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [8, 18, 9]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 20, 11]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 1.73 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [8, 18, 9]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 20, 11]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_324_001.c",
+    "total_lines": 37,
+    "analyzed_lines": 27,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 514
+  }
+}

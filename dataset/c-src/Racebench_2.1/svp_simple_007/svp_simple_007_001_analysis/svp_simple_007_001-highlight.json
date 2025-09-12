@@ -1,0 +1,314 @@
+{
+  "defect_count" : 11,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][2",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        19,
+        32,
+        23
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][2",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        19,
+        32,
+        25
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][expr",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        19,
+        35,
+        23
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][expr",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        19,
+        35,
+        25
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        17,
+        34,
+        19
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_var",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][2",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        17,
+        32,
+        19
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][expr",
+        "0][expr"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        17,
+        35,
+        19
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][2",
+        "0][2"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        23,
+        32,
+        27
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][expr",
+        "0][2"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        23,
+        35,
+        27
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][2",
+        "0][2"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        25,
+        32,
+        27
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "0][expr",
+        "0][expr",
+        "0][2"
+      ],
+      "isArrayAccess" : 
+      [
+        true,
+        true,
+        true
+      ],
+      "lines" : 
+      [
+        25,
+        35,
+        27
+      ],
+      "sharedVariable" : "svp_simple_007_001_global_array",
+      "type" : "WWR"
+    }
+  ]
+}

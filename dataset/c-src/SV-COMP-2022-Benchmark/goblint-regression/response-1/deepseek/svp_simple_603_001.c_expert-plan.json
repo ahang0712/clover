@@ -1,0 +1,14 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "glob1"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ]
+    }
+  ]
+}

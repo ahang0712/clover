@@ -1,0 +1,455 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "myglobal",
+        "x.addr",
+        "arg.addr:int8*",
+        "tmp:int32"
+      ],
+      "variable_types": {
+        "myglobal": "unknown",
+        "x.addr": "unknown",
+        "arg.addr:int8*": "unknown",
+        "tmp:int32": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_542_001_main",
+          "line": "12"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_542_001_main",
+          "line": "12"
+        },
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_542_001_main",
+          "line": "13"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_542_001_main",
+          "line": "13"
+        },
+        {
+          "variable": "arg.addr:int8*",
+          "op": "store",
+          "function": "svp_simple_542_001_isr_1",
+          "line": "UNMAPPED_0"
+        },
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_542_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "myglobal",
+          "op": "store",
+          "function": "svp_simple_542_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "myglobal",
+          "op": "load",
+          "function": "svp_simple_542_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "tmp:int32",
+          "op": "store",
+          "function": "svp_simple_542_001_isr_1",
+          "line": "8"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "svp_simple_542_001_isr_1",
+          "callee": "f"
+        },
+        {
+          "caller": "svp_simple_542_001_main",
+          "callee": "f"
+        },
+        {
+          "caller": "svp_simple_542_001_main",
+          "callee": "f"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "f",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_542_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_542_001_main",
+            "type": "defined"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_542_001_isr_1",
+            "callee": "f"
+          },
+          {
+            "caller": "svp_simple_542_001_main",
+            "callee": "f"
+          },
+          {
+            "caller": "svp_simple_542_001_main",
+            "callee": "f"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 3,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              18,
+              8,
+              18
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              19,
+              8,
+              19
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              18,
+              8,
+              19
+            ],
+            "sharedVariable": "myglobal",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "myglobal",
+          "x.addr",
+          "arg.addr:int8*",
+          "tmp:int32"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "12",
+            "function": "svp_simple_542_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "12",
+            "function": "svp_simple_542_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "13",
+            "function": "svp_simple_542_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "13",
+            "function": "svp_simple_542_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "arg.addr:int8*",
+            "line": "UNMAPPED_0",
+            "function": "svp_simple_542_001_isr_1",
+            "warning": "Line 0 could not be mapped"
+          },
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "6",
+            "function": "svp_simple_542_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "myglobal",
+            "line": "6",
+            "function": "svp_simple_542_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "myglobal",
+            "line": "7",
+            "function": "svp_simple_542_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "tmp:int32",
+            "line": "8",
+            "function": "svp_simple_542_001_isr_1"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "2": 1,
+            "4": 2,
+            "5": 3,
+            "6": 4,
+            "7": 5,
+            "8": 6,
+            "9": 7,
+            "10": 8,
+            "11": 9,
+            "12": 10,
+            "14": 11,
+            "18": 12,
+            "19": 13,
+            "20": 14,
+            "21": 15
+          },
+          "filtered_to_original": {
+            "1": 2,
+            "2": 4,
+            "3": 5,
+            "4": 6,
+            "5": 7,
+            "6": 8,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 12,
+            "11": 14,
+            "12": 18,
+            "13": 19,
+            "14": 20,
+            "15": 21
+          },
+          "total_original_lines": 21,
+          "total_filtered_lines": 15
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "f",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_542_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_542_001_main",
+            "type": "defined"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_542_001_isr_1",
+            "callee": "f"
+          },
+          {
+            "caller": "svp_simple_542_001_main",
+            "callee": "f"
+          },
+          {
+            "caller": "svp_simple_542_001_main",
+            "callee": "f"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 3,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              18,
+              8,
+              18
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              19,
+              8,
+              19
+            ],
+            "sharedVariable": "myglobal",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              18,
+              8,
+              19
+            ],
+            "sharedVariable": "myglobal",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"myglobal\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_542_001.c",
+      "total_lines": 21,
+      "analyzed_lines": 15,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 315
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [18, 8, 18]\n        },\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [19, 8, 19]\n        }\n    ]\n}\n\n[System] Expert first round completed in 3.51 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nStep 1: Check Control Conditions\n\nFor the read/write operations mentioned in the initial defect report:\n\n1. Line 18 (main function): `myglobal = f(myglobal);`\n   - This operation is not guarded by any control conditions.\n   - It can be executed as it's directly in the main function body.\n\n2. Line 8 (ISR): `myglobal=f(myglobal);`\n   - This operation is not guarded by any control conditions within the ISR.\n   - It can be executed when the interrupt is triggered and enabled.\n\n3. Line 19 (main function): `myglobal = f(myglobal);`\n   - This operation is not guarded by any control conditions.\n   - It can be executed as it's directly in the main function body.\n\nStep 2: Pay Attention to Control Condition Changes\n- There are no control conditions that change in this code.\n\nStep 3: Check Interrupt Status\n- There are no explicit disable_isr() or enable_isr() calls in the provided code.\n- We cannot determine the exact interrupt status, but we assume the interrupt can be triggered at any point during the main function execution.\n\nStep 4: Generate the Final Report\n\nSummary of analysis:\n- All read/write operations mentioned in the initial defect report can be executed.\n- There are no unsatisfiable control conditions or explicitly disabled interrupts that would prevent the execution of these operations.\n- The atomicity violations reported in the initial defect report remain valid.\n\nFinal Report:\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [18, 8, 18]\n        },\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [19, 8, 19]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ],
+    "expert_task_2": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [18, 8, 19]\n        }\n    ]\n}\n\n[System] Expert first round completed in 2.68 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nTo evaluate the accessibility of each read and write operation mentioned in the initial defect report, I will analyze the control conditions and interrupt status for each operation.\n\n1. Write operation on line 18 (main function):\n   - There are no control conditions guarding this operation.\n   - It is in the main function, which is always executed.\n   - This operation is accessible.\n\n2. Write operation on line 8 (ISR):\n   - There are no control conditions guarding this operation within the ISR.\n   - The ISR can be triggered at any time, including between lines 18 and 19 of the main function.\n   - This operation is accessible.\n\n3. Read operation on line 19 (main function):\n   - There are no control conditions guarding this operation.\n   - It is in the main function, which is always executed.\n   - This operation is accessible.\n\nAll three operations mentioned in the initial defect report are accessible without any restrictions from control conditions or interrupt status. Therefore, the atomicity violation reported remains valid.\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"myglobal\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [18, 8, 19]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_542_001.c",
+    "total_lines": 21,
+    "analyzed_lines": 15,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 315
+  }
+}

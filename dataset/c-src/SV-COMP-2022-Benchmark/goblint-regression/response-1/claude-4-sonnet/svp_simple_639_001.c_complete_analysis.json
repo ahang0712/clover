@@ -1,0 +1,539 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "g",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[0]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[1]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[9999]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[TRIGGER]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[1000]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[var]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[i]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[var[0,9999]]",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[i[0,9999]]",
+        ".str",
+        ".str[0]",
+        ".str[1]",
+        ".str[7]"
+      ],
+      "variable_types": {
+        "g": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[0]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[1]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[9999]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[TRIGGER]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[1000]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[var]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[i]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[var[0,9999]]": "unknown",
+        "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[i[0,9999]]": "unknown",
+        ".str": "unknown",
+        ".str[0]": "unknown",
+        ".str[1]": "unknown",
+        ".str[7]": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_639_001_isr_1",
+          "line": "11"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_639_001_isr_1",
+          "line": "13"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "svp_simple_639_001_isr_1",
+          "line": "14"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_639_001_isr_1",
+          "line": "15"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "svp_simple_639_001_isr_2",
+          "line": "19"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_639_001_isr_1",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_639_001_isr_1",
+          "callee": "printf"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_639_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_639_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_639_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_639_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_639_001_isr_1",
+            "callee": "printf"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 5,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              19,
+              15
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              14,
+              19,
+              15
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              19,
+              14
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              19,
+              13
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              19,
+              14
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "g",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[0]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[1]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[9999]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[TRIGGER]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[1000]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[var]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[i]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[var[0,9999]]",
+          "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c:.str[i[0,9999]]",
+          ".str",
+          ".str[0]",
+          ".str[1]",
+          ".str[7]"
+        ],
+        "MAIN_INFO": [],
+        "ISR_INFO": [
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "11",
+            "function": "svp_simple_639_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "13",
+            "function": "svp_simple_639_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "14",
+            "function": "svp_simple_639_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "15",
+            "function": "svp_simple_639_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "19",
+            "function": "svp_simple_639_001_isr_2"
+          }
+        ]
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_639_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_639_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_639_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          },
+          {
+            "name": "printf",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "svp_simple_639_001_isr_1",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_639_001_isr_1",
+            "callee": "printf"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 5,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              19,
+              15
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              14,
+              19,
+              15
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              13,
+              19,
+              14
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              19,
+              13
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              19,
+              14
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c",
+      "total_lines": 30,
+      "analyzed_lines": 30,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 433
+    }
+  },
+  "expert_judge_results": {
+    "expert_judge_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Write> pattern.\n\nLet me trace through the operations:\n\n**Function Analysis:**\n- `svp_simple_639_001_main`: No operations on `g`\n- `svp_simple_639_001_isr_1`: Contains operations on lines 11, 13, 14, 15\n- `svp_simple_639_001_isr_2`: Contains operation on line 19\n\n**Operations on variable `g`:**\n- Line 11: `g = 1;` (Write in ISR1)\n- Line 13: `__VERIFIER_assert(g == 1);` (Read in ISR1) \n- Line 14: `printf(\"g is %i\", g);` (Read in ISR1)\n- Line 15: `g = 0;` (Write in ISR1)\n- Line 19: `g = 0;` (Write in ISR2)\n\n**Priority Analysis:**\nSince no explicit priorities are given, I need to consider all possible priority combinations between ISR1 and ISR2.\n\n**Atomicity Violation Detection:**\n\nFor the <Read, Write, Write> pattern, I need:\n- a1: Read by lower-priority task\n- a2: Write by higher-priority task  \n- a3: Write by same lower-priority task as a1 (consecutive to a1)\n\n**Scenario 1: ISR1 has lower priority than ISR2**\n- a1: Line 13 (Read `g` in ISR1)\n- a2: Line 19 (Write `g` in ISR2) - can preempt ISR1\n- a3: Line 15 (Write `g` in ISR1) - consecutive to the read at line 13\n\n**Scenario 2: ISR1 has lower priority than ISR2** \n- a1: Line 14 (Read `g` in ISR1)\n- a2: Line 19 (Write `g` in ISR2) - can preempt ISR1\n- a3: Line 15 (Write `g` in ISR1) - consecutive to the read at line 14\n\nBoth scenarios represent valid atomicity violations where ISR2 can interrupt ISR1 between the read and write operations, causing the write in ISR1 to be based on stale data.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [13, 19, 15]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [14, 19, 15]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations.\n\n**Step 1: Check Control Conditions**\nAll operations on `g` are in interrupt service routines without any control conditions that could prevent their execution:\n- Line 11: `g = 1;` (Write in ISR1) - unconditional\n- Line 13: `__VERIFIER_assert(g == 1);` (Read in ISR1) - unconditional  \n- Line 14: `printf(\"g is %i\", g);` (Read in ISR1) - unconditional\n- Line 15: `g = 0;` (Write in ISR1) - unconditional\n- Line 19: `g = 0;` (Write in ISR2) - unconditional\n\n**Step 2: Check Control Condition Changes**\nNo variables controlling conditions are modified by interrupts.\n\n**Step 3: Check Interrupt Status**\nNo disable_isr() or enable_isr() calls are present, so both interrupts can execute and preempt each other based on their priorities.\n\n**Step 4: Analyze Atomicity Violations**\nFor the <Read, Write, Write> pattern, I need to identify sequences where:\n- a1: Read by lower-priority task\n- a2: Write by higher-priority task (can preempt)\n- a3: Write by same lower-priority task as a1\n\n**Valid violations found:**\n\n1. If ISR1 has lower priority than ISR2:\n   - a1: Line 13 (Read `g` in ISR1)\n   - a2: Line 19 (Write `g` in ISR2) - can preempt ISR1\n   - a3: Line 15 (Write `g` in ISR1) - consecutive write after the read\n\n2. If ISR1 has lower priority than ISR2:\n   - a1: Line 14 (Read `g` in ISR1) \n   - a2: Line 19 (Write `g` in ISR2) - can preempt ISR1\n   - a3: Line 15 (Write `g` in ISR1) - consecutive write after the read\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [13, 19, 15]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [14, 19, 15]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Write> pattern.\n\n**Operations on variable `g`:**\n- Line 11: `g = 1;` (Write in ISR1)\n- Line 13: `__VERIFIER_assert(g == 1);` (Read in ISR1) \n- Line 14: `printf(\"g is %i\", g);` (Read in ISR1)\n- Line 15: `g = 0;` (Write in ISR1)\n- Line 19: `g = 0;` (Write in ISR2)\n\n**Atomicity Violation Analysis:**\n\nFor the <Read, Write, Write> pattern, I need:\n- a1: Read by lower-priority task\n- a2: Write by higher-priority task that can preempt\n- a3: Write by same lower-priority task as a1 (consecutive to a1)\n\n**Valid violations identified:**\n\n1. **Scenario 1:** If ISR1 has lower priority than ISR2:\n   - a1: Line 13 (Read `g` in ISR1)\n   - a2: Line 19 (Write `g` in ISR2) - can preempt ISR1 between read and write\n   - a3: Line 15 (Write `g` in ISR1) - consecutive write operation\n\n2. **Scenario 2:** If ISR1 has lower priority than ISR2:\n   - a1: Line 14 (Read `g` in ISR1)\n   - a2: Line 19 (Write `g` in ISR2) - can preempt ISR1 between read and write  \n   - a3: Line 15 (Write `g` in ISR1) - consecutive write operation\n\nBoth scenarios represent valid atomicity violations where ISR2 can interrupt ISR1 between the read and subsequent write operations, causing the write in ISR1 to potentially be based on stale data.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [13, 19, 15]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [14, 19, 15]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_judge_task_2": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the operations on variable `g`:\n\n1. Line 11: `g = 1;` - Write operation in `svp_simple_639_001_isr_1`\n2. Line 13: `__VERIFIER_assert(g == 1);` - Read operation in `svp_simple_639_001_isr_1`\n3. Line 14: `printf(\"g is %i\", g);` - Read operation in `svp_simple_639_001_isr_1`\n4. Line 15: `g = 0;` - Write operation in `svp_simple_639_001_isr_1`\n5. Line 19: `g = 0;` - Write operation in `svp_simple_639_001_isr_2`\n\nNow I need to check for the <Read, Write, Read> pattern where:\n- a1: Read operation by a lower-priority task\n- a2: Write operation by a higher-priority task\n- a3: Read operation by the same lower-priority task as a1\n\nThe candidate defect suggests:\n- Line 13: Read operation\n- Line 19: Write operation  \n- Line 14: Read operation\n\nLet me verify this pattern:\n- Line 13: Read operation in `svp_simple_639_001_isr_1` (reads `g` in the assertion)\n- Line 19: Write operation in `svp_simple_639_001_isr_2` (writes `g = 0`)\n- Line 14: Read operation in `svp_simple_639_001_isr_1` (reads `g` in printf)\n\nFor this to be a valid atomicity violation:\n1. Lines 13 and 14 must be consecutive reads in the same task execution flow ✓\n2. Line 19 must be from a higher-priority task that can interrupt between lines 13 and 14 ✓\n3. The pattern must be <Read, Write, Read> ✓\n\nThe violation occurs when `svp_simple_639_001_isr_2` (higher priority) interrupts `svp_simple_639_001_isr_1` between the assertion check (line 13) and the printf statement (line 14), changing the value of `g` from 1 to 0.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 19, 14]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations and check if the operations are accessible.\n\nLet me trace through the operations on variable `g`:\n\n1. Line 11: `g = 1;` - Write operation in `svp_simple_639_001_isr_1`\n2. Line 13: `__VERIFIER_assert(g == 1);` - Read operation in `svp_simple_639_001_isr_1`\n3. Line 14: `printf(\"g is %i\", g);` - Read operation in `svp_simple_639_001_isr_1`\n4. Line 15: `g = 0;` - Write operation in `svp_simple_639_001_isr_1`\n5. Line 19: `g = 0;` - Write operation in `svp_simple_639_001_isr_2`\n\n**Step 1: Check Control Conditions**\nAll operations are in the main execution flow of their respective ISR functions with no conditional statements guarding them. All operations are accessible.\n\n**Step 2: Pay Attention to Control Condition Changes**\nNo control conditions are present that could be modified by interrupts.\n\n**Step 3: Check Interrupt Status**\nThere are no `disable_isr()` or `enable_isr()` calls in the code. Both ISR functions can execute and preempt each other based on their priority levels.\n\n**Step 4: Analyze the Atomicity Violation Pattern**\nThe reported pattern is:\n- Line 13: Read operation in `svp_simple_639_001_isr_1`\n- Line 19: Write operation in `svp_simple_639_001_isr_2`\n- Line 14: Read operation in `svp_simple_639_001_isr_1`\n\nThis forms a valid <Read, Write, Read> atomicity violation where `svp_simple_639_001_isr_2` can interrupt `svp_simple_639_001_isr_1` between lines 13 and 14, changing the value of `g` from 1 to 0.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 19, 14]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the operations on variable `g`:\n\n1. Line 11: `g = 1;` - Write operation in `svp_simple_639_001_isr_1`\n2. Line 13: `__VERIFIER_assert(g == 1);` - Read operation in `svp_simple_639_001_isr_1`\n3. Line 14: `printf(\"g is %i\", g);` - Read operation in `svp_simple_639_001_isr_1`\n4. Line 15: `g = 0;` - Write operation in `svp_simple_639_001_isr_1`\n5. Line 19: `g = 0;` - Write operation in `svp_simple_639_001_isr_2`\n\nAnalyzing for the <Read, Write, Read> pattern:\n- Line 13: Read operation in `svp_simple_639_001_isr_1` (reads `g` in the assertion)\n- Line 19: Write operation in `svp_simple_639_001_isr_2` (writes `g = 0`)\n- Line 14: Read operation in `svp_simple_639_001_isr_1` (reads `g` in printf)\n\nThis forms a valid atomicity violation where:\n1. Lines 13 and 14 are consecutive reads in the same ISR execution flow\n2. `svp_simple_639_001_isr_2` can interrupt `svp_simple_639_001_isr_1` between these reads\n3. The interruption changes the value of `g` from 1 to 0, violating the expectation that consecutive reads should return the same value\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [13, 19, 14]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_judge_task_3": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` and identify potential atomicity violations following the <Write, Write, Read> pattern.\n\nLet me trace through the code:\n\n1. **Function Analysis**:\n   - `svp_simple_639_001_main`: Main function (lowest priority)\n   - `svp_simple_639_001_isr_1`: ISR1 (higher priority than main)\n   - `svp_simple_639_001_isr_2`: ISR2 (higher priority than main)\n\n2. **Global Variable Operations on `g`**:\n   - Line 11: `g = 1;` (Write in ISR1)\n   - Line 13: `__VERIFIER_assert(g == 1);` (Read in ISR1)\n   - Line 14: `printf(\"g is %i\", g);` (Read in ISR1)\n   - Line 15: `g = 0;` (Write in ISR1)\n   - Line 19: `g = 0;` (Write in ISR2)\n\n3. **Atomicity Violation Analysis**:\n\nFor the <Write, Write, Read> pattern, I need:\n- a1: Write operation by lower-priority task\n- a2: Write operation by higher-priority task (interrupting)\n- a3: Read operation by the same lower-priority task as a1\n\n**Scenario 1**: ISR1 vs ISR2 (assuming ISR2 has higher priority than ISR1)\n- a1: Line 11 - ISR1 writes `g = 1`\n- a2: Line 19 - ISR2 writes `g = 0` (interrupts ISR1)\n- a3: Line 13 - ISR1 reads `g` in `__VERIFIER_assert(g == 1)`\n\nThis creates a violation where ISR1 expects to read 1 but gets 0 due to ISR2's interference.\n\n**Scenario 2**: ISR1 vs ISR2 (assuming ISR2 has higher priority than ISR1)\n- a1: Line 11 - ISR1 writes `g = 1`\n- a2: Line 19 - ISR2 writes `g = 0` (interrupts ISR1)\n- a3: Line 14 - ISR1 reads `g` in `printf(\"g is %i\", g)`\n\nThis creates another violation where ISR1 expects to read 1 but gets 0 due to ISR2's interference.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [11, 19, 13]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [11, 19, 14]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at this code, I need to analyze the accessibility of each read/write operation on global variable `g`.\n\n**Step 1: Check Control Conditions**\nAll operations on `g` are in straightforward function bodies without any control conditions (if, while, for, etc.). Therefore, all operations are unconditionally accessible when their respective functions execute.\n\n**Step 2: Pay Attention to Control Condition Changes**\nThere are no control conditions in this code that could be affected by interrupt execution.\n\n**Step 3: Check Interrupt Status**\nI notice there are no `disable_isr()` or `enable_isr()` function calls in this code. This means:\n- All interrupts are enabled by default\n- Both ISR1 and ISR2 can preempt the main function\n- ISR2 can potentially preempt ISR1 (assuming standard interrupt priority handling)\n\n**Step 4: Analyze Atomicity Violations**\nThe operations on `g` are:\n- Line 11: `g = 1;` (Write in ISR1)\n- Line 13: `__VERIFIER_assert(g == 1);` (Read in ISR1) \n- Line 14: `printf(\"g is %i\", g);` (Read in ISR1)\n- Line 15: `g = 0;` (Write in ISR1)\n- Line 19: `g = 0;` (Write in ISR2)\n\nAll these operations are accessible since:\n1. No control conditions block their execution\n2. No interrupt disable statements prevent the ISRs from executing\n3. The ISRs can preempt each other and the main function\n\nThe atomicity violations identified in the original report are valid because ISR2 can interrupt ISR1 between the write at line 11 and the reads at lines 13 and 14.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [11, 19, 13]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [11, 19, 14]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Write, Write, Read> pattern.\n\n**Code Analysis:**\n\n1. **Functions and Priority Levels:**\n   - `svp_simple_639_001_main`: Main function (lowest priority)\n   - `svp_simple_639_001_isr_1`: ISR1 (higher priority than main)\n   - `svp_simple_639_001_isr_2`: ISR2 (higher priority than main)\n\n2. **Operations on Global Variable `g`:**\n   - Line 11: `g = 1;` (Write in ISR1)\n   - Line 13: `__VERIFIER_assert(g == 1);` (Read in ISR1)\n   - Line 14: `printf(\"g is %i\", g);` (Read in ISR1)\n   - Line 15: `g = 0;` (Write in ISR1)\n   - Line 19: `g = 0;` (Write in ISR2)\n\n3. **Atomicity Violation Detection:**\n\nFor the <Write, Write, Read> pattern, I need to identify sequences where:\n- a1: Write operation by a lower-priority task\n- a2: Write operation by a higher-priority task (interrupting)\n- a3: Read operation by the same lower-priority task as a1\n\n**Violation 1:**\n- a1: Line 11 - ISR1 writes `g = 1`\n- a2: Line 19 - ISR2 writes `g = 0` (can interrupt ISR1 if ISR2 has higher priority)\n- a3: Line 13 - ISR1 reads `g` in `__VERIFIER_assert(g == 1)`\n\n**Violation 2:**\n- a1: Line 11 - ISR1 writes `g = 1`\n- a2: Line 19 - ISR2 writes `g = 0` (can interrupt ISR1 if ISR2 has higher priority)\n- a3: Line 14 - ISR1 reads `g` in `printf(\"g is %i\", g)`\n\nBoth violations occur when ISR1 expects to read the value 1 that it wrote, but ISR2 interrupts and overwrites it with 0.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [11, 19, 13]\n        },\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [11, 19, 14]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_639_001.c",
+    "total_lines": 30,
+    "analyzed_lines": 30,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 433
+  }
+}

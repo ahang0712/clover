@@ -1,0 +1,110 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 12, 33]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [12, 22, 10]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 35.14 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+**Analysis of `svp_simple_326_001_main`:**
+
+*   **Write to `num` at line 31 (`num = 1;`)**:
+    *   **Control Conditions**: This operation is not guarded by any control statement.
+    *   **Execution Path Analysis**: This is one of the first instructions in the `main` function. It will always be executed when the program starts.
+    *   **Conclusion**: This write operation is **executable**.
+
+*   **Read from `num` at line 33 (`if (num!=1)`)**:
+    *   **Control Conditions**: This operation is not guarded by any control statement.
+    *   **Execution Path Analysis**: This `if` statement is executed immediately after the assignment at line 31. It will always be executed.
+    *   **Conclusion**: This read operation is **executable**.
+
+**Analysis of `svp_simple_326_001_isr_1` (Priority 1):**
+
+*   **Read from `num` at line 10 (`while (num > 0)`)**:
+    *   **Control Conditions**: This read is part of the loop condition itself. The question is whether the ISR can be triggered and execute this line. Assuming interrupts are enabled, `isr_1` can preempt `main`.
+    *   **Execution Path Analysis**: When `isr_1` is triggered, this is the first line of code to be executed.
+    *   **Conclusion**: This read operation is **executable**.
+
+*   **Write to `num` at line 12 (`num=tmp;`)**:
+    *   **Control Conditions**: This write is guarded by the `while (num > 0)` loop at line 10.
+    *   **Variable Value Tracking**:
+        1.  The `main` function executes `num = 1;` at line 31.
+        2.  `isr_1` can preempt `main` after line 31.
+        3.  At this point, `num` is 1.
+        4.  The condition `num > 0` (i.e., `1 > 0`) at line 10 is satisfied.
+    *   **Conclusion**: The loop body is entered, and the write operation at line 12 is **executable**.
+
+**Analysis of `svp_simple_326_001_isr_2` (Priority 2):**
+
+*   **Read from `num` at line 20 (`while (num == 0)`)**:
+    *   **Control Conditions**: This read is part of the loop condition. The question is whether the ISR can be triggered and execute this line. Assuming interrupts are enabled, `isr_2` can preempt `main` or `isr_1`.
+    *   **Execution Path Analysis**: When `isr_2` is triggered, this is the first line of code to be executed.
+    *   **Conclusion**: This read operation is **executable**.
+
+*   **Write to `num` at line 22 (`num=tmp;`)**:
+    *   **Control Conditions**: This write is guarded by the `while (num == 0)` loop at line 20.
+    *   **Variable Value Tracking**:
+        1.  `main` executes `num = 1;`.
+        2.  `isr_1` preempts `main`. It enters its `while` loop because `num` is 1.
+        3.  `isr_1` executes `num=tmp;` at line 12, setting `num` to 0.
+        4.  `isr_2` has a higher priority and can preempt `isr_1` immediately after line 12.
+        5.  At this point, `num` is 0.
+        6.  The condition `num == 0` at line 20 is satisfied.
+    *   **Conclusion**: The loop body is entered, and the write operation at line 22 is **executable**.
+
+### Step 2 & 3: Pay Attention to Control Condition Changes & Check Interrupt Status
+
+The analysis in Step 1 already considers the preemption scenarios and how interrupts can alter the value of `num`, affecting the control conditions in other tasks/ISRs. The code does not contain any `disable_isr` or `enable_isr` calls, so we assume a standard preemption model where higher-priority ISRs can interrupt lower-priority ones and the main task. All analyzed operations are found to be reachable and executable under this model.
+
+### Summary of Accessibility Analysis
+
+*   **Write at line 31**: Executable.
+*   **Read at line 33**: Executable.
+*   **Read at line 10**: Executable.
+*   **Write at line 12**: Executable.
+*   **Read at line 20**: Executable.
+*   **Write at line 22**: Executable.
+
+All read/write operations mentioned in the initial defect report are executable. Therefore, the reported atomicity violations are plausible.
+
+### Step 4: Generate the Final Report
+
+The analysis confirms that all operations involved in the reported violations are accessible. The preemption scenarios described lead to the identified race conditions. Therefore, the original report is correct.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": ["31", "12", "33"]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": ["12", "22", "10"]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 225.08380603790283 seconds

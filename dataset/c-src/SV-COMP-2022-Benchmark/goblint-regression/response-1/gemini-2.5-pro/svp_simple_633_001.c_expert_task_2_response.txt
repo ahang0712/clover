@@ -1,0 +1,93 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": [
+                "Read",
+                "Write",
+                "Read"
+            ],
+            "lines": [
+                15,
+                10,
+                16
+            ]
+        },
+        {
+            "sharedVariable": "g",
+            "accessPattern": [
+                "Read",
+                "Write",
+                "Read"
+            ],
+            "lines": [
+                15,
+                10,
+                18
+            ]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 25.78 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Accessibility Analysis Summary
+
+**Analysis of Violation 1:**
+- **Accesses:** Read at line 15 (`if (g)`), Write at line 10 (`g = 1;`), Read at line 16 (`__VERIFIER_assert(g)`).
+- **Read at line 15:** This operation is at the beginning of the `main` function and is unconditionally executed. It is **accessible**.
+- **Write at line 10:** This operation is in an ISR and is executed upon interrupt preemption. It is **accessible**.
+- **Read at line 16:** This operation is guarded by the control condition `if (g)` at line 15. For this line to be executed, the value of `g` must be non-zero when read at line 15. This can happen if the ISR `svp_simple_633_001_isr_1` runs before line 15, setting `g` to `1`. In this case, the condition is satisfied, and the read at line 16 becomes **accessible**.
+- **Path Analysis:** For this atomicity violation to be valid, an interrupt must change `g` between the read at line 15 and the read at line 16 in a way that causes an error.
+    1. To enter the `if` block, `g` must be non-zero (i.e., `1`) at line 15.
+    2. If an interrupt occurs between line 15 and line 16, `isr_1` will execute, setting `g = 1`.
+    3. When execution resumes at line 16, `g` is still `1`. The assertion `__VERIFIER_assert(g)` will pass.
+    4. There is no execution path where `g` can become `0` after being `1`, as no code sets `g` to `0` after initialization.
+- **Conclusion:** The sequence of operations does not lead to a defect. This is a **false positive**.
+
+**Analysis of Violation 2:**
+- **Accesses:** Read at line 15 (`if (g)`), Write at line 10 (`g = 1;`), Read at line 18 (`__VERIFIER_assert(!g)`).
+- **Read at line 15:** This operation is unconditionally executed. It is **accessible**.
+- **Write at line 10:** This operation is in an ISR and is executed upon interrupt preemption. It is **accessible**.
+- **Read at line 18:** This operation is in the `else` block, guarded by the condition `if (g)` at line 15 being false. The global variable `g` is initialized to `0`. If no interrupt occurs before line 15, the condition `if (g)` will be false, and the `else` block containing line 18 will be executed. Thus, the read at line 18 is **accessible**.
+- **Path Analysis:** A race condition can occur as follows:
+    1. `main` starts, `g` is `0`.
+    2. At line 15, `if (g)` is evaluated. The read of `g` returns `0`, and the condition is determined to be false.
+    3. An interrupt preempts `main` before it executes the `else` block.
+    4. `isr_1` runs and executes `g = 1;` at line 10.
+    5. The ISR returns. `g` is now `1`.
+    6. `main` resumes and, based on the prior evaluation, enters the `else` block.
+    7. At line 18, `__VERIFIER_assert(!g)` is executed. It reads the current value of `g`, which is `1`. The assertion `!1` (i.e., `false`) fails.
+- **Conclusion:** This execution path is possible and demonstrates a valid atomicity violation. This is a **true positive**.
+
+Based on the analysis, the first reported violation is a false positive and will be removed. The second violation is a true positive and will be kept.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": [
+                "Read",
+                "Write",
+                "Read"
+            ],
+            "lines": [
+                15,
+                10,
+                18
+            ]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 112.35031604766846 seconds

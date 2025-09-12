@@ -1,0 +1,239 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "stdout",
+    "stdin",
+    "timerCount",
+    "LED_0",
+    "LED_1",
+    "P1OUT",
+    "cnt1",
+    "cnt2",
+    "cnt3",
+    "WDTPW",
+    "WDTHOLD",
+    "WDTCTL",
+    "LED_DIR",
+    "LED_OUT",
+    "CCIE",
+    "CCTL0",
+    "TASSEL_2",
+    "MC_2",
+    "TACTL",
+    "WDTCLT"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "WDTPW",
+      "line": "87",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "WDTHOLD",
+      "line": "87",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "WDTCTL",
+      "line": "87",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_0",
+      "line": "89",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_1",
+      "line": "89",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "LED_DIR",
+      "line": "89",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_0",
+      "line": "91",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_1",
+      "line": "91",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "LED_OUT",
+      "line": "91",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "CCIE",
+      "line": "93",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "CCTL0",
+      "line": "93",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "TASSEL_2",
+      "line": "94",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "MC_2",
+      "line": "94",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "TACTL",
+      "line": "94",
+      "function": "svp_simple_001_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "timerCount",
+      "line": "96",
+      "function": "svp_simple_001_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "timerCount",
+      "line": "36",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "timerCount",
+      "line": "41",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "timerCount",
+      "line": "44",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_0",
+      "line": "45",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_1",
+      "line": "45",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "P1OUT",
+      "line": "45",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt1",
+      "line": "47",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt1",
+      "line": "47",
+      "function": "Timer_A_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "timerCount",
+      "line": "56",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "timerCount",
+      "line": "60",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "timerCount",
+      "line": "63",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "LED_0",
+      "line": "64",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "P1OUT",
+      "line": "64",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt2",
+      "line": "66",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt2",
+      "line": "66",
+      "function": "Timer_B_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "timerCount",
+      "line": "76",
+      "function": "Timer_Force_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "timerCount",
+      "line": "77",
+      "function": "Timer_Force_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "timerCount",
+      "line": "80",
+      "function": "Timer_Force_isr"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt3",
+      "line": "81",
+      "function": "Timer_Force_isr"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt3",
+      "line": "81",
+      "function": "Timer_Force_isr"
+    }
+  ]
+}

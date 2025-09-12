@@ -1,0 +1,99 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 21, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 23, 35]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 1.73 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step 1: Check Control Conditions
+
+#### Operation: `data1 = 10;` (Line 30)
+- **Control Conditions:** None
+- **Execution:** Always executed in `svp_simple_325_001_main`.
+
+#### Operation: `data1 = tmp;` (Line 21)
+- **Control Conditions:** None
+- **Execution:** Always executed in `svp_simple_325_001_isr_2`.
+
+#### Operation: `data1 != 16` (Line 35)
+- **Control Conditions:** `data1 != 16`
+  - **Initialization:** `data1` set to 10 at line 30.
+  - **Modification:** Modified by ISR (`data1 = tmp;` at line 21).
+  - **Reachability:** Can be true or false depending on ISR execution order.
+
+#### Operation: `data2 = 10;` (Line 31)
+- **Control Conditions:** None
+- **Execution:** Always executed in `svp_simple_325_001_main`.
+
+#### Operation: `data2 = tmp1;` (Line 23)
+- **Control Conditions:** None
+- **Execution:** Always executed in `svp_simple_325_001_isr_2`.
+
+#### Operation: `data2 != 5` (Line 35)
+- **Control Conditions:** `data2 != 5`
+  - **Initialization:** `data2` set to 10 at line 31.
+  - **Modification:** Modified by ISR (`data2 = tmp1;` at line 23).
+  - **Reachability:** Can be true or false depending on ISR execution order.
+
+### Step 2: Pay Attention to Control Condition Changes
+- ISR2 modifies `data1` and `data2`, affecting the conditions at line 35.
+
+### Step 3: Check Interrupt Status
+- No explicit interrupt disabling/enabling logic impacts the execution of ISRs.
+
+### Summary
+- All operations can be executed given the ISR preemption model.
+- Atomicity violations exist due to concurrent access patterns between main and ISRs.
+
+### Final Report
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 21, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 23, 35]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "data1",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [30, 21, 35]
+        },
+        {
+            "sharedVariable": "data2",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [31, 23, 35]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 20.197799921035767 seconds

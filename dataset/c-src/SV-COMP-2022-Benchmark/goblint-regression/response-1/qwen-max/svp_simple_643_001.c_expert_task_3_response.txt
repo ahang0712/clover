@@ -1,0 +1,116 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [19, 63, 26]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 3.30 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step-by-Step Analysis
+
+#### **Step 1: Check Control Conditions**
+
+We analyze each read/write operation on the shared variable `g` mentioned in the defect report to determine whether it can be executed.
+
+---
+
+**Operation 1: Write at Line 19 (`g = 0;`)**  
+- **Control Condition**: This write operation is in the function `pqueue_init()` and is not guarded by any conditional statement.  
+- **Execution Path**:  
+  - The function `pqueue_init()` is called unconditionally at line 79 in `svp_simple_643_001_main()`.  
+  - Therefore, this write operation will always execute when `pqueue_init()` is called.  
+- **Conclusion**: The write operation at line 19 is accessible.
+
+---
+
+**Operation 2: Write at Line 63 (`g--;`)**  
+- **Control Condition**: This write operation is inside the `if (g > 0)` block in the function `isr_pqueue_get()`.  
+- **Execution Path**:  
+  - The function `isr_pqueue_get()` is called from the ISR `svp_simple_643_001_isr1()` at line 73.  
+  - For the write operation to execute, the condition `g > 0` must be true.  
+  - The value of `g` depends on prior operations:  
+    - Initially, `g` is set to 0 in `pqueue_init()` at line 19.  
+    - `g` is incremented in `pqueue_put()` (lines 28–29) and decremented in `pqueue_get()` (lines 45–46) and `isr_pqueue_get()` (line 63).  
+    - Since `pqueue_put()` is called multiple times in a loop (lines 82–85), `g` will eventually become greater than 0.  
+  - Once `g > 0`, the ISR can preempt and execute the write operation.  
+- **Conclusion**: The write operation at line 63 is accessible under the condition that `g > 0`.
+
+---
+
+**Operation 3: Read at Line 26 (`if (g < 1000)`)**  
+- **Control Condition**: This read operation is part of the condition `if (g < 1000)` in the function `pqueue_put()`.  
+- **Execution Path**:  
+  - The function `pqueue_put()` is called multiple times in a loop in `svp_simple_643_001_main()` (lines 82–85).  
+  - The read operation occurs every time the condition `if (g < 1000)` is evaluated.  
+  - Initially, `g` is set to 0 in `pqueue_init()` at line 19.  
+  - As `pqueue_put()` increments `g`, the condition `g < 1000` will remain true until `g` reaches 1000.  
+  - Therefore, the read operation will execute repeatedly during the loop iterations.  
+- **Conclusion**: The read operation at line 26 is accessible.
+
+---
+
+#### **Step 2: Pay Attention to Control Condition Changes**
+
+- Interrupts may preempt and alter the value of `g`.  
+- Specifically, the ISR `svp_simple_643_001_isr1()` calls `isr_pqueue_get()`, which modifies `g` if `g > 0`.  
+- This means that the control conditions for `pqueue_put()` (line 26) and `isr_pqueue_get()` (line 63) can change due to interrupt preemption.  
+- These changes are accounted for in the analysis above.
+
+---
+
+#### **Step 3: Check Interrupt Status**
+
+- There are no explicit calls to `disable_isr()` or `enable_isr()` in the code.  
+- By default, interrupts are assumed to be enabled unless explicitly disabled.  
+- Therefore, the ISR `svp_simple_643_001_isr1()` can preempt the main function or other functions at any time.  
+- This does not prevent any of the analyzed read/write operations from being executed.
+
+---
+
+#### **Step 4: Generate the Final Report**
+
+Based on the analysis above:
+- The write operation at line 19 is accessible.  
+- The write operation at line 63 is accessible under the condition that `g > 0`.  
+- The read operation at line 26 is accessible.  
+
+The reported atomicity violation involving these operations is valid.
+
+---
+
+### Final Output
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [19, 63, 26]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [19, 63, 26]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 161.77676916122437 seconds

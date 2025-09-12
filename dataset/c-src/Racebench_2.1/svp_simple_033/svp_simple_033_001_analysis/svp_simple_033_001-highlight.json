@@ -1,0 +1,118 @@
+{
+  "defect_count" : 4,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        68,
+        95,
+        69
+      ],
+      "sharedVariable" : "svp_simple_021_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWW"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        68,
+        95,
+        81
+      ],
+      "sharedVariable" : "svp_simple_021_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        60,
+        95,
+        68
+      ],
+      "sharedVariable" : "svp_simple_021_001_tc_block_rcvd_bytes_ch1",
+      "type" : "WWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        69,
+        95,
+        81
+      ],
+      "sharedVariable" : "svp_simple_021_001_tc_block_rcvd_bytes_ch1",
+      "type" : "WWR"
+    }
+  ]
+}

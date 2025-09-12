@@ -1,0 +1,126 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [11, 22, 12]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 5.57 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step-by-Step Analysis
+
+#### **Step 1: Check Control Conditions**
+
+**ISR 1 (`svp_simple_326_001_isr_1`)**:
+- **Line 10**: `while (num > 0)`
+  - **Control Condition**: `num > 0`
+  - **Variable Value Tracking**:
+    - `num` is initialized to `1` in the main function at line 31.
+    - The value of `num` can be modified by ISR 1 and ISR 2.
+    - In ISR 1, `num` is decremented in the loop until it becomes `0`.
+    - In ISR 2, `num` is also decremented but only if `num == 0`, which would make the condition false.
+  - **Execution Path Analysis**:
+    - Initially, `num` is `1`, so the condition `num > 0` is true, allowing the loop to execute.
+    - As `num` is decremented inside the loop, eventually `num` will become `0`, causing the loop to terminate.
+  - **Conclusion**: The control condition can be satisfied, and the read operation on line 10 can be executed.
+
+- **Lines 11 and 12**: Inside the loop
+  - These lines are executed as long as the loop condition (`num > 0`) is satisfied.
+  - **Conclusion**: Both read (line 11) and write (line 12) operations can be executed.
+
+**ISR 2 (`svp_simple_326_001_isr_2`)**:
+- **Line 20**: `while (num == 0)`
+  - **Control Condition**: `num == 0`
+  - **Variable Value Tracking**:
+    - `num` starts at `1` in the main function.
+    - ISR 1 decrements `num` until it reaches `0`.
+    - Once `num` is `0`, ISR 2’s condition `num == 0` can be satisfied.
+  - **Execution Path Analysis**:
+    - Initially, `num == 0` is false because `num` is `1`.
+    - After ISR 1 runs and decrements `num` to `0`, ISR 2’s condition becomes true, allowing the loop to execute.
+  - **Conclusion**: The control condition can be satisfied after ISR 1 modifies `num`, and the read operation on line 20 can be executed.
+
+- **Lines 21 and 22**: Inside the loop
+  - These lines are executed as long as the loop condition (`num == 0`) is satisfied.
+  - **Conclusion**: Both read (line 21) and write (line 22) operations can be executed.
+
+**Main Function (`svp_simple_326_001_main`)**:
+- **Line 33**: `if (num != 1)`
+  - **Control Condition**: `num != 1`
+  - **Variable Value Tracking**:
+    - `num` is initialized to `1` at line 31.
+    - ISR 1 decrements `num` to `0`.
+    - If ISR 1 runs before this condition is checked, `num` will no longer be `1`, making the condition true.
+  - **Execution Path Analysis**:
+    - Initially, `num` is `1`, so `num != 1` is false, and the block is skipped.
+    - However, if ISR 1 runs before this check, `num` will be decremented to `0`, making the condition true.
+  - **Conclusion**: The control condition can be satisfied if ISR 1 runs first, and the read operation on line 33 can be executed.
+
+#### **Step 2: Pay Attention to Control Condition Changes**
+- ISR 1 modifies `num`, which affects the conditions in both ISR 2 and the main function.
+- ISR 2’s condition (`num == 0`) depends on ISR 1 decrementing `num` to `0`.
+
+#### **Step 3: Check Interrupt Status**
+- There are no explicit calls to `disable_isr()` or `enable_isr()` in the provided code.
+- Without specific interrupt disabling/enabling, we assume interrupts are enabled by default, allowing preemption between ISRs and the main function.
+
+#### **Step 4: Generate the Final Report**
+
+**Summary of Accessibility Analysis**:
+- All read/write operations mentioned in the defect report can be executed under certain runtime conditions:
+  - Line 10: Read (`num > 0`) – Can be executed when `num > 0`.
+  - Lines 11 and 12: Read/Write inside ISR 1 – Executed while `num > 0`.
+  - Line 20: Read (`num == 0`) – Can be executed after ISR 1 sets `num` to `0`.
+  - Lines 21 and 22: Read/Write inside ISR 2 – Executed while `num == 0`.
+  - Line 33: Read (`num != 1`) – Can be executed if ISR 1 modifies `num`.
+
+**Final Report**:
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [11, 22, 12]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [10, 22, 12]
+        },
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Write"],
+            "lines": [11, 22, 12]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 346.6231801509857 seconds

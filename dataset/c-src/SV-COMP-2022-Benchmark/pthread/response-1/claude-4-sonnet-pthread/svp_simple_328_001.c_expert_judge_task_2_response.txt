@@ -1,0 +1,141 @@
+[Expert R1] (Detect atomicity violations in the code.)
+Looking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Write, Read, Write> pattern.
+
+Let me trace through the operations:
+
+**Global variable operations:**
+- `i`: 
+  - Line 15 (Write, ISR1, priority 1): `i = j + 1;`
+  - Line 21 (Read, ISR2, priority 2): `j = i + 1;`
+  - Line 28 (Read, main, priority 0): `int condI = i >= LIMIT;`
+
+- `j`:
+  - Line 15 (Read, ISR1, priority 1): `i = j + 1;`
+  - Line 21 (Write, ISR2, priority 2): `j = i + 1;`
+  - Line 30 (Read, main, priority 0): `int condJ = j >= LIMIT;`
+
+**Loop Analysis:**
+Both ISR1 and ISR2 contain loops that execute NUM (5) times. Each loop iteration performs the same operation on the global variables.
+
+**Priority Analysis:**
+- main function: priority 0 (lowest)
+- ISR1: priority 1 (medium)
+- ISR2: priority 2 (highest)
+
+**Atomicity Violation Detection:**
+
+For variable `i`:
+- ISR1 writes to `i` (line 15) - this can happen multiple times due to the loop
+- ISR2 can preempt ISR1 (higher priority) and read `i` (line 21)
+- ISR1 continues and writes to `i` again in the next loop iteration (line 15)
+
+This creates a <Write, Read, Write> pattern where:
+- a1: ISR1 writes to `i` (line 15, iteration n)
+- a2: ISR2 preempts and reads `i` (line 21)
+- a3: ISR1 continues and writes to `i` (line 15, iteration n+1)
+
+The candidate defect identified this pattern correctly with lines [15, 21, 15], representing the write-read-write sequence on variable `i`.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [15, 21, 15]
+        }
+    ]
+}
+```
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Looking at this code, I need to analyze the accessibility of the read/write operations mentioned in the defect report.
+
+**Step 1: Check Control Conditions**
+
+The operations in question are:
+- Line 15 (Write to `i`): Inside `for (int k = 0; k < NUM; k++)` where NUM = 5
+- Line 21 (Read from `i`): Inside `for (int k = 0; k < NUM; k++)` where NUM = 5
+
+Both operations are within for loops that will execute 5 times since NUM is defined as 5. These conditions are always true during execution.
+
+**Step 2: Pay Attention to Control Condition Changes**
+
+There are no interrupt handlers that modify the loop conditions or NUM value. The loop conditions remain valid throughout execution.
+
+**Step 3: Check Interrupt Status**
+
+There are no `disable_isr()` or `enable_isr()` calls in this code. Both ISR1 (priority 1) and ISR2 (priority 2) can execute and preempt each other based on their priorities. Since ISR2 has higher priority than ISR1, ISR2 can preempt ISR1.
+
+**Step 4: Accessibility Analysis**
+
+- Line 15 (Write to `i` in ISR1): Accessible - the for loop executes 5 times
+- Line 21 (Read from `i` in ISR2): Accessible - the for loop executes 5 times, and ISR2 can preempt ISR1 due to higher priority
+
+The atomicity violation pattern <Write, Read, Write> on variable `i` is valid:
+1. ISR1 writes to `i` (line 15, loop iteration n)
+2. ISR2 preempts ISR1 and reads `i` (line 21)
+3. ISR1 resumes and writes to `i` again (line 15, loop iteration n+1)
+
+All operations are accessible at runtime.
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [15, 21, 15]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Looking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Write, Read, Write> pattern.
+
+**Global variable operations:**
+- `i`: 
+  - Line 15 (Write, ISR1, priority 1): `i = j + 1;`
+  - Line 21 (Read, ISR2, priority 2): `j = i + 1;`
+  - Line 28 (Read, main, priority 0): `int condI = i >= LIMIT;`
+
+- `j`:
+  - Line 15 (Read, ISR1, priority 1): `i = j + 1;`
+  - Line 21 (Write, ISR2, priority 2): `j = i + 1;`
+  - Line 30 (Read, main, priority 0): `int condJ = j >= LIMIT;`
+
+**Loop Analysis:**
+Both ISR1 and ISR2 contain loops that execute NUM (5) times. Each loop iteration performs the same operation on the global variables.
+
+**Priority Analysis:**
+- main function: priority 0 (lowest)
+- ISR1: priority 1 (medium)  
+- ISR2: priority 2 (highest)
+
+**Atomicity Violation Detection:**
+
+For variable `i`:
+- ISR1 writes to `i` (line 15) - this can happen multiple times due to the loop
+- ISR2 can preempt ISR1 (higher priority) and read `i` (line 21)
+- ISR1 continues and writes to `i` again in the next loop iteration (line 15)
+
+This creates a <Write, Read, Write> pattern where:
+- a1: ISR1 writes to `i` (line 15, iteration n)
+- a2: ISR2 preempts and reads `i` (line 21)
+- a3: ISR1 continues and writes to `i` (line 15, iteration n+1)
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "i",
+            "accessPattern": ["Write", "Read", "Write"],
+            "lines": [15, 21, 15]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 41.41724491119385 seconds

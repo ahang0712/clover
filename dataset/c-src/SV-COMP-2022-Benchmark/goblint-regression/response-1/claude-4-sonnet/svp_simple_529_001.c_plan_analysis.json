@@ -1,0 +1,75 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "x"
+    ],
+    "variable_types": {
+      "x": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "x",
+        "op": "load",
+        "function": "svp_simple_529_001_isr_1",
+        "line": "6"
+      },
+      {
+        "variable": "x",
+        "op": "store",
+        "function": "svp_simple_529_001_isr_1",
+        "line": "7"
+      }
+    ],
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "x"
+      ],
+      "MAIN_INFO": [],
+      "ISR_INFO": [
+        {
+          "operation": "load",
+          "variable": "x",
+          "line": "6",
+          "function": "svp_simple_529_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "x",
+          "line": "7",
+          "function": "svp_simple_529_001_isr_1"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 0,
+      "defects": []
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"varA\",\n        \"varB\",\n        \"varC\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    },\n    {\n      \"sharedVariables\": [\n        \"varD\",\n        \"varE\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"varF\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"varA\",\n        \"varB\",\n        \"varC\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 6\n    },\n    {\n      \"sharedVariables\": [\n        \"varD\",\n        \"varE\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"varF\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_529_001.c",
+    "total_lines": 14,
+    "analyzed_lines": 14,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 150
+  }
+}

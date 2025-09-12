@@ -1,0 +1,146 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [10, 22, 11]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 4.18 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+### Step-by-Step Analysis
+
+#### **Step 1: Check Control Conditions**
+
+**Read/Write Operations in `svp_simple_326_001_isr_1`:**
+- **Line 10 (`while (num > 0)`):**
+  - **Control Condition:** The condition is `num > 0`.
+  - **Variable Value Tracking:** 
+    - `num` is initialized to `1` in `svp_simple_326_001_main()` (line 31).
+    - Inside `svp_simple_326_001_isr_1`, `num` is decremented in a loop (`num = tmp;` where `tmp = num - 1`).
+    - The value of `num` will eventually reach `0` due to the decrement operation.
+  - **Execution Path Analysis:** 
+    - Initially, `num > 0` evaluates to true because `num` starts at `1`.
+    - The loop continues until `num` becomes `0`. At that point, the condition `num > 0` becomes false, and the loop exits.
+  - **Conclusion:** The read operation on `num` in the condition `num > 0` (line 10) can be executed multiple times as long as `num > 0`.
+
+- **Line 11 (`int tmp = num - 1`):**
+  - **Control Condition:** This line is inside the `while (num > 0)` loop.
+  - **Variable Value Tracking:** 
+    - As analyzed above, `num` starts at `1` and is decremented in each iteration.
+  - **Execution Path Analysis:** 
+    - This line is executed in every iteration of the loop as long as `num > 0`.
+  - **Conclusion:** The read operation on `num` in this line (line 11) can be executed multiple times.
+
+- **Line 12 (`num = tmp`):**
+  - **Control Condition:** This line is also inside the `while (num > 0)` loop.
+  - **Variable Value Tracking:** 
+    - `tmp` is derived from `num - 1`, and `num` is updated to `tmp` in each iteration.
+  - **Execution Path Analysis:** 
+    - This write operation occurs in every iteration of the loop as long as `num > 0`.
+  - **Conclusion:** The write operation on `num` in this line (line 12) can be executed multiple times.
+
+---
+
+**Read/Write Operations in `svp_simple_326_001_isr_2`:**
+- **Line 20 (`while (num == 0)`):**
+  - **Control Condition:** The condition is `num == 0`.
+  - **Variable Value Tracking:** 
+    - `num` starts at `1` in `svp_simple_326_001_main()` (line 31).
+    - In `svp_simple_326_001_isr_1`, `num` is decremented to `0`.
+    - Once `num` reaches `0`, the condition `num == 0` becomes true.
+  - **Execution Path Analysis:** 
+    - Initially, `num == 0` evaluates to false because `num` starts at `1`.
+    - After `svp_simple_326_001_isr_1` decrements `num` to `0`, the condition `num == 0` becomes true, and the loop in `svp_simple_326_001_isr_2` can execute.
+  - **Conclusion:** The read operation on `num` in the condition `num == 0` (line 20) can be executed once `num` becomes `0`.
+
+- **Line 21 (`int tmp = num - 1`):**
+  - **Control Condition:** This line is inside the `while (num == 0)` loop.
+  - **Variable Value Tracking:** 
+    - As analyzed above, `num` becomes `0` after being decremented in `svp_simple_326_001_isr_1`.
+  - **Execution Path Analysis:** 
+    - This line is executed in every iteration of the loop as long as `num == 0`.
+  - **Conclusion:** The read operation on `num` in this line (line 21) can be executed multiple times once `num == 0`.
+
+- **Line 22 (`num = tmp`):**
+  - **Control Condition:** This line is also inside the `while (num == 0)` loop.
+  - **Variable Value Tracking:** 
+    - `tmp` is derived from `num - 1`, and `num` is updated to `tmp` in each iteration.
+  - **Execution Path Analysis:** 
+    - This write operation occurs in every iteration of the loop as long as `num == 0`.
+  - **Conclusion:** The write operation on `num` in this line (line 22) can be executed multiple times once `num == 0`.
+
+---
+
+**Read/Write Operations in `svp_simple_326_001_main`:**
+- **Line 31 (`num = 1`):**
+  - **Control Condition:** There is no control condition guarding this write operation.
+  - **Conclusion:** The write operation on `num` in this line (line 31) is always executed.
+
+- **Line 33 (`if (num != 1)`):**
+  - **Control Condition:** The condition is `num != 1`.
+  - **Variable Value Tracking:** 
+    - `num` is initialized to `1` in line 31.
+    - Unless preempted by an ISR, `num` remains `1` when this condition is evaluated.
+  - **Execution Path Analysis:** 
+    - Since `num` is `1` at this point, the condition `num != 1` evaluates to false.
+  - **Conclusion:** The read operation on `num` in the condition `num != 1` (line 33) is executed, but the block containing the error path is never entered.
+
+---
+
+#### **Step 2: Pay Attention to Control Condition Changes**
+- Interrupts `svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2` modify `num`.
+- `svp_simple_326_001_isr_1` decrements `num` to `0`, enabling the loop in `svp_simple_326_001_isr_2` to execute.
+- No additional interrupt disabling/enabling affects the accessibility of these operations.
+
+---
+
+#### **Step 3: Check Interrupt Status**
+- No explicit calls to `disable_isr` or `enable_isr` are present in the code.
+- Both ISRs (`svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2`) are assumed to be enabled by default.
+- Therefore, all read/write operations in the ISRs can be executed under normal interrupt conditions.
+
+---
+
+#### **Step 4: Generate the Final Report**
+
+**Summary of Analysis:**
+- All read/write operations on `num` mentioned in the defect report can be executed under specific conditions:
+  - Line 10: Read (`num > 0`) can be executed as long as `num > 0`.
+  - Line 11: Read (`num - 1`) can be executed in each iteration of the loop in `svp_simple_326_001_isr_1`.
+  - Line 22: Write (`num = tmp`) can be executed in each iteration of the loop in `svp_simple_326_001_isr_2`.
+
+**Final Output:**
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": ["10", "22", "11"]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "num",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [10, 22, 11]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 344.0464220046997 seconds

@@ -1,0 +1,146 @@
+{
+  "defect_count" : 5,
+  "defects" : 
+  [
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        31,
+        75,
+        68
+      ],
+      "sharedVariable" : "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        31,
+        75,
+        70
+      ],
+      "sharedVariable" : "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        68,
+        75,
+        70
+      ],
+      "sharedVariable" : "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        68,
+        75,
+        50
+      ],
+      "sharedVariable" : "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWR"
+    },
+    {
+      "accessPattern" : 
+      [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "arrayInfo" : 
+      [
+        "",
+        "",
+        ""
+      ],
+      "isArrayAccess" : 
+      [
+        false,
+        false,
+        false
+      ],
+      "lines" : 
+      [
+        70,
+        75,
+        50
+      ],
+      "sharedVariable" : "svp_simple_031_001_tc_block_rcvd_bytes_ch1",
+      "type" : "RWR"
+    }
+  ]
+}

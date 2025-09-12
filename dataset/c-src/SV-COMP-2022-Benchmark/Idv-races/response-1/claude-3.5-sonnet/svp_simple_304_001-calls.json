@@ -1,0 +1,82 @@
+{
+  "functions": [
+    {
+      "name": "reach_error",
+      "type": "defined"
+    },
+    {
+      "name": "ldv_assert",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_304_001_isr_1",
+      "type": "defined"
+    },
+    {
+      "name": "module_init",
+      "type": "defined"
+    },
+    {
+      "name": "module_exit",
+      "type": "defined"
+    },
+    {
+      "name": "svp_simple_304_001_main",
+      "type": "defined"
+    },
+    {
+      "name": "__VERIFIER_nondet_int",
+      "type": "external"
+    },
+    {
+      "name": "abort",
+      "type": "external"
+    }
+  ],
+  "call_graph": [
+    {
+      "caller": "ldv_assert",
+      "callee": "reach_error"
+    },
+    {
+      "caller": "ldv_assert",
+      "callee": "abort"
+    },
+    {
+      "caller": "module_init",
+      "callee": "ldv_assert"
+    },
+    {
+      "caller": "module_init",
+      "callee": "__VERIFIER_nondet_int"
+    },
+    {
+      "caller": "module_init",
+      "callee": "ldv_assert"
+    },
+    {
+      "caller": "module_exit",
+      "callee": "ldv_assert"
+    },
+    {
+      "caller": "module_exit",
+      "callee": "ldv_assert"
+    },
+    {
+      "caller": "svp_simple_304_001_main",
+      "callee": "module_init"
+    },
+    {
+      "caller": "svp_simple_304_001_main",
+      "callee": "module_exit"
+    },
+    {
+      "caller": "svp_simple_304_001_main",
+      "callee": "module_exit"
+    },
+    {
+      "caller": "svp_simple_304_001_main",
+      "callee": "module_exit"
+    }
+  ]
+}

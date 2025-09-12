@@ -1,0 +1,325 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "i",
+        "j"
+      ],
+      "variable_types": {
+        "i": "unknown",
+        "j": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "30"
+        },
+        {
+          "variable": "j",
+          "op": "load",
+          "function": "svp_simple_331_001_main",
+          "line": "32"
+        },
+        {
+          "variable": "j",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "16"
+        },
+        {
+          "variable": "i",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_1",
+          "line": "16"
+        },
+        {
+          "variable": "i",
+          "op": "load",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "23"
+        },
+        {
+          "variable": "j",
+          "op": "store",
+          "function": "svp_simple_331_001_isr_2",
+          "line": "23"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "svp_simple_331_001_main",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "svp_simple_331_001_main",
+          "callee": "abort"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "j",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "i",
+            "type": "WRW"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "i",
+          "j"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "30",
+            "function": "svp_simple_331_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "j",
+            "line": "32",
+            "function": "svp_simple_331_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "j",
+            "line": "16",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "i",
+            "line": "16",
+            "function": "svp_simple_331_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "i",
+            "line": "23",
+            "function": "svp_simple_331_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "j",
+            "line": "23",
+            "function": "svp_simple_331_001_isr_2"
+          }
+        ]
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_331_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_331_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 2,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "j",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              16,
+              23,
+              16
+            ],
+            "sharedVariable": "i",
+            "type": "WRW"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"j\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"i\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"j\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"i\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_331_001.c",
+      "total_lines": 38,
+      "analyzed_lines": 38,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 595
+    }
+  },
+  "expert_judge_results": {
+    "expert_judge_task_1": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the execution:\n\n**Global variables:** `i = 3, j = 6`\n\n**Functions and their priorities:**\n- `svp_simple_331_001_main`: main function (lowest priority)\n- `svp_simple_331_001_isr_1`: priority 1 \n- `svp_simple_331_001_isr_2`: priority 2 (highest priority)\n\n**Operations on global variables:**\n- Line 16: `i = j + 1;` (Read `j`, Write `i`) - in isr_1\n- Line 23: `j = i + 1;` (Read `i`, Write `j`) - in isr_2  \n- Line 30: `int condI = i > LIMIT;` (Read `i`) - in main\n- Line 32: `int condJ = j > LIMIT;` (Read `j`) - in main\n\n**Analysis for variable `j`:**\n\nThe candidate defect suggests a <Read, Write, Read> pattern on variable `j` at lines [16, 23, 16].\n\nLet me verify this:\n- Line 16: `i = j + 1;` - This is a **Read** operation on `j` (in isr_1, priority 1)\n- Line 23: `j = i + 1;` - This is a **Write** operation on `j` (in isr_2, priority 2)\n- Line 16: `i = j + 1;` - This would be another **Read** operation on `j` (in isr_1, priority 1)\n\nFor this to be a valid atomicity violation:\n1. The two read operations must be consecutive reads by the same lower-priority task\n2. The write operation must be by a higher-priority task that can interrupt\n\nSince isr_1 has a loop (`for (int k = 0; k < NUM; k++)`), line 16 executes multiple times. Between iterations of this loop, isr_2 (priority 2) can preempt isr_1 (priority 1) and execute line 23, writing to `j`. This creates the pattern:\n- Read `j` (line 16, first iteration of isr_1)\n- Write `j` (line 23, isr_2 preempts)\n- Read `j` (line 16, subsequent iteration of isr_1)\n\nThis matches the <Read, Write, Read> atomicity violation pattern.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"j\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the accessibility of the read/write operations for variable `j` mentioned in the defect report.\n\n**Step 1: Check Control Conditions**\n\nThe reported violation involves:\n- Line 16: `i = j + 1;` (Read operation on `j`) - in `svp_simple_331_001_isr_1`\n- Line 23: `j = i + 1;` (Write operation on `j`) - in `svp_simple_331_001_isr_2`\n- Line 16: `i = j + 1;` (Read operation on `j`) - in `svp_simple_331_001_isr_1`\n\nLet me check the control conditions:\n\n1. **Line 16** is inside a for loop: `for (int k = 0; k < NUM; k++)` where `NUM = 20`\n   - This condition `k < NUM` (k < 20) can be true at runtime since k starts at 0\n   - The loop will execute 20 times, so line 16 is accessible\n\n2. **Line 23** is inside a for loop: `for (int k = 0; k < NUM; k++)` where `NUM = 20`\n   - This condition `k < NUM` (k < 20) can be true at runtime since k starts at 0\n   - The loop will execute 20 times, so line 23 is accessible\n\n**Step 2: Check Control Condition Changes**\n- No interrupt handling code that changes control conditions is present\n\n**Step 3: Check Interrupt Status**\n- No `disable_isr()` or `enable_isr()` calls are present in the code\n- Both ISR functions can execute and preempt based on their priorities\n- `svp_simple_331_001_isr_2` (priority 2) can preempt `svp_simple_331_001_isr_1` (priority 1)\n\n**Step 4: Generate Final Report**\n\nAll operations are accessible:\n- Line 16 executes multiple times due to the loop in `svp_simple_331_001_isr_1`\n- Line 23 executes multiple times due to the loop in `svp_simple_331_001_isr_2`\n- The higher priority ISR2 can preempt the lower priority ISR1, creating the atomicity violation pattern\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"j\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Read, Write, Read> pattern.\n\n**Global variables:** `i = 3, j = 6`\n\n**Functions and their priorities:**\n- `svp_simple_331_001_main`: main function (lowest priority)\n- `svp_simple_331_001_isr_1`: priority 1 \n- `svp_simple_331_001_isr_2`: priority 2 (highest priority)\n\n**Operations on global variables:**\n- Line 16: `i = j + 1;` (Read `j`, Write `i`) - in isr_1\n- Line 23: `j = i + 1;` (Read `i`, Write `j`) - in isr_2  \n- Line 30: `int condI = i > LIMIT;` (Read `i`) - in main\n- Line 32: `int condJ = j > LIMIT;` (Read `j`) - in main\n\n**Analysis for variable `j`:**\n\nSince isr_1 has a loop (`for (int k = 0; k < NUM; k++)`), line 16 executes multiple times. Between iterations of this loop, isr_2 (priority 2) can preempt isr_1 (priority 1) and execute line 23, writing to `j`. This creates the pattern:\n- Read `j` (line 16, first iteration of isr_1)\n- Write `j` (line 23, isr_2 preempts)\n- Read `j` (line 16, subsequent iteration of isr_1)\n\nThis matches the <Read, Write, Read> atomicity violation pattern where consecutive reads by the same lower-priority task are interrupted by a write from a higher-priority task.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"j\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_judge_task_2": [
+      "WRW",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Write, Read, Write> pattern.\n\nLet me trace through the execution:\n\n**Global variables:** `i` and `j` (both initialized to 3 and 6 respectively)\n\n**Functions and their priorities:**\n- `svp_simple_331_001_main`: Priority 0 (main function)\n- `svp_simple_331_001_isr_1`: Priority 1 \n- `svp_simple_331_001_isr_2`: Priority 2\n\n**Operations on global variables:**\n- Line 16: `i = j + 1;` (Write to `i`, Read from `j`) in ISR1 (priority 1)\n- Line 23: `j = i + 1;` (Read from `i`, Write to `j`) in ISR2 (priority 2)\n- Line 30: `int condI = i > LIMIT;` (Read from `i`) in main (priority 0)\n- Line 32: `int condJ = j > LIMIT;` (Read from `j`) in main (priority 0)\n\n**Analysis for variable `i`:**\n\nLooking at the candidate defect for variable `i` with pattern Write->Read->Write at lines 16, 23, 16:\n\n1. **First Write (a1)**: Line 16 in ISR1 - `i = j + 1;` (priority 1)\n2. **Read (a2)**: Line 23 in ISR2 - `j = i + 1;` reads `i` (priority 2)  \n3. **Second Write (a3)**: Line 16 in ISR1 - `i = j + 1;` (priority 1)\n\nThis represents a loop scenario where:\n- ISR1 (priority 1) writes to `i` in its loop\n- ISR2 (priority 2) can preempt ISR1 and read the intermediate value of `i`\n- ISR1 continues and writes to `i` again in the next loop iteration\n\nSince ISR2 has higher priority (2) than ISR1 (1), ISR2 can preempt ISR1 between consecutive writes to `i` in the loop, creating an atomicity violation where the intermediate state of `i` is observed.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at this code, I need to analyze the accessibility of the read/write operations for atomicity violations.\n\n**Step 1: Check Control Conditions**\n\nAll operations are within loops or unconditional statements:\n- Line 16: `i = j + 1;` is in a for loop `for (int k = 0; k < NUM; k++)` where NUM = 20, so this executes 20 times\n- Line 23: `j = i + 1;` is in a for loop `for (int k = 0; k < NUM; k++)` where NUM = 20, so this executes 20 times  \n- Lines 30, 32: Unconditional reads in main function\n\nAll control conditions can be true at runtime.\n\n**Step 2: Check Control Condition Changes**\nNo interrupt handlers modify the loop conditions or NUM constant.\n\n**Step 3: Check Interrupt Status**\nNo disable_isr() or enable_isr() calls are present in the code. Both ISR functions can execute and preempt based on their priorities:\n- ISR1 has priority 1\n- ISR2 has priority 2 (higher priority, can preempt ISR1)\n- Main has priority 0 (lowest priority)\n\n**Step 4: Analyze Atomicity Violations**\n\nFor variable `i`:\n- **First Write**: Line 16 in ISR1 (priority 1) - `i = j + 1;`\n- **Read**: Line 23 in ISR2 (priority 2) - reads `i` in `j = i + 1;`\n- **Second Write**: Line 16 in ISR1 (priority 1) - next iteration of `i = j + 1;`\n\nThis creates a valid atomicity violation where ISR2 (higher priority) can preempt ISR1 between consecutive writes to `i` in the loop, reading an intermediate value.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variables `i` and `j` for atomicity violations following the <Write, Read, Write> pattern.\n\n**Global variables:** `i` and `j` (initialized to 3 and 6 respectively)\n\n**Functions and their priorities:**\n- `svp_simple_331_001_main`: Priority 0 (main function)\n- `svp_simple_331_001_isr_1`: Priority 1 \n- `svp_simple_331_001_isr_2`: Priority 2\n\n**Operations on global variables:**\n- Line 16: `i = j + 1;` (Write to `i`, Read from `j`) in ISR1 (priority 1)\n- Line 23: `j = i + 1;` (Read from `i`, Write to `j`) in ISR2 (priority 2)\n- Line 30: `int condI = i > LIMIT;` (Read from `i`) in main (priority 0)\n- Line 32: `int condJ = j > LIMIT;` (Read from `j`) in main (priority 0)\n\n**Analysis for variable `i`:**\n\nIn ISR1's loop, there are consecutive writes to `i` across iterations. ISR2 has higher priority (2) and can preempt ISR1 (priority 1) to read the intermediate value of `i`.\n\nPattern: Write (line 16, ISR1) → Read (line 23, ISR2) → Write (line 16, ISR1 next iteration)\n\nThis creates an atomicity violation where ISR2 reads an intermediate state of `i` between consecutive writes in ISR1's loop.\n\n**Analysis for variable `j`:**\n\nSimilarly, in ISR2's loop, there are consecutive writes to `j` across iterations. However, no higher priority task reads `j` between these writes, so no violation occurs for `j`.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"i\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [16, 23, 16]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_331_001.c",
+    "total_lines": 38,
+    "analyzed_lines": 38,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 595
+  }
+}

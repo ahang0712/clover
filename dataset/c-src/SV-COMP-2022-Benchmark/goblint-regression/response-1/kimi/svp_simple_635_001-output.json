@@ -1,0 +1,64 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "g",
+    "cond.addr",
+    "arg.addr",
+    "argc.addr",
+    "argv.addr",
+    "argv.addr -> argv",
+    "arg.addr:int8*"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "argc.addr",
+      "line": "0",
+      "function": "svp_simple_635_001_main"
+    },
+    {
+      "operation": "store",
+      "variable": "argv.addr -> argv",
+      "line": "0",
+      "function": "svp_simple_635_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "arg.addr:int8*",
+      "line": "0",
+      "function": "svp_simple_635_001_isr1"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "15",
+      "function": "svp_simple_635_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "16",
+      "function": "svp_simple_635_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "17",
+      "function": "svp_simple_635_001_isr1"
+    },
+    {
+      "operation": "load",
+      "variable": "g",
+      "line": "18",
+      "function": "svp_simple_635_001_isr1"
+    },
+    {
+      "operation": "store",
+      "variable": "g",
+      "line": "18",
+      "function": "svp_simple_635_001_isr1"
+    }
+  ]
+}

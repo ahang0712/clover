@@ -1,0 +1,595 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "i",
+      "j",
+      "argc.addr",
+      "argv.addr",
+      "condI",
+      "condJ",
+      "retval",
+      "argv.addr -> argv",
+      "arg.addr:int8*",
+      "k:int32"
+    ],
+    "variable_types": {
+      "i": "unknown",
+      "j": "unknown",
+      "argc.addr": "unknown",
+      "argv.addr": "unknown",
+      "condI": "unknown",
+      "condJ": "unknown",
+      "retval": "unknown",
+      "argv.addr -> argv": "unknown",
+      "arg.addr:int8*": "unknown",
+      "k:int32": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "argc.addr",
+        "op": "store",
+        "function": "svp_simple_327_001_main",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "argv.addr -> argv",
+        "op": "store",
+        "function": "svp_simple_327_001_main",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "i",
+        "op": "load",
+        "function": "svp_simple_327_001_main",
+        "line": "19"
+      },
+      {
+        "variable": "condI",
+        "op": "store",
+        "function": "svp_simple_327_001_main",
+        "line": "19"
+      },
+      {
+        "variable": "j",
+        "op": "load",
+        "function": "svp_simple_327_001_main",
+        "line": "20"
+      },
+      {
+        "variable": "condJ",
+        "op": "store",
+        "function": "svp_simple_327_001_main",
+        "line": "20"
+      },
+      {
+        "variable": "condI",
+        "op": "load",
+        "function": "svp_simple_327_001_main",
+        "line": "21"
+      },
+      {
+        "variable": "condJ",
+        "op": "load",
+        "function": "svp_simple_327_001_main",
+        "line": "21"
+      },
+      {
+        "variable": "retval",
+        "op": "load",
+        "function": "svp_simple_327_001_main",
+        "line": "24"
+      },
+      {
+        "variable": "arg.addr:int8*",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "k:int32",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "9"
+      },
+      {
+        "variable": "k:int32",
+        "op": "load",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "9"
+      },
+      {
+        "variable": "j",
+        "op": "load",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "10"
+      },
+      {
+        "variable": "i",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "10"
+      },
+      {
+        "variable": "k:int32",
+        "op": "load",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "9"
+      },
+      {
+        "variable": "k:int32",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_1",
+        "line": "9"
+      },
+      {
+        "variable": "arg.addr:int8*",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "UNMAPPED_0"
+      },
+      {
+        "variable": "k:int32",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "14"
+      },
+      {
+        "variable": "k:int32",
+        "op": "load",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "14"
+      },
+      {
+        "variable": "i",
+        "op": "load",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "15"
+      },
+      {
+        "variable": "j",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "15"
+      },
+      {
+        "variable": "k:int32",
+        "op": "load",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "14"
+      },
+      {
+        "variable": "k:int32",
+        "op": "store",
+        "function": "svp_simple_327_001_isr_2",
+        "line": "14"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "svp_simple_327_001_main",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "svp_simple_327_001_main",
+        "callee": "abort"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_327_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_327_001_isr_2",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_327_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "svp_simple_327_001_main",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "svp_simple_327_001_main",
+          "callee": "abort"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 2,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            23,
+            16
+          ],
+          "sharedVariable": "j",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Read",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            23,
+            16
+          ],
+          "sharedVariable": "i",
+          "type": "WRW"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 2,
+      "GLOBAL_VAR": [
+        "i",
+        "j",
+        "argc.addr",
+        "argv.addr",
+        "condI",
+        "condJ",
+        "retval",
+        "argv.addr -> argv",
+        "arg.addr:int8*",
+        "k:int32"
+      ],
+      "MAIN_INFO": [
+        {
+          "operation": "store",
+          "variable": "argc.addr",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_327_001_main",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "store",
+          "variable": "argv.addr -> argv",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_327_001_main",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "load",
+          "variable": "i",
+          "line": "19",
+          "function": "svp_simple_327_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "condI",
+          "line": "19",
+          "function": "svp_simple_327_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "j",
+          "line": "20",
+          "function": "svp_simple_327_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "condJ",
+          "line": "20",
+          "function": "svp_simple_327_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "condI",
+          "line": "21",
+          "function": "svp_simple_327_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "condJ",
+          "line": "21",
+          "function": "svp_simple_327_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "retval",
+          "line": "24",
+          "function": "svp_simple_327_001_main"
+        }
+      ],
+      "ISR_INFO": [
+        {
+          "operation": "store",
+          "variable": "arg.addr:int8*",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_327_001_isr_1",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "store",
+          "variable": "k:int32",
+          "line": "9",
+          "function": "svp_simple_327_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "k:int32",
+          "line": "9",
+          "function": "svp_simple_327_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "j",
+          "line": "10",
+          "function": "svp_simple_327_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "i",
+          "line": "10",
+          "function": "svp_simple_327_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "k:int32",
+          "line": "9",
+          "function": "svp_simple_327_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "k:int32",
+          "line": "9",
+          "function": "svp_simple_327_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "arg.addr:int8*",
+          "line": "UNMAPPED_0",
+          "function": "svp_simple_327_001_isr_2",
+          "warning": "Line 0 could not be mapped"
+        },
+        {
+          "operation": "store",
+          "variable": "k:int32",
+          "line": "14",
+          "function": "svp_simple_327_001_isr_2"
+        },
+        {
+          "operation": "load",
+          "variable": "k:int32",
+          "line": "14",
+          "function": "svp_simple_327_001_isr_2"
+        },
+        {
+          "operation": "load",
+          "variable": "i",
+          "line": "15",
+          "function": "svp_simple_327_001_isr_2"
+        },
+        {
+          "operation": "store",
+          "variable": "j",
+          "line": "15",
+          "function": "svp_simple_327_001_isr_2"
+        },
+        {
+          "operation": "load",
+          "variable": "k:int32",
+          "line": "14",
+          "function": "svp_simple_327_001_isr_2"
+        },
+        {
+          "operation": "store",
+          "variable": "k:int32",
+          "line": "14",
+          "function": "svp_simple_327_001_isr_2"
+        }
+      ],
+      "defects": [],
+      "defect_count": 0,
+      "line_mapping": {
+        "original_to_filtered": {
+          "2": 1,
+          "3": 2,
+          "5": 3,
+          "7": 4,
+          "9": 5,
+          "11": 6,
+          "12": 7,
+          "14": 8,
+          "15": 9,
+          "16": 10,
+          "17": 11,
+          "19": 12,
+          "21": 13,
+          "22": 14,
+          "23": 15,
+          "24": 16,
+          "26": 17,
+          "28": 18,
+          "30": 19,
+          "31": 20,
+          "33": 21,
+          "34": 22,
+          "35": 23,
+          "37": 24
+        },
+        "filtered_to_original": {
+          "1": 2,
+          "2": 3,
+          "3": 5,
+          "4": 7,
+          "5": 9,
+          "6": 11,
+          "7": 12,
+          "8": 14,
+          "9": 15,
+          "10": 16,
+          "11": 17,
+          "12": 19,
+          "13": 21,
+          "14": 22,
+          "15": 23,
+          "16": 24,
+          "17": 26,
+          "18": 28,
+          "19": 30,
+          "20": 31,
+          "21": 33,
+          "22": 34,
+          "23": 35,
+          "24": 37
+        },
+        "total_original_lines": 37,
+        "total_filtered_lines": 24
+      }
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_327_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_327_001_isr_2",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_327_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "svp_simple_327_001_main",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "svp_simple_327_001_main",
+          "callee": "abort"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 2,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            23,
+            16
+          ],
+          "sharedVariable": "j",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Read",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            16,
+            23,
+            16
+          ],
+          "sharedVariable": "i",
+          "type": "WRW"
+        }
+      ]
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+  "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"j\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"i\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"j\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"i\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_327_001.c",
+    "total_lines": 37,
+    "analyzed_lines": 24,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 597
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "summary": {
+    "total_tasks": 4,
+    "total_parallel_time": 35.70116925239563,
+    "average_conversation_time": 31.766984462738037,
+    "max_conversation_time": 32.28204703330994,
+    "min_conversation_time": 30.957088947296143,
+    "parallel_efficiency": 3.569284497508182
+  },
+  "task_details": [
+    {
+      "task_id": "expert_task_1",
+      "defect_mode": "RWR",
+      "variables": [
+        "num"
+      ],
+      "timing": {
+        "prepare_time": 1756977940.918627,
+        "real_start_time": 1756977941.019105,
+        "end_time": 1756977973.319307,
+        "prepare_wait_duration": 0.10047793388366699,
+        "conversation_duration": 32.28204703330994,
+        "total_task_duration": 32.30020213127136
+      }
+    },
+    {
+      "task_id": "expert_task_2",
+      "defect_mode": "RWW",
+      "variables": [
+        "num"
+      ],
+      "timing": {
+        "prepare_time": 1756977940.918682,
+        "real_start_time": 1756977942.420423,
+        "end_time": 1756977974.369528,
+        "prepare_wait_duration": 1.5017409324645996,
+        "conversation_duration": 31.93178701400757,
+        "total_task_duration": 31.94910502433777
+      }
+    },
+    {
+      "task_id": "expert_task_3",
+      "defect_mode": "WWR",
+      "variables": [
+        "num"
+      ],
+      "timing": {
+        "prepare_time": 1756977940.918713,
+        "real_start_time": 1756977943.874967,
+        "end_time": 1756977975.78802,
+        "prepare_wait_duration": 2.956254005432129,
+        "conversation_duration": 31.8970148563385,
+        "total_task_duration": 31.913052797317505
+      }
+    },
+    {
+      "task_id": "expert_task_4",
+      "defect_mode": "WRW",
+      "variables": [
+        "num"
+      ],
+      "timing": {
+        "prepare_time": 1756977940.919042,
+        "real_start_time": 1756977945.645962,
+        "end_time": 1756977976.6195,
+        "prepare_wait_duration": 4.726919889450073,
+        "conversation_duration": 30.957088947296143,
+        "total_task_duration": 30.973537921905518
+      }
+    }
+  ],
+  "timestamps": {
+    "parallel_start": 1756977940.918491,
+    "actual_parallel_start": 1756977941.019105,
+    "actual_parallel_end": 1756977976.6195
+  }
+}

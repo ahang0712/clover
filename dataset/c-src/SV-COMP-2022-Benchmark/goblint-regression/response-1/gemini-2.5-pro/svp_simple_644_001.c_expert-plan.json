@@ -1,0 +1,21 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "g_pstNext",
+        "g_pstPrev",
+        "g_stStats",
+        "g_u32Entries",
+        "g_u32Head",
+        "g_u32Tail",
+        "g_u32Used"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 7
+    }
+  ]
+}

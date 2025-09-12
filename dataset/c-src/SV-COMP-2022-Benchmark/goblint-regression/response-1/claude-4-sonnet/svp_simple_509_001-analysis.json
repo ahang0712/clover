@@ -1,0 +1,21 @@
+{
+  "ISR_COUNT": 1,
+  "GLOBAL_VAR": [
+    "myglobal"
+  ],
+  "MAIN_INFO": [],
+  "ISR_INFO": [
+    {
+      "operation": "load",
+      "variable": "myglobal",
+      "line": "13",
+      "function": "isr_munge"
+    },
+    {
+      "operation": "store",
+      "variable": "myglobal",
+      "line": "14",
+      "function": "isr_munge"
+    }
+  ]
+}

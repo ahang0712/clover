@@ -1,0 +1,814 @@
+{
+  "facts": {
+    "global_variables_to_detect": [
+      "glob1"
+    ],
+    "variable_types": {
+      "glob1": "unknown"
+    },
+    "variable_accesses": [
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_600_001_main",
+        "line": "45"
+      },
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_600_001_main",
+        "line": "46"
+      },
+      {
+        "variable": "glob1",
+        "op": "store",
+        "function": "svp_simple_600_001_main",
+        "line": "47"
+      },
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_600_001_main",
+        "line": "49"
+      },
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_600_001_main",
+        "line": "50"
+      },
+      {
+        "variable": "glob1",
+        "op": "store",
+        "function": "svp_simple_600_001_main",
+        "line": "51"
+      },
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_600_001_isr_1",
+        "line": "35"
+      },
+      {
+        "variable": "glob1",
+        "op": "store",
+        "function": "svp_simple_600_001_isr_1",
+        "line": "37"
+      },
+      {
+        "variable": "glob1",
+        "op": "load",
+        "function": "svp_simple_600_001_isr_1",
+        "line": "38"
+      },
+      {
+        "variable": "glob1",
+        "op": "store",
+        "function": "svp_simple_600_001_isr_1",
+        "line": "39"
+      }
+    ],
+    "callgraph": [
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "__VERIFIER_assert",
+        "callee": "abort"
+      },
+      {
+        "caller": "isr__VERIFIER_assert",
+        "callee": "reach_error"
+      },
+      {
+        "caller": "isr__VERIFIER_assert",
+        "callee": "abort"
+      },
+      {
+        "caller": "svp_simple_600_001_isr_1",
+        "callee": "isr__VERIFIER_assert"
+      },
+      {
+        "caller": "svp_simple_600_001_isr_1",
+        "callee": "isr__VERIFIER_assert"
+      },
+      {
+        "caller": "svp_simple_600_001_main",
+        "callee": "__VERIFIER_assert"
+      },
+      {
+        "caller": "svp_simple_600_001_main",
+        "callee": "__VERIFIER_assert"
+      }
+    ],
+    "control_flow_data": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "isr__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_600_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_600_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "isr__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "isr__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_600_001_isr_1",
+          "callee": "isr__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_600_001_isr_1",
+          "callee": "isr__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_600_001_main",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_600_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 10,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            46,
+            37,
+            47
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            46,
+            39,
+            47
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            50,
+            37,
+            51
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            50,
+            39,
+            51
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            45,
+            37,
+            46
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            45,
+            39,
+            46
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            49,
+            37,
+            50
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            49,
+            39,
+            50
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            47,
+            37,
+            49
+          ],
+          "sharedVariable": "glob1",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            47,
+            39,
+            49
+          ],
+          "sharedVariable": "glob1",
+          "type": "WWR"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Operation_Analyzer": {
+      "ISR_COUNT": 1,
+      "GLOBAL_VAR": [
+        "glob1"
+      ],
+      "MAIN_INFO": [
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "45",
+          "function": "svp_simple_600_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "46",
+          "function": "svp_simple_600_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "glob1",
+          "line": "47",
+          "function": "svp_simple_600_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "49",
+          "function": "svp_simple_600_001_main"
+        },
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "50",
+          "function": "svp_simple_600_001_main"
+        },
+        {
+          "operation": "store",
+          "variable": "glob1",
+          "line": "51",
+          "function": "svp_simple_600_001_main"
+        }
+      ],
+      "ISR_INFO": [
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "35",
+          "function": "svp_simple_600_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "glob1",
+          "line": "37",
+          "function": "svp_simple_600_001_isr_1"
+        },
+        {
+          "operation": "load",
+          "variable": "glob1",
+          "line": "38",
+          "function": "svp_simple_600_001_isr_1"
+        },
+        {
+          "operation": "store",
+          "variable": "glob1",
+          "line": "39",
+          "function": "svp_simple_600_001_isr_1"
+        }
+      ]
+    },
+    "Control_flow_Analyzer": {
+      "functions": [
+        {
+          "name": "reach_error",
+          "type": "defined"
+        },
+        {
+          "name": "__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "isr__VERIFIER_assert",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_600_001_isr_1",
+          "type": "defined"
+        },
+        {
+          "name": "svp_simple_600_001_main",
+          "type": "defined"
+        },
+        {
+          "name": "abort",
+          "type": "external"
+        }
+      ],
+      "call_graph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "isr__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "isr__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "svp_simple_600_001_isr_1",
+          "callee": "isr__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_600_001_isr_1",
+          "callee": "isr__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_600_001_main",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_600_001_main",
+          "callee": "__VERIFIER_assert"
+        }
+      ]
+    },
+    "Defect_Highlight": {
+      "defect_count": 10,
+      "defects": [
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            46,
+            37,
+            47
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            46,
+            39,
+            47
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            50,
+            37,
+            51
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Write"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            50,
+            39,
+            51
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWW"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            45,
+            37,
+            46
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            45,
+            39,
+            46
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            49,
+            37,
+            50
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Read",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            49,
+            39,
+            50
+          ],
+          "sharedVariable": "glob1",
+          "type": "RWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            47,
+            37,
+            49
+          ],
+          "sharedVariable": "glob1",
+          "type": "WWR"
+        },
+        {
+          "accessPattern": [
+            "Write",
+            "Write",
+            "Read"
+          ],
+          "arrayInfo": [
+            "",
+            "",
+            ""
+          ],
+          "isArrayAccess": [
+            false,
+            false,
+            false
+          ],
+          "lines": [
+            47,
+            39,
+            49
+          ],
+          "sharedVariable": "glob1",
+          "type": "WWR"
+        }
+      ]
+    }
+  },
+  "used_tools": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_sequence": [
+    "Operation_Analyzer",
+    "Control_flow_Analyzer",
+    "Defect_Highlight"
+  ],
+  "tool_plan_output": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "tool_plan_text": "```\n<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+  "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 4\n    },\n    {\n      \"sharedVariables\": [\n        \"glob1\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    }\n  ]\n}",
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_600_001.c",
+    "total_lines": 55,
+    "analyzed_lines": 55,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 691
+  }
+}

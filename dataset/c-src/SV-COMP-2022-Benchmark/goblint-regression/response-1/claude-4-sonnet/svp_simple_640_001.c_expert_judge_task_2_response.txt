@@ -1,0 +1,136 @@
+[Expert R1] (Detect atomicity violations in the code.)
+Looking at the code, I need to analyze the global variable `g` and identify any atomicity violations following the <Write, Write, Read> pattern.
+
+Let me trace through the operations on variable `g`:
+
+**Function: svp_simple_640_001_isr_1**
+- Line 8: `g = 1;` (Write operation)
+- Line 9: `printf("g is %i", g);` (Read operation) 
+- Line 10: `g = 0;` (Write operation)
+
+**Function: svp_simple_640_001_isr_2**
+- Line 14: `__VERIFIER_assert(!(g == 0));` (Read operation)
+- Line 15: `g = 0;` (Write operation)
+
+**Function: svp_simple_640_001_main**
+- No operations on `g`
+
+Now I need to check for the <Write, Write, Read> pattern where:
+- a1: Write operation by lower-priority task
+- a2: Write operation by higher-priority task  
+- a3: Read operation by the same lower-priority task as a1
+
+Analyzing the candidate defect (lines 8, 15, 9):
+- Line 8: Write operation `g = 1` in svp_simple_640_001_isr_1
+- Line 15: Write operation `g = 0` in svp_simple_640_001_isr_2  
+- Line 9: Read operation `printf("g is %i", g)` in svp_simple_640_001_isr_1
+
+For this to be a valid <Write, Write, Read> violation:
+1. The write at line 8 and read at line 9 must be consecutive operations in the same task (svp_simple_640_001_isr_1) ✓
+2. The write at line 15 must be from a higher-priority task that can preempt between lines 8 and 9
+
+Since both svp_simple_640_001_isr_1 and svp_simple_640_001_isr_2 are ISRs, and assuming svp_simple_640_001_isr_2 has higher priority than svp_simple_640_001_isr_1, this creates a valid atomicity violation:
+
+- svp_simple_640_001_isr_1 writes `g = 1` (line 8)
+- svp_simple_640_001_isr_2 preempts and writes `g = 0` (line 15)  
+- svp_simple_640_001_isr_1 resumes and reads `g` (line 9), expecting to read 1 but actually reads 0
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [8, 15, 9]
+        }
+    ]
+}
+```
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+Looking at the code, I need to analyze the accessibility of each read/write operation on global variable `g`.
+
+**Step 1: Check Control Conditions**
+
+All operations on variable `g` are in interrupt service routines (ISRs):
+
+- Line 8: `g = 1;` in `svp_simple_640_001_isr_1` - No control conditions
+- Line 9: `printf("g is %i", g);` in `svp_simple_640_001_isr_1` - No control conditions  
+- Line 10: `g = 0;` in `svp_simple_640_001_isr_1` - No control conditions
+- Line 14: `__VERIFIER_assert(!(g == 0));` in `svp_simple_640_001_isr_2` - No control conditions
+- Line 15: `g = 0;` in `svp_simple_640_001_isr_2` - No control conditions
+
+All operations are unconditional within their respective ISRs.
+
+**Step 2: Check Control Condition Changes**
+
+There are no variables controlling conditional statements that could be modified by interrupts.
+
+**Step 3: Check Interrupt Status**
+
+The code does not contain any `disable_isr()` or `enable_isr()` function calls. In embedded systems without explicit interrupt control, ISRs are typically enabled by default and can preempt the main function and each other based on priority levels.
+
+Since there are no interrupt disable/enable statements, both `svp_simple_640_001_isr_1` and `svp_simple_640_001_isr_2` can execute when their respective interrupts are triggered.
+
+**Step 4: Generate Final Report**
+
+All read/write operations on variable `g` are accessible. The reported atomicity violation involving lines [8, 15, 9] represents a valid <Write, Write, Read> pattern where:
+- Line 8: Write operation in `svp_simple_640_001_isr_1`
+- Line 15: Write operation in `svp_simple_640_001_isr_2` (can preempt)
+- Line 9: Read operation in `svp_simple_640_001_isr_1`
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [8, 15, 9]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Looking at the code, I need to analyze the global variable `g` for atomicity violations following the <Write, Write, Read> pattern.
+
+Let me trace through the operations on variable `g`:
+
+**Function: svp_simple_640_001_isr_1**
+- Line 8: `g = 1;` (Write operation)
+- Line 9: `printf("g is %i", g);` (Read operation) 
+- Line 10: `g = 0;` (Write operation)
+
+**Function: svp_simple_640_001_isr_2**
+- Line 14: `__VERIFIER_assert(!(g == 0));` (Read operation)
+- Line 15: `g = 0;` (Write operation)
+
+**Function: svp_simple_640_001_main**
+- No operations on `g`
+
+Analyzing for the <Write, Write, Read> pattern:
+
+The sequence (lines 8, 15, 9) forms a valid violation:
+- Line 8: Write operation `g = 1` in svp_simple_640_001_isr_1
+- Line 15: Write operation `g = 0` in svp_simple_640_001_isr_2 (can preempt)
+- Line 9: Read operation `printf("g is %i", g)` in svp_simple_640_001_isr_1
+
+This creates an atomicity violation where:
+- svp_simple_640_001_isr_1 writes `g = 1` (line 8)
+- svp_simple_640_001_isr_2 preempts and writes `g = 0` (line 15)  
+- svp_simple_640_001_isr_1 resumes and reads `g` (line 9), expecting to read 1 but actually reads 0
+
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "g",
+            "accessPattern": ["Write", "Write", "Read"],
+            "lines": [8, 15, 9]
+        }
+    ]
+}
+```
+
+
+Elapsed Time: 46.43293309211731 seconds

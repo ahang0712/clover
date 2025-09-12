@@ -1,0 +1,656 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "data1",
+        "data2"
+      ],
+      "variable_types": {
+        "data1": "unknown",
+        "data2": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "data1",
+          "op": "store",
+          "function": "svp_simple_324_001_main",
+          "line": "20"
+        },
+        {
+          "variable": "data2",
+          "op": "store",
+          "function": "svp_simple_324_001_main",
+          "line": "21"
+        },
+        {
+          "variable": "data1",
+          "op": "load",
+          "function": "svp_simple_324_001_main",
+          "line": "22"
+        },
+        {
+          "variable": "data2",
+          "op": "load",
+          "function": "svp_simple_324_001_main",
+          "line": "22"
+        },
+        {
+          "variable": "data1",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "data1",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "data2",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "8"
+        },
+        {
+          "variable": "data2",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_1",
+          "line": "9"
+        },
+        {
+          "variable": "data1",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "13"
+        },
+        {
+          "variable": "data1",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "data2",
+          "op": "load",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "15"
+        },
+        {
+          "variable": "data2",
+          "op": "store",
+          "function": "svp_simple_324_001_isr_2",
+          "line": "16"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "svp_simple_324_001_main",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "svp_simple_324_001_main",
+          "callee": "abort"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_324_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_324_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_324_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_324_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_324_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 6,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              20,
+              11
+            ],
+            "sharedVariable": "data2",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              18,
+              9
+            ],
+            "sharedVariable": "data1",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              20,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              11,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              18,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              9,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "data1",
+          "data2"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "data1",
+            "line": "20",
+            "function": "svp_simple_324_001_main"
+          },
+          {
+            "operation": "store",
+            "variable": "data2",
+            "line": "21",
+            "function": "svp_simple_324_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "data1",
+            "line": "22",
+            "function": "svp_simple_324_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "data2",
+            "line": "22",
+            "function": "svp_simple_324_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "data1",
+            "line": "6",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "data1",
+            "line": "7",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "data2",
+            "line": "8",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "data2",
+            "line": "9",
+            "function": "svp_simple_324_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "data1",
+            "line": "13",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "data1",
+            "line": "14",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "data2",
+            "line": "15",
+            "function": "svp_simple_324_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "data2",
+            "line": "16",
+            "function": "svp_simple_324_001_isr_2"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "4": 3,
+            "6": 4,
+            "7": 5,
+            "8": 6,
+            "9": 7,
+            "10": 8,
+            "11": 9,
+            "12": 10,
+            "15": 11,
+            "16": 12,
+            "17": 13,
+            "18": 14,
+            "19": 15,
+            "20": 16,
+            "21": 17,
+            "24": 18,
+            "25": 19,
+            "27": 20,
+            "28": 21,
+            "30": 22,
+            "31": 23,
+            "32": 24,
+            "33": 25,
+            "35": 26,
+            "36": 27
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 4,
+            "4": 6,
+            "5": 7,
+            "6": 8,
+            "7": 9,
+            "8": 10,
+            "9": 11,
+            "10": 12,
+            "11": 15,
+            "12": 16,
+            "13": 17,
+            "14": 18,
+            "15": 19,
+            "16": 20,
+            "17": 21,
+            "18": 24,
+            "19": 25,
+            "20": 27,
+            "21": 28,
+            "22": 30,
+            "23": 31,
+            "24": 32,
+            "25": 33,
+            "26": 35,
+            "27": 36
+          },
+          "total_original_lines": 36,
+          "total_filtered_lines": 27
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_324_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_324_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_324_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_324_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_324_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 6,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              20,
+              11
+            ],
+            "sharedVariable": "data2",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              8,
+              18,
+              9
+            ],
+            "sharedVariable": "data1",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              20,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              11,
+              30
+            ],
+            "sharedVariable": "data2",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              18,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              27,
+              9,
+              30
+            ],
+            "sharedVariable": "data1",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"data1\",\n        \"data2\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"data1\",\n        \"data2\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 4\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"data1\",\n        \"data2\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"data1\",\n        \"data2\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 4\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_324_001.c",
+      "total_lines": 37,
+      "analyzed_lines": 27,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 514
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [8, 18, 9]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 20, 11]\n        }\n    ]\n}\n\n[System] Expert first round completed in 3.19 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nStep 1: Check Control Conditions\n\nFor the main function:\n- The read operations of data1 and data2 in line 30 are not guarded by any control conditions. They will always be executed when the main function runs.\n- The write operations of data1 and data2 in lines 27 and 28 are also not guarded by any conditions and will always be executed.\n\nFor svp_simple_324_001_isr_1:\n- All read and write operations (lines 8, 9, 10, 11) are not guarded by any control conditions. They will be executed whenever this ISR is triggered.\n\nFor svp_simple_324_001_isr_2:\n- All read and write operations (lines 17, 18, 19, 20) are not guarded by any control conditions. They will be executed whenever this ISR is triggered.\n\nStep 2: Pay Attention to Control Condition Changes\n\nThere are no control conditions that change during the execution of the program. The ISRs do not modify any variables that affect control flow in other parts of the code.\n\nStep 3: Check Interrupt Status\n\nThe code does not contain any calls to disable_isr() or enable_isr(). Without additional information, we must assume that both ISRs can be triggered at any time during the execution of the main function or each other (depending on their priorities).\n\nStep 4: Generate the Final Report\n\nBased on the analysis:\n- All read and write operations mentioned in the initial defect report can be executed.\n- There are no unsatisfiable control conditions or disabled interrupts that would prevent the execution of these operations.\n- The atomicity violations reported initially are valid and should be kept in the report.\n\nTherefore, the final report remains unchanged:\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [8, 18, 9]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 20, 11]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ],
+    "expert_task_2": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [27, 18, 30]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [28, 20, 30]\n        }\n    ]\n}\n\n[System] Expert first round completed in 2.82 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nStep 1: Check Control Conditions\n\nFor each read/write operation mentioned in the defect report:\n\n1. data1 write on line 27:\n   - This operation is in the main function and not guarded by any control conditions.\n   - It can be executed.\n\n2. data1 write on line 18:\n   - This operation is in the ISR_2 function and not guarded by any control conditions within the function.\n   - It can be executed if ISR_2 is triggered.\n\n3. data1 read on line 30:\n   - This operation is in the main function and not guarded by any control conditions.\n   - It can be executed.\n\n4. data2 write on line 28:\n   - This operation is in the main function and not guarded by any control conditions.\n   - It can be executed.\n\n5. data2 write on line 20:\n   - This operation is in the ISR_2 function and not guarded by any control conditions within the function.\n   - It can be executed if ISR_2 is triggered.\n\n6. data2 read on line 30:\n   - This operation is in the main function and not guarded by any control conditions.\n   - It can be executed.\n\nStep 2: Pay Attention to Control Condition Changes\n\nThere are no control conditions that change due to interrupt handling in this code.\n\nStep 3: Check Interrupt Status\n\nThe code does not contain any disable_isr() or enable_isr() function calls. Therefore, we cannot determine if there are any restrictions on interrupt execution based on the given code.\n\nStep 4: Generate the Final Report\n\nSummary of analysis:\n- All read/write operations mentioned in the initial defect report can be executed.\n- There are no unsatisfiable control conditions or disabled interrupts that would prevent the execution of these operations.\n- No modifications to the initial report are necessary.\n\nFinal Report:\n\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"data1\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [27, 18, 30]\n        },\n        {\n            \"sharedVariable\": \"data2\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [28, 20, 30]\n        }\n    ]\n}\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nAbstain\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_324_001.c",
+    "total_lines": 37,
+    "analyzed_lines": 27,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 514
+  }
+}

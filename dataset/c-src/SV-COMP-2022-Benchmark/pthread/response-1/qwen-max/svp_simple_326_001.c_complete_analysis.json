@@ -1,0 +1,707 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "num"
+      ],
+      "variable_types": {
+        "num": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "num",
+          "op": "store",
+          "function": "svp_simple_326_001_main",
+          "line": "20"
+        },
+        {
+          "variable": "num",
+          "op": "load",
+          "function": "svp_simple_326_001_main",
+          "line": "21"
+        },
+        {
+          "variable": "num",
+          "op": "load",
+          "function": "svp_simple_326_001_isr_1",
+          "line": "6"
+        },
+        {
+          "variable": "num",
+          "op": "load",
+          "function": "svp_simple_326_001_isr_1",
+          "line": "7"
+        },
+        {
+          "variable": "num",
+          "op": "store",
+          "function": "svp_simple_326_001_isr_1",
+          "line": "8"
+        },
+        {
+          "variable": "num",
+          "op": "load",
+          "function": "svp_simple_326_001_isr_2",
+          "line": "13"
+        },
+        {
+          "variable": "num",
+          "op": "load",
+          "function": "svp_simple_326_001_isr_2",
+          "line": "14"
+        },
+        {
+          "variable": "num",
+          "op": "store",
+          "function": "svp_simple_326_001_isr_2",
+          "line": "15"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "svp_simple_326_001_main",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "svp_simple_326_001_main",
+          "callee": "abort"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_326_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_326_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_326_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_326_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_326_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 8,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              22,
+              12
+            ],
+            "sharedVariable": "num",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              22,
+              12
+            ],
+            "sharedVariable": "num",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              22,
+              11
+            ],
+            "sharedVariable": "num",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              22,
+              10
+            ],
+            "sharedVariable": "num",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              22,
+              11
+            ],
+            "sharedVariable": "num",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              12,
+              20,
+              12
+            ],
+            "sharedVariable": "num",
+            "type": "WRW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              31,
+              22,
+              33
+            ],
+            "sharedVariable": "num",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              31,
+              12,
+              33
+            ],
+            "sharedVariable": "num",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Code_Extractor": {},
+      "Operation_Analyzer": {
+        "ISR_COUNT": 2,
+        "GLOBAL_VAR": [
+          "num"
+        ],
+        "MAIN_INFO": [
+          {
+            "operation": "store",
+            "variable": "num",
+            "line": "20",
+            "function": "svp_simple_326_001_main"
+          },
+          {
+            "operation": "load",
+            "variable": "num",
+            "line": "21",
+            "function": "svp_simple_326_001_main"
+          }
+        ],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "num",
+            "line": "6",
+            "function": "svp_simple_326_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "num",
+            "line": "7",
+            "function": "svp_simple_326_001_isr_1"
+          },
+          {
+            "operation": "store",
+            "variable": "num",
+            "line": "8",
+            "function": "svp_simple_326_001_isr_1"
+          },
+          {
+            "operation": "load",
+            "variable": "num",
+            "line": "13",
+            "function": "svp_simple_326_001_isr_2"
+          },
+          {
+            "operation": "load",
+            "variable": "num",
+            "line": "14",
+            "function": "svp_simple_326_001_isr_2"
+          },
+          {
+            "operation": "store",
+            "variable": "num",
+            "line": "15",
+            "function": "svp_simple_326_001_isr_2"
+          }
+        ],
+        "defects": [],
+        "defect_count": 0,
+        "line_mapping": {
+          "original_to_filtered": {
+            "1": 1,
+            "2": 2,
+            "4": 3,
+            "7": 4,
+            "8": 5,
+            "10": 6,
+            "11": 7,
+            "12": 8,
+            "13": 9,
+            "14": 10,
+            "17": 11,
+            "18": 12,
+            "20": 13,
+            "21": 14,
+            "22": 15,
+            "23": 16,
+            "25": 17,
+            "28": 18,
+            "29": 19,
+            "31": 20,
+            "33": 21,
+            "34": 22,
+            "35": 23,
+            "36": 24,
+            "38": 25,
+            "40": 26
+          },
+          "filtered_to_original": {
+            "1": 1,
+            "2": 2,
+            "3": 4,
+            "4": 7,
+            "5": 8,
+            "6": 10,
+            "7": 11,
+            "8": 12,
+            "9": 13,
+            "10": 14,
+            "11": 17,
+            "12": 18,
+            "13": 20,
+            "14": 21,
+            "15": 22,
+            "16": 23,
+            "17": 25,
+            "18": 28,
+            "19": 29,
+            "20": 31,
+            "21": 33,
+            "22": 34,
+            "23": 35,
+            "24": 36,
+            "25": 38,
+            "26": 40
+          },
+          "total_original_lines": 40,
+          "total_filtered_lines": 26
+        }
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_326_001_isr_1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_326_001_isr_2",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_326_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "svp_simple_326_001_main",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "svp_simple_326_001_main",
+            "callee": "abort"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 8,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              22,
+              12
+            ],
+            "sharedVariable": "num",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              22,
+              12
+            ],
+            "sharedVariable": "num",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              22,
+              11
+            ],
+            "sharedVariable": "num",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              10,
+              22,
+              10
+            ],
+            "sharedVariable": "num",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              11,
+              22,
+              11
+            ],
+            "sharedVariable": "num",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Read",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              12,
+              20,
+              12
+            ],
+            "sharedVariable": "num",
+            "type": "WRW"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              31,
+              22,
+              33
+            ],
+            "sharedVariable": "num",
+            "type": "WWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              31,
+              12,
+              33
+            ],
+            "sharedVariable": "num",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Code_Extractor",
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "tool_plan_text": "```\n<tool>\nCode_Extractor\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>\n```",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 3\n    },\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 3\n    },\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 2\n    },\n    {\n      \"sharedVariables\": [\n        \"num\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Read\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_326_001.c",
+      "total_lines": 40,
+      "analyzed_lines": 26,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 439
+    }
+  },
+  "expert_results": {
+    "expert_task_1": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [10, 22, 11]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 4.18 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n### Step-by-Step Analysis\n\n#### **Step 1: Check Control Conditions**\n\n**Read/Write Operations in `svp_simple_326_001_isr_1`:**\n- **Line 10 (`while (num > 0)`):**\n  - **Control Condition:** The condition is `num > 0`.\n  - **Variable Value Tracking:** \n    - `num` is initialized to `1` in `svp_simple_326_001_main()` (line 31).\n    - Inside `svp_simple_326_001_isr_1`, `num` is decremented in a loop (`num = tmp;` where `tmp = num - 1`).\n    - The value of `num` will eventually reach `0` due to the decrement operation.\n  - **Execution Path Analysis:** \n    - Initially, `num > 0` evaluates to true because `num` starts at `1`.\n    - The loop continues until `num` becomes `0`. At that point, the condition `num > 0` becomes false, and the loop exits.\n  - **Conclusion:** The read operation on `num` in the condition `num > 0` (line 10) can be executed multiple times as long as `num > 0`.\n\n- **Line 11 (`int tmp = num - 1`):**\n  - **Control Condition:** This line is inside the `while (num > 0)` loop.\n  - **Variable Value Tracking:** \n    - As analyzed above, `num` starts at `1` and is decremented in each iteration.\n  - **Execution Path Analysis:** \n    - This line is executed in every iteration of the loop as long as `num > 0`.\n  - **Conclusion:** The read operation on `num` in this line (line 11) can be executed multiple times.\n\n- **Line 12 (`num = tmp`):**\n  - **Control Condition:** This line is also inside the `while (num > 0)` loop.\n  - **Variable Value Tracking:** \n    - `tmp` is derived from `num - 1`, and `num` is updated to `tmp` in each iteration.\n  - **Execution Path Analysis:** \n    - This write operation occurs in every iteration of the loop as long as `num > 0`.\n  - **Conclusion:** The write operation on `num` in this line (line 12) can be executed multiple times.\n\n---\n\n**Read/Write Operations in `svp_simple_326_001_isr_2`:**\n- **Line 20 (`while (num == 0)`):**\n  - **Control Condition:** The condition is `num == 0`.\n  - **Variable Value Tracking:** \n    - `num` starts at `1` in `svp_simple_326_001_main()` (line 31).\n    - In `svp_simple_326_001_isr_1`, `num` is decremented to `0`.\n    - Once `num` reaches `0`, the condition `num == 0` becomes true.\n  - **Execution Path Analysis:** \n    - Initially, `num == 0` evaluates to false because `num` starts at `1`.\n    - After `svp_simple_326_001_isr_1` decrements `num` to `0`, the condition `num == 0` becomes true, and the loop in `svp_simple_326_001_isr_2` can execute.\n  - **Conclusion:** The read operation on `num` in the condition `num == 0` (line 20) can be executed once `num` becomes `0`.\n\n- **Line 21 (`int tmp = num - 1`):**\n  - **Control Condition:** This line is inside the `while (num == 0)` loop.\n  - **Variable Value Tracking:** \n    - As analyzed above, `num` becomes `0` after being decremented in `svp_simple_326_001_isr_1`.\n  - **Execution Path Analysis:** \n    - This line is executed in every iteration of the loop as long as `num == 0`.\n  - **Conclusion:** The read operation on `num` in this line (line 21) can be executed multiple times once `num == 0`.\n\n- **Line 22 (`num = tmp`):**\n  - **Control Condition:** This line is also inside the `while (num == 0)` loop.\n  - **Variable Value Tracking:** \n    - `tmp` is derived from `num - 1`, and `num` is updated to `tmp` in each iteration.\n  - **Execution Path Analysis:** \n    - This write operation occurs in every iteration of the loop as long as `num == 0`.\n  - **Conclusion:** The write operation on `num` in this line (line 22) can be executed multiple times once `num == 0`.\n\n---\n\n**Read/Write Operations in `svp_simple_326_001_main`:**\n- **Line 31 (`num = 1`):**\n  - **Control Condition:** There is no control condition guarding this write operation.\n  - **Conclusion:** The write operation on `num` in this line (line 31) is always executed.\n\n- **Line 33 (`if (num != 1)`):**\n  - **Control Condition:** The condition is `num != 1`.\n  - **Variable Value Tracking:** \n    - `num` is initialized to `1` in line 31.\n    - Unless preempted by an ISR, `num` remains `1` when this condition is evaluated.\n  - **Execution Path Analysis:** \n    - Since `num` is `1` at this point, the condition `num != 1` evaluates to false.\n  - **Conclusion:** The read operation on `num` in the condition `num != 1` (line 33) is executed, but the block containing the error path is never entered.\n\n---\n\n#### **Step 2: Pay Attention to Control Condition Changes**\n- Interrupts `svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2` modify `num`.\n- `svp_simple_326_001_isr_1` decrements `num` to `0`, enabling the loop in `svp_simple_326_001_isr_2` to execute.\n- No additional interrupt disabling/enabling affects the accessibility of these operations.\n\n---\n\n#### **Step 3: Check Interrupt Status**\n- No explicit calls to `disable_isr` or `enable_isr` are present in the code.\n- Both ISRs (`svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2`) are assumed to be enabled by default.\n- Therefore, all read/write operations in the ISRs can be executed under normal interrupt conditions.\n\n---\n\n#### **Step 4: Generate the Final Report**\n\n**Summary of Analysis:**\n- All read/write operations on `num` mentioned in the defect report can be executed under specific conditions:\n  - Line 10: Read (`num > 0`) can be executed as long as `num > 0`.\n  - Line 11: Read (`num - 1`) can be executed in each iteration of the loop in `svp_simple_326_001_isr_1`.\n  - Line 22: Write (`num = tmp`) can be executed in each iteration of the loop in `svp_simple_326_001_isr_2`.\n\n**Final Output:**\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [\"10\", \"22\", \"11\"]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [10, 22, 11]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_task_2": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 22, 12]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [11, 22, 12]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 5.57 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n### Step-by-Step Analysis\n\n#### **Step 1: Check Control Conditions**\n\n**ISR 1 (`svp_simple_326_001_isr_1`)**:\n- **Line 10**: `while (num > 0)`\n  - **Control Condition**: `num > 0`\n  - **Variable Value Tracking**:\n    - `num` is initialized to `1` in the main function at line 31.\n    - The value of `num` can be modified by ISR 1 and ISR 2.\n    - In ISR 1, `num` is decremented in the loop until it becomes `0`.\n    - In ISR 2, `num` is also decremented but only if `num == 0`, which would make the condition false.\n  - **Execution Path Analysis**:\n    - Initially, `num` is `1`, so the condition `num > 0` is true, allowing the loop to execute.\n    - As `num` is decremented inside the loop, eventually `num` will become `0`, causing the loop to terminate.\n  - **Conclusion**: The control condition can be satisfied, and the read operation on line 10 can be executed.\n\n- **Lines 11 and 12**: Inside the loop\n  - These lines are executed as long as the loop condition (`num > 0`) is satisfied.\n  - **Conclusion**: Both read (line 11) and write (line 12) operations can be executed.\n\n**ISR 2 (`svp_simple_326_001_isr_2`)**:\n- **Line 20**: `while (num == 0)`\n  - **Control Condition**: `num == 0`\n  - **Variable Value Tracking**:\n    - `num` starts at `1` in the main function.\n    - ISR 1 decrements `num` until it reaches `0`.\n    - Once `num` is `0`, ISR 2’s condition `num == 0` can be satisfied.\n  - **Execution Path Analysis**:\n    - Initially, `num == 0` is false because `num` is `1`.\n    - After ISR 1 runs and decrements `num` to `0`, ISR 2’s condition becomes true, allowing the loop to execute.\n  - **Conclusion**: The control condition can be satisfied after ISR 1 modifies `num`, and the read operation on line 20 can be executed.\n\n- **Lines 21 and 22**: Inside the loop\n  - These lines are executed as long as the loop condition (`num == 0`) is satisfied.\n  - **Conclusion**: Both read (line 21) and write (line 22) operations can be executed.\n\n**Main Function (`svp_simple_326_001_main`)**:\n- **Line 33**: `if (num != 1)`\n  - **Control Condition**: `num != 1`\n  - **Variable Value Tracking**:\n    - `num` is initialized to `1` at line 31.\n    - ISR 1 decrements `num` to `0`.\n    - If ISR 1 runs before this condition is checked, `num` will no longer be `1`, making the condition true.\n  - **Execution Path Analysis**:\n    - Initially, `num` is `1`, so `num != 1` is false, and the block is skipped.\n    - However, if ISR 1 runs before this check, `num` will be decremented to `0`, making the condition true.\n  - **Conclusion**: The control condition can be satisfied if ISR 1 runs first, and the read operation on line 33 can be executed.\n\n#### **Step 2: Pay Attention to Control Condition Changes**\n- ISR 1 modifies `num`, which affects the conditions in both ISR 2 and the main function.\n- ISR 2’s condition (`num == 0`) depends on ISR 1 decrementing `num` to `0`.\n\n#### **Step 3: Check Interrupt Status**\n- There are no explicit calls to `disable_isr()` or `enable_isr()` in the provided code.\n- Without specific interrupt disabling/enabling, we assume interrupts are enabled by default, allowing preemption between ISRs and the main function.\n\n#### **Step 4: Generate the Final Report**\n\n**Summary of Accessibility Analysis**:\n- All read/write operations mentioned in the defect report can be executed under certain runtime conditions:\n  - Line 10: Read (`num > 0`) – Can be executed when `num > 0`.\n  - Lines 11 and 12: Read/Write inside ISR 1 – Executed while `num > 0`.\n  - Line 20: Read (`num == 0`) – Can be executed after ISR 1 sets `num` to `0`.\n  - Lines 21 and 22: Read/Write inside ISR 2 – Executed while `num == 0`.\n  - Line 33: Read (`num != 1`) – Can be executed if ISR 1 modifies `num`.\n\n**Final Report**:\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 22, 12]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [11, 22, 12]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [10, 22, 12]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [11, 22, 12]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_task_3": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 22, 33]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 12, 33]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 5.87 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n### Step 1: Check Control Conditions\n\n#### Analysis of `num` Operations:\n\n1. **Write Operation at Line 31 (`num = 1;`)**:\n   - This operation is in the `svp_simple_326_001_main` function.\n   - There are no control conditions guarding this write operation, so it will always execute when the `main` function runs.\n\n2. **Write Operation at Line 22 (`num = tmp;`)**:\n   - This operation is inside the `svp_simple_326_001_isr_2` function.\n   - It is guarded by the `while (num == 0)` loop condition.\n   - The variable `num` must be `0` for this loop to execute.\n   - Initially, `num` is set to `1` in the `main` function (Line 31). Therefore, the condition `num == 0` cannot initially be satisfied.\n   - However, `num` can be modified by other ISRs, specifically `svp_simple_326_001_isr_1`, which decrements `num`. If `svp_simple_326_001_isr_1` sets `num` to `0`, then `svp_simple_326_001_isr_2` could execute, and the write operation at Line 22 could occur.\n\n3. **Read Operation at Line 33 (`if (num != 1)`)**:\n   - This read operation is in the `svp_simple_326_001_main` function.\n   - There are no control conditions guarding this read operation, so it will always execute after the write at Line 31.\n\n4. **Write Operation at Line 12 (`num = tmp;`)**:\n   - This operation is inside the `svp_simple_326_001_isr_1` function.\n   - It is guarded by the `while (num > 0)` loop condition.\n   - The variable `num` must be greater than `0` for this loop to execute.\n   - Initially, `num` is set to `1` in the `main` function (Line 31), so the condition `num > 0` is satisfied, allowing the loop to execute.\n   - As long as `num` remains greater than `0`, this write operation will continue to execute.\n\n### Step 2: Pay Attention to Control Condition Changes\n\n- **ISR Preemption**:\n  - In `svp_simple_326_001_isr_1`, `num` is decremented in a loop until it reaches `0`.\n  - Once `num` reaches `0`, `svp_simple_326_001_isr_2` can start executing because its loop condition `while (num == 0)` becomes true.\n  - Interrupt preemption between `svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2` can lead to interleaved access to `num`.\n\n### Step 3: Check Interrupt Status\n\n- **Interrupts**:\n  - The code does not explicitly disable or enable interrupts, so we assume all interrupts are enabled.\n  - Both ISRs (`svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2`) can preempt each other and the main function.\n\n### Summary of Analysis:\n\n- **Line 31 (`num = 1;`)**: Always executed in the main function.\n- **Line 22 (`num = tmp;`)**: Can be executed if `svp_simple_326_001_isr_1` sets `num` to `0`, enabling `svp_simple_326_001_isr_2`.\n- **Line 33 (`if (num != 1)`)**: Always executed in the main function after Line 31.\n- **Line 12 (`num = tmp;`)**: Can be executed as long as `num > 0`.\n\n### Final Report:\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 22, 33]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 12, 33]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 22, 33]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [31, 12, 33]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_task_4": [
+      "WRW",
+      "[Expert R1] (Detect atomicity violations in the code.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [31, 10, 12]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [12, 20, 22]\n        }\n    ]\n}\n```\n\n[System] Expert first round completed in 7.47 seconds\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\n### Step 1: **Check Control Conditions**\n\n#### Operation Analysis for `num`:\n\n1. **Write at Line 31 (`num = 1;`)**:\n   - **Control Condition**: This write operation is unconditional and occurs in the main function.\n   - **Execution Path**:\n     - The program initializes `num` to `1` directly without any conditional checks.\n     - No control conditions guard this operation, so it will always execute when the main function runs.\n   - **Conclusion**: The write at line 31 is guaranteed to execute.\n\n2. **Read at Line 10 (`while (num > 0)`)**:\n   - **Control Condition**: This read operation is part of the `while` loop condition in `svp_simple_326_001_isr_1`.\n   - **Execution Path**:\n     - The ISR `svp_simple_326_001_isr_1` can be preempted at any time if interrupts are enabled.\n     - The value of `num` depends on the execution flow of the main function and other ISRs.\n     - Initially, `num` is set to `1` in the main function (line 31). Therefore, the condition `num > 0` evaluates to true for the first iteration of the loop.\n     - Inside the loop, `num` is decremented (`num = tmp`, where `tmp = num - 1`), eventually making `num == 0`. At this point, the loop terminates.\n   - **Conclusion**: The read at line 10 will execute as long as `num > 0`.\n\n3. **Write at Line 12 (`num = tmp;`)**:\n   - **Control Condition**: This write operation is inside the `while (num > 0)` loop in `svp_simple_326_001_isr_1`.\n   - **Execution Path**:\n     - The loop executes only when `num > 0`, which is initially true because `num` is set to `1` in the main function.\n     - Inside the loop, `num` is decremented until it becomes `0`, at which point the loop exits.\n   - **Conclusion**: The write at line 12 will execute repeatedly until `num == 0`.\n\n4. **Read at Line 20 (`while (num == 0)`)**:\n   - **Control Condition**: This read operation is part of the `while` loop condition in `svp_simple_326_001_isr_2`.\n   - **Execution Path**:\n     - The ISR `svp_simple_326_001_isr_2` can be preempted at any time if interrupts are enabled.\n     - Initially, `num` is set to `1` in the main function (line 31). Therefore, the condition `num == 0` evaluates to false, and the loop does not execute immediately.\n     - However, `num` is decremented in `svp_simple_326_001_isr_1` (line 12). Once `num` becomes `0`, the condition `num == 0` in `svp_simple_326_001_isr_2` becomes true, allowing the loop to execute.\n   - **Conclusion**: The read at line 20 will execute when `num == 0`.\n\n5. **Write at Line 22 (`num = tmp;`)**:\n   - **Control Condition**: This write operation is inside the `while (num == 0)` loop in `svp_simple_326_001_isr_2`.\n   - **Execution Path**:\n     - The loop executes only when `num == 0`, which happens after `svp_simple_326_001_isr_1` decrements `num` to `0`.\n     - Inside the loop, `num` is decremented further (`num = tmp`, where `tmp = num - 1`), making `num < 0`. At this point, the loop terminates.\n   - **Conclusion**: The write at line 22 will execute repeatedly while `num == 0`.\n\n---\n\n### Step 2: **Pay Attention to Control Condition Changes**\n\n- **Interrupt Preemption**:\n  - Both ISRs (`svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2`) can preempt each other or the main function, depending on interrupt priorities.\n  - In `svp_simple_326_001_isr_1`, `num` is decremented until it becomes `0`. This change in `num` affects the control condition in `svp_simple_326_001_isr_2` (`num == 0`).\n  - Similarly, in `svp_simple_326_001_isr_2`, `num` is decremented further, affecting subsequent reads/writes.\n\n- **Key Observation**:\n  - The control conditions in both ISRs are interdependent due to shared access to `num`.\n  - Interrupt preemption can lead to interleaved execution of reads and writes to `num`, potentially causing atomicity violations.\n\n---\n\n### Step 3: **Check Interrupt Status**\n\n- **Interrupt Management**:\n  - The code does not explicitly disable or enable interrupts using `disable_isr()` or `enable_isr()`.\n  - By default, all interrupts are assumed to be enabled unless stated otherwise.\n  - Both ISRs (`svp_simple_326_001_isr_1` and `svp_simple_326_001_isr_2`) are active and can preempt each other or the main function.\n\n---\n\n### Step 4: Generate the Final Report\n\n#### Summary of Accessibility Analysis:\n1. **Write at Line 31**: Accessible (unconditional).\n2. **Read at Line 10**: Accessible when `num > 0`.\n3. **Write at Line 12**: Accessible when `num > 0`.\n4. **Read at Line 20**: Accessible when `num == 0`.\n5. **Write at Line 22**: Accessible when `num == 0`.\n\n#### Atomicity Violations:\n- The reported violations involve interleaved accesses to `num` by multiple ISRs and the main function.\n- All operations in the reported violations are accessible under specific conditions, as analyzed above.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [31, 10, 12]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [12, 20, 22]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [31, 10, 12]\n        },\n        {\n            \"sharedVariable\": \"num\",\n            \"accessPattern\": [\"Write\", \"Read\", \"Write\"],\n            \"lines\": [12, 20, 22]\n        }\n    ]\n}\n```\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/pthread/svp_simple_326_001.c",
+    "total_lines": 40,
+    "analyzed_lines": 26,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 439
+  }
+}

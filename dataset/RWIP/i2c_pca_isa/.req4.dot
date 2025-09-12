@@ -1,0 +1,5 @@
+digraph "CFG for 'req4' function" {
+	label="CFG for 'req4' function";
+
+	Node0x7fe2d600d2a0 [shape=record,label="{%0:\l  store i32 0, i32* @irq, align 4, !dbg !37\l  store i32 4, i32* @global_id, align 4, !dbg !38\l  store i32 4, i32* @global_dev, align 4, !dbg !38\l  store i32 -1, i32* @global_id, align 4, !dbg !40\l  store i32 -1, i32* @global_dev, align 4, !dbg !40\l  %1 = load i32, i32* @cnt4, align 4, !dbg !42\l  %2 = add nsw i32 %1, 1, !dbg !42\l  store i32 %2, i32* @cnt4, align 4, !dbg !42\l  ret void, !dbg !43\l}"];
+}

@@ -1,0 +1,63 @@
+[Expert R1] (Detect atomicity violations in the code.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [45, 37, 46]
+        },
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [45, 39, 46]
+        },
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [49, 37, 50]
+        },
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [49, 39, 50]
+        }
+    ]
+}
+```
+
+[System] Expert first round completed in 6.04 seconds
+
+[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)
+```json
+{
+    "violations": [
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [45, 37, 46]
+        },
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [45, 39, 46]
+        },
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [49, 37, 50]
+        },
+        {
+            "sharedVariable": "glob1",
+            "accessPattern": ["Read", "Write", "Read"],
+            "lines": [49, 39, 50]
+        }
+    ]
+}
+```
+
+[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)
+Abstain
+
+
+Elapsed Time: 19.60087490081787 seconds

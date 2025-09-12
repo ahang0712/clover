@@ -1,0 +1,477 @@
+{
+  "plan_analysis": {
+    "facts": {
+      "global_variables_to_detect": [
+        "g"
+      ],
+      "variable_types": {
+        "g": "unknown"
+      },
+      "variable_accesses": [
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "isr_pqueue_get",
+          "line": "58"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "isr_pqueue_get",
+          "line": "60"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "isr_pqueue_get",
+          "line": "61"
+        },
+        {
+          "variable": "g",
+          "op": "load",
+          "function": "isr_pqueue_get",
+          "line": "63"
+        },
+        {
+          "variable": "g",
+          "op": "store",
+          "function": "isr_pqueue_get",
+          "line": "63"
+        }
+      ],
+      "callgraph": [
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "reach_error"
+        },
+        {
+          "caller": "__VERIFIER_assert",
+          "callee": "abort"
+        },
+        {
+          "caller": "pqueue_get",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "pqueue_get",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "isr_pqueue_get",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "isr_pqueue_get",
+          "callee": "__VERIFIER_assert"
+        },
+        {
+          "caller": "svp_simple_643_001_isr1",
+          "callee": "isr_pqueue_get"
+        },
+        {
+          "caller": "svp_simple_643_001_main",
+          "callee": "pqueue_init"
+        },
+        {
+          "caller": "svp_simple_643_001_main",
+          "callee": "pqueue_put"
+        }
+      ],
+      "control_flow_data": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "pqueue_init",
+            "type": "defined"
+          },
+          {
+            "name": "pqueue_put",
+            "type": "defined"
+          },
+          {
+            "name": "pqueue_get",
+            "type": "defined"
+          },
+          {
+            "name": "isr_pqueue_get",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_643_001_isr1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_643_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "isr_pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "isr_pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_643_001_isr1",
+            "callee": "isr_pqueue_get"
+          },
+          {
+            "caller": "svp_simple_643_001_main",
+            "callee": "pqueue_init"
+          },
+          {
+            "caller": "svp_simple_643_001_main",
+            "callee": "pqueue_put"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 3,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              63,
+              29
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              26,
+              63,
+              28
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              19,
+              63,
+              26
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "Operation_Analyzer": {
+        "ISR_COUNT": 1,
+        "GLOBAL_VAR": [
+          "g"
+        ],
+        "MAIN_INFO": [],
+        "ISR_INFO": [
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "58",
+            "function": "isr_pqueue_get"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "60",
+            "function": "isr_pqueue_get"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "61",
+            "function": "isr_pqueue_get"
+          },
+          {
+            "operation": "load",
+            "variable": "g",
+            "line": "63",
+            "function": "isr_pqueue_get"
+          },
+          {
+            "operation": "store",
+            "variable": "g",
+            "line": "63",
+            "function": "isr_pqueue_get"
+          }
+        ]
+      },
+      "Control_flow_Analyzer": {
+        "functions": [
+          {
+            "name": "reach_error",
+            "type": "defined"
+          },
+          {
+            "name": "__VERIFIER_assert",
+            "type": "defined"
+          },
+          {
+            "name": "pqueue_init",
+            "type": "defined"
+          },
+          {
+            "name": "pqueue_put",
+            "type": "defined"
+          },
+          {
+            "name": "pqueue_get",
+            "type": "defined"
+          },
+          {
+            "name": "isr_pqueue_get",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_643_001_isr1",
+            "type": "defined"
+          },
+          {
+            "name": "svp_simple_643_001_main",
+            "type": "defined"
+          },
+          {
+            "name": "abort",
+            "type": "external"
+          }
+        ],
+        "call_graph": [
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "reach_error"
+          },
+          {
+            "caller": "__VERIFIER_assert",
+            "callee": "abort"
+          },
+          {
+            "caller": "pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "isr_pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "isr_pqueue_get",
+            "callee": "__VERIFIER_assert"
+          },
+          {
+            "caller": "svp_simple_643_001_isr1",
+            "callee": "isr_pqueue_get"
+          },
+          {
+            "caller": "svp_simple_643_001_main",
+            "callee": "pqueue_init"
+          },
+          {
+            "caller": "svp_simple_643_001_main",
+            "callee": "pqueue_put"
+          }
+        ]
+      },
+      "Defect_Highlight": {
+        "defect_count": 3,
+        "defects": [
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Write"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              28,
+              63,
+              29
+            ],
+            "sharedVariable": "g",
+            "type": "RWW"
+          },
+          {
+            "accessPattern": [
+              "Read",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              26,
+              63,
+              28
+            ],
+            "sharedVariable": "g",
+            "type": "RWR"
+          },
+          {
+            "accessPattern": [
+              "Write",
+              "Write",
+              "Read"
+            ],
+            "arrayInfo": [
+              "",
+              "",
+              ""
+            ],
+            "isArrayAccess": [
+              false,
+              false,
+              false
+            ],
+            "lines": [
+              19,
+              63,
+              26
+            ],
+            "sharedVariable": "g",
+            "type": "WWR"
+          }
+        ]
+      }
+    },
+    "used_tools": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_sequence": [
+      "Operation_Analyzer",
+      "Control_flow_Analyzer",
+      "Defect_Highlight"
+    ],
+    "tool_plan_output": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "tool_plan_text": "<tool>\nOperation_Analyzer\nControl_flow_Analyzer\nDefect_Highlight\n</tool>",
+    "expert_judge_json": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "expert_judge_plan": "{\n  \"expert_judge_tasks\": [\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Write\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Read\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    },\n    {\n      \"sharedVariables\": [\n        \"g\"\n      ],\n      \"accessPattern\": [\n        \"Write\",\n        \"Write\",\n        \"Read\"\n      ],\n      \"defect_count\": 1\n    }\n  ]\n}",
+    "file_metadata": {
+      "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_643_001.c",
+      "total_lines": 87,
+      "analyzed_lines": 87,
+      "truncated": false,
+      "max_lines_limit": 5000,
+      "file_size_bytes": 913
+    }
+  },
+  "expert_judge_results": {
+    "expert_judge_task_1": [
+      "RWW",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Write> pattern.\n\nLet me trace through the code:\n\n1. **Main function execution flow**:\n   - Calls `pqueue_init()` which sets `g = 0` (line 19)\n   - Loop calls `pqueue_put()` 4 times (lines 82-85)\n\n2. **In `pqueue_put()` function**:\n   - Line 28: `int tmp = g + 1;` - This is a **Read** operation on `g`\n   - Line 29: `g = tmp;` - This is a **Write** operation on `g`\n\n3. **ISR execution**:\n   - `svp_simple_643_001_isr1()` calls `isr_pqueue_get()`\n   - Line 63: `g--;` - This is a compound operation that decomposes to:\n     - Read operation: `temp = g;`\n     - Write operation: `g = temp - 1;`\n\n4. **Atomicity violation analysis**:\n   The candidate defect identifies lines 28, 63, 29 with pattern Read -> Write -> Write.\n\n   - **a1** (line 28): Read operation `g + 1` in `pqueue_put()` (main function context)\n   - **a2** (line 63): Write operation from `g--` in ISR (higher priority)\n   - **a3** (line 29): Write operation `g = tmp` in `pqueue_put()` (main function context)\n\n   This forms a valid <Read, Write, Write> atomicity violation where:\n   - The main function reads `g` (line 28)\n   - ISR can preempt and write to `g` (line 63)\n   - Main function continues and writes to `g` based on the old read value (line 29)\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [28, 63, 29]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at this code, I need to analyze the accessibility of the read/write operations mentioned in the defect report.\n\n**Step 1: Check Control Conditions**\n\nFor the reported violation with lines [28, 63, 29]:\n\n- **Line 28** (`int tmp = g + 1;`): This is inside `pqueue_put()` which is guarded by `if (g < 1000)` at line 26. Since `g` starts at 0 and the loop only runs 4 times, this condition will be true and the read operation is accessible.\n\n- **Line 63** (`g--;`): This is inside `isr_pqueue_get()` which is called by the ISR `svp_simple_643_001_isr1()`. However, this operation is guarded by `if (g > 0)` at line 61. \n\n- **Line 29** (`g = tmp;`): This is also inside the same `if (g < 1000)` condition as line 28, so it's accessible.\n\n**Step 2: Analyze Control Condition Changes**\n\nThe critical issue is with line 63. The condition `if (g > 0)` at line 61 determines whether line 63 executes. Let me trace the execution:\n\n1. `pqueue_init()` sets `g = 0`\n2. The loop calls `pqueue_put()` 4 times, each incrementing `g` by 1\n3. After the loop, `g` would be 4\n\nHowever, for the ISR to execute line 63, `g` must be greater than 0. Since the main function increments `g` from 0 to positive values, the condition `g > 0` can indeed be true when the ISR preempts.\n\n**Step 3: Check Interrupt Status**\n\nThe code doesn't show any `disable_isr()` or `enable_isr()` calls, so I assume interrupts are enabled by default and the ISR can preempt the main function.\n\n**Step 4: Final Analysis**\n\nAll three operations (lines 28, 63, 29) are accessible:\n- Line 28: Accessible when `g < 1000` (true during execution)\n- Line 63: Accessible when `g > 0` (true after first `pqueue_put()` call)  \n- Line 29: Accessible when `g < 1000` (true during execution)\n\nThe atomicity violation is valid.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [28, 63, 29]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Write> pattern.\n\nLet me trace through the code:\n\n1. **Main function execution flow**:\n   - Calls `pqueue_init()` which sets `g = 0` (line 19)\n   - Loop calls `pqueue_put()` 4 times (lines 82-85)\n\n2. **In `pqueue_put()` function**:\n   - Line 28: `int tmp = g + 1;` - This is a **Read** operation on `g`\n   - Line 29: `g = tmp;` - This is a **Write** operation on `g`\n\n3. **ISR execution**:\n   - `svp_simple_643_001_isr1()` calls `isr_pqueue_get()`\n   - Line 63: `g--;` - This is a compound operation that decomposes to:\n     - Read operation: `temp = g;`\n     - Write operation: `g = temp - 1;`\n\n4. **Atomicity violation analysis**:\n   - **a1** (line 28): Read operation `g + 1` in `pqueue_put()` (main function context)\n   - **a2** (line 63): Write operation from `g--` in ISR (higher priority)\n   - **a3** (line 29): Write operation `g = tmp` in `pqueue_put()` (main function context)\n\n   This forms a valid <Read, Write, Write> atomicity violation where:\n   - The main function reads `g` (line 28)\n   - ISR can preempt and write to `g` (line 63)\n   - Main function continues and writes to `g` based on the old read value (line 29)\n\n**Control condition verification**:\n- Line 28/29: Protected by `if (g < 1000)` - accessible since g starts at 0 and increments by small amounts\n- Line 63: Protected by `if (g > 0)` - accessible after first `pqueue_put()` call makes g positive\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Write\"],\n            \"lines\": [28, 63, 29]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_judge_task_2": [
+      "RWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the execution:\n\n1. **Main function execution**: `svp_simple_643_001_main` calls `pqueue_init()` (sets g=0), then calls `pqueue_put()` in a loop.\n\n2. **In `pqueue_put()` function**:\n   - Line 26: `if (g < 1000)` - **Read operation on g**\n   - Line 28: `int tmp = g + 1;` - **Read operation on g** \n   - Line 29: `g = tmp;` - **Write operation on g**\n\n3. **ISR can interrupt**: `svp_simple_643_001_isr1` calls `isr_pqueue_get()` which contains:\n   - Line 63: `g--` - This is a compound operation that decomposes to:\n     - Read operation: `temp = g`\n     - Write operation: `g = temp - 1`\n\nNow I need to check if there's a <Read, Write, Read> pattern where:\n- a1: Read by lower priority task (main function)\n- a2: Write by higher priority task (ISR)  \n- a3: Read by the same lower priority task (main function)\n\nAnalyzing the candidate defect (lines 26, 63, 28):\n- Line 26: `if (g < 1000)` - Read operation in `pqueue_put()` (called by main)\n- Line 63: `g--` - Write operation in ISR (higher priority)\n- Line 28: `int tmp = g + 1;` - Read operation in `pqueue_put()` (same main execution)\n\nThis matches the <Read, Write, Read> pattern:\n1. Main function reads `g` at line 26 for the condition check\n2. ISR interrupts and writes to `g` at line 63 (the write part of `g--`)\n3. Main function continues and reads `g` again at line 28\n\nThe main function expects `g` to have the same value between these two consecutive reads, but the ISR can modify it in between, causing an atomicity violation.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [26, 63, 28]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the execution:\n\n**Step 1: Check Control Conditions**\n\nIn `pqueue_put()` function:\n- Line 26: `if (g < 1000)` - Read operation on g\n- Line 28: `int tmp = g + 1;` - Read operation on g (inside the if block)\n- Line 29: `g = tmp;` - Write operation on g (inside the if block)\n\nThe condition `g < 1000` can be true since `g` starts at 0 and is incremented in the loop, so it will be less than 1000 during normal execution.\n\nIn `isr_pqueue_get()` function:\n- Line 58: `__VERIFIER_assert(g == 0);` - Read operation on g\n- Line 60: `__VERIFIER_assert(g != 0);` - Read operation on g\n- Line 61: `if (g > 0)` - Read operation on g\n- Line 63: `g--` - Read and Write operation on g (inside the if block)\n\n**Step 2: Check Control Condition Changes**\n\nThe ISR `svp_simple_643_001_isr1` can interrupt the main function execution and modify `g` through the `g--` operation.\n\n**Step 3: Check Interrupt Status**\n\nThere are no explicit `disable_isr()` or `enable_isr()` calls in the code, so interrupts are assumed to be enabled and the ISR can preempt the main function.\n\n**Step 4: Analyze Atomicity Violation**\n\nThe potential atomicity violation pattern <Read, Write, Read> is:\n1. Line 26: Main function reads `g` in condition `if (g < 1000)`\n2. Line 63: ISR interrupts and writes to `g` via `g--`\n3. Line 28: Main function continues and reads `g` again in `int tmp = g + 1;`\n\nThis creates an atomicity violation where the main function expects `g` to have the same value between the two consecutive reads, but the ISR can modify it in between.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [26, 63, 28]\n        }\n    ]\n}\n```\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Read, Write, Read> pattern.\n\nLet me trace through the execution:\n\n**Main function execution**: `svp_simple_643_001_main` calls `pqueue_init()` (sets g=0), then calls `pqueue_put()` in a loop.\n\n**In `pqueue_put()` function**:\n- Line 26: `if (g < 1000)` - **Read operation on g**\n- Line 28: `int tmp = g + 1;` - **Read operation on g** (inside the if block)\n- Line 29: `g = tmp;` - **Write operation on g**\n\n**ISR can interrupt**: `svp_simple_643_001_isr1` calls `isr_pqueue_get()` which contains:\n- Line 63: `g--` - This is a compound operation that decomposes to:\n  - Read operation: `temp = g`\n  - Write operation: `g = temp - 1`\n\n**Analyzing the atomicity violation pattern**:\n1. Line 26: Main function reads `g` in condition `if (g < 1000)` \n2. Line 63: ISR interrupts and writes to `g` via `g--` (write part of compound operation)\n3. Line 28: Main function continues and reads `g` again in `int tmp = g + 1;`\n\nThis matches the <Read, Write, Read> pattern where the main function expects `g` to have the same value between two consecutive reads, but the ISR can modify it in between, causing an atomicity violation.\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Read\", \"Write\", \"Read\"],\n            \"lines\": [26, 63, 28]\n        }\n    ]\n}\n```\n\n"
+    ],
+    "expert_judge_task_3": [
+      "WWR",
+      "[Expert R1] (Detect atomicity violations in the code.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Write, Write, Read> pattern.\n\nLet me trace through the execution:\n\n1. **Main function execution**:\n   - Line 79: `pqueue_init()` is called, which writes `g = 0` (line 19)\n   - Lines 82-85: Loop executes 4 times, each calling `pqueue_put()`\n   - In `pqueue_put()`: Line 26 reads `g`, line 29 writes `g = tmp`\n\n2. **ISR1 execution** (can interrupt at any time):\n   - Line 73: `isr_pqueue_get()` is called\n   - Line 63: `g--` which decomposes to: read `g`, then write `g = g - 1`\n\nNow I need to check for the <Write, Write, Read> pattern by analyzing the candidate defect:\n\n**Candidate Defect Analysis**:\n- Line 19: Write operation `g = 0` (in main via pqueue_init)\n- Line 63: Write operation `g--` (in ISR1 via isr_pqueue_get) \n- Line 26: Read operation `if (g < 1000)` (in main via pqueue_put)\n\nLet me verify this pattern:\n1. **a1 (Write)**: Line 19 - `g = 0` executed by main function (lower priority)\n2. **a2 (Write)**: Line 63 - `g--` executed by ISR1 (higher priority) \n3. **a3 (Read)**: Line 26 - `if (g < 1000)` executed by main function (lower priority)\n\nThe sequence would be:\n- Main executes `pqueue_init()` writing `g = 0`\n- Main starts executing the loop and calls `pqueue_put()`\n- Before the read at line 26 in `pqueue_put()`, ISR1 interrupts\n- ISR1 executes `g--` (write operation)\n- Control returns to main, which then reads `g` at line 26\n\nThis matches the <Write, Write, Read> pattern where:\n- The main function writes to `g` and expects to read that value\n- ISR1 intervenes with another write\n- The subsequent read by main gets the modified value instead of the expected value\n\n```json\n{\n    \"violations\": [\n        {\n            \"sharedVariable\": \"g\",\n            \"accessPattern\": [\"Write\", \"Write\", \"Read\"],\n            \"lines\": [19, 63, 26]\n        }\n    ]\n}\n```\n\n[Judge R1] (Validate the expert's defect report and check control/interrupt conditions.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations and check the accessibility of each operation.\n\nLet me trace through the execution:\n\n**Step 1: Check Control Conditions**\n\n1. **Line 19 (Write `g = 0`)**: This is in `pqueue_init()` called from main at line 79. No control conditions prevent this execution.\n\n2. **Line 63 (Write `g--`)**: This is in `isr_pqueue_get()` called from ISR1 at line 73. However, this operation is guarded by:\n   - Line 58: `__VERIFIER_assert(g == 0)` - asserts that g must equal 0\n   - Line 60: `__VERIFIER_assert(g != 0)` - asserts that g must not equal 0\n   - Line 61: `if (g > 0)` - only executes if g is greater than 0\n\n   The assertions at lines 58 and 60 are contradictory - they require `g == 0` AND `g != 0` simultaneously, which is impossible. This means the function will always abort at one of these assertions and never reach line 63.\n\n3. **Line 26 (Read `if (g < 1000)`)**: This is in `pqueue_put()` called from the main loop. No control conditions prevent this execution.\n\n**Step 2: Check Interrupt Status**\nNo interrupt enable/disable operations are present in the code, so all interrupts can execute when triggered.\n\n**Step 3: Accessibility Analysis**\nSince the assertions at lines 58 and 60 in `isr_pqueue_get()` are contradictory, the write operation at line 63 can never be executed. The function will always terminate at one of the assertion failures before reaching the write operation.\n\nTherefore, the reported atomicity violation involving line 63 is a false positive because this line is unreachable.\n\nNo defects.\n\n[Expert R2] (Refine the report based on judge feedback, re-check for missed or false defects.)\nLooking at the code, I need to analyze the global variable `g` for atomicity violations following the <Write, Write, Read> pattern.\n\nLet me examine the execution flow and control conditions:\n\n**Step 1: Trace Main Function Execution**\n- Line 79: `pqueue_init()` called, which writes `g = 0` (line 19)\n- Lines 82-85: Loop calls `pqueue_put()` 4 times\n- In `pqueue_put()`: Line 26 reads `g` in condition `if (g < 1000)`\n\n**Step 2: Examine ISR1 Execution**\n- Line 73: `isr_pqueue_get()` called\n- Line 58: `__VERIFIER_assert(g == 0)` - requires g to equal 0\n- Line 60: `__VERIFIER_assert(g != 0)` - requires g to NOT equal 0\n- Line 61: `if (g > 0)` condition\n- Line 63: `g--` operation (if reached)\n\n**Step 3: Control Flow Analysis**\nThe critical issue is in `isr_pqueue_get()`:\n- Line 58 asserts `g == 0`\n- Line 60 asserts `g != 0`\n\nThese assertions are contradictory - they require `g` to simultaneously equal 0 AND not equal 0, which is logically impossible. Regardless of the value of `g`, one of these assertions will always fail, causing the program to abort via `reach_error()` and never reach line 63.\n\n**Step 4: Reachability Assessment**\nSince the write operation at line 63 (`g--`) can never be executed due to the contradictory assertions, any atomicity violation pattern involving this line is impossible.\n\nNo defects.\n\n"
+    ]
+  },
+  "file_metadata": {
+    "original_file": "/Users/hehang03/code/clover/dataset/c-src/SV-COMP-2022-Benchmark/goblint-regression/svp_simple_643_001.c",
+    "total_lines": 87,
+    "analyzed_lines": 87,
+    "truncated": false,
+    "max_lines_limit": 5000,
+    "file_size_bytes": 913
+  }
+}

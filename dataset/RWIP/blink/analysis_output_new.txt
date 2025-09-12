@@ -1,0 +1,1240 @@
+Analyzing LLVM IR file: blink3.ll
+Starting module analysis...
+Collecting global variables...
+Analyzing functions...
+Analyzing function: Timer_isr_1
+DEBUG: Analyzing pointer mappings for function: Timer_isr_1
+DEBUG: Analyzing local pointer mappings for function: Timer_isr_1
+DEBUG: Found call to function: Timer_Force
+DEBUG: getLineNumber for call instruction: 34
+DEBUG: Non-memory instruction at line 34 in function Timer_isr_1 (opcode: call)
+DEBUG: getLineNumber for store instruction: 35
+DEBUG: Found StoreInst at line 35 in function Timer_isr_1, target variable: timerCount
+DEBUG: Recording direct store access to timerCount (arrayInfo: ) at line 35 in function Timer_isr_1
+DEBUG: getLineNumber for load instruction: 36
+DEBUG: Found LoadInst at line 36 in function Timer_isr_1, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 36 in function Timer_isr_1
+DEBUG: getLineNumber for icmp instruction: 36
+DEBUG: Non-memory instruction at line 36 in function Timer_isr_1 (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 36
+DEBUG: Non-memory instruction at line 36 in function Timer_isr_1 (opcode: br)
+DEBUG: getLineNumber for br instruction: 37
+DEBUG: Non-memory instruction at line 37 in function Timer_isr_1 (opcode: br)
+DEBUG: getLineNumber for load instruction: 38
+DEBUG: Found LoadInst at line 38 in function Timer_isr_1, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 38 in function Timer_isr_1
+DEBUG: getLineNumber for icmp instruction: 38
+DEBUG: Non-memory instruction at line 38 in function Timer_isr_1 (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 38
+DEBUG: Non-memory instruction at line 38 in function Timer_isr_1 (opcode: br)
+DEBUG: getLineNumber for load instruction: 39
+DEBUG: Found LoadInst at line 39 in function Timer_isr_1, target variable: LED_0
+DEBUG: Recording direct load access to LED_0 (arrayInfo: ) at line 39 in function Timer_isr_1
+DEBUG: getLineNumber for load instruction: 39
+DEBUG: Found LoadInst at line 39 in function Timer_isr_1, target variable: LED_1
+DEBUG: Recording direct load access to LED_1 (arrayInfo: ) at line 39 in function Timer_isr_1
+DEBUG: getLineNumber for add instruction: 39
+DEBUG: Non-memory instruction at line 39 in function Timer_isr_1 (opcode: add)
+DEBUG: getLineNumber for store instruction: 39
+DEBUG: Found StoreInst at line 39 in function Timer_isr_1, target variable: P1OUT
+DEBUG: Recording direct store access to P1OUT (arrayInfo: ) at line 39 in function Timer_isr_1
+DEBUG: getLineNumber for br instruction: 40
+DEBUG: Non-memory instruction at line 40 in function Timer_isr_1 (opcode: br)
+DEBUG: getLineNumber for load instruction: 41
+DEBUG: Found LoadInst at line 41 in function Timer_isr_1, target variable: cnt1
+DEBUG: Recording direct load access to cnt1 (arrayInfo: ) at line 41 in function Timer_isr_1
+DEBUG: getLineNumber for add instruction: 41
+DEBUG: Non-memory instruction at line 41 in function Timer_isr_1 (opcode: add)
+DEBUG: getLineNumber for store instruction: 41
+DEBUG: Found StoreInst at line 41 in function Timer_isr_1, target variable: cnt1
+DEBUG: Recording direct store access to cnt1 (arrayInfo: ) at line 41 in function Timer_isr_1
+DEBUG: getLineNumber for ret instruction: 42
+DEBUG: Non-memory instruction at line 42 in function Timer_isr_1 (opcode: ret)
+Analyzing control flow for function: Timer_isr_1
+Starting control flow analysis for: Timer_isr_1
+Processing basic block: bb_140529302001104
+Processing basic block: bb_140529302012592
+Processing basic block: bb_140529302012720
+Processing basic block: bb_140529302014256
+Processing basic block: bb_140529302014384
+Control flow analysis completed for: Timer_isr_1
+Analyzing function: Timer_isr_2
+DEBUG: Analyzing pointer mappings for function: Timer_isr_2
+DEBUG: Analyzing local pointer mappings for function: Timer_isr_2
+DEBUG: Found call to function: Timer_Reset
+DEBUG: getLineNumber for store instruction: 49
+DEBUG: Found StoreInst at line 49 in function Timer_isr_2, target variable: timerCount
+DEBUG: Recording direct store access to timerCount (arrayInfo: ) at line 49 in function Timer_isr_2
+DEBUG: getLineNumber for load instruction: 53
+DEBUG: Found LoadInst at line 53 in function Timer_isr_2, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 53 in function Timer_isr_2
+DEBUG: getLineNumber for icmp instruction: 53
+DEBUG: Non-memory instruction at line 53 in function Timer_isr_2 (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 53
+DEBUG: Non-memory instruction at line 53 in function Timer_isr_2 (opcode: br)
+DEBUG: getLineNumber for br instruction: 55
+DEBUG: Non-memory instruction at line 55 in function Timer_isr_2 (opcode: br)
+DEBUG: getLineNumber for load instruction: 56
+DEBUG: Found LoadInst at line 56 in function Timer_isr_2, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 56 in function Timer_isr_2
+DEBUG: getLineNumber for icmp instruction: 56
+DEBUG: Non-memory instruction at line 56 in function Timer_isr_2 (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 56
+DEBUG: Non-memory instruction at line 56 in function Timer_isr_2 (opcode: br)
+DEBUG: getLineNumber for load instruction: 57
+DEBUG: Found LoadInst at line 57 in function Timer_isr_2, target variable: LED_0
+DEBUG: Recording direct load access to LED_0 (arrayInfo: ) at line 57 in function Timer_isr_2
+DEBUG: getLineNumber for store instruction: 57
+DEBUG: Found StoreInst at line 57 in function Timer_isr_2, target variable: P1OUT
+DEBUG: Recording direct store access to P1OUT (arrayInfo: ) at line 57 in function Timer_isr_2
+DEBUG: getLineNumber for br instruction: 58
+DEBUG: Non-memory instruction at line 58 in function Timer_isr_2 (opcode: br)
+DEBUG: getLineNumber for load instruction: 59
+DEBUG: Found LoadInst at line 59 in function Timer_isr_2, target variable: cnt2
+DEBUG: Recording direct load access to cnt2 (arrayInfo: ) at line 59 in function Timer_isr_2
+DEBUG: getLineNumber for add instruction: 59
+DEBUG: Non-memory instruction at line 59 in function Timer_isr_2 (opcode: add)
+DEBUG: getLineNumber for store instruction: 59
+DEBUG: Found StoreInst at line 59 in function Timer_isr_2, target variable: cnt2
+DEBUG: Recording direct store access to cnt2 (arrayInfo: ) at line 59 in function Timer_isr_2
+DEBUG: getLineNumber for call instruction: 61
+DEBUG: Non-memory instruction at line 61 in function Timer_isr_2 (opcode: call)
+DEBUG: getLineNumber for ret instruction: 63
+DEBUG: Non-memory instruction at line 63 in function Timer_isr_2 (opcode: ret)
+Analyzing control flow for function: Timer_isr_2
+Starting control flow analysis for: Timer_isr_2
+Processing basic block: bb_140529302018048
+Processing basic block: bb_140529302019296
+Processing basic block: bb_140529302019424
+Processing basic block: bb_140529302020960
+Processing basic block: bb_140529302021088
+Control flow analysis completed for: Timer_isr_2
+Analyzing function: Timer_isr_3
+DEBUG: Analyzing pointer mappings for function: Timer_isr_3
+DEBUG: Analyzing local pointer mappings for function: Timer_isr_3
+DEBUG: getLineNumber for store instruction: 72
+DEBUG: Found StoreInst at line 72 in function Timer_isr_3, target variable: timerCount
+DEBUG: Recording direct store access to timerCount (arrayInfo: ) at line 72 in function Timer_isr_3
+DEBUG: getLineNumber for load instruction: 76
+DEBUG: Found LoadInst at line 76 in function Timer_isr_3, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 76 in function Timer_isr_3
+DEBUG: getLineNumber for icmp instruction: 76
+DEBUG: Non-memory instruction at line 76 in function Timer_isr_3 (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 76
+DEBUG: Non-memory instruction at line 76 in function Timer_isr_3 (opcode: br)
+DEBUG: getLineNumber for br instruction: 78
+DEBUG: Non-memory instruction at line 78 in function Timer_isr_3 (opcode: br)
+DEBUG: getLineNumber for load instruction: 79
+DEBUG: Found LoadInst at line 79 in function Timer_isr_3, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 79 in function Timer_isr_3
+DEBUG: getLineNumber for icmp instruction: 79
+DEBUG: Non-memory instruction at line 79 in function Timer_isr_3 (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 79
+DEBUG: Non-memory instruction at line 79 in function Timer_isr_3 (opcode: br)
+DEBUG: getLineNumber for load instruction: 80
+DEBUG: Found LoadInst at line 80 in function Timer_isr_3, target variable: LED_0
+DEBUG: Recording direct load access to LED_0 (arrayInfo: ) at line 80 in function Timer_isr_3
+DEBUG: getLineNumber for store instruction: 80
+DEBUG: Found StoreInst at line 80 in function Timer_isr_3, target variable: P1OUT
+DEBUG: Recording direct store access to P1OUT (arrayInfo: ) at line 80 in function Timer_isr_3
+DEBUG: getLineNumber for br instruction: 81
+DEBUG: Non-memory instruction at line 81 in function Timer_isr_3 (opcode: br)
+DEBUG: getLineNumber for load instruction: 82
+DEBUG: Found LoadInst at line 82 in function Timer_isr_3, target variable: cnt3
+DEBUG: Recording direct load access to cnt3 (arrayInfo: ) at line 82 in function Timer_isr_3
+DEBUG: getLineNumber for add instruction: 82
+DEBUG: Non-memory instruction at line 82 in function Timer_isr_3 (opcode: add)
+DEBUG: getLineNumber for store instruction: 82
+DEBUG: Found StoreInst at line 82 in function Timer_isr_3, target variable: cnt3
+DEBUG: Recording direct store access to cnt3 (arrayInfo: ) at line 82 in function Timer_isr_3
+DEBUG: getLineNumber for ret instruction: 84
+DEBUG: Non-memory instruction at line 84 in function Timer_isr_3 (opcode: ret)
+Analyzing control flow for function: Timer_isr_3
+Starting control flow analysis for: Timer_isr_3
+Processing basic block: bb_140529302006464
+Processing basic block: bb_140529302026352
+Processing basic block: bb_140529302026480
+Processing basic block: bb_140529302028016
+Processing basic block: bb_140529302028144
+Control flow analysis completed for: Timer_isr_3
+Analyzing function: Timer_Force
+DEBUG: Analyzing pointer mappings for function: Timer_Force
+DEBUG: Analyzing local pointer mappings for function: Timer_Force
+DEBUG: getLineNumber for load instruction: 92
+DEBUG: Found LoadInst at line 92 in function Timer_Force, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 92 in function Timer_Force
+DEBUG: getLineNumber for add instruction: 92
+DEBUG: Non-memory instruction at line 92 in function Timer_Force (opcode: add)
+DEBUG: getLineNumber for store instruction: 92
+DEBUG: Found StoreInst at line 92 in function Timer_Force, target variable: timerCount
+DEBUG: Recording direct store access to timerCount (arrayInfo: ) at line 92 in function Timer_Force
+DEBUG: getLineNumber for load instruction: 93
+DEBUG: Found LoadInst at line 93 in function Timer_Force, target variable: cnt4
+DEBUG: Recording direct load access to cnt4 (arrayInfo: ) at line 93 in function Timer_Force
+DEBUG: getLineNumber for add instruction: 93
+DEBUG: Non-memory instruction at line 93 in function Timer_Force (opcode: add)
+DEBUG: getLineNumber for store instruction: 93
+DEBUG: Found StoreInst at line 93 in function Timer_Force, target variable: cnt4
+DEBUG: Recording direct store access to cnt4 (arrayInfo: ) at line 93 in function Timer_Force
+DEBUG: getLineNumber for ret instruction: 96
+DEBUG: Non-memory instruction at line 96 in function Timer_Force (opcode: ret)
+Analyzing control flow for function: Timer_Force
+Starting control flow analysis for: Timer_Force
+Processing basic block: bb_140529302030768
+Control flow analysis completed for: Timer_Force
+Analyzing function: Timer_Reset
+DEBUG: Analyzing pointer mappings for function: Timer_Reset
+DEBUG: Analyzing local pointer mappings for function: Timer_Reset
+DEBUG: getLineNumber for store instruction: 102
+DEBUG: Found StoreInst at line 102 in function Timer_Reset, target variable: timerCount
+DEBUG: Recording direct store access to timerCount (arrayInfo: ) at line 102 in function Timer_Reset
+DEBUG: getLineNumber for load instruction: 106
+DEBUG: Found LoadInst at line 106 in function Timer_Reset, target variable: timerCount
+DEBUG: Recording direct load access to timerCount (arrayInfo: ) at line 106 in function Timer_Reset
+DEBUG: getLineNumber for icmp instruction: 106
+DEBUG: Non-memory instruction at line 106 in function Timer_Reset (opcode: icmp)
+DEBUG: getLineNumber for br instruction: 106
+DEBUG: Non-memory instruction at line 106 in function Timer_Reset (opcode: br)
+DEBUG: getLineNumber for br instruction: 108
+DEBUG: Non-memory instruction at line 108 in function Timer_Reset (opcode: br)
+DEBUG: getLineNumber for load instruction: 109
+DEBUG: Found LoadInst at line 109 in function Timer_Reset, target variable: cnt5
+DEBUG: Recording direct load access to cnt5 (arrayInfo: ) at line 109 in function Timer_Reset
+DEBUG: getLineNumber for add instruction: 109
+DEBUG: Non-memory instruction at line 109 in function Timer_Reset (opcode: add)
+DEBUG: getLineNumber for store instruction: 109
+DEBUG: Found StoreInst at line 109 in function Timer_Reset, target variable: cnt5
+DEBUG: Recording direct store access to cnt5 (arrayInfo: ) at line 109 in function Timer_Reset
+DEBUG: getLineNumber for ret instruction: 111
+DEBUG: Non-memory instruction at line 111 in function Timer_Reset (opcode: ret)
+Analyzing control flow for function: Timer_Reset
+Starting control flow analysis for: Timer_Reset
+Processing basic block: bb_140529302032640
+Processing basic block: bb_140529302033872
+Processing basic block: bb_140529302034000
+Control flow analysis completed for: Timer_Reset
+Analyzing function: svp_simple_003_001_main
+DEBUG: Analyzing pointer mappings for function: svp_simple_003_001_main
+DEBUG: Analyzing local pointer mappings for function: svp_simple_003_001_main
+DEBUG: getLineNumber for alloca instruction: NO DEBUG INFO (returning 0)
+DEBUG: Non-memory instruction at line 0 in function svp_simple_003_001_main (opcode: alloca)
+DEBUG: getLineNumber for load instruction: 115
+DEBUG: Found LoadInst at line 115 in function svp_simple_003_001_main, target variable: WDTPW
+DEBUG: Recording direct load access to WDTPW (arrayInfo: ) at line 115 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 115
+DEBUG: Found LoadInst at line 115 in function svp_simple_003_001_main, target variable: WDTHOLD
+DEBUG: Recording direct load access to WDTHOLD (arrayInfo: ) at line 115 in function svp_simple_003_001_main
+DEBUG: getLineNumber for add instruction: 115
+DEBUG: Non-memory instruction at line 115 in function svp_simple_003_001_main (opcode: add)
+DEBUG: getLineNumber for store instruction: 115
+DEBUG: Found StoreInst at line 115 in function svp_simple_003_001_main, target variable: WDTCTL
+DEBUG: Recording direct store access to WDTCTL (arrayInfo: ) at line 115 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 117
+DEBUG: Found LoadInst at line 117 in function svp_simple_003_001_main, target variable: LED_0
+DEBUG: Recording direct load access to LED_0 (arrayInfo: ) at line 117 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 117
+DEBUG: Found LoadInst at line 117 in function svp_simple_003_001_main, target variable: LED_1
+DEBUG: Recording direct load access to LED_1 (arrayInfo: ) at line 117 in function svp_simple_003_001_main
+DEBUG: getLineNumber for add instruction: 117
+DEBUG: Non-memory instruction at line 117 in function svp_simple_003_001_main (opcode: add)
+DEBUG: getLineNumber for store instruction: 117
+DEBUG: Found StoreInst at line 117 in function svp_simple_003_001_main, target variable: LED_DIR
+DEBUG: Recording direct store access to LED_DIR (arrayInfo: ) at line 117 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 119
+DEBUG: Found LoadInst at line 119 in function svp_simple_003_001_main, target variable: LED_0
+DEBUG: Recording direct load access to LED_0 (arrayInfo: ) at line 119 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 119
+DEBUG: Found LoadInst at line 119 in function svp_simple_003_001_main, target variable: LED_1
+DEBUG: Recording direct load access to LED_1 (arrayInfo: ) at line 119 in function svp_simple_003_001_main
+DEBUG: getLineNumber for add instruction: 119
+DEBUG: Non-memory instruction at line 119 in function svp_simple_003_001_main (opcode: add)
+DEBUG: getLineNumber for add instruction: 119
+DEBUG: Non-memory instruction at line 119 in function svp_simple_003_001_main (opcode: add)
+DEBUG: getLineNumber for store instruction: 119
+DEBUG: Found StoreInst at line 119 in function svp_simple_003_001_main, target variable: LED_OUT
+DEBUG: Recording direct store access to LED_OUT (arrayInfo: ) at line 119 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 121
+DEBUG: Found LoadInst at line 121 in function svp_simple_003_001_main, target variable: CCIE
+DEBUG: Recording direct load access to CCIE (arrayInfo: ) at line 121 in function svp_simple_003_001_main
+DEBUG: getLineNumber for store instruction: 121
+DEBUG: Found StoreInst at line 121 in function svp_simple_003_001_main, target variable: CCTL0
+DEBUG: Recording direct store access to CCTL0 (arrayInfo: ) at line 121 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 122
+DEBUG: Found LoadInst at line 122 in function svp_simple_003_001_main, target variable: TASSEL_2
+DEBUG: Recording direct load access to TASSEL_2 (arrayInfo: ) at line 122 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 122
+DEBUG: Found LoadInst at line 122 in function svp_simple_003_001_main, target variable: MC_2
+DEBUG: Recording direct load access to MC_2 (arrayInfo: ) at line 122 in function svp_simple_003_001_main
+DEBUG: getLineNumber for add instruction: 122
+DEBUG: Non-memory instruction at line 122 in function svp_simple_003_001_main (opcode: add)
+DEBUG: getLineNumber for store instruction: 122
+DEBUG: Found StoreInst at line 122 in function svp_simple_003_001_main, target variable: TACTL
+DEBUG: Recording direct store access to TACTL (arrayInfo: ) at line 122 in function svp_simple_003_001_main
+DEBUG: getLineNumber for store instruction: 124
+DEBUG: Found StoreInst at line 124 in function svp_simple_003_001_main, target variable: timerCount
+DEBUG: Recording direct store access to timerCount (arrayInfo: ) at line 124 in function svp_simple_003_001_main
+DEBUG: getLineNumber for load instruction: 138
+DEBUG: Found LoadInst at line 138 in function svp_simple_003_001_main, target variable: 
+DEBUG: resolvePointerToGlobal called for function: svp_simple_003_001_main
+DEBUG: Found function in pointer map, checking 0 mappings
+DEBUG: Pointer not found in mappings
+DEBUG: LoadInst at line 138 does not target a global variable (varName: )
+DEBUG: getLineNumber for ret instruction: 138
+DEBUG: Non-memory instruction at line 138 in function svp_simple_003_001_main (opcode: ret)
+Analyzing control flow for function: svp_simple_003_001_main
+Starting control flow analysis for: svp_simple_003_001_main
+Processing basic block: bb_140529302036240
+Control flow analysis completed for: svp_simple_003_001_main
+Analyzing function call relationships...
+Function call relationships:
+  Timer_isr_1 -> Timer_Force
+  Timer_isr_2 -> Timer_Reset
+Module analysis completed successfully.
+Module analysis complete. Generating defect analysis report...
+Starting defect detection...
+Detecting RWW defects...
+Starting RWW defect detection...
+Analyzing variable: MC_2
+Found 1 main accesses for MC_2
+Found main read at line 122
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: MC_2
+Analyzing variable: TASSEL_2
+Found 1 main accesses for TASSEL_2
+Found main read at line 122
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: TASSEL_2
+Analyzing variable: CCTL0
+Found 1 main accesses for CCTL0
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: CCTL0
+Analyzing variable: LED_OUT
+Found 1 main accesses for LED_OUT
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: LED_OUT
+Analyzing variable: TACTL
+Found 1 main accesses for TACTL
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: TACTL
+Analyzing variable: WDTCTL
+Found 1 main accesses for WDTCTL
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: WDTCTL
+Analyzing variable: cnt2
+Found 0 main accesses for cnt2
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Found ISR read at line 59
+Found ISR write at line 59
+Found read-modify-write at line 59 in ISR Timer_isr_2, checking for cross-ISR RWW interruption
+Found consecutive read-write pair in Timer_isr_2: 59 -> 59
+Skipping ISR: Timer_isr_1 (cannot interrupt Timer_isr_2)
+Checking other ISR: Timer_isr_3 (can interrupt Timer_isr_2)
+Completed analysis for variable: cnt2
+Analyzing variable: WDTHOLD
+Found 1 main accesses for WDTHOLD
+Found main read at line 115
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: WDTHOLD
+Analyzing variable: cnt5
+Found 0 main accesses for cnt5
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Found ISR read at line 109
+Found ISR write at line 109
+Found read-modify-write at line 109 in ISR Timer_isr_2, checking for cross-ISR RWW interruption
+Found consecutive read-write pair in Timer_isr_2: 109 -> 109
+Skipping ISR: Timer_isr_1 (cannot interrupt Timer_isr_2)
+Checking other ISR: Timer_isr_3 (can interrupt Timer_isr_2)
+Completed analysis for variable: cnt5
+Analyzing variable: LED_DIR
+Found 1 main accesses for LED_DIR
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: LED_DIR
+Analyzing variable: cnt4
+Found 0 main accesses for cnt4
+Checking ISR reads in: Timer_isr_1
+Found ISR read at line 93
+Found ISR write at line 93
+Found read-modify-write at line 93 in ISR Timer_isr_1, checking for cross-ISR RWW interruption
+Found consecutive read-write pair in Timer_isr_1: 93 -> 93
+Checking other ISR: Timer_isr_3 (can interrupt Timer_isr_1)
+Checking other ISR: Timer_isr_2 (can interrupt Timer_isr_1)
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: cnt4
+Analyzing variable: WDTCLT
+Found 0 main accesses for WDTCLT
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: WDTCLT
+Analyzing variable: cnt3
+Found 0 main accesses for cnt3
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Found ISR read at line 82
+Found ISR write at line 82
+Found read-modify-write at line 82 in ISR Timer_isr_3, checking for cross-ISR RWW interruption
+Found consecutive read-write pair in Timer_isr_3: 82 -> 82
+Skipping ISR: Timer_isr_1 (cannot interrupt Timer_isr_3)
+Skipping ISR: Timer_isr_2 (cannot interrupt Timer_isr_3)
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: cnt3
+Analyzing variable: cnt1
+Found 0 main accesses for cnt1
+Checking ISR reads in: Timer_isr_1
+Found ISR read at line 41
+Found ISR write at line 41
+Found read-modify-write at line 41 in ISR Timer_isr_1, checking for cross-ISR RWW interruption
+Found consecutive read-write pair in Timer_isr_1: 41 -> 41
+Checking other ISR: Timer_isr_3 (can interrupt Timer_isr_1)
+Checking other ISR: Timer_isr_2 (can interrupt Timer_isr_1)
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: cnt1
+Analyzing variable: timerCount
+Found 1 main accesses for timerCount
+Checking ISR reads in: Timer_isr_1
+Found ISR read at line 36
+Found ISR write at line 35
+Skipping non-consecutive ISR read-write pair: 36 -> 35 (areConsecutiveInPath returned false)
+Found ISR write at line 92
+Skipping non-consecutive ISR read-write pair: 36 -> 92 (areConsecutiveInPath returned false)
+Found ISR read at line 38
+Found ISR write at line 35
+Skipping non-consecutive ISR read-write pair: 38 -> 35 (areConsecutiveInPath returned false)
+Found ISR write at line 92
+Skipping non-consecutive ISR read-write pair: 38 -> 92 (areConsecutiveInPath returned false)
+Found ISR read at line 92
+Found ISR write at line 35
+Skipping non-consecutive ISR read-write pair: 92 -> 35 (areConsecutiveInPath returned false)
+Found ISR write at line 92
+Found read-modify-write at line 92 in ISR Timer_isr_1, checking for cross-ISR RWW interruption
+Found consecutive read-write pair in Timer_isr_1: 92 -> 92
+Checking other ISR: Timer_isr_3 (can interrupt Timer_isr_1)
+Found consecutive RWW pattern in ISR: 92 -> 72 -> 92
+Checking other ISR: Timer_isr_2 (can interrupt Timer_isr_1)
+Found consecutive RWW pattern in ISR: 92 -> 49 -> 92
+Found consecutive RWW pattern in ISR: 92 -> 102 -> 92
+Checking ISR reads in: Timer_isr_3
+Found ISR read at line 76
+Found ISR write at line 72
+Skipping non-consecutive ISR read-write pair: 76 -> 72 (areConsecutiveInPath returned false)
+Found ISR read at line 79
+Found ISR write at line 72
+Skipping non-consecutive ISR read-write pair: 79 -> 72 (areConsecutiveInPath returned false)
+Checking ISR reads in: Timer_isr_2
+Found ISR read at line 53
+Found ISR write at line 49
+Skipping non-consecutive ISR read-write pair: 53 -> 49 (areConsecutiveInPath returned false)
+Found ISR write at line 102
+Skipping non-consecutive ISR read-write pair: 53 -> 102 (areConsecutiveInPath returned false)
+Found ISR read at line 56
+Found ISR write at line 49
+Skipping non-consecutive ISR read-write pair: 56 -> 49 (areConsecutiveInPath returned false)
+Found ISR write at line 102
+Skipping non-consecutive ISR read-write pair: 56 -> 102 (areConsecutiveInPath returned false)
+Found ISR read at line 106
+Found ISR write at line 49
+Skipping non-consecutive ISR read-write pair: 106 -> 49 (areConsecutiveInPath returned false)
+Found ISR write at line 102
+Skipping non-consecutive ISR read-write pair: 106 -> 102 (areConsecutiveInPath returned false)
+Completed analysis for variable: timerCount
+Analyzing variable: CCIE
+Found 1 main accesses for CCIE
+Found main read at line 121
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: CCIE
+Analyzing variable: P1OUT
+Found 0 main accesses for P1OUT
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: P1OUT
+Analyzing variable: WDTPW
+Found 1 main accesses for WDTPW
+Found main read at line 115
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: WDTPW
+Analyzing variable: LED_1
+Found 2 main accesses for LED_1
+Found main read at line 117
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Found main read at line 119
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Found ISR read at line 39
+Checking ISR reads in: Timer_isr_3
+Checking ISR reads in: Timer_isr_2
+Completed analysis for variable: LED_1
+Analyzing variable: LED_0
+Found 2 main accesses for LED_0
+Found main read at line 117
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Found main read at line 119
+Checking ISR: Timer_isr_1
+Checking ISR: Timer_isr_3
+Checking ISR: Timer_isr_2
+Checking ISR reads in: Timer_isr_1
+Found ISR read at line 39
+Checking ISR reads in: Timer_isr_3
+Found ISR read at line 80
+Checking ISR reads in: Timer_isr_2
+Found ISR read at line 57
+Completed analysis for variable: LED_0
+Found read-modify-write at line 59 in Timer_isr_2, checking for cross-ISR RWW interruption
+Found read-modify-write at line 59 in Timer_isr_2, checking for cross-ISR RWW interruption
+Found read-modify-write at line 109 in Timer_isr_2, checking for cross-ISR RWW interruption
+Found read-modify-write at line 109 in Timer_isr_2, checking for cross-ISR RWW interruption
+Found read-modify-write at line 93 in Timer_isr_1, checking for cross-ISR RWW interruption
+Found read-modify-write at line 93 in Timer_isr_1, checking for cross-ISR RWW interruption
+Found read-modify-write at line 82 in Timer_isr_3, checking for cross-ISR RWW interruption
+Found read-modify-write at line 82 in Timer_isr_3, checking for cross-ISR RWW interruption
+Found read-modify-write at line 41 in Timer_isr_1, checking for cross-ISR RWW interruption
+Found read-modify-write at line 41 in Timer_isr_1, checking for cross-ISR RWW interruption
+Found read-modify-write at line 92 in Timer_isr_1, checking for cross-ISR RWW interruption
+Found valid ISR-to-ISR RWW pattern: Timer_isr_1 R(92) -> Timer_isr_3 W(72) -> Timer_isr_1 W(92)
+Found read-modify-write at line 92 in Timer_isr_1, checking for cross-ISR RWW interruption
+Found valid ISR-to-ISR RWW pattern: Timer_isr_1 R(92) -> Timer_isr_2 W(49) -> Timer_isr_1 W(92)
+Found valid ISR-to-ISR RWW pattern: Timer_isr_1 R(92) -> Timer_isr_2 W(102) -> Timer_isr_1 W(92)
+RWW defect detection completed.
+Found 6 RWW defects.
+Detecting RWR defects...
+Starting RWR defect detection...
+Analyzing variable: MC_2 for RWR defects
+Found 1 main read operations for MC_2
+Checking read1 at line 122 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: TASSEL_2 for RWR defects
+Found 1 main read operations for TASSEL_2
+Checking read1 at line 122 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: CCTL0 for RWR defects
+Found 0 main read operations for CCTL0
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: LED_OUT for RWR defects
+Found 0 main read operations for LED_OUT
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: TACTL for RWR defects
+Found 0 main read operations for TACTL
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: WDTCTL for RWR defects
+Found 0 main read operations for WDTCTL
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: cnt2 for RWR defects
+Found 0 main read operations for cnt2
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: WDTHOLD for RWR defects
+Found 1 main read operations for WDTHOLD
+Checking read1 at line 115 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: cnt5 for RWR defects
+Found 0 main read operations for cnt5
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: LED_DIR for RWR defects
+Found 0 main read operations for LED_DIR
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: cnt4 for RWR defects
+Found 0 main read operations for cnt4
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: WDTCLT for RWR defects
+Found 0 main read operations for WDTCLT
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: cnt3 for RWR defects
+Found 0 main read operations for cnt3
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: cnt1 for RWR defects
+Found 0 main read operations for cnt1
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: timerCount for RWR defects
+Found 0 main read operations for timerCount
+DEBUG: findConsecutiveReads found 3 read operations
+DEBUG: Checking read pair: line 36 (BB: bb_140529302001104) vs line 38 (BB: bb_140529302012720)
+  areInMutuallyExclusiveBranches: Checking access1 at line 36 (BB: bb_140529302001104) vs access2 at line 38 (BB: bb_140529302012720)
+  Checking mutual exclusivity between BB bb_140529302001104 and BB bb_140529302012720 in function Timer_isr_1
+  Reachability: bb_140529302001104 can reach bb_140529302012720: 1
+  Reachability: bb_140529302012720 can reach bb_140529302001104: 0
+  BB bb_140529302001104 and BB bb_140529302012720 are NOT mutually exclusive (reachable from each other)
+DEBUG: areStrictlyConsecutiveReads called for reads at line 36 (function: Timer_isr_1, BB: bb_140529302001104) and line 38 (function: Timer_isr_1, BB: bb_140529302012720)
+  areInMutuallyExclusiveBranches: Checking access1 at line 36 (BB: bb_140529302001104) vs access2 at line 38 (BB: bb_140529302012720)
+  Checking mutual exclusivity between BB bb_140529302001104 and BB bb_140529302012720 in function Timer_isr_1
+  Reachability: bb_140529302001104 can reach bb_140529302012720: 1
+  Reachability: bb_140529302012720 can reach bb_140529302001104: 0
+  BB bb_140529302001104 and BB bb_140529302012720 are NOT mutually exclusive (reachable from each other)
+DEBUG: areStrictlyConsecutiveReads returning true for reads at line 36 and line 38
+Lines 36 and 38 are strictly consecutive reads
+DEBUG: Checking read pair: line 36 (BB: bb_140529302001104) vs line 92 (BB: bb_140529302030768)
+  areInMutuallyExclusiveBranches: Checking access1 at line 36 (BB: bb_140529302001104) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+DEBUG: areStrictlyConsecutiveReads called for reads at line 36 (function: Timer_isr_1, BB: bb_140529302001104) and line 92 (function: Timer_Force, BB: bb_140529302030768)
+  areInMutuallyExclusiveBranches: Checking access1 at line 36 (BB: bb_140529302001104) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+DEBUG: Later read at line 92 is part of read-modify-write operation
+DEBUG: Found potential intervening access at line 38 in function Timer_isr_1 (operation: load) between reads at line 36 and line 92
+DEBUG: isMandatoryAccess checking access at line 38 in function Timer_isr_1 (BB: bb_140529302012720)
+DEBUG: Found 2 predecessors for BB bb_140529302012720
+DEBUG: Predecessor bb_140529302012592 has 1 successors
+DEBUG: Predecessor bb_140529302001104 has 2 successors
+DEBUG: checkIfElseStructureWithMandatoryWrite for condition BB bb_140529302001104 with 2 branches
+DEBUG: 0 out of 2 branches have writes. Mandatory: 0
+Access at line 38 is unconditional (in block bb_140529302012720, predecessors: 2, hasConditionalPred: 1, isConditionalBranch: 1)
+Found unconditional intervening access at line 38 in function Timer_isr_1 between reads at line 36 and line 92
+Lines 36 and 92 are NOT strictly consecutive (have intervening accesses or in exclusive branches)
+DEBUG: Checking read pair: line 38 (BB: bb_140529302012720) vs line 92 (BB: bb_140529302030768)
+  areInMutuallyExclusiveBranches: Checking access1 at line 38 (BB: bb_140529302012720) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+DEBUG: areStrictlyConsecutiveReads called for reads at line 38 (function: Timer_isr_1, BB: bb_140529302012720) and line 92 (function: Timer_Force, BB: bb_140529302030768)
+  areInMutuallyExclusiveBranches: Checking access1 at line 38 (BB: bb_140529302012720) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+DEBUG: Later read at line 92 is part of read-modify-write operation
+DEBUG: areStrictlyConsecutiveReads returning true for reads at line 38 and line 92
+Lines 38 and 92 are strictly consecutive reads
+DEBUG: findConsecutiveReads found 2 consecutive read pairs
+  areInMutuallyExclusiveBranches: Checking access1 at line 36 (BB: bb_140529302001104) vs access2 at line 38 (BB: bb_140529302012720)
+  Checking mutual exclusivity between BB bb_140529302001104 and BB bb_140529302012720 in function Timer_isr_1
+  Reachability: bb_140529302001104 can reach bb_140529302012720: 1
+  Reachability: bb_140529302012720 can reach bb_140529302001104: 0
+  BB bb_140529302001104 and BB bb_140529302012720 are NOT mutually exclusive (reachable from each other)
+DEBUG: findConsecutiveReads found 2 read operations
+DEBUG: Checking read pair: line 76 (BB: bb_140529302006464) vs line 79 (BB: bb_140529302026480)
+  areInMutuallyExclusiveBranches: Checking access1 at line 76 (BB: bb_140529302006464) vs access2 at line 79 (BB: bb_140529302026480)
+  Checking mutual exclusivity between BB bb_140529302006464 and BB bb_140529302026480 in function Timer_isr_3
+  Reachability: bb_140529302006464 can reach bb_140529302026480: 1
+  Reachability: bb_140529302026480 can reach bb_140529302006464: 0
+  BB bb_140529302006464 and BB bb_140529302026480 are NOT mutually exclusive (reachable from each other)
+DEBUG: areStrictlyConsecutiveReads called for reads at line 76 (function: Timer_isr_3, BB: bb_140529302006464) and line 79 (function: Timer_isr_3, BB: bb_140529302026480)
+  areInMutuallyExclusiveBranches: Checking access1 at line 76 (BB: bb_140529302006464) vs access2 at line 79 (BB: bb_140529302026480)
+  Checking mutual exclusivity between BB bb_140529302006464 and BB bb_140529302026480 in function Timer_isr_3
+  Reachability: bb_140529302006464 can reach bb_140529302026480: 1
+  Reachability: bb_140529302026480 can reach bb_140529302006464: 0
+  BB bb_140529302006464 and BB bb_140529302026480 are NOT mutually exclusive (reachable from each other)
+DEBUG: areStrictlyConsecutiveReads returning true for reads at line 76 and line 79
+Lines 76 and 79 are strictly consecutive reads
+DEBUG: findConsecutiveReads found 1 consecutive read pairs
+  areInMutuallyExclusiveBranches: Checking access1 at line 76 (BB: bb_140529302006464) vs access2 at line 79 (BB: bb_140529302026480)
+  Checking mutual exclusivity between BB bb_140529302006464 and BB bb_140529302026480 in function Timer_isr_3
+  Reachability: bb_140529302006464 can reach bb_140529302026480: 1
+  Reachability: bb_140529302026480 can reach bb_140529302006464: 0
+  BB bb_140529302006464 and BB bb_140529302026480 are NOT mutually exclusive (reachable from each other)
+DEBUG: findConsecutiveReads found 3 read operations
+DEBUG: Checking read pair: line 53 (BB: bb_140529302018048) vs line 56 (BB: bb_140529302019424)
+  areInMutuallyExclusiveBranches: Checking access1 at line 53 (BB: bb_140529302018048) vs access2 at line 56 (BB: bb_140529302019424)
+  Checking mutual exclusivity between BB bb_140529302018048 and BB bb_140529302019424 in function Timer_isr_2
+  Reachability: bb_140529302018048 can reach bb_140529302019424: 1
+  Reachability: bb_140529302019424 can reach bb_140529302018048: 0
+  BB bb_140529302018048 and BB bb_140529302019424 are NOT mutually exclusive (reachable from each other)
+DEBUG: areStrictlyConsecutiveReads called for reads at line 53 (function: Timer_isr_2, BB: bb_140529302018048) and line 56 (function: Timer_isr_2, BB: bb_140529302019424)
+  areInMutuallyExclusiveBranches: Checking access1 at line 53 (BB: bb_140529302018048) vs access2 at line 56 (BB: bb_140529302019424)
+  Checking mutual exclusivity between BB bb_140529302018048 and BB bb_140529302019424 in function Timer_isr_2
+  Reachability: bb_140529302018048 can reach bb_140529302019424: 1
+  Reachability: bb_140529302019424 can reach bb_140529302018048: 0
+  BB bb_140529302018048 and BB bb_140529302019424 are NOT mutually exclusive (reachable from each other)
+DEBUG: areStrictlyConsecutiveReads returning true for reads at line 53 and line 56
+Lines 53 and 56 are strictly consecutive reads
+DEBUG: Checking read pair: line 53 (BB: bb_140529302018048) vs line 106 (BB: bb_140529302032640)
+  areInMutuallyExclusiveBranches: Checking access1 at line 53 (BB: bb_140529302018048) vs access2 at line 106 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+DEBUG: areStrictlyConsecutiveReads called for reads at line 53 (function: Timer_isr_2, BB: bb_140529302018048) and line 106 (function: Timer_Reset, BB: bb_140529302032640)
+  areInMutuallyExclusiveBranches: Checking access1 at line 53 (BB: bb_140529302018048) vs access2 at line 106 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+DEBUG: Found potential intervening access at line 56 in function Timer_isr_2 (operation: load) between reads at line 53 and line 106
+DEBUG: isMandatoryAccess checking access at line 56 in function Timer_isr_2 (BB: bb_140529302019424)
+DEBUG: Found 2 predecessors for BB bb_140529302019424
+DEBUG: Predecessor bb_140529302019296 has 1 successors
+DEBUG: Predecessor bb_140529302018048 has 2 successors
+DEBUG: checkIfElseStructureWithMandatoryWrite for condition BB bb_140529302018048 with 2 branches
+DEBUG: 0 out of 2 branches have writes. Mandatory: 0
+Access at line 56 is unconditional (in block bb_140529302019424, predecessors: 2, hasConditionalPred: 1, isConditionalBranch: 1)
+Found unconditional intervening access at line 56 in function Timer_isr_2 between reads at line 53 and line 106
+Lines 53 and 106 are NOT strictly consecutive (have intervening accesses or in exclusive branches)
+DEBUG: Checking read pair: line 56 (BB: bb_140529302019424) vs line 106 (BB: bb_140529302032640)
+  areInMutuallyExclusiveBranches: Checking access1 at line 56 (BB: bb_140529302019424) vs access2 at line 106 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+DEBUG: areStrictlyConsecutiveReads called for reads at line 56 (function: Timer_isr_2, BB: bb_140529302019424) and line 106 (function: Timer_Reset, BB: bb_140529302032640)
+  areInMutuallyExclusiveBranches: Checking access1 at line 56 (BB: bb_140529302019424) vs access2 at line 106 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+DEBUG: Found potential intervening access at line 102 in function Timer_Reset (operation: store) between reads at line 56 and line 106
+DEBUG: isMandatoryAccess checking access at line 102 in function Timer_Reset (BB: bb_140529302032640)
+DEBUG: Found 0 predecessors for BB bb_140529302032640
+Access at line 102 is unconditional (in block bb_140529302032640, predecessors: 0, hasConditionalPred: 0, isConditionalBranch: 1)
+Found unconditional intervening access at line 102 in function Timer_Reset between reads at line 56 and line 106
+Lines 56 and 106 are NOT strictly consecutive (have intervening accesses or in exclusive branches)
+DEBUG: findConsecutiveReads found 1 consecutive read pairs
+  areInMutuallyExclusiveBranches: Checking access1 at line 53 (BB: bb_140529302018048) vs access2 at line 56 (BB: bb_140529302019424)
+  Checking mutual exclusivity between BB bb_140529302018048 and BB bb_140529302019424 in function Timer_isr_2
+  Reachability: bb_140529302018048 can reach bb_140529302019424: 1
+  Reachability: bb_140529302019424 can reach bb_140529302018048: 0
+  BB bb_140529302018048 and BB bb_140529302019424 are NOT mutually exclusive (reachable from each other)
+Analyzing variable: CCIE for RWR defects
+Found 1 main read operations for CCIE
+Checking read1 at line 121 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: P1OUT for RWR defects
+Found 0 main read operations for P1OUT
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: WDTPW for RWR defects
+Found 1 main read operations for WDTPW
+Checking read1 at line 115 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: LED_1 for RWR defects
+Found 2 main read operations for LED_1
+Checking read1 at line 117 in function svp_simple_003_001_main
+Checking read2 at line 119 in function svp_simple_003_001_main
+DEBUG: areStrictlyConsecutiveReads called for reads at line 117 (function: svp_simple_003_001_main, BB: bb_140529302036240) and line 119 (function: svp_simple_003_001_main, BB: bb_140529302036240)
+  areInMutuallyExclusiveBranches: Checking access1 at line 117 (BB: bb_140529302036240) vs access2 at line 119 (BB: bb_140529302036240)
+  Same basic block (bb_140529302036240), returning false
+DEBUG: areStrictlyConsecutiveReads returning true for reads at line 117 and line 119
+Found consecutive reads: 117 -> 119
+Checking ISR: Timer_isr_1 for interrupting writes
+Checking ISR: Timer_isr_3 for interrupting writes
+Checking ISR: Timer_isr_2 for interrupting writes
+Checking read1 at line 119 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 0 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+Analyzing variable: LED_0 for RWR defects
+Found 2 main read operations for LED_0
+Checking read1 at line 117 in function svp_simple_003_001_main
+Checking read2 at line 119 in function svp_simple_003_001_main
+DEBUG: areStrictlyConsecutiveReads called for reads at line 117 (function: svp_simple_003_001_main, BB: bb_140529302036240) and line 119 (function: svp_simple_003_001_main, BB: bb_140529302036240)
+  areInMutuallyExclusiveBranches: Checking access1 at line 117 (BB: bb_140529302036240) vs access2 at line 119 (BB: bb_140529302036240)
+  Same basic block (bb_140529302036240), returning false
+DEBUG: areStrictlyConsecutiveReads returning true for reads at line 117 and line 119
+Found consecutive reads: 117 -> 119
+Checking ISR: Timer_isr_1 for interrupting writes
+Checking ISR: Timer_isr_3 for interrupting writes
+Checking ISR: Timer_isr_2 for interrupting writes
+Checking read1 at line 119 in function svp_simple_003_001_main
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+DEBUG: findConsecutiveReads found 1 read operations
+DEBUG: findConsecutiveReads found 0 consecutive read pairs
+RWR defect detection completed.
+Found 4 RWR defects.
+Detecting WRW defects...
+  areInMutuallyExclusiveBranches: Checking access1 at line 35 (BB: bb_140529302001104) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+Checking if writes at lines 35 and 92 are in mutually exclusive branches
+  areInMutuallyExclusiveBranches: Checking access1 at line 35 (BB: bb_140529302001104) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+Writes at lines 35 and 92 are NOT in mutually exclusive branches
+  areInMutuallyExclusiveBranches: Checking access1 at line 35 (BB: bb_140529302001104) vs access2 at line 36 (BB: bb_140529302001104)
+  Same basic block (bb_140529302001104), returning false
+  areInMutuallyExclusiveBranches: Checking access1 at line 36 (BB: bb_140529302001104) vs access2 at line 92 (BB: bb_140529302030768)
+  Different functions (Timer_isr_1 vs Timer_Force), returning false
+Checking intermediate access at line 36 (conditional: 0, mutual exclusive with first: 0, mutual exclusive with second: 0)
+Found intermediate access at line 36 that blocks continuity between 35 and 92
+Skipping non-consecutive writes at lines 35 and 92 (unconditional intermediate access found)
+  areInMutuallyExclusiveBranches: Checking access1 at line 49 (BB: bb_140529302018048) vs access2 at line 102 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+Checking if writes at lines 49 and 102 are in mutually exclusive branches
+  areInMutuallyExclusiveBranches: Checking access1 at line 49 (BB: bb_140529302018048) vs access2 at line 102 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+Writes at lines 49 and 102 are NOT in mutually exclusive branches
+  areInMutuallyExclusiveBranches: Checking access1 at line 49 (BB: bb_140529302018048) vs access2 at line 53 (BB: bb_140529302018048)
+  Same basic block (bb_140529302018048), returning false
+  areInMutuallyExclusiveBranches: Checking access1 at line 53 (BB: bb_140529302018048) vs access2 at line 102 (BB: bb_140529302032640)
+  Different functions (Timer_isr_2 vs Timer_Reset), returning false
+Checking intermediate access at line 53 (conditional: 0, mutual exclusive with first: 0, mutual exclusive with second: 0)
+Found intermediate access at line 53 that blocks continuity between 49 and 102
+Skipping non-consecutive writes at lines 49 and 102 (unconditional intermediate access found)
+Found 0 WRW defects.
+Detecting WWR defects...
+Starting WWR defect detection...
+Analyzing variable: MC_2 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 1 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: TASSEL_2 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 1 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: CCTL0 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 1 writes and 0 reads
+Checking write1 at line 121 in function svp_simple_003_001_main
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: LED_OUT for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 1 writes and 0 reads
+Checking write1 at line 119 in function svp_simple_003_001_main
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: TACTL for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 1 writes and 0 reads
+Checking write1 at line 122 in function svp_simple_003_001_main
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: WDTCTL for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 1 writes and 0 reads
+Checking write1 at line 115 in function svp_simple_003_001_main
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: cnt2 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 1 writes and 1 reads
+Checking WWR: write1.line=59, read1.line=59
+DEBUG: areStrictlyConsecutiveWR called for write at line 59 (function: Timer_isr_2) and read at line 59 (function: Timer_isr_2)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (59) >= read1.line (59), returning false
+areStrictlyConsecutiveWR(59, 59) = 0
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: WDTHOLD for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 1 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: cnt5 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 1 writes and 1 reads
+Checking WWR: write1.line=109, read1.line=109
+DEBUG: areStrictlyConsecutiveWR called for write at line 109 (function: Timer_Reset) and read at line 109 (function: Timer_Reset)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (109) >= read1.line (109), returning false
+areStrictlyConsecutiveWR(109, 109) = 0
+Function Timer_Reset has 1 writes and 1 reads
+Checking WWR: write1.line=109, read1.line=109
+DEBUG: areStrictlyConsecutiveWR called for write at line 109 (function: Timer_Reset) and read at line 109 (function: Timer_Reset)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (109) >= read1.line (109), returning false
+areStrictlyConsecutiveWR(109, 109) = 0
+Analyzing variable: LED_DIR for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 1 writes and 0 reads
+Checking write1 at line 117 in function svp_simple_003_001_main
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: cnt4 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 1 writes and 1 reads
+Checking WWR: write1.line=93, read1.line=93
+DEBUG: areStrictlyConsecutiveWR called for write at line 93 (function: Timer_Force) and read at line 93 (function: Timer_Force)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (93) >= read1.line (93), returning false
+areStrictlyConsecutiveWR(93, 93) = 0
+Function Timer_isr_1 has 1 writes and 1 reads
+Checking WWR: write1.line=93, read1.line=93
+DEBUG: areStrictlyConsecutiveWR called for write at line 93 (function: Timer_Force) and read at line 93 (function: Timer_Force)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (93) >= read1.line (93), returning false
+areStrictlyConsecutiveWR(93, 93) = 0
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: WDTCLT for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: cnt3 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 1 writes and 1 reads
+Checking WWR: write1.line=82, read1.line=82
+DEBUG: areStrictlyConsecutiveWR called for write at line 82 (function: Timer_isr_3) and read at line 82 (function: Timer_isr_3)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (82) >= read1.line (82), returning false
+areStrictlyConsecutiveWR(82, 82) = 0
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: cnt1 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 1 writes and 1 reads
+Checking WWR: write1.line=41, read1.line=41
+DEBUG: areStrictlyConsecutiveWR called for write at line 41 (function: Timer_isr_1) and read at line 41 (function: Timer_isr_1)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (41) >= read1.line (41), returning false
+areStrictlyConsecutiveWR(41, 41) = 0
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: timerCount for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 1 writes and 0 reads
+Checking write1 at line 124 in function svp_simple_003_001_main
+Function Timer_Force has 1 writes and 1 reads
+Checking WWR: write1.line=92, read1.line=92
+DEBUG: areStrictlyConsecutiveWR called for write at line 92 (function: Timer_Force) and read at line 92 (function: Timer_Force)
+DEBUG: Total accesses provided: 2
+DEBUG: write1.line (92) >= read1.line (92), returning false
+areStrictlyConsecutiveWR(92, 92) = 0
+Function Timer_isr_1 has 2 writes and 3 reads
+Checking WWR: write1.line=35, read1.line=36
+DEBUG: areStrictlyConsecutiveWR called for write at line 35 (function: Timer_isr_1) and read at line 36 (function: Timer_isr_1)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 35 in function Timer_isr_1 (operation: store)
+DEBUG: Found access to timerCount at line 36 in function Timer_isr_1 (operation: load)
+DEBUG: Found access to timerCount at line 38 in function Timer_isr_1 (operation: load)
+DEBUG: Found access to timerCount at line 92 in function Timer_Force (operation: load)
+DEBUG: Found access to timerCount at line 92 in function Timer_Force (operation: store)
+DEBUG: areStrictlyConsecutiveWR returning true for write at line 35 and read at line 36
+areStrictlyConsecutiveWR(35, 36) = 1
+Found WWR pattern: Timer_isr_1 W1(35) -> Timer_isr_3 W2(72) -> Timer_isr_1 R1(36)
+Found WWR pattern: Timer_isr_1 W1(35) -> Timer_isr_2 W2(49) -> Timer_isr_1 R1(36)
+Found WWR pattern: Timer_isr_1 W1(35) -> Timer_isr_2 W2(102) -> Timer_isr_1 R1(36)
+Checking WWR: write1.line=35, read1.line=38
+DEBUG: areStrictlyConsecutiveWR called for write at line 35 (function: Timer_isr_1) and read at line 38 (function: Timer_isr_1)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 35 in function Timer_isr_1 (operation: store)
+DEBUG: Found access to timerCount at line 36 in function Timer_isr_1 (operation: load)
+DEBUG: Found access to timerCount at line 38 in function Timer_isr_1 (operation: load)
+DEBUG: Found access to timerCount at line 92 in function Timer_Force (operation: load)
+DEBUG: Found access to timerCount at line 92 in function Timer_Force (operation: store)
+DEBUG: Found potential intervening access at line 36 in function Timer_isr_1 (operation: load) between write at line 35 and read at line 38
+Access at line 36 is unconditional (in block bb_140529302001104, predecessors: 0, hasConditionalPred: 0, isConditionalBranch: 1)
+Found unconditional intervening access at line 36 between write at line 35 and read at line 38
+areStrictlyConsecutiveWR(35, 38) = 0
+Checking WWR: write1.line=35, read1.line=92
+DEBUG: areStrictlyConsecutiveWR called for write at line 35 (function: Timer_isr_1) and read at line 92 (function: Timer_Force)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 35 in function Timer_isr_1 (operation: store)
+DEBUG: Found access to timerCount at line 36 in function Timer_isr_1 (operation: load)
+DEBUG: Found access to timerCount at line 38 in function Timer_isr_1 (operation: load)
+DEBUG: Found access to timerCount at line 92 in function Timer_Force (operation: load)
+DEBUG: Found access to timerCount at line 92 in function Timer_Force (operation: store)
+DEBUG: Found potential intervening access at line 36 in function Timer_isr_1 (operation: load) between write at line 35 and read at line 92
+Access at line 36 is unconditional (in block bb_140529302001104, predecessors: 0, hasConditionalPred: 0, isConditionalBranch: 1)
+Found unconditional intervening access at line 36 between write at line 35 and read at line 92
+areStrictlyConsecutiveWR(35, 92) = 0
+Checking WWR: write1.line=92, read1.line=36
+DEBUG: areStrictlyConsecutiveWR called for write at line 92 (function: Timer_Force) and read at line 36 (function: Timer_isr_1)
+DEBUG: Total accesses provided: 5
+DEBUG: write1.line (92) >= read1.line (36), returning false
+areStrictlyConsecutiveWR(92, 36) = 0
+Checking WWR: write1.line=92, read1.line=38
+DEBUG: areStrictlyConsecutiveWR called for write at line 92 (function: Timer_Force) and read at line 38 (function: Timer_isr_1)
+DEBUG: Total accesses provided: 5
+DEBUG: write1.line (92) >= read1.line (38), returning false
+areStrictlyConsecutiveWR(92, 38) = 0
+Checking WWR: write1.line=92, read1.line=92
+DEBUG: areStrictlyConsecutiveWR called for write at line 92 (function: Timer_Force) and read at line 92 (function: Timer_Force)
+DEBUG: Total accesses provided: 5
+DEBUG: write1.line (92) >= read1.line (92), returning false
+areStrictlyConsecutiveWR(92, 92) = 0
+Function Timer_isr_3 has 1 writes and 2 reads
+Checking WWR: write1.line=72, read1.line=76
+DEBUG: areStrictlyConsecutiveWR called for write at line 72 (function: Timer_isr_3) and read at line 76 (function: Timer_isr_3)
+DEBUG: Total accesses provided: 3
+DEBUG: Found access to timerCount at line 72 in function Timer_isr_3 (operation: store)
+DEBUG: Found access to timerCount at line 76 in function Timer_isr_3 (operation: load)
+DEBUG: Found access to timerCount at line 79 in function Timer_isr_3 (operation: load)
+DEBUG: areStrictlyConsecutiveWR returning true for write at line 72 and read at line 76
+areStrictlyConsecutiveWR(72, 76) = 1
+Checking WWR: write1.line=72, read1.line=79
+DEBUG: areStrictlyConsecutiveWR called for write at line 72 (function: Timer_isr_3) and read at line 79 (function: Timer_isr_3)
+DEBUG: Total accesses provided: 3
+DEBUG: Found access to timerCount at line 72 in function Timer_isr_3 (operation: store)
+DEBUG: Found access to timerCount at line 76 in function Timer_isr_3 (operation: load)
+DEBUG: Found access to timerCount at line 79 in function Timer_isr_3 (operation: load)
+DEBUG: Found potential intervening access at line 76 in function Timer_isr_3 (operation: load) between write at line 72 and read at line 79
+Access at line 76 is unconditional (in block bb_140529302006464, predecessors: 0, hasConditionalPred: 0, isConditionalBranch: 1)
+Found unconditional intervening access at line 76 between write at line 72 and read at line 79
+areStrictlyConsecutiveWR(72, 79) = 0
+Function Timer_isr_2 has 2 writes and 3 reads
+Checking WWR: write1.line=49, read1.line=53
+DEBUG: areStrictlyConsecutiveWR called for write at line 49 (function: Timer_isr_2) and read at line 53 (function: Timer_isr_2)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 49 in function Timer_isr_2 (operation: store)
+DEBUG: Found access to timerCount at line 53 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 56 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 102 in function Timer_Reset (operation: store)
+DEBUG: Found access to timerCount at line 106 in function Timer_Reset (operation: load)
+DEBUG: areStrictlyConsecutiveWR returning true for write at line 49 and read at line 53
+areStrictlyConsecutiveWR(49, 53) = 1
+Found WWR pattern: Timer_isr_2 W1(49) -> Timer_isr_3 W2(72) -> Timer_isr_2 R1(53)
+Checking WWR: write1.line=49, read1.line=56
+DEBUG: areStrictlyConsecutiveWR called for write at line 49 (function: Timer_isr_2) and read at line 56 (function: Timer_isr_2)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 49 in function Timer_isr_2 (operation: store)
+DEBUG: Found access to timerCount at line 53 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 56 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 102 in function Timer_Reset (operation: store)
+DEBUG: Found access to timerCount at line 106 in function Timer_Reset (operation: load)
+DEBUG: Found potential intervening access at line 53 in function Timer_isr_2 (operation: load) between write at line 49 and read at line 56
+Access at line 53 is unconditional (in block bb_140529302018048, predecessors: 0, hasConditionalPred: 0, isConditionalBranch: 1)
+Found unconditional intervening access at line 53 between write at line 49 and read at line 56
+areStrictlyConsecutiveWR(49, 56) = 0
+Checking WWR: write1.line=49, read1.line=106
+DEBUG: areStrictlyConsecutiveWR called for write at line 49 (function: Timer_isr_2) and read at line 106 (function: Timer_Reset)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 49 in function Timer_isr_2 (operation: store)
+DEBUG: Found access to timerCount at line 53 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 56 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 102 in function Timer_Reset (operation: store)
+DEBUG: Found access to timerCount at line 106 in function Timer_Reset (operation: load)
+DEBUG: Found potential intervening access at line 53 in function Timer_isr_2 (operation: load) between write at line 49 and read at line 106
+Access at line 53 is unconditional (in block bb_140529302018048, predecessors: 0, hasConditionalPred: 0, isConditionalBranch: 1)
+Found unconditional intervening access at line 53 between write at line 49 and read at line 106
+areStrictlyConsecutiveWR(49, 106) = 0
+Checking WWR: write1.line=102, read1.line=53
+DEBUG: areStrictlyConsecutiveWR called for write at line 102 (function: Timer_Reset) and read at line 53 (function: Timer_isr_2)
+DEBUG: Total accesses provided: 5
+DEBUG: write1.line (102) >= read1.line (53), returning false
+areStrictlyConsecutiveWR(102, 53) = 0
+Checking WWR: write1.line=102, read1.line=56
+DEBUG: areStrictlyConsecutiveWR called for write at line 102 (function: Timer_Reset) and read at line 56 (function: Timer_isr_2)
+DEBUG: Total accesses provided: 5
+DEBUG: write1.line (102) >= read1.line (56), returning false
+areStrictlyConsecutiveWR(102, 56) = 0
+Checking WWR: write1.line=102, read1.line=106
+DEBUG: areStrictlyConsecutiveWR called for write at line 102 (function: Timer_Reset) and read at line 106 (function: Timer_Reset)
+DEBUG: Total accesses provided: 5
+DEBUG: Found access to timerCount at line 49 in function Timer_isr_2 (operation: store)
+DEBUG: Found access to timerCount at line 53 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 56 in function Timer_isr_2 (operation: load)
+DEBUG: Found access to timerCount at line 102 in function Timer_Reset (operation: store)
+DEBUG: Found access to timerCount at line 106 in function Timer_Reset (operation: load)
+DEBUG: areStrictlyConsecutiveWR returning true for write at line 102 and read at line 106
+areStrictlyConsecutiveWR(102, 106) = 1
+Found WWR pattern: Timer_isr_2 W1(102) -> Timer_isr_3 W2(72) -> Timer_isr_2 R1(106)
+Function Timer_Reset has 1 writes and 1 reads
+Checking WWR: write1.line=102, read1.line=106
+DEBUG: areStrictlyConsecutiveWR called for write at line 102 (function: Timer_Reset) and read at line 106 (function: Timer_Reset)
+DEBUG: Total accesses provided: 2
+DEBUG: Found access to timerCount at line 102 in function Timer_Reset (operation: store)
+DEBUG: Found access to timerCount at line 106 in function Timer_Reset (operation: load)
+DEBUG: areStrictlyConsecutiveWR returning true for write at line 102 and read at line 106
+areStrictlyConsecutiveWR(102, 106) = 1
+Found WWR pattern: Timer_Reset W1(102) -> Timer_isr_3 W2(72) -> Timer_Reset R1(106)
+Analyzing variable: CCIE for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 1 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: P1OUT for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 0 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 1 writes and 0 reads
+Function Timer_isr_3 has 1 writes and 0 reads
+Function Timer_isr_2 has 1 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: WDTPW for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 1 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 0 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: LED_1 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 2 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 1 reads
+Function Timer_isr_3 has 0 writes and 0 reads
+Function Timer_isr_2 has 0 writes and 0 reads
+Function Timer_Reset has 0 writes and 0 reads
+Analyzing variable: LED_0 for WWR defects
+Checking inlined WWR patterns in main function and its callees
+Main function (inlined) has 0 writes and 2 reads
+Function Timer_Force has 0 writes and 0 reads
+Function Timer_isr_1 has 0 writes and 1 reads
+Function Timer_isr_3 has 0 writes and 1 reads
+Function Timer_isr_2 has 0 writes and 1 reads
+Function Timer_Reset has 0 writes and 0 reads
+Found 6 WWR defects.
+Total defects before deduplication: 16
+Added unique defect: timerCount_RWW_72_92_92_Read_Write_Write_
+Added unique defect: timerCount_RWW_49_92_92_Read_Write_Write_
+Added unique defect: timerCount_RWW_92_92_102_Read_Write_Write_
+Skipped duplicate defect: timerCount_RWW_72_92_92_Read_Write_Write_
+Skipped duplicate defect: timerCount_RWW_49_92_92_Read_Write_Write_
+Skipped duplicate defect: timerCount_RWW_92_92_102_Read_Write_Write_
+Added unique defect: timerCount_RWR_36_38_72_Read_Write_Read_
+Added unique defect: timerCount_RWR_36_38_49_Read_Write_Read_
+Added unique defect: timerCount_RWR_36_38_102_Read_Write_Read_
+Added unique defect: timerCount_RWR_53_56_72_Read_Write_Read_
+Added unique defect: timerCount_WWR_35_36_72_Write_Write_Read_
+Added unique defect: timerCount_WWR_35_36_49_Write_Write_Read_
+Added unique defect: timerCount_WWR_35_36_102_Write_Write_Read_
+Added unique defect: timerCount_WWR_49_53_72_Write_Write_Read_
+Added unique defect: timerCount_WWR_72_102_106_Write_Write_Read_
+Skipped duplicate defect: timerCount_WWR_72_102_106_Write_Write_Read_
+Removed 4 duplicate defects
+Total unique defects after deduplication: 12
+Building JSON report...
+Report generation completed successfully.
+Analysis complete. Report saved to: llvm_analysis.json

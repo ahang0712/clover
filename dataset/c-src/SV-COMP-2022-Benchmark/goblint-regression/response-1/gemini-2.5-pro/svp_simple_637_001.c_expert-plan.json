@@ -1,0 +1,69 @@
+{
+  "expert_judge_tasks": [
+    {
+      "sharedVariables": [
+        "tx_pool",
+        "g_data"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 13
+    },
+    {
+      "sharedVariables": [
+        "net_stats",
+        "conn_mgr",
+        "cache",
+        "block_map",
+        "peer_list",
+        "config",
+        "mempool",
+        "chain_db"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 9
+    },
+    {
+      "sharedVariables": [
+        "g_data"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 2
+    },
+    {
+      "sharedVariables": [
+        "net_stats",
+        "p2p_state",
+        "cache"
+      ],
+      "accessPattern": [
+        "Read",
+        "Write",
+        "Write"
+      ],
+      "defect_count": 5
+    },
+    {
+      "sharedVariables": [
+        "tx_pool"
+      ],
+      "accessPattern": [
+        "Write",
+        "Write",
+        "Read"
+      ],
+      "defect_count": 1
+    }
+  ]
+}

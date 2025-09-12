@@ -1,0 +1,23 @@
+{
+  "ISR_COUNT": 0,
+  "GLOBAL_VAR": [
+    "A",
+    "B"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "load",
+      "variable": "A",
+      "line": "53",
+      "function": "svp_simple_602_001_main"
+    },
+    {
+      "operation": "load",
+      "variable": "B",
+      "line": "53",
+      "function": "svp_simple_602_001_main"
+    }
+  ],
+  "ISR_INFO": [
+  ]
+}
