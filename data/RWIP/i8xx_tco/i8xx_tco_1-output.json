@@ -1,0 +1,196 @@
+{
+  "ISR_COUNT": 3,
+  "GLOBAL_VAR": [
+    "heartbeat",
+    "nowayout",
+    "tco_lock",
+    "tco_write_buf",
+    "tco_expect_close",
+    "tco1_rld",
+    "timer_alive",
+    "cnt1",
+    "cnt2",
+    "cnt3",
+    "ACPIBASE",
+    "tco1_cnt_b0",
+    "tco1_cnt_b1",
+    "tco1_cnt_b2",
+    "tco1_cnt_b3",
+    "tco1_cnt_b4",
+    "tco1_cnt_b5",
+    "tco1_cnt_b6",
+    "tco1_cnt_b7"
+  ],
+  "MAIN_INFO": [
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "753",
+      "function": "svp_simple_010_001_main"
+    }
+  ],
+  "ISR_INFO": [
+    {
+      "operation": "store",
+      "variable": "tco_write_buf",
+      "line": "718",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "nowayout",
+      "line": "719",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "719",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "tco_write_buf",
+      "line": "719",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "719",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "tco1_rld",
+      "line": "719",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "720",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "tco_expect_close",
+      "line": "721",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "timer_alive",
+      "line": "721",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "721",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt1",
+      "line": "722",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt1",
+      "line": "722",
+      "function": "task_isr_3"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_write_buf",
+      "line": "729",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "nowayout",
+      "line": "730",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "730",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "tco_write_buf",
+      "line": "730",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "730",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "tco1_rld",
+      "line": "730",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "731",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "tco_expect_close",
+      "line": "732",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "timer_alive",
+      "line": "732",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "tco_expect_close",
+      "line": "732",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt2",
+      "line": "733",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt2",
+      "line": "733",
+      "function": "task_isr_2"
+    },
+    {
+      "operation": "store",
+      "variable": "tco1_rld",
+      "line": "744",
+      "function": "task_isr_1"
+    },
+    {
+      "operation": "load",
+      "variable": "cnt3",
+      "line": "745",
+      "function": "task_isr_1"
+    },
+    {
+      "operation": "store",
+      "variable": "cnt3",
+      "line": "745",
+      "function": "task_isr_1"
+    }
+  ]
+}

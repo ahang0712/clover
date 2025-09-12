@@ -1,0 +1,81 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/code/i2c_pca_isa/i2c_pca_isa_3-output.json:
+Defect_Pattern: RWW
+Variable: irq
+Location: MAIN
+Description: RWW defect found: read-write in main function with write in ISR
+---
+Defect_Pattern: RWW
+Variable: global_id
+Location: MAIN
+Description: RWW defect found: read-write in main function with write in ISR
+---
+Defect_Pattern: RWW
+Variable: global_id
+Location: req_isr_1
+Description: RWW defect found: read-write in req_isr_1 with write in req_isr_2
+---
+Defect_Pattern: RWW
+Variable: global_dev
+Location: MAIN
+Description: RWW defect found: read-write in main function with write in ISR
+---
+Defect_Pattern: RWW
+Variable: global_dev
+Location: req_isr_1
+Description: RWW defect found: read-write in req_isr_1 with write in req_isr_2
+---
+Defect_Pattern: WRW
+Variable: irq
+Location: MAIN
+Description: WRW defect found: consecutive writes in main function with read in ISR
+---
+Defect_Pattern: WRW
+Variable: global_id
+Location: MAIN
+Description: WRW defect found: consecutive writes in main function with read in ISR
+---
+Defect_Pattern: WRW
+Variable: global_dev
+Location: MAIN
+Description: WRW defect found: consecutive writes in main function with read in ISR
+---
+Defect_Pattern: WRW
+Variable: global_dev
+Location: req_isr_1
+Description: WRW defect found: consecutive writes in req_isr_1 with read in req_isr_2
+---
+Defect_Pattern: WWR
+Variable: irq
+Location: MAIN
+Description: WWR defect found: write-read in main function with write in ISR
+---
+Defect_Pattern: WWR
+Variable: irq
+Location: req_isr_1
+Description: WWR defect found: write-read in req_isr_1 with write in req_isr_2
+---
+Defect_Pattern: WWR
+Variable: global_id
+Location: MAIN
+Description: WWR defect found: write-read in main function with write in ISR
+---
+Defect_Pattern: WWR
+Variable: global_id
+Location: req_isr_1
+Description: WWR defect found: write-read in req_isr_1 with write in req_isr_2
+---
+Defect_Pattern: WWR
+Variable: global_dev
+Location: MAIN
+Description: WWR defect found: write-read in main function with write in ISR
+---
+Defect_Pattern: WWR
+Variable: global_dev
+Location: req_isr_1
+Description: WWR defect found: write-read in req_isr_1 with write in req_isr_2
+---
+Defect_Pattern: WWR
+Variable: global_dev
+Location: req_isr_2
+Description: WWR defect found: write-read in req_isr_2 with write in req_isr_3
+---

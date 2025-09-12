@@ -1,0 +1,21 @@
+Found defects in /home/vip/hanghe/race-master/llvm-api-demo/c-src/code/i8xx_tco/i8xx_tco_1-output.json:
+Defect_Pattern: RWW
+Variable: tco_expect_close
+Location: task_isr_2
+Description: RWW defect found: read-write in task_isr_2 with write in task_isr_3
+---
+Defect_Pattern: WRW
+Variable: tco_expect_close
+Location: task_isr_2
+Description: WRW defect found: consecutive writes in task_isr_2 with read in task_isr_3
+---
+Defect_Pattern: WWR
+Variable: tco_write_buf
+Location: task_isr_2
+Description: WWR defect found: write-read in task_isr_2 with write in task_isr_3
+---
+Defect_Pattern: WWR
+Variable: tco_expect_close
+Location: task_isr_2
+Description: WWR defect found: write-read in task_isr_2 with write in task_isr_3
+---
