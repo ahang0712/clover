@@ -261,7 +261,7 @@ Clover has been evaluated on:
 
 ### LLM Performance Comparison
 
-![Different LLM Performance](assets/different-LLM.png)
+<img src="assets/different-LLM.png" alt="Different LLM Performance" width="600">
 
 Our evaluation across different LLM models shows that Clover achieves consistently high performance with various state-of-the-art models, with Claude-Sonnet-4 and Gemini-2.5-Pro showing the best overall performance.
 
