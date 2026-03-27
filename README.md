@@ -18,6 +18,9 @@
 - **Domain-specific knowledge** required for embedded system analysis
 - **High false-positive rates** in existing static analysis tools
 
+> [!NOTE]
+> **Data Availability**: The atomic violation data for closed-source projects mentioned in the paper is not included in this repository due to licensing restrictions. For open-source benchmark evaluation, please refer to the [SV-COMP](https://sv-comp.sosy-lab.org/) and [Racebench](https://github.com/chenruibuaa/racebench) datasets included in the `/data` directory.
+
 ### Key Innovation
 Clover employs a **multi-agent collaborative framework** with iterative refinement:
 1. **Plan Agent** - Orchestrates program analysis tool selection and subsequent agentic workflow
@@ -63,8 +66,8 @@ pip install -r requirements.txt
 
 **Step 2: LLVM Installation**
 ```bash
-# Download required components
-wget https://mirrors.tuna.tsinghua.edu.cn/llvm/releases/10.0.0/llvm-10.0.0.src.tar.xz
+# Download required components (using official LLVM releases)
+wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/llvm-10.0.0.src.tar.xz
 wget https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang-10.0.0.src.tar.xz
 wget https://github.com/Kitware/CMake/releases/download/v3.13.0/cmake-3.13.0-Linux-x86_64.tar.gz
 
@@ -89,7 +92,7 @@ make -j$(nproc) && make install
 
 **Step 3: Build Analysis Tools**
 ```bash
-cd clover/tool/Read_Write_Analyzer
+cd clover/tool/Operation_Analyzer
 
 clang++ main.cpp tool.cpp cJSON.c -o analyzer \
   `llvm-config --cxxflags --ldflags --libs all` \
