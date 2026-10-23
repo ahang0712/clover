@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/ahang0712/clover",
+  "commit": "3addd87b41729d5f7d5466adf5b9383abe001db1",
+  "files": {
+    "vendor/pattern.py": {
+      "path": "tool/Highlight/pattern.py",
+      "sha256": "8a23d2d6243cf73633305206041847c941f7ea439341b659474dd92d69459d18"
+    },
+    "examples/highlight-input.json": {
+      "path": "tool/Highlight/test_input.json",
+      "sha256": "eae2c403272e465e9f8de246143eb2cd67f6b06b355d268185b9fcd247a688f4"
+    },
+    "examples/highlight-expected.json": {
+      "path": "tool/Highlight/test_output.json",
+      "sha256": "ad156b215b7cec39d452dd91c23268e586325b084d0d2b22d2c68da3acf361a0"
+    },
+    "vendor/LICENSE": {
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  }
+}
