@@ -26,7 +26,9 @@ def run_highlighter():
             raise RuntimeError("The public highlighter did not produce a successful result.")
         data = json.loads(target.read_text())
     return {"execution": "live", "scope": "Defect Highlighter on stored operation records; no LLM call",
-            "source_commit": "3addd87b41729d5f7d5466adf5b9383abe001db1", "result": data}
+            "source_commit": "3addd87b41729d5f7d5466adf5b9383abe001db1",
+            "verified_against_fixture": data == json.loads((ROOT / "examples/highlight-expected.json").read_text()),
+            "result": data}
 
 
 class Handler(SimpleHTTPRequestHandler):

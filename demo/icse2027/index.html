@@ -1,88 +1,11 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Clover | Atomicity Violation Walkthrough</title>
-<style>
-:root{--ink:#142d36;--muted:#61727a;--green:#087f70;--line:#dce6e4;--paper:#f5f8f7;--orange:#a95d16}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,a{touch-action:manipulation}button{font:inherit;cursor:pointer}header{padding:28px 42px;background:#102f36;color:white;display:flex;justify-content:space-between;align-items:center}.brand{font-size:30px;font-weight:750;letter-spacing:-1px}.brand span{color:#71dbc1}.subtitle{color:#b7cece;font-size:15px;margin-top:7px}.tag{font-size:13px;border:1px solid #557177;border-radius:20px;padding:9px 15px;letter-spacing:.07em}main{max-width:1740px;margin:auto;padding:28px 38px}.intro{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:22px}h1{font-size:30px;margin:0 0 9px;letter-spacing:-.5px}.intro p{margin:0;color:var(--muted);line-height:1.5}.pill{font-size:13px;white-space:nowrap;border-radius:18px;background:#e0eee8;color:#135b4c;padding:9px 13px}.steps{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;margin:24px 0}.steps button{background:#fff;border:1px solid var(--line);border-radius:10px;text-align:left;padding:13px 12px;color:var(--muted);font-size:14px}.steps button strong{display:block;font-size:12px;margin-bottom:5px;color:#8a9a9c}.steps button.active{background:var(--green);color:white;border-color:var(--green)}.steps button.active strong{color:#b9e7dc}.layout{display:grid;grid-template-columns:1fr 1fr;gap:22px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.panelhead{padding:16px 21px;display:flex;justify-content:space-between;border-bottom:1px solid var(--line);font-weight:650;font-size:15px}.panelhead small{color:var(--muted);font-weight:400}.code{padding:18px 0;font:15px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre}.line{padding:0 24px 0 0;border-left:4px solid transparent;display:flex;min-height:25px}.ln{display:inline-block;min-width:49px;text-align:right;padding-right:16px;color:#92a0a3;user-select:none}.line.read{background:#e7f5ee;border-color:#188b5f}.line.interrupt{background:#fff1df;border-color:#d59435}.line.resume{background:#e5f0fc;border-color:#507fba}.line.off{background:#f4e8ec;border-color:#be6d7e}.detail{padding:22px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--green);text-transform:uppercase}h2{font-size:25px;margin:10px 0 13px;letter-spacing:-.4px}p{line-height:1.62;margin:10px 0 16px}.stats{display:flex;gap:12px;margin:18px 0}.stat{flex:1;background:#f1f6f4;border-radius:10px;padding:13px}.stat b{font-size:27px;display:block}.stat span{font-size:12px;color:var(--muted)}.candidates{display:grid;gap:8px;margin:18px 0}.candidate{border:1px solid var(--line);padding:11px 12px;border-radius:8px;background:white;display:flex;justify-content:space-between;gap:10px;text-align:left;font-size:14px}.candidate.selected{outline:2px solid var(--green)}.candidate code{font-size:14px}.candidate .status{font-size:12px;color:var(--muted)}.notice{background:#eef4f4;border-left:3px solid #71a7a2;padding:13px 15px;font-size:14px;line-height:1.55;margin:16px 0}.warning{background:#fff5e6;border-left-color:#cc9347}.actions{display:flex;gap:10px;align-items:center;margin-top:20px}.primary,.secondary{border-radius:8px;padding:11px 18px;border:1px solid var(--green)}.primary{background:var(--green);color:white}.secondary{background:white;color:var(--green)}button:disabled{opacity:.45;cursor:default}pre.json{background:#f2f6f6;border-radius:10px;padding:16px;max-height:285px;overflow:auto;font:13px/1.5 ui-monospace,monospace;white-space:pre-wrap}.legend{display:flex;gap:16px;padding:14px 20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.nav{display:flex;align-items:center;justify-content:space-between;margin:21px 0 0;color:var(--muted);font-size:13px}.nav .actions{margin:0}.footer{margin-top:20px;color:#76878b;font-size:12px;display:flex;justify-content:space-between;gap:20px}.footer a{color:#527a78}a{color:var(--green)}.flow{display:flex;gap:7px;align-items:center;margin:19px 0}.flow b{background:#edf4f2;padding:12px;border-radius:8px;font-size:14px}.flow span{color:#8ba6a1}.hide{display:none}@media(min-width:1500px){main{padding-top:30px}.code{font-size:17px}.line{min-height:29px}.detail{padding:26px}p{font-size:17px}}@media(max-width:900px){header{padding:20px}.tag{display:none}main{padding:20px}.steps{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.intro{display:block}.pill{display:inline-block;margin-top:12px}.footer{display:block}}
-</style>
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Clover · Interactive demonstration</title><link rel="stylesheet" href="style.css"></head>
 <body>
-<header><div><div class="brand"><span>♧</span> Clover</div><div class="subtitle">Atomicity violations in interrupt-driven programs</div></div><div class="tag">ICSE 2027 · TOOL DEMONSTRATION</div></header>
+<header><div><b>Clover</b><span>Interactive demonstration</span></div><span class="conference">ICSE 2027 · Tool Demonstrations</span></header>
 <main>
-<div class="intro"><div><h1>From conflicting accesses to reviewable evidence</h1><p>Inspect the source. Follow candidate refinement. Check the interrupt state.</p></div><span class="pill" id="mode">Documented walkthrough · no model call</span></div>
-<nav class="steps" aria-label="Walkthrough stages" id="steps"></nav>
-<div class="layout">
- <section class="panel"><div class="panelhead"><span id="left-title">walkthrough.c</span><small id="left-note">21 lines · 1 shared variable · 3 ISRs</small></div><div id="source" class="code"></div><div class="legend" id="legend"><span><i style="background:#188b5f"></i>Read in main</span><span><i style="background:#d59435"></i>ISR preemption</span><span><i style="background:#507fba"></i>Resume main</span></div></section>
- <section class="panel"><div class="detail" id="detail"></div></section>
-</div>
-<div class="nav"><span id="progress"></span><div class="actions"><button class="secondary" id="back">← Previous</button><button class="primary" id="next">Next step →</button></div></div>
-<div class="footer"><span>Steps 1–5 reconstruct the manuscript example. Step 6 executes the public Python highlighter on a repository fixture.</span><a href="https://github.com/ahang0712/clover" target="_blank" rel="noreferrer">github.com/ahang0712/clover ↗</a></div>
-</main>
-<script>
-const source=`int DevVal = 0;
-void main() {
-  disable_isr(-1);
-  enable_isr(1);
-  if (DevVal < 12) {
-    DevVal = 0;
-  } else {
-    DevVal = 1;
-  }
-}
-void ISR_1() {
-  enable_isr(2);
-  DevVal = 1;
-}
-void ISR_2() {
-  int reader = DevVal;
-  DevVal = 2;
-}
-void ISR_3() {
-  DevVal += 3;
-}`;
-const fixture={GLOBAL_VAR:["global_var","global_array"],MAIN_INFO:[{variable:"global_var",function:"main",operation:"load"},{variable:"global_var",function:"main",operation:"store"},{variable:"global_var",function:"main",operation:"store"},{variable:"global_array",function:"main",operation:"store"}],ISR_INFO:[{variable:"global_var",function:"isr_1",operation:"load"},{variable:"global_array",function:"isr_1",operation:"load"}],ISR_COUNT:1};
-const triples=[[5,13,6],[5,17,6],[5,13,8],[5,17,8],[5,20,6],[5,20,8],[16,20,17]];
-const names=['Source & interrupts','Static candidates','Expert screening','Judge screening','Final report','Live highlighter','Full tool & scope'];
-let step=Math.max(0,Math.min(6,Number(new URLSearchParams(location.search).get('step'))||0));
-let selected=0, liveResult=null;
-const $=s=>document.querySelector(s);
-const escapeHtml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-function codeView(){
- $('#left-title').textContent=step===5?'Repository input: test_input.json':'walkthrough.c';
- $('#left-note').textContent=step===5?'Stored operation records · no LLVM execution':'21 lines · 1 shared variable · 3 ISRs';
- $('#legend').classList.toggle('hide',step===5);
- if(step===5){$('#source').innerHTML='<pre class="json" style="margin:0 20px;max-height:600px">'+escapeHtml(JSON.stringify(fixture,null,2))+'</pre>';return;}
- const triple=triples[selected];
- $('#source').innerHTML=source.split('\n').map((line,i)=>{let cls='';if(step!==0&&step!==6){if(i+1===triple[0])cls='read';if(i+1===triple[1])cls='interrupt';if(i+1===triple[2])cls='resume';if(step===3&&i+1===20)cls='off';}return `<div class="line ${cls}"><span class="ln">${i+1}</span><span>${escapeHtml(line)}</span></div>`}).join('');
-}
-function list(ids){return '<div class="candidates">'+ids.map(i=>`<button class="candidate ${i===selected?'selected':''}" data-candidate="${i}"><code>DevVal · RWW · (${triples[i].join(', ')})</code><span class="status">${step===2&&[2,3].includes(i)?'Rejected: branch':step===3&&i>=4?'Rejected: ISR disabled':step===4?'Retained':'Inspect source →'}</span></button>`).join('')+'</div>';}
-function render(){
- $('#steps').innerHTML=names.map((name,i)=>`<button data-step="${i}" class="${i===step?'active':''}"><strong>0${i+1}</strong>${name}</button>`).join('');
- $('#mode').textContent=step===5?'Live Python execution · repository fixture':step===6?'Configuration guide · full pipeline not run here':'Documented walkthrough · no model call';
- const stats='<div class="stats"><div class="stat"><b>7</b><span>Static candidates</span></div><div class="stat"><b>5</b><span>After Expert</span></div><div class="stat"><b>2</b><span>After Judge</span></div></div>';
- const content=[
- `<div class="eyebrow">01 / Understand the program</div><h2>A shared value, interrupted</h2><p><code>main</code> reads <code>DevVal</code> at line 5, then writes at line 6. An ISR may update the same variable between those operations.</p><div class="flow"><b>Read</b><span>→</span><b>ISR write</b><span>→</span><b>Main write</b></div><p>Priority order: <strong>ISR 3 &gt; ISR 2 &gt; ISR 1 &gt; main</strong>.</p><div class="notice">All ISRs start disabled. Main enables ISR 1; ISR 1 enables ISR 2. ISR 3 is never enabled.</div><p>The walkthrough asks which candidate interleavings survive checks of both branch conditions and interrupt state.</p>`,
- `<div class="eyebrow">02 / Plan Agent context</div><h2>Seven possible access triples</h2><p>Static access information highlights <strong>RWW</strong> candidates. Select a row to inspect its three source locations.</p>${list([0,1,2,3,4,5,6])}<div class="notice">These seven candidates are reconstructed from the manuscript illustration. A pattern match alone does not establish execution feasibility.</div>`,
- `<div class="eyebrow">03 / Expert screening</div><h2>Check the branch condition</h2><p>ISR 1 writes 1. ISR 2 writes 2. Neither value can make <code>DevVal &lt; 12</code> false, so the two proposed sequences through line 8 are removed.</p>${list([2,3,0,1])}${stats}<div class="notice">Five candidates remain in the documented first-round Expert report, including candidates involving ISR 3.</div>`,
- `<div class="eyebrow">04 / Judge screening</div><h2>An interrupt that cannot run</h2><p>The Judge inspects enable/disable behavior: <strong>ISR 3 remains disabled</strong>. Its line-20 write cannot be the intervening access.</p>${list([4,5,6])}${stats}<div class="notice">The three line-20 candidates are removed. The Expert reports no additional violations in the second round.</div>`,
- `<div class="eyebrow">05 / Developer review</div><h2>Two source-level reports</h2><p>Each retained report points to the shared variable, the access pattern, and the three operations to inspect.</p>${list([0,1])}<div class="notice">A retained report is evidence for developer review. LLM screening does not prove a program correct or automatically repair it.</div><div class="actions"><button class="primary" id="export">Export walkthrough report</button></div><p style="font-size:13px;color:var(--muted)">The exported JSON records its manuscript-derived provenance and replay mode.</p>`,
- `<div class="eyebrow">06 / Run a public tool component</div><h2>Execute the Defect Highlighter</h2><p>This button invokes the repository's <code>tool/Highlight/pattern.py</code> on its published operation-record fixture. No LLM or compiler is invoked.</p><div class="actions"><button class="primary" id="run">Run highlighter locally</button></div><div id="live-output">${liveResult?'<pre class="json">'+escapeHtml(JSON.stringify(liveResult,null,2))+'</pre>':'<div class="notice">Expected fixture result: one WRW candidate on global_var. The result will be displayed only after the Python component runs.</div>'}</div><p style="font-size:13px;color:var(--muted)">Source pinned to commit <code>3addd87b4172</code>. Start with <code>python3 serve.py</code> to enable execution.</p>`,
- `<div class="eyebrow">07 / Extend beyond the walkthrough</div><h2>Run new-program analysis</h2><p>The full Clover pipeline uses Python, Clang/LLVM 10, and a configured model backend. Keep credentials in your local configuration.</p><pre class="json">python main.py --single-file example.c \\\n  --force-local-tools</pre><div class="notice warning">The current public snapshot has integration gaps, including a missing thinking_config module and APIClient interface mismatches. See README.md before attempting a full run. This companion does not claim an end-to-end rerun.</div><p><a href="README.md">Open the usage and reproducibility guide →</a></p><p><a href="https://github.com/ahang0712/clover" target="_blank" rel="noreferrer">Open the full public repository →</a></p>`
- ];
- $('#detail').innerHTML=content[step];codeView();
- $('#progress').textContent=`Step ${step+1} of ${names.length} · Use the buttons or left/right arrow keys`;
- $('#back').disabled=step===0;$('#next').disabled=step===6;
- document.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>go(Number(b.dataset.step)));
- document.querySelectorAll('[data-candidate]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.candidate);render()});
- if($('#run'))$('#run').onclick=run;
- if($('#export'))$('#export').onclick=()=>{let report={mode:'documented-walkthrough-replay',provenance:'Clover manuscript example; manually transcribed, not a new LLM execution',variable:'DevVal',pattern:'RWW',retained_triples:[triples[0],triples[1]],candidate_count:7,after_expert:5,after_judge:2};let a=document.createElement('a');let url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.href=url;a.download='clover-walkthrough-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
-}
-function go(n){step=Math.max(0,Math.min(6,n));selected=step===2?2:step===3?4:0;history.replaceState(null,'','?step='+step);render();}
-async function run(){let button=$('#run');button.disabled=true;button.textContent='Running Python component…';try{let r=await fetch('/api/run-highlight',{method:'POST'});let data=await r.json();if(!r.ok||data.error)throw Error(data.error||'Execution failed');liveResult=data;render();$('#run').textContent='Run again';}catch(e){$('#live-output').textContent='Could not execute: start python3 serve.py and open http://127.0.0.1:8765. '+e.message;button.disabled=false;button.textContent='Run highlighter locally';}}
-$('#back').onclick=()=>go(step-1);$('#next').onclick=()=>go(step+1);
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(step+1);if(e.key==='ArrowLeft')go(step-1)});
-render();
-</script>
-</body></html>
+<section class="intro"><div><h1>Inspect the interleaving. Follow the evidence.</h1><p>For developers and testers of interrupt-driven C/C++ software.</p></div><div id="mode" class="mode">Prepared example · guided replay</div></section>
+<nav id="steps" aria-label="Analysis stages"></nav>
+<section class="workspace"><article class="panel"><div class="panelhead"><strong id="source-title">SOURCE EXAMPLE</strong><span id="source-meta">DevVal · C</span></div><div id="source" class="source"></div><div id="legend" class="legend"></div></article><article class="panel"><div class="panelhead"><strong id="detail-title">WORKFLOW</strong><span id="detail-meta">01 / 07</span></div><div id="detail" class="detail"></div></article></section>
+<footer><span>Prepared case: guided replay <i>·</i> Highlighter: executable component</span><div><button id="back" class="quiet">← Back</button><button id="next">Next →</button></div></footer>
+</main><script src="app.js"></script></body></html>

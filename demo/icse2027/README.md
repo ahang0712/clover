@@ -12,15 +12,15 @@ python3 serve.py
 
 Open **http://127.0.0.1:8765**. The server binds only to the local machine. Press Ctrl+C to stop it. Choose another port with `python3 serve.py --port 8766` if needed.
 
-You can also open `index.html` directly to explore the documented walkthrough. The **Live highlighter** button requires the Python server.
+You can also open `index.html` directly to explore the documented walkthrough. The **Run highlighter** button requires the Python server.
 
 ## What you can do
 
-1. Inspect the example's shared variable, priorities, and interrupt switches.
+1. Open the prepared example and inspect its shared variable and interrupt switches.
 2. Select a candidate to highlight its three source locations.
 3. Follow the documented seven → five → two candidate refinement.
-4. Export a JSON report with an explicit provenance label.
-5. Run the public Defect Highlighter on its original operation-record fixture.
+4. Download a JSON report containing the retained source locations and replay label.
+5. Run the public Defect Highlighter on its original operation-record fixture, inspect the actual JSON output, and export the execution result.
 
 The first five walkthrough steps are a **manually transcribed illustration from the manuscript**, not captured output from a new LLM run. The live step invokes the unmodified `tool/Highlight/pattern.py` from the public repository on its existing `test_input.json`. It does not compile C, invoke a model, or validate interrupt feasibility.
 
@@ -55,6 +55,8 @@ The README's `--input` and `--output` example does not match that parser. **The 
 
 No credentials were supplied and the complete model pipeline was not rerun in preparing this companion. The paper's experimental numbers are inherited from the existing manuscript. Completing the full runtime package remains necessary for a submission that promises analysis of arbitrary new programs without building the tool.
 
-## Recording
+## Interface and video
 
-Use the steps in order, explaining both the source-level effect and why candidates are removed. Keep the replay label visible. Run the live highlighter separately and describe its limited scope. The supplied English video is a narrated artifact walkthrough; it does not purport to be a recording of fresh agent inference.
+The interface uses locally included Lexend Regular and Bold fonts, distributed under the SIL Open Font License in `fonts/OFL.txt`. It makes the prepared-case replay and actual component execution visibly distinct. The PASS indicator is displayed only after the server executes the highlighter and compares its complete output with the expected fixture.
+
+The English demonstration video combines presentation slides with an edited sequence of actual companion-interface interactions: opening the case, selecting source triples, inspecting exclusions, downloading reports, running the highlighter, and inspecting its returned JSON. It is not a continuous screen recording or a fresh full-agent inference run. The prepared case and component input are separate examples.
